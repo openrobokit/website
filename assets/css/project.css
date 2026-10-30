@@ -1,0 +1,2102 @@
+/* Project pages (robokit / retargetingkit / graspkit). Layout is identical for
+ * all three; everything that differs between them is a custom property set at
+ * runtime from RK_THEMES in data/projects.js.
+ *
+ * Loads after assets/css/site.css, which owns the nav and mobile menu.
+ */
+
+html, body { margin: 0; padding: 0; background: #FAFAF8; }
+a:hover { color: var(--accent); }
+::selection { background: #00629B; color: #fff; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #F0F0EE; }
+::-webkit-scrollbar-thumb { background: #C6C6C2; border: 2px solid #F0F0EE; }
+
+body {
+  min-height: 100vh; background: #FAFAF8; color: #15171F;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 15px; line-height: 1.55; letter-spacing: -0.005em;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- hero ---------- */
+.hero { position: relative; height: 100vh; min-height: 560px; background: #FAFAF8; overflow: hidden; }
+
+/* The neutral render already sits on the page ground, so it is placed by
+   height rather than cropped to fit: only its left edge needs a fade. */
+.hero .hero-figure {
+  position: absolute; width: 178vh; top: -0.5vh; left: calc(70vw - 116.6vh);
+  pointer-events: none;
+  mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 100%);
+}
+.hero .hero-media {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 50%;
+  /* a kit whose clip needs different framing overrides --hero-vid-tf */
+  transform: var(--hero-vid-tf, translate(16%, -5%) scale(0.78));
+  pointer-events: none;
+  --edge: 90px;
+  mask-image:
+    linear-gradient(to right, transparent 0, #000 var(--edge), #000 calc(100% - var(--edge)), transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 var(--edge), #000 calc(100% - var(--edge)), transparent 100%);
+  mask-composite: intersect;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, #000 var(--edge), #000 calc(100% - var(--edge)), transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 var(--edge), #000 calc(100% - var(--edge)), transparent 100%);
+  -webkit-mask-composite: source-in;
+}
+.hero video.hero-media { z-index: 1; filter: var(--hero-vid-filter, none); }
+.hero .hero-reel-still,
+.hero .hero-clip { transform: var(--clip-fit, var(--hero-vid-tf, translate(16%, -5%) scale(0.78))); }
+.hero .hero-reel-still { transition: opacity 260ms ease; }
+.hero .hero-reel-still.is-hidden { opacity: 0; }
+/* Same stack used by the robokit scale demo: the outgoing frame stays visible
+   below the incoming clip for the short fade, while the pitch remains above
+   both layers. Reels opt out of site.css's one-video ready opacity. */
+.hero video.hero-clip { opacity: 0; z-index: 1; transition: opacity 260ms ease; }
+.hero .hero-clip.is-ready.is-under { opacity: 1; z-index: 1; }
+.hero .hero-clip.is-ready.is-active { opacity: 1; z-index: 2; }
+.hero .hero-clip.is-entering { opacity: 0; }
+.pitch { position: absolute; left: 0; top: 0; bottom: 0; z-index: 3; display: flex; align-items: center; padding: 0 0 0 var(--page-inset); }
+.pitch__in { display: flex; flex-direction: column; align-items: flex-start; width: min(42vw, 600px); min-width: 300px; }
+.chip {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--chip-fg, #FFCD00); background: var(--chip-bg, #182B49); border-radius: 4px; padding: 4px 8px 3px;
+  box-shadow: 3px 3px 0 rgba(21,23,31,.3);
+}
+.pitch .chip { margin-bottom: clamp(12px, 2.8vh, 26px); }
+h1 {
+  font-family: 'Pixelify Sans', 'JetBrains Mono', monospace; font-weight: 700;
+  font-size: clamp(40px, min(5.1vw, 10vh), 82px);
+  line-height: 1.04; letter-spacing: 0; color: var(--h1-ink, #182B49);
+  /* the site's offset-shadow vocabulary, sized off the em so it holds at every
+     step of the clamp */
+  text-shadow: 0.055em 0.055em 0 rgba(24,43,73,.14);
+  margin: 0 0 clamp(10px, 2vh, 18px);
+}
+/* the kit half carries the colourway — the accent, not the slash's brass,
+   which graspkit tuned for a single glyph and which no word could carry */
+h1 .kit { color: var(--pop, var(--accent)); }
+.lede {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(14px, 1.22vw, 17px); line-height: 1.55; letter-spacing: 0.01em;
+  color: #6B7080; max-width: 520px; margin: 0 0 clamp(20px, 4.2vh, 38px);
+}
+
+/* ---------- buttons ---------- */
+.btns { display: flex; gap: 10px; flex-wrap: wrap; }
+.cta {
+  display: inline-flex; align-items: center; gap: 9px; height: 48px; padding: 0 24px;
+  background: var(--cta-bg, var(--accent)); color: var(--cta-fg, #fff); border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 15px;
+  letter-spacing: 0.02em; white-space: nowrap;
+  box-shadow: 4px 4px 0 rgba(21,23,31,.85);
+  transition: filter 140ms ease, box-shadow 140ms ease, transform 140ms ease;
+}
+.cta:hover { filter: brightness(0.82); color: var(--cta-fg, #fff); transform: translate(2px, 2px); box-shadow: 2px 2px 0 rgba(21,23,31,.85); }
+.ghost {
+  display: inline-flex; align-items: center; gap: 8px; height: 48px; padding: 0 20px;
+  border: 1px solid rgba(21,23,31,0.28); border-radius: 6px; background: transparent; cursor: pointer;
+  font-family: 'JetBrains Mono', monospace; font-size: 13.5px; color: #15171F; white-space: nowrap;
+  box-shadow: 4px 4px 0 rgba(21,23,31,.3);
+  transition: border-color 140ms ease, background 140ms ease, box-shadow 140ms ease, transform 140ms ease;
+}
+.ghost:hover { border-color: rgba(21,23,31,0.5); background: rgba(21,23,31,0.05); transform: translate(2px, 2px); box-shadow: 2px 2px 0 rgba(21,23,31,.3); }
+.ghost .p { color: var(--pop, var(--accent)); }
+
+/* ---------- scroll cue ---------- */
+/* Same vocabulary as .chip / .ghost: mono caps on a hard offset shadow, and a
+   caret that hops in steps rather than easing, so it reads as pixel art. */
+@keyframes rk-hop {
+  0%, 60%, 100% { transform: translateY(0); }
+  30%           { transform: translateY(3px); }
+}
+.scrollcue {
+  position: absolute; left: 50%; transform: translateX(-50%); bottom: clamp(26px, 4.4vh, 46px); z-index: 4;
+  display: inline-flex; align-items: center; gap: 9px; height: 32px; padding: 0 12px;
+  border: 1px solid rgba(21,23,31,0.28); border-radius: 4px; background: transparent; cursor: pointer;
+  box-shadow: 3px 3px 0 rgba(21,23,31,.3);
+  transition: border-color 140ms ease, background 140ms ease, box-shadow 140ms ease, transform 140ms ease;
+}
+.scrollcue:hover {
+  border-color: rgba(21,23,31,0.5); background: rgba(21,23,31,0.05);
+  transform: translate(-50%, 0) translate(2px, 2px); box-shadow: 1px 1px 0 rgba(21,23,31,.3);
+}
+.scrollcue span.t {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #6B7080;
+}
+.scrollcue span.c {
+  font-size: 8px; line-height: 1; color: var(--pop, var(--accent));
+  animation: rk-hop 1600ms steps(1, end) infinite;
+}
+@media (prefers-reduced-motion: reduce) { .scrollcue span.c { animation: none; } }
+
+/* ---------- band sections (bento, benchmarks) ---------- */
+.band {
+  display: flex; flex-direction: column; background: #FAFAF8;
+  --band-pad-top: clamp(40px, 6vh, 68px);
+  padding: var(--band-pad-top) clamp(28px, 6.4vw, 118px) clamp(44px, 6vh, 72px);
+}
+.band__in { width: 100%; max-width: 1280px; margin: 0 auto; flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.band__eyebrow { display: flex; align-items: center; gap: 18px; margin: 0 0 clamp(16px, 2.4vh, 26px); }
+.band__eyebrow .rule { flex: 1; height: 1px; background: #E4E4E1; margin-left: 5px; }
+.band h2 {
+  font-family: 'JetBrains Mono', monospace; font-weight: 500;
+  font-size: clamp(21px, 2.05vw, 32px); line-height: 1.16; letter-spacing: -0.012em;
+  margin: 0; color: #15171F; text-wrap: balance;
+}
+
+/* ---------- bento ---------- */
+.bento h2 { margin: 0 0 clamp(22px, 3.6vh, 42px); }
+/* Rows are capped rather than stretched: filling the band's leftover height
+   turned the cells portrait on a tall display, which the renders are not
+   framed for. */
+.bento__grid {
+  display: grid; gap: 14px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(220px, 340px));
+}
+.bento__grid article, .bento__row article {
+  position: relative; border-radius: 24px; background: #FFFFFF;
+  isolation: isolate; overflow: hidden; min-width: 0;
+}
+/* The ring rides above the media — an inset shadow paints on the background
+   layer and a full-bleed <img> would cover it. */
+.bento__grid article::after, .bento__row article::after {
+  content: ''; position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  border-radius: inherit; box-shadow: inset 0 0 0 1px #DEDEDA;
+  transition: box-shadow 240ms ease;
+}
+.bento__grid article:hover::after, .bento__row article:hover::after { box-shadow: inset 0 0 0 1px #BFBFB8; }
+/* The cursor lights the borders, and does it to every card at once rather than
+   only the one under it. project.js writes the pointer into each card's own
+   coordinates as --mx/--my; those go unclamped, so a card two cells away gets
+   a gradient centred well outside itself and catches only the faint tail. The
+   falloff across the grid, and across each card's near and far edge, is the
+   gradient's own — there is no distance arithmetic anywhere. */
+.bento__grid article::before, .bento__row article::before {
+  content: ''; position: absolute; inset: 0; z-index: 4; pointer-events: none;
+  border-radius: inherit; padding: 1px; opacity: 0;
+  background: radial-gradient(
+    circle 380px at var(--mx, 50%) var(--my, 50%),
+    #B4B4AC 0%,
+    rgba(180,180,172,0.28) 35%,
+    rgba(0,0,0,0) 70%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  transition: opacity 320ms ease;
+}
+/* One flag on the grid fades the whole field in, so leaving it dims every card
+   together instead of snapping the last one off. */
+.bento__grid.is-lit article::before, .bento__row.is-lit article::before { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .bento__grid article::before, .bento__row article::before { transition: none; }
+}
+.bento__grid article.wide { grid-column: span 2; }
+/* Media is the card background. Labels sit over the footage instead of
+   reserving a separate empty strip beneath it. */
+.bento__grid .card-media {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover; pointer-events: none;
+  transform: var(--card-fit, scale(1));
+}
+.bento__grid .card-video { z-index: 1; }
+.bento__grid .card-label, .bento__row .card-label {
+  position: absolute; left: clamp(20px, 1.9vw, 30px); right: clamp(20px, 1.9vw, 30px);
+  bottom: clamp(17px, 1.6vw, 25px); z-index: 2; pointer-events: none;
+}
+.bento__grid h3, .bento__row h3 {
+  font-family: 'JetBrains Mono', monospace; font-weight: 500;
+  font-size: clamp(17px, 1.4vw, 23px); line-height: 1.2; letter-spacing: 0.005em;
+  margin: 0; color: #15171F; text-wrap: balance;
+}
+
+/* ---------- scalable optimization ---------- */
+.scale__head { margin: 0 0 clamp(18px, 2.6vh, 30px); }
+.scale__lead { margin: 0; color: #6B7080; font-size: clamp(14px, 1.1vw, 17px); line-height: 1.6; text-wrap: pretty; }
+.scale__demo {
+  overflow: hidden; background: #FFFFFF; border-radius: 24px;
+  box-shadow: 0 16px 40px rgba(21,23,31,0.04), inset 0 0 0 1px #DEDEDA;
+}
+/* ---------- tab tray ---------- */
+/* The scale demo's task switcher and the API card's example tabs are the same
+   control, so they are one rule. The active cell uses the site's offset
+   shadow, the same idiom as .chip / .cta / .ghost, and sits 1px into it. */
+.scale__tasks, .api__tabs {
+  display: grid; grid-template-columns: repeat(var(--scale-tasks, 5), minmax(0, 1fr)); gap: 4px;
+  padding: 8px; border-bottom: 1px solid #EDEDEB; background: #F3F3F0;
+}
+.scale__tasks button, .api__tabs button {
+  min-width: 0; padding: 11px 10px; border: 0; border-radius: 9px; background: transparent;
+  color: #777C89; cursor: pointer; font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px; line-height: 1.25;
+  transition: color 120ms ease, transform 120ms ease, box-shadow 120ms ease;
+}
+.scale__tasks button:hover, .api__tabs button:hover { color: #15171F; }
+.scale__tasks button.is-active, .api__tabs button.is-active {
+  background: #FFFFFF; color: var(--accent); font-weight: 500;
+  box-shadow: 2px 2px 0 rgba(21,23,31,.16), inset 0 0 0 1px rgba(21,23,31,.14);
+  transform: translate(1px, 1px);
+}
+.scale__stage { position: relative; aspect-ratio: 21 / 9; overflow: hidden; background: #FFFFFF; }
+.scale__stage video { width: 100%; height: 100%; display: block; object-fit: cover; }
+/* Clips are stacked, but only the active one plays. The outgoing frame stays
+   under the incoming poster/video during the short crossfade. */
+.scale__clip { position: absolute; inset: 0; opacity: 0; }
+.scale__clip.is-under { opacity: 1; z-index: 1; }
+.scale__clip.is-active { opacity: 1; z-index: 2; transition: opacity 260ms ease; }
+.scale__clip.is-entering { opacity: 0; }
+.scale__count {
+  /* above the stacked clips, which carry z-index while crossfading */
+  position: absolute; z-index: 3; top: clamp(16px, 2vw, 28px); left: clamp(16px, 2vw, 28px);
+  padding: 11px 14px 10px; border: 1px solid rgba(21,23,31,.12); border-radius: 10px;
+  background: rgba(250,250,248,.84); box-shadow: 0 8px 28px rgba(21,23,31,.08);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+}
+.scale__count strong {
+  display: block; color: #15171F; font-family: 'Archivo', 'Inter', system-ui, sans-serif;
+  font-size: clamp(27px, 3.2vw, 52px); line-height: .92; letter-spacing: -.04em; font-variant-numeric: tabular-nums;
+}
+.scale__count span {
+  display: block; margin-top: 7px; color: #6B7080; font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(9px, .75vw, 11px); letter-spacing: .08em; text-transform: uppercase;
+}
+.scale__count--timed { display: flex; align-items: center; gap: clamp(12px, 1.5vw, 22px); }
+.scale__timing { padding-left: clamp(12px, 1.5vw, 22px); border-left: 1px solid rgba(21,23,31,.14); }
+.scale__timing b {
+  display: block; color: var(--accent); font: 500 clamp(16px, 1.7vw, 25px)/1.2 'JetBrains Mono', monospace;
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.scale__timing small { display: block; margin-top: 5px; color: #6B7080; font: 9px/1.3 'JetBrains Mono', monospace; }
+@media (max-width: 640px) {
+  .scale--timed .scale__stage { aspect-ratio: auto; padding-top: calc(100% * 9 / 21); }
+  .scale--timed .scale__stage video { height: auto; aspect-ratio: 21 / 9; }
+  .scale--timed .scale__count {
+    position: relative; inset: auto; justify-content: space-between; padding: 12px 16px;
+    border: 0; border-top: 1px solid #EDEDEB; border-radius: 0; background: #FAFAF8; box-shadow: none;
+    -webkit-backdrop-filter: none; backdrop-filter: none;
+  }
+}
+.scale__control { padding: clamp(20px, 2.4vw, 34px); border-top: 1px solid #EDEDEB; }
+.scale__range { --scale-p: 1; --thumb: 22px; --scale-fill: calc(var(--scale-p) * (100% - var(--thumb)) + var(--thumb) / 2); position: relative; }
+.scale__range input {
+  width: 100%; height: 24px; margin: 0; appearance: none; background: transparent; cursor: grab;
+}
+.scale__range input:active { cursor: grabbing; }
+.scale__range input::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: linear-gradient(to right, var(--accent) 0 var(--scale-fill), #DADAD6 var(--scale-fill) 100%); }
+.scale__range input::-moz-range-track { height: 4px; border-radius: 2px; background: linear-gradient(to right, var(--accent) 0 var(--scale-fill), #DADAD6 var(--scale-fill) 100%); }
+.scale__range input::-webkit-slider-thumb { box-sizing: border-box; width: var(--thumb); height: var(--thumb); margin-top: -9px; appearance: none; border: 4px solid #FFFFFF; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 1px rgba(21,23,31,.18), 0 3px 10px rgba(21,23,31,.18); }
+.scale__range input::-moz-range-thumb { box-sizing: border-box; width: var(--thumb); height: var(--thumb); border: 4px solid #FFFFFF; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 1px rgba(21,23,31,.18), 0 3px 10px rgba(21,23,31,.18); }
+/* every label sits under the thumb centre it selects, so the track and the
+   read-out share one geometry: p * (track - thumb) + half a thumb */
+.scale__ticks { position: relative; height: 24px; margin-top: 2px; }
+.scale__ticks button {
+  position: absolute; top: 0; left: calc(var(--p) * (100% - var(--thumb)) + var(--thumb) / 2); transform: translateX(-50%);
+  padding: 5px 0; border: 0; background: none; color: #8A8F9C; cursor: pointer; white-space: nowrap;
+  font-family: 'JetBrains Mono', monospace; font-size: clamp(10px, .85vw, 12px); font-variant-numeric: tabular-nums;
+}
+.scale__ticks button.is-active { color: var(--accent); font-weight: 600; }
+.scale__note { margin: 14px 0 0; color: #8A8F9C; font-family: 'JetBrains Mono', monospace; font-size: clamp(9px, .72vw, 11px); line-height: 1.5; }
+
+/* ---------- method (objectives / optimizers / acceleration / distillation) ---------- */
+.method__head { margin: 0 0 clamp(20px, 3.2vh, 36px); max-width: 760px; }
+.method__lead { margin: 10px 0 0; color: #6B7080; font-size: clamp(14px, 1.1vw, 17px); line-height: 1.6; text-wrap: pretty; }
+.method__grid {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(14px, 1.8vw, 20px);
+}
+.method__card {
+  min-width: 0; background: #FFFFFF; border-radius: 12px;
+  box-shadow: 0 16px 40px rgba(21,23,31,0.04), inset 0 0 0 1px #DEDEDA;
+  padding: clamp(18px, 1.8vw, 24px) clamp(18px, 1.8vw, 24px) clamp(16px, 1.6vw, 20px);
+  display: flex; flex-direction: column; gap: 16px;
+}
+.method__card-head {
+  display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px 16px;
+}
+.method__title {
+  font-family: 'Archivo', 'Inter', system-ui, sans-serif; font-weight: 700;
+  font-size: clamp(17px, 1.5vw, 21px); line-height: 1.3; letter-spacing: -0.012em; color: #15171F;
+  white-space: nowrap;
+}
+/* The design's own blue (from the imported figures, including the two
+   raster renders below that can't be recolored) — not the site's teal
+   --accent, which would clash with them. */
+.method__title strong { color: #1F5EEA; font-weight: 700; }
+.method__figs { display: grid; gap: 12px; min-width: 0; }
+.method__fig { display: flex; flex-direction: column; align-items: center; gap: 10px; min-width: 0; }
+.method__fig-box { height: clamp(76px, 13vw, 124px); width: 100%; display: flex; align-items: center; justify-content: center; min-width: 0; }
+.method__fig img { display: block; max-width: 100%; height: auto; }
+/* The SVG figures animate inside their own files; the two raster figures
+   get their idle motion here. */
+@keyframes method-rock { 0%, 100% { transform: rotate(-1.8deg); } 50% { transform: rotate(1.8deg); } }
+@keyframes method-float { 0%, 100% { transform: translateY(-3px) scale(1); } 50% { transform: translateY(3px) scale(1.022); } }
+.method__fig img.is-rock { transform-origin: 50% 88%; animation: method-rock 4s ease-in-out infinite; }
+.method__fig img.is-float { animation: method-float 4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .method__fig img { animation: none; } }
+.method__fig span {
+  text-align: center; text-wrap: balance; font-size: 12px; line-height: 17px; letter-spacing: 0.06em;
+  text-transform: uppercase; color: #475467; font-weight: 500;
+}
+.method__note { font-size: 13px; letter-spacing: 0.02em; color: #98A2B3; white-space: nowrap; }
+
+/* ---------- api (install + tabbed examples) ---------- */
+/* The heading and install command wrap together on narrow screens. */
+.api__head { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin: 0 0 clamp(18px, 2.4vh, 28px); }
+.api__copy-cmd {
+  display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px; cursor: pointer;
+  border: 1px solid rgba(21,23,31,0.22); border-radius: 6px; background: #FFFFFF;
+  box-shadow: 3px 3px 0 rgba(21,23,31,.16);
+  font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #15171F; white-space: nowrap;
+  transition: border-color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
+}
+.api__copy-cmd:hover { border-color: rgba(21,23,31,0.44); transform: translate(1.5px, 1.5px); box-shadow: 1.5px 1.5px 0 rgba(21,23,31,.16); }
+.api__copy-cmd .p { color: var(--pop, var(--accent)); }
+.api__note { max-width: 780px; margin: -4px 0 24px; color: #596157; font-size: 15px; line-height: 1.7; }
+.api__launch { border-top: 1px solid #EDEDEB; }
+.api__launch .api__bar { justify-content: space-between; }
+.api__launch pre { margin: 0; padding: 18px clamp(16px, 2vw, 26px); overflow-x: auto; color: #15171F; font: 12px/1.75 'JetBrains Mono', monospace; }
+
+/* one card, matching .scale__demo, so the two interactive blocks read as a pair */
+.api__demo {
+  overflow: hidden; background: #FFFFFF; border-radius: 24px;
+  box-shadow: 0 16px 40px rgba(21,23,31,0.04), inset 0 0 0 1px #DEDEDA;
+}
+.api__pane { display: none; }
+.api__pane.is-active { display: block; }
+.api__bar {
+  display: flex; align-items: center; gap: 18px; padding: 11px clamp(16px, 2vw, 26px);
+  border-bottom: 1px solid #EDEDEB; background: #FBFBF9;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: #8A8F9C;
+}
+.api__bar a { margin-left: auto; color: var(--accent); }
+/* without a docs or source link, the controls still sit at the right */
+.api__bar .file + .api__copy { margin-left: auto; }
+.api__bar a:hover { border-bottom: 1px solid currentColor; }
+.api__copy { border: 0; background: none; cursor: pointer; padding: 0; font: inherit; color: #8A8F9C; }
+.api__copy:hover { color: var(--accent); }
+.api__copy .o, .api__copy-cmd .o { color: var(--accent); }
+.api__body {
+  padding: clamp(18px, 2vw, 26px) clamp(16px, 2vw, 26px);
+  font-family: 'JetBrains Mono', monospace; font-size: clamp(11.5px, .92vw, 13.5px); line-height: 1.75;
+  overflow-x: auto;
+  /* every pane reserves the tallest example's height, so switching tabs does
+     not shift the page under the pointer */
+  min-height: calc(var(--api-lines, 12) * 1.75em + 2 * clamp(18px, 2vw, 26px));
+}
+.api__body div { white-space: pre; color: #15171F; }
+pre.api__body { min-height: 0; margin: 0; white-space: pre; color: #15171F; }
+.api__body[hidden] { display: none; }
+/* same token palette as the docs bodies, so a snippet reads the same in both */
+.api__body .tok-k, .api__body .tok-o { color: #C6304C; }
+.api__body .tok-s, .api__body .tok-n, .api__body .tok-f { color: #1D4494; }
+.api__body .tok-c { color: #918A7C; font-style: italic; }
+
+/* ---------- closing band ---------- */
+.close h2 {
+  font-family: 'Archivo', 'Inter', system-ui, sans-serif; font-weight: 700;
+  font-size: clamp(30px, 3.6vw, 52px); line-height: 1.05; letter-spacing: -0.035em;
+  margin: 0 0 clamp(20px, 2.6vh, 30px);
+}
+
+/* ---------- benchmarks ---------- */
+.bench__legend {
+  margin-left: auto; display: flex; align-items: center; gap: 18px;
+  font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6B7080;
+}
+.bench__legend span { display: flex; align-items: center; gap: 7px; }
+.bench__key { margin-left: auto; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.bench__legend i { width: 9px; height: 9px; border-radius: 50%; font-style: normal; }
+.bench__head { margin: 0 0 clamp(20px, 3.2vh, 36px); display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap; }
+.bench__table {
+  position: relative;
+  display: flex; flex-direction: column; background: #FFFFFF; border-radius: 24px;
+  padding: clamp(16px, 2vw, 28px) clamp(20px, 2.5vw, 36px) clamp(18px, 2.2vw, 30px);
+  box-shadow: 0 16px 40px rgba(21,23,31,0.04), inset 0 0 0 1px #DEDEDA;
+}
+.bench__row { padding: clamp(15px, 1.7vw, 21px) 0; display: flex; align-items: center; gap: clamp(16px, 2vw, 34px); }
+.bench__row + .bench__row { border-top: 1px solid #EDEDEB; }
+.bench__group {
+  display: flex; align-items: baseline; gap: 8px; padding: clamp(16px, 1.9vw, 24px) 0 10px; border-bottom: 1px solid #EDEDEB;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #6B7080;
+}
+.bench__group:first-child { padding-top: 2px; }
+.bench__group .arrow { color: var(--accent); font-size: 14px; letter-spacing: 0; }
+.bench__task {
+  flex: 0 0 clamp(104px, 9vw, 152px);
+  font-family: 'JetBrains Mono', monospace; font-size: clamp(13px, 1.02vw, 15px);
+  line-height: 1.25; color: #15171F;
+}
+.bench__bars { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 7px; position: relative; }
+.bench__bars i {
+  display: block; height: 10px; border-radius: 5px; font-style: normal; outline: none;
+  transition: filter 140ms ease, transform 140ms ease;
+}
+.bench__bars:hover i, .bench__bars:focus-visible i { filter: brightness(1.06); transform: scaleY(1.3); }
+.bench__bars { outline: none; }
+/* The rows run out from zero once the card is on screen, each a beat after the
+   one above it. `width` is the animated property because the bar is a rounded
+   pill — a scaleX would stretch the cap into an oval. */
+.bench__bars i.ours {
+  position: relative; overflow: hidden;
+  min-width: 5px; width: 0;
+  background: linear-gradient(90deg, var(--accent), var(--accent-lite));
+  transition: width 1150ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--i, 0) * 90ms),
+              filter 140ms ease, transform 140ms ease;
+}
+.bench__table.is-in .bench__bars i.ours { width: var(--w); }
+/* Two layers ride inside the leading bar: the accent gradient scrolls the
+   length of the pill underneath, and one wide soft swell drifts across on top,
+   so a bar that has finished running out still reads as work in flight. */
+.bench__bars i.ours .flow, .bench__bars i.ours .swell {
+  position: absolute; top: 0; left: 0; height: 100%;
+}
+.bench__bars i.ours .flow {
+  width: 200%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-lite), var(--accent), var(--accent-lite), var(--accent));
+  animation: bench-flow 3.6s linear infinite;
+}
+.bench__bars i.ours .swell {
+  width: 72%; min-width: 34px;
+  background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.25), rgba(255,255,255,0));
+  animation: bench-swell 4s cubic-bezier(0.4, 0, 0.6, 1) calc(var(--i, 0) * 130ms) infinite;
+}
+@keyframes bench-flow { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+@keyframes bench-swell { from { transform: translateX(-115%); } to { transform: translateX(300%); } }
+.bench__bars i.base {
+  width: 100%; background: #E2E2DF;
+  clip-path: inset(0 100% 0 0); transition: clip-path 620ms ease calc(var(--i, 0) * 90ms);
+}
+.bench__table.is-in .bench__bars i.base { clip-path: inset(0 0 0 0); }
+@media (prefers-reduced-motion: reduce) {
+  .bench__bars i.ours, .bench__bars i.base { transition: none; }
+  .bench__bars i.ours .flow, .bench__bars i.ours .swell { animation: none; }
+  .bench__bars i.ours .swell { display: none; }
+}
+
+/* the row's read-out: both bars, so the comparison is the thing being read */
+.bench__tip {
+  position: absolute; top: 0; left: 0; z-index: 4; pointer-events: none;
+  display: flex; flex-direction: column; gap: 5px; white-space: nowrap;
+  padding: 9px 12px 8px; border-radius: 6px; background: #FAFAF8;
+  border: 1px solid rgba(21,23,31,0.14); box-shadow: 3px 3px 0 rgba(21,23,31,.14);
+  font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #15171F;
+  opacity: 0; transition: opacity 120ms ease;
+}
+.bench__tip.is-on { opacity: 1; }
+.bench__tip .r { display: flex; align-items: center; gap: 8px; }
+.bench__tip .r i { width: 9px; height: 9px; border-radius: 50%; font-style: normal; flex: none; }
+.bench__tip .r i.ours { background: var(--accent); }
+.bench__tip .r i.base { background: #D6D6D2; }
+.bench__tip .r b { margin-left: auto; padding-left: 18px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.bench__fig { flex: 0 0 clamp(94px, 8.4vw, 134px); display: flex; flex-direction: column; align-items: flex-end; text-align: right; }
+.bench--wide .bench__table { padding: 14px clamp(20px, 2.5vw, 36px) 20px; }
+.bench--wide .bench__row { padding: 15px 0; gap: 34px; }
+.bench--wide .bench__task { flex-basis: 210px; font-size: 14px; line-height: 1.3; }
+.bench--wide .bench__task span { color: #5F6475; }
+.bench--wide .bench__fig { flex-basis: 210px; }
+.bench--wide .bench__fig .x { font-size: 28px; }
+.bench--wide .bench__fig .vs { font-size: 12.5px; color: #5F6475; }
+.bench--wide .bench__group { padding: 20px 0 10px; color: #5F6475; }
+.bench--wide .bench__group:first-child { padding-top: 20px; }
+.bench--wide .bench__note { margin-top: 18px; max-width: 760px; font-size: 13.5px; color: #5F6475; }
+.bench__fig .x {
+  font-family: 'Archivo', 'Inter', system-ui, sans-serif; font-weight: 700;
+  font-size: clamp(21px, 1.95vw, 30px); line-height: 1; letter-spacing: -0.02em;
+  color: var(--accent); font-variant-numeric: tabular-nums;
+}
+.bench__fig .vs { font-size: clamp(11px, 0.82vw, 12.5px); line-height: 1.3; color: #6B7080; margin-top: 5px; }
+.bench__note {
+  font-size: clamp(12px, 0.9vw, 13.5px); line-height: 1.5; color: #6B7080;
+  margin: clamp(15px, 2vh, 22px) 0 0; max-width: 640px; text-wrap: pretty;
+}
+
+
+/* ---------- body ---------- */
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 56px 120px; }
+
+.hl {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+  background: #DEDEDA; border: 1px solid #DEDEDA;
+  border-radius: 6px; overflow: hidden; margin-top: 56px;
+}
+.hl > div { min-width: 0; background: #FFFFFF; padding: 18px 20px; display: flex; flex-direction: column; gap: 5px; }
+.hl .k { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+.hl .v { font-size: 14px; line-height: 1.5; color: #6B7080; }
+
+.meta { display: flex; flex-wrap: wrap; gap: 0 28px; padding: 18px 0 0; margin-top: 18px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; }
+.meta span.row { display: flex; gap: 8px; padding: 4px 0; }
+.meta .k { color: #8A8F9C; letter-spacing: 0.04em; }
+.meta .status { margin-left: auto; }
+.meta .status .v { color: var(--accent); }
+
+.sec, .end { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 48px; }
+.sec { padding: 56px 0; border-bottom: 1px solid #E4E4E1; }
+.end { padding: 88px 0 0; }
+.sec__label, .end__label {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: #8A8F9C; padding-top: 8px;
+}
+.sec__label .n, .end__label .n { display: block; margin-bottom: 6px; font-size: 10.5px; color: var(--accent); }
+.sec h2 {
+  font-family: 'Archivo', 'Inter', system-ui, sans-serif; font-weight: 700;
+  font-size: 36px; line-height: 1.12; letter-spacing: -0.03em; margin: 0 0 22px; max-width: 700px;
+}
+.sec p { font-size: 16px; line-height: 1.65; color: #6B7080; max-width: 680px; margin: 0 0 18px; }
+.sec p a { color: var(--accent); border-bottom: 1px solid currentColor; }
+
+.cards { display: grid; gap: 14px; margin: 24px 0; }
+.cards > div {
+  min-width: 0; background: #FFFFFF; border: 1px solid rgba(21,23,31,0.20);
+  border-radius: 6px; box-shadow: 4px 4px 0 rgba(21,23,31,.16);
+  padding: 20px; display: flex; flex-direction: column; gap: 8px;
+}
+.cards .kicker { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--accent); letter-spacing: 0.06em; }
+.cards .name { font-family: 'Archivo', 'Inter', system-ui, sans-serif; font-weight: 600; font-size: 21px; line-height: 1.2; letter-spacing: -0.02em; }
+.cards .desc { font-size: 13.5px; color: #6B7080; line-height: 1.55; }
+
+ul.bullets { list-style: none; padding: 0; margin: 20px 0 26px; max-width: 680px; }
+ul.bullets li {
+  position: relative; padding: 8px 0 8px 22px; font-size: 15.5px; line-height: 1.6;
+  border-bottom: 1px dashed rgba(21,23,31,0.16);
+}
+ul.bullets li::before { content: "›"; position: absolute; left: 0; top: 8px; color: var(--accent); font-family: 'JetBrains Mono', monospace; }
+
+.callout {
+  display: grid; grid-template-columns: 10px 1fr; gap: 16px;
+  background: var(--tint-soft); border: 1px solid rgba(21,23,31,0.20); border-radius: 6px;
+  box-shadow: 4px 4px 0 rgba(21,23,31,.16); overflow: hidden; margin: 24px 0; max-width: 680px;
+}
+.callout__bar { background: var(--accent); }
+.callout__body { padding: 18px 20px 18px 0; font-size: 14.5px; line-height: 1.6; color: #15171F; }
+.callout__body .t {
+  display: block; margin-bottom: 6px; font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent);
+}
+
+.code {
+  background: #FFFFFF; border: 1px solid rgba(21,23,31,0.20); border-radius: 6px;
+  box-shadow: 5px 5px 0 rgba(21,23,31,.16); margin: 26px 0; overflow: hidden;
+  font-family: 'JetBrains Mono', monospace; font-size: 12.5px;
+}
+.code__bar {
+  display: flex; align-items: center; padding: 10px 14px;
+  border-bottom: 1px solid rgba(21,23,31,0.20); background: #F0F0EE;
+  font-size: 11px; color: #8A8F9C; letter-spacing: 0.04em;
+}
+.code__bar .file { color: #6B7080; }
+.code__bar .copy { margin-left: auto; cursor: pointer; border: 0; padding: 0; background: none; font: inherit; color: inherit; }
+.code__bar .copy:hover { color: var(--accent); }
+.code__body { padding: 16px 18px; line-height: 1.65; overflow-x: auto; }
+.code__body div { white-space: pre; color: #15171F; }
+.code__body div.c { color: #8A8F9C; }
+
+.end h2 {
+  font-family: 'Archivo', 'Inter', system-ui, sans-serif; font-weight: 700;
+  font-size: 52px; line-height: 1.05; letter-spacing: -0.035em; margin: 0 0 28px;
+}
+
+/* Below four columns the bento stops filling the viewport and just flows.
+   Six cards divide evenly by three, so this tier still lands in two rows. */
+@media (max-width: 1250px) {
+  .bento { min-height: 0; }
+  .bento__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: none; min-height: 0; flex: none; }
+  .bento__grid article, .bento__grid article.wide { grid-column: span 1; aspect-ratio: 4 / 3; }
+  body.project--roboskills .bento__grid article:last-child { grid-column: span 2; aspect-ratio: 16 / 9; }
+  /* Objectives (4 figs) and Acceleration (3) wrap to 2 columns once a card is
+     too narrow to fit them all on one line at a legible size. */
+  .method__figs:has(> :nth-child(3)) { grid-template-columns: repeat(2, 1fr) !important; }
+  /* A 3-item card (Acceleration) leaves an orphan on the last row once
+     collapsed to 2 columns — span and center it instead of a blank cell. */
+  .method__figs:has(> :nth-child(3)) > .method__fig:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+/* The card beside the wide last one fills its row, so no gap opens under it. */
+@media (min-width: 641px) and (max-width: 1250px) {
+  body.project--roboskills .bento__grid article:nth-last-child(2) { aspect-ratio: auto; }
+}
+/* Three columns leave the cards too narrow to read their labels below this. */
+@media (max-width: 940px) {
+  .bento__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 880px) {
+  .wrap { padding: 0 24px 80px; }
+  .band { --band-pad-top: 56px; padding: var(--band-pad-top) 24px 64px; }
+  .method__grid { grid-template-columns: 1fr; }
+  .bench__row { gap: 14px; }
+  .bench__task { flex-basis: 88px; }
+  .bench__fig { flex-basis: 80px; }
+  /* Task and figure on a line, the bars full width under them, the read-out last. */
+  .bench--wide .bench__row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; padding: 12px 0; }
+  .bench--wide .bench__task { grid-area: 1 / 1; font-size: 13px; }
+  .bench--wide .bench__task br { display: none; }
+  .bench--wide .bench__task span { margin-left: 0.6em; }
+  .bench--wide .bench__fig { display: contents; }
+  .bench--wide .bench__fig .x { grid-area: 1 / 2; font-size: 22px; }
+  .bench--wide .bench__bars { grid-area: 2 / 1 / auto / -1; gap: 5px; }
+  .bench--wide .bench__fig .vs { grid-area: 3 / 1 / auto / -1; margin-top: 0; font-size: 12px; }
+  .bench--wide .bench__group { padding: 14px 0 8px; }
+  .bench--wide .bench__group:first-child { padding-top: 8px; }
+  .sec, .end { grid-template-columns: 1fr; gap: 24px; }
+  .pitch { padding: 0 24px; }
+  .hl { grid-template-columns: 1fr; }
+  h1 { font-size: 45px; }
+  .cards { grid-template-columns: 1fr !important; }
+  .end h2 { font-size: 40px; }
+  .sec h2 { font-size: 30px; }
+}
+/* Six cards in one column ran the section past five screens. Two columns
+   hold at any width — the cards square up so three rows still fit a phone. */
+@media (max-width: 640px) {
+  .bento__grid { gap: 10px; }
+  .bento__grid article, .bento__grid article.wide { aspect-ratio: 1 / 1; }
+  /* Every label in this band is nowrap by default, which reads well until a
+     card is a phone wide — then the longest ones run past their column. */
+  .method__title, .method__note, .method__fig span { white-space: normal; }
+  .method__fig span { text-align: center; }
+  .method__card { gap: 12px; padding: 14px 14px 12px; }
+  .method__figs { gap: 8px; }
+  .method__fig-box { height: clamp(58px, 17vw, 92px); }
+  .method__fig { gap: 6px; }
+  .method__grid { gap: 12px; }
+  /* 'optimization' alone is wider than half a 360px screen at the base size */
+  .bento__grid h3, .bento__row h3 { font-size: 14px; }
+  .bento__grid .card-label, .bento__row .card-label { left: 14px; right: 14px; bottom: 14px; }
+  .bench__row { gap: 12px; padding: 13px 0; }
+  .bench__task { flex-basis: 74px; font-size: 12px; }
+  .bench__fig { flex-basis: 58px; }
+  .bench__fig .x { font-size: 19px; }
+  .bench__legend { gap: 12px; font-size: 11px; }
+}
+
+@media (max-width: 760px) {
+  nav { padding: 0 16px; }
+  nav .links { display: none; }
+  nav .right button.burger { display: inline-flex; }
+  .scale__tasks, .api__tabs { display: flex; overflow-x: auto; scrollbar-width: none; }
+  .scale__tasks::-webkit-scrollbar, .api__tabs::-webkit-scrollbar { display: none; }
+  .scale__tasks button, .api__tabs button { flex: 0 0 auto; padding: 11px 14px; white-space: nowrap; }
+  /* a phone cannot fit the widest line anyway; let the body scroll on its own
+     and stop reserving the tallest pane's height */
+  .api__body { min-height: 0; }
+}
+
+/* Portrait: the hero stops being a two-column overlay and becomes a column —
+   clip on top, pitch centred under it. Both media share row 1, since the
+   still sits below the clip. Keyed on shape rather than width, and written to
+   match the landing page row for row, so the two never disagree about what a
+   portrait window should look like. */
+@media (max-width: 760px), (max-aspect-ratio: 1/1) {
+  .hero {
+    height: auto; min-height: 100vh;
+    position: relative;
+    display: grid; grid-template-columns: minmax(0, 1fr);
+    /* the clip takes whatever height the copy leaves, never under a
+       near-square share of the width, as on the landing page */
+    grid-template-rows: minmax(min(46vh, 100vw), 1fr) auto;
+    padding: 56px 0 clamp(40px, 6vh, 88px);
+  }
+  /* `contain` would letterbox the 16:9 render and leave the robot
+     thumbnail-sized, so the row is filled and the surplus width cropped;
+     the subject sits a touch left of frame centre. The ground is a level or
+     two off the band, so every edge fades, wide enough that none shows. Size
+     containment keeps the media's intrinsic height out of the 1fr row. */
+  .hero .hero-figure,
+  .hero .hero-media {
+    position: relative; grid-area: 1 / 1; inset: auto; transform: none;
+    width: 100%; height: 100%; min-height: 0; contain: size;
+    object-fit: cover; object-position: var(--clip-portrait-pos, var(--hero-portrait-pos, 46% 45%));
+    --edge: clamp(32px, 6vw, 96px);
+    mask-image:
+      linear-gradient(to right, transparent 0, #000 var(--edge), #000 calc(100% - var(--edge)), transparent 100%),
+      linear-gradient(to bottom, transparent 0, #000 var(--edge), #000 calc(100% - var(--edge)), transparent 100%);
+    mask-composite: intersect;
+    -webkit-mask-image:
+      linear-gradient(to right, transparent 0, #000 var(--edge), #000 calc(100% - var(--edge)), transparent 100%),
+      linear-gradient(to bottom, transparent 0, #000 var(--edge), #000 calc(100% - var(--edge)), transparent 100%);
+    -webkit-mask-composite: source-in;
+  }
+  .pitch {
+    position: relative; inset: auto; grid-row: 2;
+    display: flex; justify-content: center;
+    padding: 8px var(--page-inset) 0;
+  }
+  .pitch__in { width: 100%; min-width: 0; align-items: center; text-align: center; }
+  .lede { max-width: 520px; }  /* the landing sub caps at the same measure */
+  .btns { justify-content: center; }
+  h1 { font-size: clamp(30px, min(9vw, 5.2vh), 82px); }
+  /* a phone does not need to be told to scroll, and the cue is the one
+     piece of the hero the landing page has no counterpart for */
+  .scrollcue { display: none; }
+}
+/* a phone stacks the buttons, as on the landing page */
+@media (max-width: 560px) {
+  .hero .btns { flex-direction: column; align-items: stretch; width: 100%; gap: 12px; }
+  .hero .cta, .hero .ghost { justify-content: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero video.hero-clip { transition: none; }
+}
+
+/* ================================================================
+   Imported footage
+   ================================================================
+   Six bands built out of the RetargetingKit clips. They speak the band
+   vocabulary above — mono eyebrow, mono h2, white card on a hairline ring —
+   and add the three things camera footage needs that a render on the page
+   ground did not: a scrim under a label that lands on a photograph, a caption
+   strip for footage too busy to letter over, and a fixed-height frame so
+   clips of different shapes can share a row without the row resizing. */
+
+
+/* ---------- bento: justified rows of whole frames ---------- */
+/* robokit's bento crops every card into one grid cell. This page cannot: each
+   card is one representative clip shown whole. So a row is a flex line where
+   each card grows by its own aspect ratio — widths differ, heights come out
+   equal, and the row keeps a clean top and bottom edge with nothing cut off. */
+.bento--justified { min-height: 0; }
+.bento__row { display: flex; gap: clamp(10px, 1vw, 14px); }
+.bento__row + .bento__row { margin-top: clamp(10px, 1vw, 14px); }
+.bento__row article { flex: var(--ar) 1 0; }
+.bento__frame { position: relative; width: 100%; }
+.bento__row .card-media { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.bento__row .card-video { z-index: 1; }
+/* A card that rolls through a family stacks its clips and crossfades between
+   them. The outgoing clip stays opaque underneath for the length of the fade,
+   so the poster behind the stack never shows through the middle of it. */
+.bento__row .card-clip { opacity: 0; z-index: 1; transition: opacity 320ms ease; }
+.bento__row .card-clip.is-under { opacity: 1; z-index: 1; }
+.bento__row .card-clip.is-active { opacity: 1; z-index: 2; }
+.bento__row .card-clip.is-entering { opacity: 0; }
+
+/* ---------- bento, on photographs ---------- */
+/* A label laid over camera footage needs a scrim; over a render on the page
+   ground it did not. It rides the frame rather than the label, above the clip
+   and below the words, and is clipped by the card's overflow. */
+.bento--photo .bento__frame::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 172px;
+  z-index: 2; pointer-events: none;
+  background: linear-gradient(to top, rgba(10,18,30,.74), rgba(10,18,30,.34) 46%, rgba(10,18,30,0));
+}
+.bento--photo .card-label { z-index: 3; }
+.bento--photo h3 { color: #FFFFFF; text-shadow: 0 1px 14px rgba(10,18,30,.5); }
+/* Four autoplaying rooms is a lot of motion to put in front of someone who has
+   asked for less of it. The still behind each card is a frame of the same
+   footage, so hiding the clip costs the card nothing. */
+@media (prefers-reduced-motion: reduce) {
+  .bento--photo .card-video { display: none; }
+}
+
+/* Every clip below is a <figure>, and the UA sheet gives those 40px of side
+   margin — enough to squeeze a five-column strip to nothing on a phone. */
+.tile { margin: 0; }
+
+/* ---------- tile: a clip with its name under it ---------- */
+/* Camera footage is busy enough that a caption laid over it competes with the
+   subject, so these carry theirs in a strip beneath the frame. */
+.tile {
+  position: relative; min-width: 0; display: flex; flex-direction: column;
+  background: #FFFFFF; border-radius: 16px; overflow: hidden;
+  box-shadow: 0 14px 34px rgba(21,23,31,0.04), inset 0 0 0 1px #DEDEDA;
+  transition: box-shadow 220ms ease, transform 220ms ease;
+}
+.tile:hover { transform: translateY(-2px); box-shadow: 0 20px 44px rgba(21,23,31,0.09), inset 0 0 0 1px #C6C6BF; }
+/* The frame is the shape of the clip in it, so the clip fills it exactly and
+   nothing is cut off — which also rules out the usual hover push-in, since a
+   scale() inside an overflow-hidden frame is a crop by another name. */
+.tile__frame { position: relative; aspect-ratio: var(--tile-ar, 16 / 9); overflow: hidden; background: #FFFFFF; }
+.tile__frame video { display: block; width: 100%; height: 100%; object-fit: contain; }
+.tile figcaption {
+  display: flex; align-items: center; gap: 9px; min-width: 0;
+  justify-content: var(--cap-align, flex-start);
+  font-family: 'JetBrains Mono', monospace; font-size: clamp(10.5px, .84vw, 12.5px);
+  line-height: 1.35; letter-spacing: 0.01em; color: #15171F;
+}
+/* The bench legend's marks, reused wherever two clips are a comparison. */
+.dot { width: 8px; height: 8px; border-radius: 50%; flex: none; font-style: normal; }
+.dot--on { background: var(--accent); }
+.dot--off { background: #C4CBD4; }
+.dot--src { box-shadow: inset 0 0 0 1.5px #9AA6B4; }
+@media (prefers-reduced-motion: reduce) {
+  .tile { transition: none; }
+  .tile:hover { transform: none; }
+}
+
+/* ---------- method: the three layers ---------- */
+.layers__head, .reel__head {
+  max-width: 880px; margin: 0 0 clamp(18px, 2.6vh, 32px);
+}
+.layers__lead, .reel__lead {
+  margin: 12px 0 0; color: #6B7080; font-size: clamp(14px, 1.1vw, 17px);
+  line-height: 1.62; text-wrap: pretty;
+}
+.layers__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 1.8vw, 20px); }
+.layers__card {
+  min-width: 0; background: #FFFFFF; border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(21,23,31,0.04), inset 0 0 0 1px #DEDEDA;
+  padding: clamp(18px, 1.9vw, 26px);
+}
+/* The figures that used to head these cards were renders, so the card leads
+   with its layer number instead — the same rule-and-label vocabulary the
+   section headings downpage use. */
+.layers__head-row {
+  display: flex; align-items: baseline; gap: 11px;
+  padding-bottom: 14px; margin-bottom: 16px; border-bottom: 1px solid #EDEDEB;
+}
+.layers__head-row .n {
+  font-family: 'Archivo', 'Inter', system-ui, sans-serif; font-weight: 700;
+  font-size: clamp(26px, 2.4vw, 36px); line-height: 1; letter-spacing: -0.03em; color: var(--accent);
+}
+.layers__card .kicker {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px; letter-spacing: 0.14em; color: var(--label-muted, #8A8F9C);
+}
+.layers__card h3 {
+  margin: 7px 0 9px; font-family: 'Archivo', 'Inter', system-ui, sans-serif; font-weight: 700;
+  font-size: clamp(17px, 1.45vw, 21px); line-height: 1.2; letter-spacing: -0.02em; color: #15171F;
+}
+.layers__card p { margin: 0; font-size: 13.5px; line-height: 1.6; color: #6B7080; }
+body.project--legacy .layers__head-row { border-bottom-color: rgba(24,43,73,0.12); }
+/* ---------- humanoid reel ---------- */
+/* Two across, full width. These clips are shot at room distance, so a card
+   narrower than half the band loses the robot in the room. */
+.reel__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(14px, 1.6vw, 22px); }
+
+/* ---------- imported footage: narrower screens ---------- */
+@media (max-width: 1000px) {
+  .layers__grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  /* a phone cannot read four columns of footage; two is the floor at which a
+     robot hand is still a robot hand */
+  /* two justified cards side by side put a room at 160px across */
+  .bento__row { flex-direction: column; gap: clamp(10px, 1vw, 14px); }
+}
+@media (max-width: 640px) {
+  .reel__grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* The imported graphite treatment belongs to robokit only. The shared
+   project template keeps the established kit colorways everywhere else. */
+body.project--legacy {
+  background: var(--band); color: #182B49;
+  /* the shared nav is re-tinted through its tokens, not restyled */
+  --nav-ink: #182B49;
+  --nav-muted: #4A5D73;
+  /* the four neutrals below default to the sand tuning graspkit uses; a kit
+     that needs its own (retargetingkit's ice) sets them from RK_THEMES */
+  --nav-hover-bg: var(--hover-bg, #E7E0CB);
+  --brand-ink: rgba(24, 43, 73, 0.35);
+  --menu-bg: var(--band);
+  --menu-line: rgba(24,43,73,0.14);
+}
+body.project--legacy h1,
+body.project--legacy .callout__body,
+body.project--legacy .code__body div { color: #182B49; }
+body.project--legacy .lede,
+body.project--legacy .hl .v,
+body.project--legacy .sec p,
+body.project--legacy .cards .desc,
+body.project--legacy .code__bar .file { color: #4A5D73; }
+body.project--legacy .hero { background: var(--band); }
+body.project--legacy .chip { box-shadow: 3px 3px 0 rgba(24,43,73,.3); }
+body.project--legacy .cta { box-shadow: 4px 4px 0 rgba(24,43,73,.85); }
+body.project--legacy .cta:hover { filter: brightness(1.15); box-shadow: 2px 2px 0 rgba(24,43,73,.85); }
+body.project--legacy .ghost { color: #182B49; border-color: rgba(24,43,73,0.28); box-shadow: 4px 4px 0 rgba(24,43,73,.3); }
+body.project--legacy .ghost:hover { border-color: rgba(24,43,73,0.5); background: rgba(24,43,73,0.04); box-shadow: 2px 2px 0 rgba(24,43,73,.3); }
+body.project--legacy .meta .k,
+body.project--legacy .sec__label,
+body.project--legacy .end__label,
+body.project--legacy .code__bar { color: var(--label-muted, #7A8798); }
+body.project--legacy .hl { background: rgba(24,43,73,0.20); border-color: rgba(24,43,73,0.20); }
+body.project--legacy .sec { border-bottom-color: rgba(24,43,73,0.28); }
+body.project--legacy .cards > div,
+body.project--legacy .callout,
+body.project--legacy .code { border-color: rgba(24,43,73,0.28); box-shadow: 4px 4px 0 rgba(24,43,73,.3); }
+body.project--legacy .code { box-shadow: 5px 5px 0 rgba(24,43,73,.3); }
+body.project--legacy .code__bar { background: var(--bar-bg, #EDE9DC); border-bottom-color: rgba(24,43,73,0.28); }
+body.project--legacy .code__body div.c { color: var(--code-comment, #8A8F9C); }
+body.project--legacy ul.bullets li { border-bottom-color: rgba(24,43,73,0.18); }
+
+/* The bands take the page ground rather than robokit's paper, and every
+   neutral in them moves off the warm greys onto the navy the rest of this
+   colourway is drawn in. */
+body.project--legacy .band { background: var(--band); }
+body.project--legacy .band h2,
+body.project--legacy .bento__grid h3,
+body.project--legacy .bento__row h3,
+body.project--legacy .layers__card h3,
+body.project--legacy .tile figcaption { color: #182B49; }
+body.project--legacy .band__eyebrow .rule { background: rgba(24,43,73,0.16); }
+body.project--legacy .layers__lead,
+body.project--legacy .layers__card p,
+body.project--legacy .reel__lead { color: #4A5D73; }
+body.project--legacy .tile,
+body.project--legacy .layers__card { box-shadow: 0 16px 40px rgba(24,43,73,0.05), inset 0 0 0 1px rgba(24,43,73,0.13); }
+body.project--legacy .tile:hover { box-shadow: 0 20px 46px rgba(24,43,73,0.10), inset 0 0 0 1px rgba(24,43,73,0.28); }
+body.project--legacy .bento__grid article::after,
+body.project--legacy .bento__row article::after { box-shadow: inset 0 0 0 1px rgba(24,43,73,0.13); }
+body.project--legacy .bento__grid article:hover::after,
+body.project--legacy .bento__row article:hover::after { box-shadow: inset 0 0 0 1px rgba(24,43,73,0.30); }
+/* except a label sitting on camera footage, which stays white on its scrim */
+body.project--legacy .bento--photo h3 { color: #FFFFFF; }
+/* the sweeping arc picks up the accent here — on the ice ground robokit's
+   warm grey reads as a smudge rather than the border lighting up */
+body.project--legacy .bento__grid article::before, .bento__row article::before {
+  background: conic-gradient(
+    from var(--card-border-angle),
+    rgba(0,0,0,0) 0deg,
+    rgba(0,0,0,0) 250deg,
+    var(--accent) 312deg,
+    rgba(0,0,0,0) 360deg
+  );
+}
+body.project--legacy .scrollcue { border-color: rgba(24,43,73,0.28); box-shadow: 3px 3px 0 rgba(24,43,73,.3); }
+body.project--legacy .scrollcue:hover { border-color: rgba(24,43,73,0.5); background: rgba(24,43,73,0.04); box-shadow: 1px 1px 0 rgba(24,43,73,.3); }
+body.project--legacy .scrollcue span.t { color: var(--label-muted, #7A8798); }
+
+/* ================================================================
+   RetargetingKit capabilities
+   ================================================================
+   Two equal real-footage stages compare hand-scale and whole-body motion. The
+   image-only contact sheets keep both reels quick to scan. */
+
+body.project--retargetingkit {
+  --rk-ink: #182B49;
+  --rk-muted: #4A5D73;
+  --rk-line: rgba(24,43,73,0.14);
+  --rk-panel: #FFFFFF;
+}
+.project-skip {
+  position: fixed;
+  top: 12px;
+  left: 18px;
+  z-index: 101;
+  padding: 10px 14px;
+  border-radius: 7px;
+  background: #182B49;
+  color: #FFFFFF;
+  box-shadow: 3px 3px 0 rgba(24,43,73,.28);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  transform: translateY(calc(-100% - 20px));
+  transition: transform 140ms ease;
+}
+.project-skip:focus-visible {
+  color: #FFFFFF;
+  transform: translateY(0);
+}
+
+body.project--retargetingkit .showcase {
+  overflow: clip;
+  scroll-margin-top: 12px;
+}
+body.project--retargetingkit .showcase .band__in { min-width: 0; }
+body.project--retargetingkit .showcase__head {
+  margin-bottom: clamp(22px, 3.6vh, 42px);
+}
+/* The two headlines hold one line down to the 620px query below; past that,
+   wrapping beats overflow. */
+body.project--retargetingkit .showcase__head h2 {
+  max-width: none;
+  font-size: clamp(25px, 2.4vw, 38px);
+  white-space: nowrap;
+}
+/* The rest of the same sentence, not a subtitle: it runs on from the headline
+   and is only dropped back in colour. */
+body.project--retargetingkit .showcase__sub { color: #8DA0B4; }
+
+body.project--retargetingkit .motion-board {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
+  min-width: 0;
+}
+body.project--retargetingkit .motion-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 16 / 9;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 24px;
+  background: var(--rk-panel);
+  box-shadow: 0 18px 46px rgba(24,43,73,.07), inset 0 0 0 1px var(--rk-line);
+}
+body.project--retargetingkit .motion-stage {
+  position: relative;
+  isolation: isolate;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  background: #142435;
+}
+body.project--retargetingkit .motion-stage::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.12);
+}
+body.project--retargetingkit .motion-stage__poster,
+body.project--retargetingkit .motion-stage__clip {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+body.project--retargetingkit .motion-stage__poster { z-index: 0; }
+body.project--retargetingkit .motion-stage__clip {
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 280ms ease;
+}
+body.project--retargetingkit .motion-stage__clip.is-ready.is-under { z-index: 1; opacity: 1; }
+body.project--retargetingkit .motion-stage__clip.is-ready.is-active { z-index: 2; opacity: 1; }
+body.project--retargetingkit .motion-stage__clip.is-entering { opacity: 0; }
+
+/* Last in the caption line, in the same register as the rate beside it: the
+   headline makes the claim, this says the clip is the evidence for it. */
+body.project--retargetingkit .motion-stage__tag {
+  color: rgba(255,255,255,.52);
+  font-size: 11px;
+}
+body.project--retargetingkit .motion-stage__tag::before {
+  content: '·';
+  margin-right: 11px;
+}
+
+body.project--retargetingkit .motion-stage__caption {
+  position: absolute;
+  z-index: 7;
+  left: clamp(16px, 2vw, 26px);
+  bottom: clamp(14px, 1.8vw, 22px);
+  display: flex;
+  align-items: baseline;
+  gap: 11px;
+  pointer-events: none;
+  font-family: 'JetBrains Mono', monospace;
+  text-shadow: 0 1px 8px rgba(12,22,33,.6);
+}
+body.project--retargetingkit .motion-stage__scene {
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 500;
+}
+/* The footage is retimed on disk, so the stage has to say so — but quietly, in
+   the same register as the counter rather than as a badge competing with it. */
+body.project--retargetingkit .motion-stage__rate {
+  color: rgba(255,255,255,.52);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+body.project--retargetingkit .motion-stage__rate::before {
+  content: '·';
+  margin-right: 11px;
+}
+
+/* The contact sheet rides the footage in the opposite corner. Image-only: the
+   scene name lives on the button label, and on the caption beside it. */
+body.project--retargetingkit .motion-stage .motion-picker {
+  position: absolute;
+  z-index: 7;
+  right: clamp(16px, 2vw, 26px);
+  bottom: clamp(14px, 1.8vw, 22px);
+  display: flex;
+  gap: 7px;
+}
+body.project--retargetingkit .motion-stage .motion-picker__item {
+  position: relative;
+  flex: none;
+  width: clamp(48px, 4.8vw, 66px);
+  aspect-ratio: 16 / 9;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 5px;
+  background-color: #142435;
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  opacity: .46;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.30);
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(255,255,255,.16);
+  transition: opacity 160ms ease, box-shadow 160ms ease;
+}
+/* A 16:9 thumb is well under the 44px touch minimum, so the hit area is grown
+   vertically without growing the picture. */
+body.project--retargetingkit .motion-stage .motion-picker__item::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 44px;
+  transform: translateY(-50%);
+}
+body.project--retargetingkit .motion-stage .motion-picker__item:hover { opacity: 1; }
+body.project--retargetingkit .motion-stage .motion-picker__item.is-active {
+  opacity: 1;
+  box-shadow: 0 0 0 2px #FFFFFF;
+}
+body.project--retargetingkit .motion-stage .motion-picker__item:focus-visible {
+  opacity: 1;
+  outline: 3px solid rgba(255,255,255,.85);
+  outline-offset: 2px;
+}
+body.project--retargetingkit .motion-card__announce {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Embodiments reuse RoboKit's batch stage with the RetargetingKit palette. */
+body.project--retargetingkit #embodiment .scale__demo {
+  background: var(--band);
+  isolation: isolate;
+}
+/* Blend each white studio lineup as one layer, including poster transitions. */
+body.project--retargetingkit #embodiment .scale__stage {
+  mix-blend-mode: multiply;
+}
+body.project--retargetingkit .scale__tasks { background: #F4F8FA; }
+body.project--retargetingkit .scale__tasks button { color: #66758A; }
+body.project--retargetingkit .scale__tasks button.is-active { color: var(--accent); }
+body.project--retargetingkit .scale__tasks button:focus-visible,
+body.project--retargetingkit .scale__ticks button:focus-visible,
+body.project--retargetingkit .scale__range input:focus-visible {
+  outline: 3px solid rgba(2,108,143,.34);
+  outline-offset: 2px;
+}
+body.project--retargetingkit .scale__ticks button { min-width: 28px; }
+.scale__footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 20px;
+  border-top: 1px solid #E6EDF1;
+}
+.scale__footer[hidden] { display: none; }
+.scale__playback {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #526476;
+  font: 12px 'JetBrains Mono', monospace;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.scale__playback:hover { background: #F0F5F8; color: #16445A; }
+.scale__playback:focus-visible { outline: 3px solid rgba(2,108,143,.4); outline-offset: 2px; }
+.scale__caption { margin: 0; color: #66758A; font: 11px/1.5 'JetBrains Mono', monospace; }
+body.project--graspkit #all-arms-all-hands .scale__demo,
+body.project--graspkit #all-arms-all-hands .scale__stage { background: var(--band); }
+body.project--graspkit #all-arms-all-hands .scale__demo {
+  box-shadow: inset 0 0 0 1px rgba(24,43,73,.12);
+}
+body.project--graspkit #all-arms-all-hands .scale__tasks {
+  display: grid; background: #F4F6F1; border-color: rgba(24,43,73,.1);
+}
+body.project--graspkit #all-arms-all-hands video { object-fit: contain; }
+body.project--graspkit #all-arms-all-hands .scale__footer { border-color: rgba(24,43,73,.1); }
+body.project--graspkit #all-arms-all-hands .scale__caption,
+body.project--graspkit #all-arms-all-hands .scale__playback { color: #596B58; }
+body.project--graspkit #all-arms-all-hands .scale__playback:hover { background: #DCE3D7; color: var(--accent); }
+body.project--graspkit #all-arms-all-hands .scale__tasks button:focus-visible,
+body.project--graspkit #all-arms-all-hands .scale__playback:focus-visible {
+  outline: 3px solid rgba(82,105,77,.4); outline-offset: 2px;
+}
+@media (max-width: 640px) {
+  .scale--responsive .scale__stage { aspect-ratio: 4 / 3; }
+  body.project--graspkit #all-arms-all-hands .scale__stage { aspect-ratio: var(--scale-mobile-aspect, 3 / 4); }
+  .scale__footer { gap: 10px; padding: 8px 12px; }
+  .scale__caption { font-size: 10px; }
+}
+
+/* Scene interaction keeps the same quiet frame and compact task strip. */
+body.project--retargetingkit .motion-range__head {
+  margin: 0 0 clamp(18px, 2.6vh, 30px);
+}
+body.project--retargetingkit .motion-range__demo {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #FFFFFF;
+  box-shadow: 0 16px 40px rgba(24,43,73,.055), inset 0 0 0 1px var(--rk-line);
+}
+body.project--retargetingkit .motion-range__tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+  padding: 8px;
+  border-bottom: 1px solid var(--rk-line);
+  background: #F4F8FA;
+}
+body.project--retargetingkit .motion-range__tabs button {
+  min-height: 44px;
+  min-width: 0;
+  padding: 11px 8px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: #66758A;
+  cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(9px, .76vw, 11px);
+  line-height: 1.25;
+  touch-action: manipulation;
+}
+body.project--retargetingkit .motion-range__tabs button:hover {
+  color: var(--rk-ink);
+}
+body.project--retargetingkit .motion-range__tabs button.is-active {
+  background: #FFFFFF;
+  color: var(--accent);
+  font-weight: 500;
+  box-shadow: 0 1px 6px rgba(24,43,73,.09), inset 0 0 0 1px rgba(24,43,73,.07);
+}
+body.project--retargetingkit .motion-range__tabs button:focus-visible {
+  outline: 3px solid rgba(2,108,143,.34);
+  outline-offset: 1px;
+}
+body.project--retargetingkit .motion-range__stage {
+  position: relative;
+  isolation: isolate;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--band);
+}
+body.project--retargetingkit .motion-range__stage::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(24,43,73,.08);
+}
+body.project--retargetingkit .motion-range__poster,
+body.project--retargetingkit .motion-range__clip {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+body.project--retargetingkit .motion-range__poster { z-index: 0; }
+body.project--retargetingkit .motion-range__clip {
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 280ms ease;
+}
+body.project--retargetingkit .motion-range__clip.is-ready.is-active { z-index: 2; opacity: 1; }
+body.project--retargetingkit .motion-range__picker {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 7px;
+  height: auto;
+  box-sizing: border-box;
+  padding: 10px;
+  border-top: 1px solid var(--rk-line);
+  background: #F4F8FA;
+}
+body.project--retargetingkit .motion-range__picker[hidden] { display: none; }
+body.project--retargetingkit .motion-range__picker .motion-picker__item {
+  min-width: 0;
+  min-height: 44px;
+  aspect-ratio: 16 / 10;
+  padding: 3px;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  cursor: pointer;
+  touch-action: manipulation;
+  scroll-margin-block: 96px;
+  -webkit-tap-highlight-color: rgba(2,108,143,.16);
+  transition: border-color 150ms ease, background 150ms ease, transform 150ms ease;
+}
+body.project--retargetingkit .motion-range__picker .motion-picker__item:hover {
+  background: rgba(255,255,255,.82);
+  transform: translateY(-1px);
+}
+body.project--retargetingkit .motion-range__picker .motion-picker__item.is-active {
+  border-color: rgba(2,108,143,.42);
+  background: #FFFFFF;
+  box-shadow: 0 2px 9px rgba(24,43,73,.10);
+}
+body.project--retargetingkit .motion-range__picker .motion-picker__thumb,
+body.project--retargetingkit .motion-range__picker img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+body.project--retargetingkit .motion-range__picker .motion-picker__thumb {
+  overflow: hidden;
+  border-radius: 5px;
+  background: var(--band);
+}
+body.project--retargetingkit .motion-range__picker img { object-fit: contain; }
+body.project--retargetingkit .motion-range__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 14px 8px;
+  color: #53647B;
+  font-size: 12px;
+  background: #F4F8FA;
+}
+body.project--retargetingkit .motion-range__footer p { margin: 0; }
+body.project--retargetingkit .motion-range__count {
+  margin-left: 12px;
+  color: #66758A;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+body.project--retargetingkit .motion-range__footer button {
+  min-height: 44px;
+  min-width: 56px;
+  border: 1px solid var(--rk-line);
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: var(--accent);
+  font: inherit;
+  cursor: pointer;
+}
+body.project--retargetingkit .motion-range__picker button:focus-visible,
+body.project--retargetingkit .motion-range__footer button:focus-visible {
+  outline: 3px solid rgba(2,108,143,.5);
+  outline-offset: 1px;
+}
+/* The lower story uses the same restrained RoboKit cards, with only the terms
+   needed to establish the method. */
+body.project--retargetingkit .layers {
+  border-block: 1px solid rgba(24,43,73,.09);
+  background: var(--tint-soft);
+}
+body.project--retargetingkit .layers__head {
+  margin-bottom: clamp(20px, 3.2vh, 36px);
+}
+body.project--retargetingkit .layers__grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+body.project--retargetingkit .layers__card {
+  border-radius: 20px;
+  box-shadow: 0 16px 38px rgba(24,43,73,.055), inset 0 0 0 1px var(--rk-line);
+}
+body.project--retargetingkit .layers__card h3 { margin-bottom: 0; }
+
+body.project--retargetingkit .wrap {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1480px;
+  padding: clamp(40px, 6vh, 68px) clamp(28px, 6.4vw, 118px) clamp(44px, 6vh, 72px);
+}
+body.project--retargetingkit .details__head { margin-bottom: clamp(18px, 2.6vh, 30px); }
+body.project--retargetingkit .details__intro { display: block; }
+body.project--retargetingkit .details__intro h2 {
+  margin: 0;
+  color: var(--rk-ink);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(25px, 2.4vw, 38px);
+  font-weight: 500;
+  line-height: 1.16;
+  letter-spacing: -.012em;
+}
+body.project--retargetingkit .details__intro p {
+  max-width: 700px;
+  margin: 12px 0 0;
+  color: var(--rk-muted);
+  font-size: clamp(14px, 1.06vw, 16px);
+  line-height: 1.62;
+  text-wrap: pretty;
+}
+body.project--retargetingkit .hl {
+  margin-top: 0;
+  border-color: var(--rk-line);
+  border-radius: 16px;
+  background: var(--rk-line);
+}
+body.project--retargetingkit .hl > div { padding: clamp(18px, 2vw, 26px); }
+/* Use the same top/bottom cadence as adjacent RoboKit bands. */
+body.project--retargetingkit .sec {
+  padding-block: clamp(40px, 6vh, 68px) clamp(44px, 6vh, 72px);
+}
+body.project--retargetingkit .end { padding-top: clamp(40px, 6vh, 68px); }
+body.project--retargetingkit .cards > div,
+body.project--retargetingkit .callout,
+body.project--retargetingkit .code {
+  border-color: var(--rk-line);
+  border-radius: 14px;
+  box-shadow: 0 14px 34px rgba(24,43,73,.055);
+}
+
+@media (max-width: 880px) {
+  body.project--retargetingkit .wrap { padding: 56px 24px 64px; }
+  body.project--retargetingkit .sec { padding-block: 56px 64px; }
+  body.project--retargetingkit .end { padding-top: 56px; }
+}
+
+@media (max-width: 840px) {
+  body.project--retargetingkit .layers__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 620px) {
+  body.project--retargetingkit .showcase__head h2 {
+    white-space: normal;
+    text-wrap: pretty;
+  }
+}
+
+@media (max-width: 640px) {
+  body.project--retargetingkit .motion-card { border-radius: 18px; }
+  /* Six thumbs and a scene name will not share one row at phone widths, so the
+     caption moves to the free corner instead of being cut. */
+  /* Last in the caption line, in the same register as the rate beside it: the
+   headline makes the claim, this says the clip is the evidence for it. */
+body.project--retargetingkit .motion-stage__tag {
+  color: rgba(255,255,255,.52);
+  font-size: 11px;
+}
+body.project--retargetingkit .motion-stage__tag::before {
+  content: '·';
+  margin-right: 11px;
+}
+
+body.project--retargetingkit .motion-stage__caption {
+    top: clamp(12px, 3vw, 18px);
+    bottom: auto;
+  }
+  body.project--retargetingkit .motion-stage .motion-picker {
+    left: clamp(12px, 3vw, 18px);
+    right: clamp(12px, 3vw, 18px);
+    bottom: clamp(12px, 3vw, 18px);
+    justify-content: flex-start;
+    gap: 5px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding-block: 2px;
+    scrollbar-width: none;
+  }
+  body.project--retargetingkit .motion-stage .motion-picker__item {
+    width: clamp(38px, 11vw, 58px);
+  }
+  body.project--retargetingkit .motion-stage__nav {
+    width: clamp(44px, 12%, 64px);
+    align-items: flex-start;
+    padding-top: 38%;
+  }
+  body.project--retargetingkit .scale__demo,
+  body.project--retargetingkit .motion-range__demo { border-radius: 18px; }
+  body.project--retargetingkit .scale__tasks {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  body.project--retargetingkit .scale__tasks button { padding-inline: 8px; }
+  body.project--retargetingkit .motion-range__tabs {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  body.project--retargetingkit .motion-range__tabs::-webkit-scrollbar { display: none; }
+  body.project--retargetingkit .motion-range__tabs button {
+    flex: 0 0 auto;
+    padding-inline: 14px;
+    white-space: nowrap;
+  }
+  body.project--retargetingkit .motion-range__stage {
+    box-sizing: border-box;
+    aspect-ratio: 16 / 9;
+    padding-bottom: 0;
+  }
+  body.project--retargetingkit .motion-range__picker {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 5px;
+    height: auto;
+    padding: 9px;
+  }
+  body.project--retargetingkit .motion-range__footer { padding-inline: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-skip,
+  body.project--retargetingkit .motion-stage__clip,
+  body.project--retargetingkit .motion-picker__item,
+  body.project--retargetingkit .scale__clip,
+  body.project--retargetingkit .motion-range__clip {
+    transition: none;
+  }
+  body.project--retargetingkit .motion-stage__clip,
+  body.project--retargetingkit .motion-range__clip { display: none; }
+  body.project--retargetingkit .motion-range__clip.is-ready { display: block; }
+  body.project--retargetingkit .motion-range__picker .motion-picker__item:hover {
+    transform: none;
+  }
+}
+
+/* ---------- stage: one clip per row, full measure ---------- */
+/* Both stage clips carry their own telemetry -- a running clock, a batch count
+   -- and that type is small in the source. A two-up grid halves it to the point
+   where it stops resolving, so each clip takes the whole .band__in measure. */
+.stage__frame {
+  position: relative; width: 100%; aspect-ratio: 16 / 9;
+  border-radius: 18px; overflow: hidden; background: #FFFFFF;
+}
+.stage__frame video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+#grasp-optimization .stage__frame { background: var(--band); aspect-ratio: 16 / 9; }
+.stage__benchmark .stage__status {
+  min-width: 12ch; font-size: clamp(13.5px, 1.125vw, 16.5px); font-weight: 600;
+}
+.stage__variants { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 720px; margin-top: 16px; }
+.stage__variant {
+  min-width: 0; padding: 0; overflow: hidden; text-align: left; cursor: pointer;
+  border: 1px solid rgba(24,43,73,.18); border-radius: 12px; background: var(--band); color: inherit;
+}
+.stage__variant.is-active { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* Three or more variants share one row under the stage. */
+.stage__variants:has(> :nth-child(3)) {
+  grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); max-width: none;
+}
+@media (max-width: 640px) {
+  .stage__variants:has(> :nth-child(3)) { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-flow: row; }
+}
+.stage__variant:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.stage__variant img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+.stage__variant > span { display: block; padding: 10px 12px; font: 500 13px/1.4 'JetBrains Mono', monospace; }
+.stage__variant small { display: block; margin-top: 4px; font: 400 12px/1.5 Inter, sans-serif; opacity: .72; }
+.stage__selection { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin: 14px 0 0; font: 400 12px/1.5 'JetBrains Mono', monospace; color: var(--accent); }
+.stage__selection a { color: inherit; text-underline-offset: 3px; }
+@media (max-width: 640px) {
+  #grasp-optimization .stage__frame { aspect-ratio: auto; }
+  #grasp-optimization .stage__frame video { position: relative; aspect-ratio: 16 / 9; height: auto; }
+}
+
+/* ---------- pipeline ---------- */
+.stage__head, .pipeline__head {
+  display: flex; align-items: baseline; gap: clamp(12px, 2vw, 28px);
+  flex-wrap: wrap; margin: 0 0 clamp(24px, 4vh, 44px);
+}
+.stage__note, .pipeline__note {
+  font-family: 'JetBrains Mono', monospace; font-size: clamp(12px, 0.95vw, 14px);
+  line-height: 1.5; margin: 0; color: var(--accent);
+}
+/* One looping scene per stage. The clips carry the band baked in, so they sit
+   on the page without a card. Each scene is sized so both rows, the heading and
+   their one-line titles fit a single screen. */
+.pipeline__flow {
+  --scene-h: clamp(190px, calc((100svh - 300px) / 2), 400px);
+  display: grid; grid-template-columns: repeat(2, minmax(0, calc(var(--scene-h) * 16 / 9)));
+  justify-content: center; gap: clamp(14px, 1.8vw, 20px);
+}
+/* Each stage is boxed like robokit's method cards (radius, ring, shadow and
+   gap), titled inside its top-left corner over the scene. The ring is drawn
+   over the clip so it stays crisp against it. */
+.pipeline__stage {
+  position: relative; min-width: 0; background: var(--band); border-radius: 12px; overflow: hidden;
+  box-shadow: 0 16px 40px rgba(21,23,31,0.04); container-type: inline-size;
+}
+.pipeline__stage::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  box-shadow: inset 0 0 0 1px #DEDEDA;
+}
+.pipeline__label {
+  position: absolute; z-index: 1; top: clamp(16px, 1.6vw, 22px); left: clamp(18px, 1.8vw, 24px);
+  margin: 0; pointer-events: none;
+  font-family: 'JetBrains Mono', monospace; font-weight: 500;
+  font-size: clamp(16px, 1.45vw, 20px); line-height: 1.3; letter-spacing: -0.012em; color: #182B49;
+}
+/* Captions under a clip's pieces, sized with the box so they never meet. */
+.pipeline__part {
+  position: absolute; top: 72.5%; left: var(--x); transform: translateX(-50%);
+  white-space: nowrap; pointer-events: none;
+  font-family: 'JetBrains Mono', monospace; font-size: clamp(9px, 2.3cqw, 13px);
+  line-height: 1.4; color: var(--accent);
+}
+.pipeline__media { aspect-ratio: 16 / 9; }
+.pipeline__media video { display: block; width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 760px) {
+  .pipeline__flow { grid-template-columns: 1fr; }
+}
+
+/* ================================================================
+   Composed bands: the optional hero console and the band types a kit
+   lists in `bands` (project.js). Everything takes the kit's colourway.
+   ================================================================ */
+
+/* ---------- hero console ---------- */
+/* The pitch keeps the kits' inset and narrows, so the teaser's clip, on the right, can be as large as the
+   hero allows. */
+.hero.hero--console {
+  height: auto; min-height: 100vh; min-height: 100svh;
+  display: flex; flex-direction: column; justify-content: center; gap: clamp(28px, 5vh, 56px);
+  padding: calc(var(--site-nav-height) + clamp(16px, 3vh, 32px)) var(--page-inset) calc(clamp(26px, 4.4vh, 46px) + 32px);
+}
+.hero__row { display: flex; align-items: center; justify-content: space-between; gap: 48px; }
+.hero--console .pitch { position: relative; inset: auto; padding: 0; display: block; }
+.hero--console .pitch__in { width: min(400px, 100%); min-width: 0; }
+.hero--console h1 { font-size: clamp(40px, min(4.4vw, 9vh), 68px); }
+.hero--console .btns { flex-wrap: nowrap; }
+.hero-console { position: relative; flex: 1 1 560px; min-width: 0; max-width: 1120px; }
+.hero-console__media {
+  position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 22px; background-color: #D8D8D8;
+  box-shadow: 0 30px 70px rgba(24,43,73,.16), 0 0 0 1px rgba(24,43,73,.06);
+}
+.hero-console__media video { display: block; width: 100%; height: 100%; object-fit: cover; }
+/* A seamless clip drops the card, as the kits' heroes do: rendered on a ground a shade under white (249,249,246), it
+   multiplies into the band, and the brightness lifts that ground back so no rectangle shows. */
+.hero-console__media { transition: background-color .3s ease, box-shadow .3s ease; }
+.hero-console__media.is-seamless { background-color: transparent; box-shadow: none; }
+.hero-console__media.is-seamless video { mix-blend-mode: multiply; filter: brightness(1.025); }
+/* The agent's side, in the Agent band's glass, low on the clip's right: what the prompt hands the agent beside the
+   prompt as it types, then one numbered step at a time to done; a recorded run shows each turn's words instead. */
+.hero-console__card {
+  position: absolute; z-index: 2; right: 0; bottom: 48px; width: 296px; max-width: calc(100% - 24px);
+  display: flex; flex-direction: column; gap: 8px; padding: 12px; box-sizing: border-box; border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.42);
+  background: linear-gradient(155deg, rgba(255,255,255,.82), rgba(243,243,255,.70));
+  backdrop-filter: blur(24px) saturate(1.15); -webkit-backdrop-filter: blur(24px) saturate(1.15);
+  box-shadow: 0 18px 48px rgba(24,43,73,.12), 0 2px 6px rgba(24,43,73,.04), inset 0 1px 0 rgba(255,255,255,.5);
+  color: #182B49; font: 500 11px/1.4 'JetBrains Mono', monospace;
+}
+.hero-console__head { display: flex; align-items: center; gap: 10px; }
+.hero-console__head .agent__avatar { width: 30px; height: 30px; border-radius: 10px; }
+.hero-console__head .agent__avatar svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.hero-console.is-playing .agent__avatar::after { background: #6C65CC; box-shadow: 0 0 0 3px rgba(108,101,204,.12); }
+.hero-console__title { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.hero-console__title strong { font-weight: 600; }
+.hero-console__title small { overflow: hidden; color: #5F6F83; font: 400 10px/1.3 Inter, sans-serif; white-space: nowrap; text-overflow: ellipsis; }
+.hero-console__head .agent__percent { margin-left: auto; }
+.hero-console__input {
+  display: flex; align-items: center; gap: 9px; padding: 7px; border-radius: 11px;
+  background: rgba(255,255,255,.28); box-shadow: inset 0 0 0 1px rgba(255,255,255,.4);
+}
+.hero-console__thumb { flex: none; width: 60px; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 5px; background: #E3E3EE; }
+.hero-console__thumb[hidden] { display: none; }
+.hero-console__thumb img, .hero-console__thumb video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.hero-console__words { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+/* a run's turn can run long; three lines keep the card small */
+.hero-console__text { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; color: #182B49; font: 500 11.5px/1.45 Inter, sans-serif; overflow-wrap: anywhere; }
+.hero-console__text strong { font-weight: 700; }
+.hero-console__text b { padding: 0 3px; white-space: nowrap; border-radius: 4px; background: color-mix(in srgb, var(--accent) 11%, transparent); color: var(--accent); font: 500 .94em/1 'JetBrains Mono', monospace; }
+.hero-console__input.is-empty .hero-console__text { color: #68788B; }
+.hero-console__input.is-typing .hero-console__text::after {
+  content: ''; display: inline-block; width: 1.5px; height: 1.15em; margin-left: 1px; vertical-align: -.2em;
+  background: currentColor; animation: hero-caret 1s steps(1) infinite;
+}
+.hero-console__words small { color: #68788B; font: 400 9px/1.3 'JetBrains Mono', monospace; }
+.hero-console__words small:empty { display: none; }
+/* the steps: reached ones tinted, the current one filled; a run's turns as one bar */
+.hero-console__status { display: flex; align-items: center; gap: 6px; min-height: 18px; padding: 2px 2px 0; }
+.hero-console__progress { flex: none; display: flex; align-items: center; gap: 4px; }
+.hero-console__progress i {
+  display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%;
+  background: rgba(24,43,73,.045); color: #68788B; font: 400 8.5px/1 'JetBrains Mono', monospace;
+}
+.hero-console__progress i.is-on { background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--accent); }
+.hero-console__progress i.is-now { background: var(--accent); color: #FFFFFF; box-shadow: 0 3px 8px rgba(80,74,170,.17); }
+.hero-console__progress.is-bar { width: 44px; height: 4px; overflow: hidden; border-radius: 2px; background: color-mix(in srgb, var(--accent) 14%, transparent); }
+.hero-console__progress.is-bar i { display: block; width: 0; height: 100%; border-radius: 0; background: var(--accent); transition: width .3s ease; }
+.hero-console__status [data-hero-step] { min-width: 0; margin-left: 4px; overflow: hidden; color: var(--accent); font-size: 10.5px; white-space: nowrap; text-overflow: ellipsis; }
+.hero-console__done { display: none; flex: none; margin-left: auto; padding: 3px 6px; border-radius: 5px; background: rgba(80,74,170,.07); color: var(--accent); font-size: 9.5px; }
+.hero-console__status.is-done .hero-console__done { display: block; }
+/* under the clip, the kits' progress lines: one per task, the current one filling as its clip plays; each line
+   jumps to its task, the button around it tall enough to hit */
+.hero-console__foot { display: flex; justify-content: center; margin-top: 14px; }
+.hero-console__playlist { display: flex; gap: 10px; }
+.hero-console__playlist button { display: flex; align-items: center; width: 44px; height: 24px; padding: 0; border: 0; background: none; cursor: pointer; }
+.hero-console__playlist button::before {
+  content: ''; width: 100%; height: 2px; transition: background-color .2s;
+  background: rgba(24,43,73,.14) linear-gradient(var(--accent), var(--accent)) no-repeat 0 0 / calc(var(--p, 0) * 100%) 100%;
+}
+.hero-console__playlist button:hover::before { background-color: rgba(24,43,73,.28); }
+.hero-console__playlist button.is-on::before { background-color: color-mix(in srgb, var(--accent) 20%, transparent); }
+.hero-console__playlist button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+@keyframes hero-caret { 50% { opacity: 0; } }
+/* On a landscape screen a seamless clip is staged as the kits' heroes are: across the whole hero, shifted right and
+   scaled to about half the hero's height, its edges faded. Nothing around it may stack (no z-index), or the multiply would
+   blend into that layer instead of the band. The agent's card sits low at the inset's right edge, overlapping the
+   hands a little, and the clip's line runs under them. */
+@media (min-width: 761px) and (min-aspect-ratio: 1001/1000) {
+  .hero-console:has(> .is-seamless) { position: static; }
+  .hero-console__media.is-seamless { position: absolute; inset: 0; aspect-ratio: auto; border-radius: 0; pointer-events: none; }
+  .hero-console__media.is-seamless video {
+    object-fit: cover; transform: translate(16%, -3%) scale(0.6);
+    --edge: 90px;
+    mask-image:
+      linear-gradient(to right, transparent 0, #000 var(--edge), #000 calc(100% - var(--edge)), transparent 100%),
+      linear-gradient(to bottom, transparent 0, #000 var(--edge), #000 calc(100% - var(--edge)), transparent 100%);
+    mask-composite: intersect;
+    -webkit-mask-image:
+      linear-gradient(to right, transparent 0, #000 var(--edge), #000 calc(100% - var(--edge)), transparent 100%),
+      linear-gradient(to bottom, transparent 0, #000 var(--edge), #000 calc(100% - var(--edge)), transparent 100%);
+    -webkit-mask-composite: source-in;
+  }
+  /* large on a wide screen, and wide enough for a step on one line; a narrower one keeps the hands in view */
+  .hero-console:has(> .is-seamless) .hero-console__card {
+    --card-zoom: 1.35; zoom: var(--card-zoom); width: 336px; right: calc(var(--page-inset) / var(--card-zoom)); bottom: 23%;
+  }
+  @media (max-width: 1399px) { .hero-console:has(> .is-seamless) .hero-console__card { --card-zoom: 1.05; } }
+  .hero-console:has(> .is-seamless) .hero-console__thumb { width: 96px; }
+  .hero-console:has(> .is-seamless) .hero-console__foot { position: absolute; z-index: 1; left: 66%; bottom: 19%; margin: 0; transform: translateX(-50%); }
+}
+.ghost--status { cursor: default; }
+
+/* ---------- bento additions ---------- */
+/* The title sits on the footage, which fades into paper beneath it instead of
+   holding a box; a card can link to its band or hold the place of footage still to come. */
+.bento--pills .card-label {
+  left: 0; right: 0; bottom: 0;
+  padding: clamp(30px, 2.8vw, 44px) clamp(20px, 1.9vw, 30px) clamp(14px, 1.2vw, 18px);
+  background: linear-gradient(to top, rgba(250,250,248,.94), rgba(250,250,248,.66) 48%, rgba(250,250,248,0));
+}
+/* A card's flow floats along its top edge with no backing: inputs on paper,
+   the output in the accent, arrows lifted off the footage by a shadow. */
+.card-flow {
+  position: absolute; z-index: 2; top: clamp(14px, 1.25vw, 20px); left: clamp(14px, 1.25vw, 20px);
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0;
+  max-width: calc(100% - 2 * clamp(14px, 1.25vw, 20px)); pointer-events: none;
+}
+.card-flow span {
+  padding: 6px 10px; border-radius: 9px; background: rgba(250,250,248,.68);
+  border: 1px solid rgba(255,255,255,.24); box-shadow: 0 4px 14px rgba(21,23,31,.08);
+  backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px);
+  font: 600 clamp(9px, .66vw, 11px)/1 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; color: #182B49;
+}
+.card-flow span.is-out { background: color-mix(in srgb, var(--accent) 76%, transparent); border-color: rgba(255,255,255,.16); color: #FFFFFF; }
+.card-flow i { margin: 0 1px; font-style: normal; font-size: 13px; line-height: 1; color: rgba(255,255,255,.92); text-shadow: 0 1px 4px rgba(21,23,31,.7); }
+body.project--roboskills .bento__grid article {
+  box-shadow: 0 14px 34px rgba(24,43,73,.07);
+  transition: transform 240ms ease, box-shadow 240ms ease;
+}
+body.project--roboskills .bento__grid article:hover {
+  transform: translateY(-2px); box-shadow: 0 18px 42px rgba(24,43,73,.11);
+}
+body.project--roboskills .bento__grid .card-media { transition: transform 520ms cubic-bezier(.2,.7,.2,1); }
+body.project--roboskills .bento__grid article:hover .card-media { transform: var(--card-fit, scale(1)) scale(1.012); }
+@media (prefers-reduced-motion: reduce) {
+  body.project--roboskills .bento__grid article,
+  body.project--roboskills .bento__grid .card-media { transition: none; }
+  body.project--roboskills .bento__grid article:hover { transform: none; }
+  body.project--roboskills .bento__grid article:hover .card-media { transform: var(--card-fit, scale(1)); }
+}
+/* Small cards under a band: a name, what it does, and a note in the accent. */
+.band__tiles { margin-top: clamp(32px, 5vh, 52px); }
+.band__tiles-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+.band__tiles-grid > div {
+  display: flex; flex-direction: column; gap: 6px; min-width: 0;
+  padding: 14px 16px 15px; background: #FFFFFF; border-radius: 12px; box-shadow: inset 0 0 0 1px #DEDEDA;
+}
+.band__tile-head { display: flex; align-items: center; gap: 10px; }
+.band__tile-icon {
+  display: grid; place-items: center; flex: 0 0 32px; width: 32px; height: 32px;
+  border-radius: 9px; background: color-mix(in srgb, var(--accent) 9%, #FFFFFF); color: var(--accent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent);
+  font: 600 11px/1 'JetBrains Mono', monospace;
+}
+.band__tile-icon--logo { background: #FFFFFF; box-shadow: none; }
+.band__tile-icon img { display: block; width: 28px; height: 28px; object-fit: contain; }
+.band__tile-icon svg { display: block; width: 20px; height: 20px; }
+.band__tiles-grid b { font: 500 15px/1.3 'JetBrains Mono', monospace; color: #15171F; }
+.band__tile-desc { font-size: 13.5px; line-height: 1.4; color: #5E6373; }
+.band__tiles-grid small { margin-top: auto; padding-top: 6px; font: 400 11px/1.45 'JetBrains Mono', monospace; color: var(--accent); }
+@media (max-width: 1000px) { .band__tiles-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+/* A flow and a title need a card wider than half a phone: one column of wide footage. */
+@media (max-width: 640px) {
+  .bento__grid:has(.card-flow) { grid-template-columns: minmax(0, 1fr); }
+  .bento__grid:has(.card-flow) article, body.project--roboskills .bento__grid article:last-child { grid-column: auto; aspect-ratio: 16 / 9; }
+  .band__tiles-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.card-link { position: absolute; inset: 0; z-index: 5; border-radius: inherit; }
+.card-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.bento__grid article.is-placeholder { background: repeating-linear-gradient(135deg, #F3F3F0 0 10px, #EDEDEA 10px 20px); }
+.card-placeholder {
+  position: absolute; top: 22px; left: 0; right: 0; text-align: center;
+  font-family: 'JetBrains Mono', monospace; font-size: 11.5px; letter-spacing: .06em; color: #8A8F9C;
+}
+
+/* ---------- stage additions ---------- */
+.stage__card {
+  overflow: hidden; background: #FFFFFF; border-radius: 24px;
+  box-shadow: 0 16px 40px rgba(21,23,31,0.04), inset 0 0 0 1px #DEDEDA;
+}
+.stage__card--narrow { width: 100%; max-width: 1080px; margin: 0 auto; }
+.stage__card .stage__frame { border-radius: 0; }
+.stage__scene { position: relative; }
+.stage__scene .stage__frame video { object-fit: contain; }
+.stage__input {
+  position: absolute; z-index: 2; left: 24px; top: 24px; width: clamp(180px, 22%, 280px); margin: 0; padding: 6px;
+  border: 1px solid rgba(255,255,255,.85); border-radius: 14px; background: rgba(250,250,248,.84);
+  box-shadow: 0 6px 24px rgba(24,43,73,.12); backdrop-filter: blur(12px);
+}
+.stage__input figcaption { padding: 3px 5px 8px; color: #4E5D73; font: 500 10px/1.4 'JetBrains Mono', monospace; letter-spacing: .03em; }
+.stage__input-body video, .stage__input-body img { display: block; width: 100%; height: auto; object-fit: contain; border-radius: 8px; }
+.stage__input-body video { aspect-ratio: 16 / 9; }
+.stage__input:has(blockquote) { width: min(38%, 360px); padding: 14px 16px; }
+.stage__input:has(blockquote) figcaption { padding: 0 0 8px; color: var(--accent); }
+.stage__input-body blockquote { margin: 0; color: #182B49; font: 400 13px/1.6 Inter, sans-serif; }
+@media (max-width: 760px) {
+  .stage__input { left: 12px; top: 12px; width: 34%; min-width: 112px; padding: 4px; border-radius: 10px; }
+  .stage__input figcaption { padding: 2px 4px 5px; font-size: 8px; }
+  .stage__input-body video, .stage__input-body img { border-radius: 6px; }
+  .stage__input:has(blockquote) { position: static; width: auto; padding: 16px 18px; border: 0; border-radius: 0; box-shadow: none; background: #FAFAF8; backdrop-filter: none; }
+  .stage__input:has(blockquote) figcaption { font-size: 10px; }
+}
+.stage__comparison { --reveal: 50%; touch-action: pan-y; user-select: none; }
+/* only near the divider does a press drag it */
+.stage__comparison.is-grabbable, .stage__comparison:has(.stage__range:active) { cursor: ew-resize; }
+.stage__comparison video { object-fit: contain; pointer-events: none; }
+.stage__before {
+  position: absolute; z-index: 1; inset: 0; overflow: hidden; pointer-events: none;
+  transform: translate3d(calc(var(--reveal) - 100%), 0, 0); will-change: transform;
+}
+/* Opposing transforms move the reveal edge while the footage stays aligned. */
+.stage__before video { transform: translate3d(calc(100% - var(--reveal)), 0, 0); will-change: transform; }
+.stage__compare-label {
+  position: absolute; z-index: 2; top: 18px; padding: 7px 11px; border-radius: 7px;
+  background: rgba(250,250,248,.92); color: #182B49; pointer-events: none;
+  font: 500 11px/1.4 'JetBrains Mono', monospace;
+}
+.stage__compare-label[hidden] { display: none; }
+.stage__compare-label--before { left: 18px; }
+.stage__compare-label--after { right: 18px; }
+.stage__range { position: absolute; z-index: 4; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; pointer-events: none; }
+.stage__divider {
+  position: absolute; z-index: 3; inset: 0; pointer-events: none;
+  transform: translate3d(calc(var(--reveal) - 100%), 0, 0); will-change: transform;
+}
+.stage__divider::before { content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 1px; background: #FFFFFF; box-shadow: 0 0 3px rgba(24,43,73,.25); }
+.stage__handle {
+  position: absolute; right: 0; top: 50%;
+  display: grid; place-items: center; width: 28px; height: 28px; border: 1px solid #FFFFFF; border-radius: 50%;
+  transform: translate(50%, -50%); background: rgba(250,250,248,.94); color: #182B49;
+  box-shadow: 0 2px 8px rgba(24,43,73,.18); pointer-events: none;
+}
+.stage__handle svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.stage__comparison:has(.stage__range:focus-visible) .stage__handle { outline: 2px solid var(--accent); outline-offset: 2px; }
+.stage__compare-play {
+  position: absolute; z-index: 4; right: 18px; bottom: 18px; min-width: 60px; padding: 8px 12px;
+  border: 1px solid rgba(255,255,255,.5); border-radius: 8px; background: rgba(250,250,248,.90);
+  color: #182B49; cursor: pointer; font: 500 11px/1.4 'JetBrains Mono', monospace;
+}
+.stage__compare-play:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+/* A stage's agent, in the Agent section's glass at the top right (under a comparison's Simulation label): the
+   variant's run and the harness's steps. Above a divider's range, so it scrolls and folds instead of dragging. */
+.agent__sidebar.stage__sidebar { z-index: 5; top: 18px; right: 18px; width: 300px; height: auto; max-height: calc(100% - 90px); }
+.stage__comparison .agent__sidebar.stage__sidebar { top: 60px; max-height: calc(100% - 132px); }
+.stage__sidebar .agent__record { padding-top: 2px; }
+.stage__sidebar .stage__step-head { padding: 10px 0 2px; }
+.stage__sidebar .agent__step::before { top: 19px; }
+.stage__sidebar .agent__step-note { padding-bottom: 10px; }
+@media (max-width: 640px) {
+  .agent__sidebar.stage__sidebar { top: 10px; right: 10px; width: 270px; max-width: calc(100% - 20px); max-height: calc(100% - 70px); }
+  .stage__comparison .agent__sidebar.stage__sidebar { top: 44px; max-height: calc(100% - 100px); }
+  .stage__compare-label { top: 12px; padding: 5px 8px; font-size: 9px; }
+  .stage__compare-label--before { left: 12px; }
+  .stage__compare-label--after { right: 12px; }
+  .stage__compare-play { right: 12px; bottom: 12px; }
+}
+.stage__tags { position: absolute; inset: 0; z-index: 2; display: grid; grid-template-columns: repeat(var(--tags), minmax(0, 1fr)); pointer-events: none; }
+.stage__tags b {
+  display: inline-block; margin: 14px; padding: 5px 10px; border-radius: 6px;
+  background: rgba(250,250,248,.92); box-shadow: 0 0 0 1px rgba(21,23,31,.08);
+  font: 400 11px/1.4 'JetBrains Mono', monospace; letter-spacing: .06em; text-transform: uppercase; color: #15171F;
+}
+.stage__tags span:last-child b { background: var(--accent); box-shadow: none; color: #FFFFFF; }
+/* A typed input reads over the empty left half of its stage. */
+.stage__prompt {
+  position: absolute; z-index: 1; left: 0; top: 0; bottom: 0; width: 50%; margin: 0;
+  display: flex; align-items: center; padding: 48px clamp(20px, 4vw, 56px) 24px;
+  font-family: 'JetBrains Mono', monospace; font-size: clamp(13px, 1.5vw, 20px); line-height: 1.6; color: #182B49;
+}
+.stage__prompt[hidden] { display: none; }
+
+/* ---------- shared heading for composed bands ---------- */
+.band h2.band__h { margin: 0 0 clamp(22px, 3.6vh, 36px); }
+
+/* ---------- clips ---------- */
+.clips__grid { display: grid; grid-template-columns: repeat(var(--clips-cols, 4), minmax(0, 1fr)); gap: 14px; }
+.clips__item { margin: 0; background: #FFFFFF; border-radius: 12px; overflow: hidden; box-shadow: inset 0 0 0 1px #DEDEDA; }
+.clips__frame { aspect-ratio: 4 / 3; background: #1B1D22; }
+.clips__frame video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.clips__item figcaption { padding: 12px 16px 14px; font: 500 14.5px/1.4 'JetBrains Mono', monospace; color: #15171F; }
+.clips__kicker, .codeband__k {
+  display: block; margin-bottom: 3px;
+  font: 400 10.5px/1.4 'JetBrains Mono', monospace; letter-spacing: .06em; text-transform: uppercase; color: var(--accent);
+}
+
+/* ---------- code beside footage ---------- */
+.codeband__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: stretch; }
+.codeband__code { display: flex; flex-direction: column; }
+.codeband__code pre.api__body { flex: 1; margin: 0; }
+.codeband__side { margin-left: auto; }
+.codeband__side + .api__copy { margin-left: 0; }
+.codeband__facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid #EDEDEB; }
+.codeband__facts > div { padding: 14px 20px; font-size: 13px; color: #5E6373; }
+.codeband__facts > div + div { border-left: 1px solid #EDEDEB; }
+.codeband__media { position: relative; min-height: 320px; border-radius: 24px; overflow: hidden; box-shadow: inset 0 0 0 1px #DEDEDA; }
+.codeband__media video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.codeband__media.is-placeholder { display: flex; align-items: center; justify-content: center; background: repeating-linear-gradient(135deg, #F3F3F0 0 12px, #EDEDEA 12px 24px); }
+.codeband__media.is-placeholder span { font: 500 14px/1.4 'JetBrains Mono', monospace; color: #6B7080; }
+
+/* ---------- Agent: shared tab tray and in-video progress ---------- */
+.agent__workspace { min-width: 0; }
+.agent__tasks button:focus-visible, .agent__step summary:focus-visible, .agent__progress-toggle:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: -3px; border-radius: 6px;
+}
+.agent__frame {
+  position: relative; overflow: hidden; width: 100%; aspect-ratio: 16 / 9; background: #F3F3F0;
+}
+.agent__frame video { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: contain; }
+.agent__sidebar {
+  position: absolute; z-index: 2; top: 20px; right: 20px; width: 304px; height: min(270px, calc(50% - 38px)); max-width: calc(100% - 40px);
+  display: flex; flex-direction: column; min-height: 0; overflow: hidden; border-radius: 20px;
+  border: 1px solid rgba(255,255,255,.42);
+  background: linear-gradient(155deg, rgba(255,255,255,.82), rgba(243,243,255,.70));
+  backdrop-filter: blur(24px) saturate(1.15); -webkit-backdrop-filter: blur(24px) saturate(1.15);
+  box-shadow: 0 18px 48px rgba(24,43,73,.12), 0 2px 6px rgba(24,43,73,.04), inset 0 1px 0 rgba(255,255,255,.5);
+}
+.agent__sidebar.is-collapsed { width: auto; height: auto; }
+.agent__progress-toggle {
+  display: flex; flex: none; align-items: center; gap: 10px; width: 100%; padding: 16px;
+  border: 0; background: transparent; color: #182B49; cursor: pointer; text-align: left;
+  font: 500 11.5px/1.4 'JetBrains Mono', monospace;
+}
+.agent__progress-toggle svg { flex: none; width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.agent__avatar {
+  position: relative; display: grid; place-items: center; flex: none; width: 34px; height: 34px; border-radius: 11px;
+  color: var(--accent); background: linear-gradient(135deg, #FFFFFF, #DFDEF7);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.9), 0 3px 8px rgba(80,74,170,.10);
+}
+.agent__avatar svg { width: 21px; height: 21px; }
+.agent__avatar::after { content: ''; position: absolute; right: -2px; bottom: -2px; width: 7px; height: 7px; border: 2px solid #F8F8FD; border-radius: 50%; background: #A9AFC1; }
+.agent__sidebar.is-playing .agent__avatar::after { background: #6C65CC; box-shadow: 0 0 0 3px rgba(108,101,204,.12); }
+.agent__progress-title { display: flex; flex-direction: column; gap: 3px; }
+.agent__progress-title strong { font: 600 11.5px/1.4 'JetBrains Mono', monospace; }
+.agent__progress-title small { color: #8991A4; font: 400 10px/1.3 Inter, sans-serif; }
+.agent__percent { margin-left: auto; padding: 5px 7px; border-radius: 7px; background: rgba(255,255,255,.36); color: var(--accent); font: 600 10px/1 'JetBrains Mono', monospace; box-shadow: inset 0 0 0 1px rgba(80,74,170,.06); }
+.agent__progress-toggle .agent__chevron { width: 13px; height: 13px; color: #9298AE; }
+.agent__sidebar.is-collapsed .agent__chevron { transform: rotate(180deg); }
+.agent__sidebar.is-collapsed .agent__percent, .agent__sidebar.is-collapsed .agent__progress-title small { display: none; }
+.agent__progress-body { display: flex; flex: 1; flex-direction: column; min-height: 0; }
+.agent__progress-body[hidden] { display: none; }
+.agent__playhead { display: none; flex: none; margin: 0 14px 4px; padding: 12px; border-radius: 12px; background: rgba(255,255,255,.28); box-shadow: inset 0 0 0 1px rgba(255,255,255,.4); }
+.agent__playhead > div:first-child { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: var(--accent); font: 500 11px/1.4 'JetBrains Mono', monospace; }
+.agent__playhead time { color: #68788B; font-size: 9px; white-space: nowrap; }
+.agent__track { position: relative; height: 5px; margin-top: 10px; overflow: hidden; border-radius: 5px; background: rgba(80,74,170,.10); }
+.agent__track::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(to right, transparent 0 calc(25% - 2px), rgba(255,255,255,.8) calc(25% - 2px) 25%); }
+.agent__track i { display: block; width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--accent), #9490DE); transition: width 160ms linear; }
+.agent__record { flex: 1; min-height: 0; padding: 14px 16px 18px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #C3C8D6 transparent; }
+.agent__record-head { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.agent__record-head > span { padding: 5px 8px; border-radius: 6px; background: rgba(255,255,255,.3); color: #68788B; font: 400 9.5px/1.4 'JetBrains Mono', monospace; box-shadow: inset 0 0 0 1px rgba(24,43,73,.045); }
+.agent__description { margin: 0 0 18px; color: #4A5D73; font-size: 12px; line-height: 1.6; }
+.agent__context { display: block; margin-bottom: 6px; color: #7A8798; font: 400 9px/1.4 'JetBrains Mono', monospace; letter-spacing: .06em; text-transform: uppercase; }
+.agent__steps { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; margin: 0 0 0 3px; padding: 0; list-style: none; border-left: 1px solid rgba(24,43,73,.12); }
+.agent__steps > li { min-width: 0; }
+.agent__step { position: relative; min-width: 0; padding: 0 10px 0 14px; border-radius: 12px; }
+.agent__step[open], .agent__step.is-current { background: rgba(255,255,255,.3); box-shadow: inset 0 0 0 1px rgba(80,74,170,.09); }
+.agent__step::before { content: ''; position: absolute; left: -3px; top: 22px; width: 5px; height: 5px; border-radius: 50%; background: #ADB5C7; }
+.agent__step[open]::before, .agent__step.is-current::before { background: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 10%, #FAFAF8); }
+.agent__step.is-current .agent__step-head > b { color: var(--accent); }
+.agent__step summary { padding: 12px 0; cursor: pointer; list-style: none; }
+.agent__step summary::-webkit-details-marker { display: none; }
+.agent__step summary:hover .agent__step-head > b { color: var(--accent); }
+.agent__step-head { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.agent__step-head > b { color: #182B49; font: 500 11px/1.4 'JetBrains Mono', monospace; }
+.agent__step-n { display: grid; place-items: center; flex: none; width: 22px; height: 22px; border-radius: 50%; background: rgba(24,43,73,.045); color: #9199AD; font: 400 9px/1 'JetBrains Mono', monospace; }
+.agent__step[open] .agent__step-n, .agent__step.is-current .agent__step-n { color: #FFFFFF; background: var(--accent); box-shadow: 0 3px 8px rgba(80,74,170,.17); }
+.agent__result { margin-left: auto; padding: 4px 6px; border-radius: 5px; background: rgba(80,74,170,.07); color: var(--accent); font: 500 10px/1.2 'JetBrains Mono', monospace; white-space: nowrap; }
+.agent__step-note { margin: 0; padding: 0 0 16px; color: #526476; font-size: 12px; line-height: 1.6; }
+.agent__turn-step { margin-left: auto; color: #7A8798; font: 400 9px/1.4 'JetBrains Mono', monospace; }
+.agent__say { display: block; margin-top: 8px; color: #526476; font-size: 12px; line-height: 1.6; overflow-wrap: anywhere; }
+.agent__step:not([open]) .agent__say { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.agent__source { margin: 0 0 12px; overflow: hidden; border-radius: 8px; background: rgba(80,74,170,.04); }
+.agent__source > summary { display: flex; align-items: center; gap: 7px; padding: 9px 10px; color: var(--accent); font: 500 10px/1.4 'JetBrains Mono', monospace; }
+.agent__source > summary svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.agent__source > summary > span { margin-left: auto; }
+.agent__source[open] > summary > span { transform: rotate(45deg); }
+.agent__code { overflow: auto; max-height: 180px; margin: 0; padding: 10px; border-top: 1px solid rgba(80,74,170,.07); color: #182B49; font: 400 10.5px/1.7 'JetBrains Mono', monospace; }
+.agent__code code { font: inherit; }
+.agent__record-link { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 16px; padding: 10px; border-radius: 9px; background: rgba(255,255,255,.28); color: var(--accent); font: 500 10px/1.5 'JetBrains Mono', monospace; text-decoration: none; box-shadow: inset 0 0 0 1px rgba(80,74,170,.07); }
+.agent__record-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 760px) {
+  .agent__sidebar { top: 12px; right: 12px; width: 270px; height: min(250px, calc(50% - 32px)); }
+  .agent__progress-toggle { padding: 12px; }
+}
+@media (max-width: 640px) {
+  .agent__sidebar { top: 10px; right: 10px; max-width: calc(100% - 20px); height: calc(50% - 28px); }
+}
+@media (prefers-reduced-motion: reduce) { .agent__track i { transition: none; } }
+
+/* ---------- composed bands: narrower screens ---------- */
+@media (max-width: 1000px) {
+  .clips__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px), (max-aspect-ratio: 1/1) {
+  .hero.hero--console {
+    display: flex; grid-template-rows: none;
+    padding: calc(var(--site-nav-height) + 16px) var(--page-inset) clamp(40px, 6vh, 88px);
+  }
+  .hero__row { flex-direction: column-reverse; align-items: stretch; gap: 32px; }
+  .hero--console .pitch { padding: 0; }
+  .hero-console { flex: none; width: 100%; max-width: 640px; margin: 0 auto; }
+}
+@media (max-width: 760px) {
+  .codeband__grid, .codeband__facts { grid-template-columns: minmax(0, 1fr); }
+  .codeband__facts > div + div { border-left: 0; border-top: 1px solid #EDEDEB; }
+  .hero--console .pitch__in { width: 100%; }
+  .hero-console__media { border-radius: 16px; }
+  /* a phone has no room beside the hands, so the agent's card follows the clip, overlapping its foot */
+  .hero-console__card { position: relative; right: auto; bottom: auto; width: auto; max-width: none; margin: -20px 10px 0; }
+  /* a half-width prompt cannot fit a phone, so it follows the clip instead */
+  .stage__frame:has(> .stage__prompt:not([hidden])) { aspect-ratio: auto !important; }
+  .stage__frame:has(> .stage__prompt:not([hidden])) video { position: relative; height: auto; aspect-ratio: 8 / 3; }
+  .stage__prompt { position: static; width: auto; padding: 14px 16px; font-size: 13px; border-top: 1px solid #EDEDEB; }
+}
+@media (max-width: 520px) {
+  .clips__grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ---------- phones: a section's gaps, and a tool as name and job ---------- */
+@media (max-width: 880px) {
+  .hero-console__status [data-hero-step] { min-height: 2.5em; line-height: 1.25; white-space: normal; }
+}
+@media (max-width: 640px) {
+  .band { --band-pad-top: 28px; padding-bottom: 32px; }
+  .band__tiles { margin-top: 24px; }
+  .band__tiles-grid { gap: 8px; }
+  .band__tiles-grid > div { gap: 3px; padding: 10px 12px; }
+  .band__tile-head { gap: 8px; }
+  .band__tile-icon { flex-basis: 24px; width: 24px; height: 24px; border-radius: 7px; }
+  .band__tile-icon img { width: 22px; height: 22px; }
+  .band__tile-icon svg { width: 16px; height: 16px; }
+  .band__tiles-grid b { font-size: 13.5px; }
+  .band__tile-desc { font-size: 12px; line-height: 1.3; }
+  .band__tiles-grid small { display: none; }
+}

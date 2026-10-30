@@ -1,0 +1,160 @@
+/* Site chrome shared by every page: the nav bar and its mobile menu.
+ *
+ * The three pages that use it sit on different grounds — the landing and
+ * project pages on paper white, the docs on the warmer #F3F1E9 — so every
+ * colour here comes from a token the page sets on :root. Structure (sizes,
+ * spacing, typography, fixed positioning) is shared; only colour and the brand
+ * shadow vary. Load this before the page's own sheet.
+ *
+ * Tokens, with the defaults below covering the paper-white pages:
+ *   --nav-bg          nav backdrop; defaults to the hero scrim, which a page's
+ *                     --fade0/1/2 re-tint. The docs set a flat fill instead.
+ *   --nav-ink         active / hover text
+ *   --nav-muted       idle text
+ *   --nav-hover-bg    hover pill
+ *   --nav-dot         active marker
+ *   --brand-ink       colour of the gear mark's hard shadow
+ *   --menu-bg         mobile overlay fill
+ *   --menu-line       mobile overlay row divider
+ *
+ * The burger and the overlay are always in the DOM but hidden; a page opts
+ * into them by unhiding `nav .right button.burger` in its own media query.
+ */
+
+:root {
+  --site-nav-height: 56px;
+  /* Left edge of the nav brand and hero copy; past 2036px it centres an 1800px stage. */
+  --page-inset: max(28px, 6.4vw, 50vw - 900px);
+  --nav-bg: linear-gradient(to bottom, var(--fade0, rgba(250,250,248,0.78)) 0%, var(--fade1, rgba(250,250,248,0.40)) 55%, var(--fade2, rgba(250,250,248,0)) 100%);
+  --nav-ink: #182B49;
+  --nav-muted: #6B7080;
+  --nav-hover-bg: #F0F0EE;
+  --nav-dot: var(--accent, #00629B);
+  --brand-ink: rgba(21, 23, 31, 0.35);
+  --menu-bg: #FAFAF8;
+  --menu-line: rgba(21, 23, 31, 0.14);
+}
+
+html { scroll-padding-top: calc(var(--site-nav-height) + 12px); }
+* { box-sizing: border-box; }
+a { color: inherit; text-decoration: none; }
+
+/* ---------- nav ---------- */
+/* The product navigation stays above the page and chapter controls. */
+nav {
+  height: var(--site-nav-height);
+  display: flex; align-items: center;
+  /* the right gutter mirrors the left, less the icon button's 8px of padding */
+  padding: 0 calc(var(--page-inset) - 8px) 0 var(--page-inset); font-size: 13px; z-index: 100;
+  background: var(--nav-bg);
+}
+.site-nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  transition: box-shadow 180ms ease;
+}
+.site-nav.is-scrolled, .site-nav:has(+ .menu.is-open) {
+  background: color-mix(in srgb, var(--band, #FAFAF8) 94%, transparent);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 rgba(24,43,73,.12);
+}
+@media (prefers-reduced-motion: reduce) { .site-nav { transition: none; } }
+/* ---------- copy affordance ---------- */
+/* Every copy button on the site is the same two spans: `.t` is the resting
+   label and `.o` the acknowledgement, which appears beside it rather than
+   replacing it. An icon-only button has no room for both, so it opts into
+   the swap with .copy--swap. */
+.o { display: none; }
+.is-copied .o { display: inline; }
+.copy--swap.is-copied .t, .copy--swap.is-copied .p { display: none; }
+
+nav .brand { display: flex; align-items: center; gap: 14px; margin-right: 36px; }
+nav .brand img { width: 32px; height: 32px; display: block; filter: drop-shadow(2.5px 2.5px 0 var(--brand-ink)); }
+nav .brand .wordmark {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500; font-size: 17px; letter-spacing: 0.30em; text-transform: uppercase;
+  color: var(--nav-ink); line-height: 1;
+  /* tracking leaves a trailing space after the last letter; pull it back so the
+     wordmark's optical right edge lands where it did before */
+  margin-right: -0.30em;
+  transform: translateY(-0.5px);
+}
+/* Eleven tracked capitals scan as one run, so a hair over the tracking is
+   enough to hint at the org half — no second colour needed. */
+nav .brand .wordmark .o { display: inline-block; margin-right: 0.10em; }
+nav .links { position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 4px; }
+nav .links a {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 10px; border-radius: 6px; color: var(--nav-muted);
+  font-family: 'JetBrains Mono', monospace; font-size: 14px;
+}
+nav .links a:hover { background: var(--nav-hover-bg); color: var(--nav-ink); }
+nav .links a.is-active { color: var(--nav-ink); }
+nav .links a .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--nav-dot); }
+nav .right { margin-left: auto; display: flex; align-items: center; gap: 4px; }
+nav .right a, nav .right button {
+  width: 38px; height: 38px; display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 6px; color: var(--nav-muted); cursor: pointer; border: none; background: transparent;
+}
+nav .right a:hover, nav .right button:hover { color: var(--nav-ink); background: var(--nav-hover-bg); }
+nav .right a svg, nav .right button svg { width: 22px; height: 22px; }
+nav .right button.burger { display: none; }
+
+/* The link row is centred by absolute positioning, so on a viewport that is
+   narrow but still too wide to hide it, it rides over the wordmark. Below that
+   width the links simply flow after the brand instead. */
+@media (max-width: 1080px) {
+  nav .links { position: static; transform: none; }
+}
+
+/* On a narrow phone the tracked wordmark eats the whole bar; the mark alone
+   still reads as the brand, so drop the letters and keep the logo. */
+@media (max-width: 560px) {
+  nav .brand .wordmark { display: none; }
+  nav .brand { margin-right: 16px; }
+}
+
+/* ---------- mobile menu overlay ---------- */
+.menu {
+  display: none; position: fixed; top: var(--site-nav-height); left: 0; right: 0; bottom: 0;
+  z-index: 99; background: var(--menu-bg); padding: 18px 24px;
+  flex-direction: column; gap: 2px;
+}
+.menu.is-open { display: flex; }
+.menu a {
+  font-family: 'JetBrains Mono', monospace; font-size: 17px;
+  padding: 14px 4px; border-bottom: 1px solid var(--menu-line); color: var(--nav-ink);
+}
+
+/* ---------- hero clips ---------- */
+/* A clip sits over a tracked still of its own first frame. It fades in once it
+   can actually play, so the handover reads as the image coming to life rather
+   than a snap; if it never loads, site.js hides it and the still just stays. */
+video[data-fallback] { opacity: 0; transition: opacity 420ms ease; }
+video[data-fallback].is-ready { opacity: 1; }
+
+/* ---------- tab tray ---------- */
+/* A docs page's `=== "uv"` tray, styled like the project pages' task switcher:
+   the active cell takes the site's offset shadow, the .chip / .cta / .ghost idiom. */
+.tabs {
+  display: grid; gap: 4px; padding: 8px;
+  border-bottom: 1px solid #EDEDEB; background: #F3F3F0;
+}
+/* A docs tray holds two or three labels; `uv` on its own is too small a target,
+   so a cell is at least a comfortable click wide and grows with its label. */
+.tabs {
+  grid-auto-flow: column; grid-auto-columns: minmax(112px, max-content);
+  justify-content: start;
+}
+.tabs button {
+  min-width: 0; padding: 11px 10px; border: 0; border-radius: 9px; background: transparent;
+  color: #777C89; cursor: pointer; font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px; line-height: 1.25;
+  transition: color 120ms ease, transform 120ms ease, box-shadow 120ms ease;
+}
+.tabs button:hover { color: #15171F; }
+.tabs button.is-active {
+  /* a docs page has no colourway, so the fallback is its own ink */
+  background: #FFFFFF; color: var(--accent, #15171F); font-weight: 500;
+  box-shadow: 2px 2px 0 rgba(21,23,31,.16), inset 0 0 0 1px rgba(21,23,31,.14);
+  transform: translate(1px, 1px);
+}
