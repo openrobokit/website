@@ -1661,7 +1661,6 @@ body.project--retargetingkit .motion-stage__caption {
 .hero__row { display: flex; align-items: center; justify-content: space-between; gap: 48px; }
 .hero--console .pitch { position: relative; inset: auto; padding: 0; display: block; }
 .hero--console .pitch__in { width: min(400px, 100%); min-width: 0; }
-.hero--console h1 { font-size: clamp(40px, min(4.4vw, 9vh), 68px); }
 .hero--console .btns { flex-wrap: nowrap; }
 .hero-console { position: relative; flex: 1 1 560px; min-width: 0; max-width: 1120px; }
 .hero-console__media {
