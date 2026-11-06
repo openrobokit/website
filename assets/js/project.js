@@ -204,7 +204,7 @@ function bentoSection(b) {
                   c.clips.map((k, i) => `<video class="card-media card-video card-clip${i === 0 ? ' is-active' : ''}" data-src="${k.video}" poster="${k.still}" muted loop playsinline preload="none" aria-hidden="true"></video>`).join('') : ''}
                 ${c.video ? `<video class="card-media card-video" src="${c.video}" autoplay muted loop playsinline aria-hidden="true" data-fallback></video>` : ''}
               </div>
-              <div class="card-label"><h3>${esc(c.name)}</h3></div>
+              <div class="card-label"><h3>${esc(c.name)}${c.tag ? ` <span class="card-tag">${esc(c.tag)}</span>` : ''}</h3></div>
             </article>`).join('')}
         </div>`).join('') : `
       <div class="bento__grid">
@@ -232,6 +232,7 @@ function bentoSection(b) {
           <div><div class="band__tile-head">${skillIcon(t)}<b>${esc(t.name)}</b></div><span class="band__tile-desc">${esc(t.desc)}</span><small>${esc(t.note)}</small></div>`).join('')}
         </div>
       </div>` : ''}
+      ${b.note ? `<p class="scale__note">${esc(b.note)}</p>` : ''}
     </div>
   </section>`;
 }
@@ -493,7 +494,9 @@ document.getElementById('page').innerHTML = `
 
   ${kit.bands ? kit.bands.map((b) => BANDS[b.type](b)).join('') : ''}
 
-  ${kit.showcase ? kit.showcase.groups.map(showcaseSection).join('') : kit.bento ? bentoSection(kit.bento) : ''}
+  ${kit.showcase ? kit.showcase.groups.map(showcaseSection).join('') : `
+  ${kit.mpc ? bentoSection({ ...kit.mpc, id: 'mpc', label: 'Simulation' }) : ''}
+  ${kit.bento ? bentoSection(kit.bento) : ''}`}
 
   ${kit.stages ? kit.stages.map(stageSection).join('') : ''}
 
@@ -846,7 +849,9 @@ if (teaser) {
       if (!response.ok) throw new Error('Recorded run unavailable');
       return response.json();
     }).then((record) => {
-      records[index] = record;
+      // the run file holds the turns; its benchmark name lives in the catalogue
+      const entry = (window.RK_SHOWCASE_AAP || []).find((r) => r.id === run);
+      records[index] = { source: entry?.source, ...record };
       if (selected === index) paint(true);
     }).catch(() => {
       records[index] = null;

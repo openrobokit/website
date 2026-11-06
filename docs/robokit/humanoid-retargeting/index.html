@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Humanoid Retargeting · RoboKit docs · OpenRoboKit</title>
+  <meta name="description" content="GPU-native, differentiable robotics tooling: IK, trajectory optimization, retargeting, grasping, calibration." />
+  <link rel="canonical" href="https://openrobokit.com/docs/robokit/humanoid-retargeting/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">RoboKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="is-active">
+        <span class="nm">RoboKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="">
+        <span class="nm">GraspKit</span>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/robokit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/robokit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/robokit/rl/" data-id="rl" class="">RL</a></div><div class="side__list"><a href="/docs/robokit/sim-mpc/" data-id="sim-mpc" class="">Sim MPC</a></div><div class="side__list"><a href="/docs/robokit/ik/" data-id="ik" class="">IK</a></div><div class="side__list"><a href="/docs/robokit/motion-planning/" data-id="motion-planning" class="">Motion Planning</a></div><div class="side__list"><a href="/docs/robokit/humanoid-retargeting/" data-id="humanoid-retargeting" class="is-active">Humanoid Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand-retargeting/" data-id="hand-retargeting" class="">Hand Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand_eye_calibration/" data-id="hand_eye_calibration" class="">Hand-Eye Calibration</a></div><div class="side__list"><a href="/docs/robokit/ref-assets/" data-id="ref-assets" class="">Built-in Robots &amp; Datasets</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/robot/" data-id="robot" class="">Robot</a></div><div class="side__list"><a href="/docs/robokit/geom/" data-id="geom" class="">Geometry</a></div><div class="side__list"><a href="/docs/robokit/optimization/" data-id="optimization" class="">Optimization</a></div><div class="side__list"><a href="/docs/robokit/conventions/" data-id="conventions" class="">Conventions</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list">
+      <div class="side__sub is-folded" data-fold="Reference·Optimizers">
+        <span>Optimizers</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/opt-gd/" data-id="opt-gd" class="">GDOptimizer</a><a href="/docs/robokit/opt-lm/" data-id="opt-lm" class="">LMOptimizer</a><a href="/docs/robokit/opt-lbfgs/" data-id="opt-lbfgs" class="">LBFGSOptimizer</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Terms">
+        <span>Terms</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/term-frame/" data-id="term-frame" class="">Frame Task</a><a href="/docs/robokit/term-position/" data-id="term-position" class="">Position Task</a><a href="/docs/robokit/term-rotation/" data-id="term-rotation" class="">Rotation Tasks</a><a href="/docs/robokit/term-frame-vector/" data-id="term-frame-vector" class="">Frame Vector Task</a><a href="/docs/robokit/term-com-position/" data-id="term-com-position" class="">CoM Position Task</a><a href="/docs/robokit/term-position-limit/" data-id="term-position-limit" class="">Position Limit</a><a href="/docs/robokit/term-velocity-limit/" data-id="term-velocity-limit" class="">Velocity Limit Task</a><a href="/docs/robokit/term-configuration/" data-id="term-configuration" class="">Configuration Task</a><a href="/docs/robokit/term-smoothness/" data-id="term-smoothness" class="">Smoothness Task</a><a href="/docs/robokit/term-self-collision/" data-id="term-self-collision" class="">Self Collision Task</a><a href="/docs/robokit/term-scene-collision/" data-id="term-scene-collision" class="">Scene Collision Task</a><a href="/docs/robokit/term-scene-distance/" data-id="term-scene-distance" class="">Scene Distance Task</a><a href="/docs/robokit/term-interaction-mesh/" data-id="term-interaction-mesh" class="">Interaction Mesh Task</a><a href="/docs/robokit/term-mask-alignment/" data-id="term-mask-alignment" class="">Mask Alignment Task</a><a href="/docs/robokit/term-manipulability/" data-id="term-manipulability" class="">Manipulability Task</a><a href="/docs/robokit/term-force-closure/" data-id="term-force-closure" class="">Force Closure Task</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/api-robot/" data-id="api-robot" class="">Robot</a><a href="/docs/robokit/api-geometry/" data-id="api-geometry" class="">Geometry</a><a href="/docs/robokit/api-optimization/" data-id="api-optimization" class="">Optimization</a><a href="/docs/robokit/api-terms/" data-id="api-terms" class="">Terms</a><a href="/docs/robokit/api-ik/" data-id="api-ik" class="">Inverse Kinematics</a><a href="/docs/robokit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/robokit/api-sim-mpc/" data-id="api-sim-mpc" class="">Sim MPC</a><a href="/docs/robokit/api-humanoid-retargeting/" data-id="api-humanoid-retargeting" class="">Humanoid Retargeting</a><a href="/docs/robokit/api-hand-retargeting/" data-id="api-hand-retargeting" class="">Hand Retargeting</a><a href="/docs/robokit/api-hand_eye_calibration/" data-id="api-hand_eye_calibration" class="">Hand-Eye Calibration</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">robokit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>User Guide</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Humanoid Retargeting</h1>
+        <div class="doc-body" id="doc-body"><table class="doc-table" style="--cols:2"><thead><tr><th><img src="/assets/docs/robokit/assets/gallery/humanoid_retargeting.webp" alt="Two-feet jump retargeted to a G1 humanoid"></th><th><img src="/assets/docs/robokit/assets/gallery/humanoid_retargeting_h1_2.webp" alt="A cha-cha dance retargeted to a G1 humanoid"></th></tr></thead><tbody><tr><td>Two-feet jump retargeted to a G1 humanoid.</td><td>A cha-cha dance retargeted to a G1 humanoid.</td></tr></tbody></table><p><code>robokit.helpers.humanoid_retargeting</code> maps human motion onto a floating-base humanoid. Online retargeting solves one frame at a time. Offline retargeting solves a whole trajectory at once.</p><p>The snippets assume <code>robot</code>, <code>device</code>, <code>motion</code>, and <code>human_heights</code> exist. Complete examples are in <a class="inline" href="https://github.com/openrobokit/robokit/tree/main/src/robokit/examples/humanoid_retargeting/"><code>src/robokit/examples/humanoid_retargeting</code></a>.</p><h3 id="how-retargeting-works">How Retargeting Works</h3><p>Each solve scales human joint transforms to robot-link targets by the robot-to-human height ratio. It then optimizes the floating base and joints and returns the best state.</p><div class="mermaid">flowchart TD
+    INPUT[Input&lt;br/&gt;&lt;br/&gt;Human joint transforms&lt;br/&gt;Optional human heights]
+
+    subgraph SOLVING[Solving]
+        direction TB
+        MAP[1. Scale to robot link targets]
+        OPT[2. Optimize base and joints]
+        PACK[3. Pack the best state]
+        MAP --&gt; OPT --&gt; PACK
+    end
+
+    OUT[Return base pose and joint positions]
+
+    INPUT --&gt; MAP
+    PACK --&gt; OUT</div><p>Poses are 7D <code>(x, y, z, qw, qx, qy, qz)</code>. The joint axis follows <code>retargeter.human_joint_names</code>.</p><table class="doc-table" style="--cols:3"><thead><tr><th>Workflow</th><th>NumPy input</th><th>Output</th></tr></thead><tbody><tr><td>Online</td><td><code>(B, J, 7)</code> per frame</td><td><code>(B, 7 + Q)</code></td></tr><tr><td>Offline</td><td><code>(B, T, J, 7)</code></td><td><code>(B, T, 7 + Q)</code></td></tr></tbody></table><p><code>B</code> is batch size, <code>T</code> frame count, <code>J</code> human joints, and <code>Q</code> robot joints. Each output row is the base pose followed by joint positions. <code>human_heights</code> has shape <code>(B,)</code>. Omit it to use the preset's assumed height.</p><h3 id="presets">Presets</h3><p>A preset is a <code>HumanoidRetargeterOnlineConfig</code> for one robot and one human motion source. Presets exist for the G1, GR3, H1-2, and BHL robots.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>from robokit.helpers.humanoid_retargeting.presets.g1_aligned import g1_aligned  # G1, aligned SMPL-X
+from robokit.helpers.humanoid_retargeting.presets.g1_smplh import g1_smplh  # G1, SMPL-H interaction
+from robokit.helpers.humanoid_retargeting.presets.g1_offline import g1_offline  # G1 offline optimizer</pre><pre data-code-full hidden>from robokit.helpers.humanoid_retargeting.presets.g1_aligned import g1_aligned  # G1, aligned SMPL-X
+from robokit.helpers.humanoid_retargeting.presets.g1_smplh import g1_smplh  # G1, SMPL-H interaction
+from robokit.helpers.humanoid_retargeting.presets.g1_offline import g1_offline  # G1 offline optimizer
+
+assert g1_smplh.interaction_terms</pre></div><p>Derive a variant with <code>dataclasses.replace(...)</code>; do not mutate a preset. Costs are tasks in <code>config.terms</code>. Some task weights take a dict keyed by link or joint name.</p><h3 id="online-retargeting">Online Retargeting</h3><p>Online retargeting follows <code>__init__ → warmup → solve → reset</code>. The caller owns the frame loop:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>from robokit.helpers.humanoid_retargeting import HumanoidRetargeterOnline
+from robokit.helpers.humanoid_retargeting.presets.g1_aligned import g1_aligned
+
+retargeter = HumanoidRetargeterOnline(g1_aligned, robot=robot, device=device)
+retargeter.warmup(batch_size=1)
+
+for T_world_human in motion:  # one (J, 7) frame per iteration
+    qpos = retargeter.solve_numpy(T_world_human[None], human_heights)[0]
+
+retargeter.reset()</pre><pre data-code-full hidden>import numpy as np
+import warp as wp
+from robokit.helpers.humanoid_retargeting import HumanoidRetargeterOnline
+from robokit.helpers.humanoid_retargeting.presets.g1_aligned import g1_aligned
+
+device = "cuda:0" if wp.is_cuda_available() else "cpu"
+robot = g1_aligned.load_robot()
+human_heights = np.array([g1_aligned.human_height_assumption], dtype=np.float32)
+motion = np.zeros((3, len(g1_aligned.human_joint_names), 7), dtype=np.float32)
+motion[..., 3] = 1.0
+motion[..., 2] = np.linspace(0.2, 1.6, motion.shape[1])
+motion[..., 0] = 0.05 * np.sin(np.arange(motion.shape[1]))
+from robokit.helpers.humanoid_retargeting import HumanoidRetargeterOnline
+from robokit.helpers.humanoid_retargeting.presets.g1_aligned import g1_aligned
+
+retargeter = HumanoidRetargeterOnline(g1_aligned, robot=robot, device=device)
+retargeter.warmup(batch_size=1)
+
+for T_world_human in motion:  # one (J, 7) frame per iteration
+    qpos = retargeter.solve_numpy(T_world_human[None], human_heights)[0]
+
+retargeter.reset()
+assert qpos.shape == (7 + robot.spec.num_actuated_joints,)
+assert np.isfinite(qpos).all()</pre></div><p>Omit <code>robot</code> to load it from the config. The first solve captures the CUDA graph. Before a timed loop, run one throwaway solve and call <code>reset()</code>. <code>solve()</code> is the Warp API.</p><p>Call <code>reset()</code> between clips. <code>reset(T_world_base=...)</code> also seeds the floating base. Use it when the first frame is far from the origin; see <a class="inline" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/examples/humanoid_retargeting/08_terrain.py"><code>08_terrain.py</code></a>.</p><p>See <a class="inline" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/examples/humanoid_retargeting/01_online.py"><code>01_online.py</code></a>.</p><h4>Online Batches</h4><p>Call <code>warmup(batch_size=B)</code> and pass one <code>(B, J, 7)</code> frame per iteration. Streams advance in lockstep. Repeat the last frame of shorter streams. The batch size is fixed after <code>warmup</code>; create a new retargeter to change it.</p><p>See <a class="inline" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/examples/humanoid_retargeting/06_online_batch.py"><code>06_online_batch.py</code></a>.</p><h3 id="collision-avoidance">Collision Avoidance</h3><p>Weight the <code>collision</code> task and pass your own <code>WarpScene</code>:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>from copy import deepcopy
+
+from robokit.geom import PlaneGeom, WarpScene
+
+config = deepcopy(g1_aligned)
+config.task("collision").weight = 1000.0
+scene = WarpScene(1, device).add(PlaneGeom(np.array([0, 1], dtype=np.int32)))
+retargeter = HumanoidRetargeterOnline(config, scene=scene, device=device)</pre><pre data-code-full hidden>import numpy as np
+import warp as wp
+from robokit.helpers.humanoid_retargeting import HumanoidRetargeterOnline
+from robokit.helpers.humanoid_retargeting.presets.g1_aligned import g1_aligned
+
+device = "cuda:0" if wp.is_cuda_available() else "cpu"
+robot = g1_aligned.load_robot()
+human_heights = np.array([g1_aligned.human_height_assumption], dtype=np.float32)
+motion = np.zeros((3, len(g1_aligned.human_joint_names), 7), dtype=np.float32)
+motion[..., 3] = 1.0
+motion[..., 2] = np.linspace(0.2, 1.6, motion.shape[1])
+motion[..., 0] = 0.05 * np.sin(np.arange(motion.shape[1]))
+from copy import deepcopy
+
+from robokit.geom import PlaneGeom, WarpScene
+
+config = deepcopy(g1_aligned)
+config.task("collision").weight = 1000.0
+scene = WarpScene(1, device).add(PlaneGeom(np.array([0, 1], dtype=np.int32)))
+retargeter = HumanoidRetargeterOnline(config, scene=scene, device=device)
+retargeter.warmup(batch_size=1)
+assert retargeter.config.task("collision").weight == 1000.0</pre></div><p>The <code>collision</code> task needs a scene. The <code>self_collision</code> task does not. Both need robot collision spheres; a robot loaded from the config has them. Move obstacles with <code>geom.update(...)</code>. The scene layout is fixed after <code>warmup</code>.</p><p>See <a class="inline" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/examples/humanoid_retargeting/02_collision.py"><code>02_collision.py</code></a> and <a class="inline" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/examples/humanoid_retargeting/03_self_collision.py"><code>03_self_collision.py</code></a>.</p><h3 id="contact-aware-retargeting">Contact-aware Retargeting</h3><p>Contact-aware retargeting keeps the human joints' layout relative to points on a moving object. It needs an interaction preset such as <code>g1_smplh</code>, a scene with the object as its only mesh, and <code>batch_size=1</code>. Set the first target before <code>warmup</code>. Update it before each solve:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>from robokit.helpers.humanoid_retargeting import build_interaction_mesh_frame
+
+retargeter = HumanoidRetargeterOnline(g1_smplh, robot=robot, scene=scene, device=device)
+retargeter.interaction_task.set_frame(
+    *build_interaction_mesh_frame(human_points[0], object_points, T_world_object_vec7[0])
+)
+retargeter.warmup(batch_size=1)
+
+for i, T_world_human in enumerate(motion):
+    retargeter.interaction_task.set_frame(
+        *build_interaction_mesh_frame(human_points[i], object_points, T_world_object_vec7[i])
+    )
+    qpos = retargeter.solve_numpy(T_world_human[None])[0]</pre><pre data-code-full hidden>import numpy as np
+import trimesh
+import warp as wp
+from robokit.geom import MeshGeom, WarpScene
+from robokit.helpers.humanoid_retargeting import HumanoidRetargeterOnline
+from robokit.helpers.humanoid_retargeting.presets.g1_smplh import g1_smplh
+
+device = "cuda:0" if wp.is_cuda_available() else "cpu"
+robot = g1_smplh.load_robot()
+mesh = trimesh.creation.box((0.1, 0.1, 0.1))
+scene = WarpScene(1, device).add(MeshGeom([mesh], np.array([0, 1], dtype=np.int32)))
+object_points = mesh.vertices.astype(np.float32)
+T_world_object_vec7 = np.tile([0, 0, 0, 1, 0, 0, 0], (3, 1)).astype(np.float32)
+motion = np.zeros((3, len(g1_smplh.human_joint_names), 7), dtype=np.float32)
+motion[..., 3] = 1.0
+motion[..., :3] = np.random.default_rng(0).uniform([-0.2, -0.2, 0.2], [0.2, 0.2, 1.6], (3, motion.shape[1], 3))
+human_points = motion[..., :3].copy()
+from robokit.helpers.humanoid_retargeting import build_interaction_mesh_frame
+
+retargeter = HumanoidRetargeterOnline(g1_smplh, robot=robot, scene=scene, device=device)
+retargeter.interaction_task.set_frame(
+    *build_interaction_mesh_frame(human_points[0], object_points, T_world_object_vec7[0])
+)
+retargeter.warmup(batch_size=1)
+
+for i, T_world_human in enumerate(motion):
+    retargeter.interaction_task.set_frame(
+        *build_interaction_mesh_frame(human_points[i], object_points, T_world_object_vec7[i])
+    )
+    qpos = retargeter.solve_numpy(T_world_human[None])[0]
+assert np.isfinite(qpos).all()</pre></div><p>Move the scene object with <code>object_geom.update(...)</code>. Move the interaction target with <code>set_frame(...)</code>. The first target fixes the vertex count.</p><p>See <a class="inline" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/examples/humanoid_retargeting/07_contact.py"><code>07_contact.py</code></a>.</p><h3 id="offline-retargeting">Offline Retargeting</h3><p>Offline retargeting optimizes all frames jointly. Pass an online mapping config for the targets and an offline config for the tasks:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>from robokit.helpers.humanoid_retargeting import HumanoidRetargeterOffline
+from robokit.helpers.humanoid_retargeting.presets.g1_offline import g1_offline
+from robokit.helpers.humanoid_retargeting.presets.g1_offline_mapping import g1_offline_mapping
+
+retargeter = HumanoidRetargeterOffline(g1_offline_mapping, g1_offline, device=device)
+qpos = retargeter.solve_numpy(motion[None], human_heights=human_heights)[0]  # (T, 7 + Q)</pre><pre data-code-full hidden>import numpy as np
+import warp as wp
+from robokit.helpers.humanoid_retargeting import HumanoidRetargeterOnline
+from robokit.helpers.humanoid_retargeting.presets.g1_aligned import g1_aligned
+
+device = "cuda:0" if wp.is_cuda_available() else "cpu"
+robot = g1_aligned.load_robot()
+human_heights = np.array([g1_aligned.human_height_assumption], dtype=np.float32)
+motion = np.zeros((3, len(g1_aligned.human_joint_names), 7), dtype=np.float32)
+motion[..., 3] = 1.0
+motion[..., 2] = np.linspace(0.2, 1.6, motion.shape[1])
+motion[..., 0] = 0.05 * np.sin(np.arange(motion.shape[1]))
+from robokit.helpers.humanoid_retargeting import HumanoidRetargeterOffline
+from robokit.helpers.humanoid_retargeting.presets.g1_offline import g1_offline
+from robokit.helpers.humanoid_retargeting.presets.g1_offline_mapping import g1_offline_mapping
+
+from robokit.helpers.humanoid_retargeting import HumanoidRetargeterOffline
+from robokit.helpers.humanoid_retargeting.presets.g1_offline import g1_offline
+from robokit.helpers.humanoid_retargeting.presets.g1_offline_mapping import g1_offline_mapping
+
+retargeter = HumanoidRetargeterOffline(g1_offline_mapping, g1_offline, device=device)
+qpos = retargeter.solve_numpy(motion[None], human_heights=human_heights)[0]  # (T, 7 + Q)
+assert qpos.shape == (3, 7 + robot.spec.num_actuated_joints)
+assert np.isfinite(qpos).all()</pre></div><p>The mapping config must not set interaction or correspondence options. Its tasks apply online only; its velocity limits and output clamp also apply offline. For offline self-collision, add a <code>TrajectorySelfCollisionTask</code> to the offline tasks. <code>solve_numpy(...)</code> warms up for its input shape. The Warp path needs <code>warmup(batch_size=B, num_frames=T)</code> before <code>solve()</code>.</p><p>See <a class="inline" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/examples/humanoid_retargeting/04_offline.py"><code>04_offline.py</code></a>.</p><h4>Batch Clips</h4><p>Pad shorter clips by repeating their last frame. Pass the real lengths:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>lengths = np.array([len(m) for m in motions], dtype=np.int32)
+num_frames = int(lengths.max())
+padded = np.stack([np.concatenate([m, np.repeat(m[-1:], num_frames - len(m), axis=0)]) for m in motions])
+
+qpos = retargeter.solve_numpy(padded, valid_lengths=lengths, human_heights=human_heights)
+first_clip = qpos[0, : lengths[0]]</pre><pre data-code-full hidden>import numpy as np
+import warp as wp
+from robokit.helpers.humanoid_retargeting import HumanoidRetargeterOnline
+from robokit.helpers.humanoid_retargeting.presets.g1_aligned import g1_aligned
+
+device = "cuda:0" if wp.is_cuda_available() else "cpu"
+robot = g1_aligned.load_robot()
+human_heights = np.array([g1_aligned.human_height_assumption], dtype=np.float32)
+motion = np.zeros((3, len(g1_aligned.human_joint_names), 7), dtype=np.float32)
+motion[..., 3] = 1.0
+motion[..., 2] = np.linspace(0.2, 1.6, motion.shape[1])
+motion[..., 0] = 0.05 * np.sin(np.arange(motion.shape[1]))
+from robokit.helpers.humanoid_retargeting import HumanoidRetargeterOffline
+from robokit.helpers.humanoid_retargeting.presets.g1_offline import g1_offline
+from robokit.helpers.humanoid_retargeting.presets.g1_offline_mapping import g1_offline_mapping
+
+retargeter = HumanoidRetargeterOffline(g1_offline_mapping, g1_offline, device=device)
+motions = [motion, np.concatenate([motion, motion[-1:]])]
+human_heights = np.repeat(human_heights, len(motions))
+lengths = np.array([len(m) for m in motions], dtype=np.int32)
+num_frames = int(lengths.max())
+padded = np.stack([np.concatenate([m, np.repeat(m[-1:], num_frames - len(m), axis=0)]) for m in motions])
+
+qpos = retargeter.solve_numpy(padded, valid_lengths=lengths, human_heights=human_heights)
+first_clip = qpos[0, : lengths[0]]
+assert first_clip.shape[0] == len(motions[0])
+assert np.isfinite(qpos).all()</pre></div><p>See <a class="inline" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/examples/humanoid_retargeting/05_batch.py"><code>05_batch.py</code></a>.</p></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/robokit/motion-planning/"><span class="lbl">← Previous</span><span class="nm">Motion Planning</span></a><a class="next" href="/docs/robokit/hand-retargeting/"><span class="lbl">Next →</span><span class="nm">Hand Retargeting</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#how-retargeting-works">How Retargeting Works</a><a href="#presets">Presets</a><a href="#online-retargeting">Online Retargeting</a><a href="#collision-avoidance">Collision Avoidance</a><a href="#contact-aware-retargeting">Contact-aware Retargeting</a><a href="#offline-retargeting">Offline Retargeting</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "robokit", "id": "humanoid-retargeting", "toc": [{"text": "How Retargeting Works", "href": "#how-retargeting-works"}, {"text": "Presets", "href": "#presets"}, {"text": "Online Retargeting", "href": "#online-retargeting"}, {"text": "Collision Avoidance", "href": "#collision-avoidance"}, {"text": "Contact-aware Retargeting", "href": "#contact-aware-retargeting"}, {"text": "Offline Retargeting", "href": "#offline-retargeting"}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

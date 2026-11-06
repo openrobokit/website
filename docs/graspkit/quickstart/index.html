@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quickstart · GraspKit docs · OpenRoboKit</title>
+  <meta name="description" content="Manipulation across robot embodiments, including grippers and dexterous hands." />
+  <link rel="canonical" href="https://openrobokit.com/docs/graspkit/quickstart/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">GraspKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="">
+        <span class="nm">RoboKit</span>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="is-active">
+        <span class="nm">GraspKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/graspkit/quickstart/" data-id="quickstart" class="is-active">Quickstart</a></div><div class="side__list"><a href="/docs/graspkit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim/" data-id="grasp-optim" class="">Grasp Optimization</a></div><div class="side__list"><a href="/docs/graspkit/training/" data-id="training" class="">Policy Training</a></div><div class="side__list"><a href="/docs/graspkit/pipeline/" data-id="pipeline" class="">Pipeline</a></div><div class="side__list"><a href="/docs/graspkit/sim-deploy/" data-id="sim-deploy" class="">Sim Deployment</a></div><div class="side__list"><a href="/docs/graspkit/real-deploy/" data-id="real-deploy" class="">Real Deployment</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/concepts-overview/" data-id="concepts-overview" class="">Core Overview</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim-backends/" data-id="grasp-optim-backends" class="">Grasp Optimization Backends</a></div><div class="side__list"><a href="/docs/graspkit/concepts-sim/" data-id="concepts-sim" class="">Simulation</a></div><div class="side__list"><a href="/docs/graspkit/concepts-policies/" data-id="concepts-policies" class="">Models and Policies</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/ref-robot-hands/" data-id="ref-robot-hands" class="">Robot and Hand Catalog</a></div><div class="side__list"><a href="/docs/graspkit/ref-config-system/" data-id="ref-config-system" class="">Config System</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Data">
+        <span>Data</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/ref-data-format/" data-id="ref-data-format" class="">Data Format Specification</a><a href="/docs/graspkit/ref-assets/" data-id="ref-assets" class="">graspkit assets</a><a href="/docs/graspkit/ref-scene-descriptions/" data-id="ref-scene-descriptions" class="">Dex1B Scene Descriptions</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/api-grasp-optim/" data-id="api-grasp-optim" class="">Grasp Optimization</a><a href="/docs/graspkit/api-scene/" data-id="api-scene" class="">Scene</a><a href="/docs/graspkit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/graspkit/api-policy/" data-id="api-policy" class="">Policy</a><a href="/docs/graspkit/api-training/" data-id="api-training" class="">Training</a><a href="/docs/graspkit/api-envs/" data-id="api-envs" class="">Environments</a><a href="/docs/graspkit/api-data/" data-id="api-data" class="">Data</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">graspkit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>User Guide</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Quickstart</h1>
+        <div class="doc-body" id="doc-body"><h3 id="try-it-without-installing">Try it without installing</h3><p>Run this to start the interactive grasp gallery:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">shell</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>uvx --from graspkit python -m graspkit.gallery.grasp_optim</pre></div><p>Pick a hand, arm, and object. Press <em>Optimize</em> to generate grasps, then browse them with the <em>Grasp</em> slider. The gallery caches results for the next visit.</p><h3 id="optimize-one-grasp">Optimize one grasp</h3><p>After <a class="inline" href="/docs/graspkit/install/">installing</a>, run the smallest grasp optimization example:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">shell</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>uv run src/graspkit/examples/grasp_optim/01_basic.py</pre></div><p>It optimizes xHand grasps for one YCB object and opens a <a class="inline" href="https://viser.studio">Viser</a> page to browse the results. Grasp optimization needs a CUDA GPU.</p><h3 id="more-examples">More examples</h3><p>The scripts below are runnable. Paths are relative to the repository root.</p><table class="doc-table" style="--cols:2"><thead><tr><th>Directory</th><th>Scripts</th></tr></thead><tbody><tr><td><a class="inline" href="https://github.com/openrobokit/graspkit/tree/main/src/graspkit/examples/grasp_optim/"><code>src/graspkit/examples/grasp_optim</code></a></td><td><a class="inline" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/examples/grasp_optim/01_basic.py"><code>01_basic.py</code></a>, <a class="inline" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/examples/grasp_optim/02_table.py"><code>02_table.py</code></a>, <a class="inline" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/examples/grasp_optim/03_arm.py"><code>03_arm.py</code></a>, <a class="inline" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/examples/grasp_optim/04_sim_valid.py"><code>04_sim_valid.py</code></a>, <a class="inline" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/examples/grasp_optim/05_table_sim_valid.py"><code>05_table_sim_valid.py</code></a>, <a class="inline" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/examples/grasp_optim/06_arm_sim_valid.py"><code>06_arm_sim_valid.py</code></a>, <a class="inline" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/examples/grasp_optim/07_mj_sim_valid.py"><code>07_mj_sim_valid.py</code></a></td></tr><tr><td><a class="inline" href="https://github.com/openrobokit/graspkit/blob/main/scripts/launch.py"><code>scripts/launch.py</code></a></td><td>Run an experiment from grasp optimization through policy training. See <a class="inline" href="/docs/graspkit/pipeline/">The full pipeline</a>.</td></tr></tbody></table><p>Example usage:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">shell</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>uv run src/graspkit/examples/grasp_optim/02_table.py</pre></div></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/graspkit/overview/"><span class="lbl">← Previous</span><span class="nm">Overview</span></a><a class="next" href="/docs/graspkit/install/"><span class="lbl">Next →</span><span class="nm">Installation</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#try-it-without-installing">Try it without installing</a><a href="#optimize-one-grasp">Optimize one grasp</a><a href="#more-examples">More examples</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "graspkit", "id": "quickstart", "toc": [{"text": "Try it without installing", "href": "#try-it-without-installing"}, {"text": "Optimize one grasp", "href": "#optimize-one-grasp"}, {"text": "More examples", "href": "#more-examples"}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

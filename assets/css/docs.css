@@ -1,0 +1,412 @@
+/* Docs page. Loads after assets/css/site.css, which owns the nav.
+ *
+ * The docs reserve space for the fixed header; the tokens below keep it on
+ * the same palette.
+ */
+
+html, body { margin: 0; padding: 0; background: #FAFAF8; }
+html { scrollbar-gutter: stable; scroll-padding-top: 0; }
+a:hover { color: #00629B; }
+::selection { background: #00629B; color: #fff; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+/* overlay-style: the thumb only exists while something is actually scrolling */
+::-webkit-scrollbar-thumb { background: transparent; border: 2px solid transparent; background-clip: padding-box; border-radius: 6px; }
+[data-scrolling]::-webkit-scrollbar-thumb { background: rgba(21,23,31,0.20); background-clip: padding-box; }
+input { font: inherit; }
+
+body {
+  min-height: 100vh; padding-top: var(--site-nav-height); background: #FAFAF8; color: #15171F;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 15px; line-height: 1.55; letter-spacing: -0.005em;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* The shared fixed header stays frosted over the paper on docs pages. */
+nav {
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  --nav-bg: rgba(250,250,248,0.92);
+  --nav-ink: #15171F;
+  --nav-muted: #5B6070;
+  --nav-hover-bg: #EDEDEA;
+  --nav-dot: #00629B;
+  --menu-bg: #FAFAF8;
+  --menu-line: rgba(21,23,31,0.14);
+}
+
+/* ---------- shell ---------- */
+.grid { display: grid; grid-template-columns: 248px minmax(0, 1fr); max-width: 1760px; margin: 0 auto; padding-right: 16px; align-items: start; }
+
+/* ---------- sidebar ---------- */
+/* overscroll-behavior keeps a panel's scroll to itself: reaching its end must
+   not hand the wheel to the page underneath */
+.side { position: sticky; top: 56px; height: calc(100vh - 56px); overflow-y: auto; overscroll-behavior: contain; padding: 24px 20px 56px 28px; font-size: 14px; }
+.search {
+  display: flex; align-items: center; gap: 9px; padding: 0 12px; height: 40px;
+  background: #FFFFFF; border: 1px solid rgba(21,23,31,0.14); border-radius: 8px; margin-bottom: 22px;
+}
+.search input { flex: 1; min-width: 0; border: none; outline: none; background: transparent; font-size: 14px; color: #15171F; letter-spacing: -0.005em; }
+.search .kbd { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A8F9C; }
+/* kit switcher: a real dropdown, so each kit keeps its full name. Filled
+   rather than outlined — white fields are inputs, this is a control. */
+.kitpick { position: relative; margin: 0 0 26px; }
+.kitpick__label { display: block; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F9C; margin: 0 0 6px 2px; }
+.kitpick__btn {
+  display: flex; align-items: center; gap: 8px; width: 100%; height: 38px; padding: 0 12px;
+  background: #EDEDEA; border: none; border-radius: 8px;
+  cursor: pointer; color: #15171F; font: inherit; text-align: left;
+  transition: background 120ms ease;
+}
+.kitpick__btn:hover, .kitpick.is-open .kitpick__btn { background: #E3E3DF; }
+.kitpick__btn .nm {
+  flex: 1; min-width: 0; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.kitpick__btn .chev { width: 12px; height: 12px; flex: none; color: #6B7080; transition: transform 140ms ease; }
+.kitpick.is-open .kitpick__btn .chev { transform: rotate(180deg); }
+.kitpick__menu {
+  display: none; position: absolute; left: 0; right: 0; top: calc(100% + 4px); z-index: 20;
+  background: #FFFFFF; border: 1px solid rgba(21,23,31,0.14); border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(21,23,31,0.10); padding: 4px; flex-direction: column; gap: 1px;
+}
+.kitpick.is-open .kitpick__menu { display: flex; }
+.kitpick__menu a { display: flex; align-items: center; gap: 10px; padding: 8px 8px; border-radius: 6px; color: #5B6070; }
+.kitpick__menu a:hover { background: rgba(21,23,31,0.05); color: #15171F; }
+.kitpick__menu a.is-active { color: #15171F; font-weight: 600; }
+.kitpick__menu .nm { flex: 1; min-width: 0; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+.kitpick__menu .tick { width: 13px; height: 13px; flex: none; color: #00629B; }
+.side__group { margin-bottom: 32px; }
+.side__group h4 { font-size: 14.5px; font-weight: 600; color: #15171F; letter-spacing: -0.01em; margin: 0 0 10px; padding: 0 12px; }
+.side__list { display: flex; flex-direction: column; gap: 2px; }
+.side__list a { padding: 8px 12px; border-radius: 8px; color: #5B6070; line-height: 1.35; }
+.side__list a:hover { background: rgba(21,23,31,0.05); color: #15171F; }
+.side__list a.is-active { background: #E8E8E4; color: #15171F; font-weight: 600; }
+.side__sub {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 8px 12px; border-radius: 8px; color: #5B6070; cursor: pointer; user-select: none;
+}
+.side__sub:hover { background: rgba(21,23,31,0.05); color: #15171F; }
+/* chevron points right when the run is folded, down when it is open */
+.side__sub svg { width: 12px; height: 12px; flex: none; color: #B0B3BC; transform: rotate(90deg); transition: transform 140ms ease; }
+.side__sub.is-folded svg { transform: rotate(0deg); }
+/* indent alone marks the nesting — no stem rule, so the run reads as one list */
+.side__subitems { display: flex; flex-direction: column; gap: 2px; }
+.side__subitems a { padding-left: 24px; }
+.side__sub.is-folded + .side__subitems { display: none; }
+.side__none { padding: 10px 12px; color: #8A8F9C; font-size: 13.5px; }
+.side__foot { margin-top: 8px; padding: 16px 12px 0; border-top: 1px solid rgba(21,23,31,0.10); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8A8F9C; letter-spacing: 0.03em; }
+.docs-menu { display: none; }
+
+/* ---------- article card ---------- */
+.card {
+  background: #FFFFFF; border: 1px solid rgba(21,23,31,0.10); border-radius: 16px;
+  margin: 12px 0 16px; min-height: calc(100vh - 100px);
+  display: grid; grid-template-columns: minmax(0, 1fr) 200px; align-items: start;
+}
+/* wide enough for a fully annotated signature; prose keeps its own measure */
+.doc { padding: 40px 40px 96px; min-width: 0; width: 100%; max-width: 1120px; margin: 0 auto; }
+.doc__head { display: flex; align-items: flex-start; gap: 24px; margin-bottom: 6px; }
+.crumb { flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 13.5px; color: #8A8F9C; }
+.crumb .slash { opacity: 0.6; }
+.copy-page {
+  flex: none; display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px;
+  background: #fff; border: 1px solid rgba(21,23,31,0.14); border-radius: 6px; color: #5B6070; cursor: pointer;
+}
+.copy-page:hover { background: #F4F4F1; color: #15171F; }
+.copy-page { padding: 0; }
+.copy-page svg { width: 14px; height: 14px; }
+.doc h1 {
+  font-family: 'Archivo', 'Inter', system-ui, sans-serif; font-weight: 700;
+  font-size: 52px; line-height: 1.05; letter-spacing: -0.04em; color: #15171F; margin: 0 0 34px;
+}
+.prevnext { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 72px; padding-top: 28px; border-top: 1px solid rgba(21,23,31,0.10); }
+.prevnext a { padding: 15px 18px; border: 1px solid rgba(21,23,31,0.12); border-radius: 10px; transition: background 120ms ease; }
+.prevnext a:hover { background: #FAF9F5; color: #15171F; }
+.prevnext a.next { grid-column: 2; text-align: right; }
+.prevnext .lbl { display: block; margin-bottom: 5px; font-size: 12px; color: #8A8F9C; }
+.prevnext .nm { font-size: 15px; color: #15171F; font-weight: 500; }
+
+/* ---------- toc rail ---------- */
+/* a class can list thirty members, so the rail scrolls rather than running off
+   the bottom of the viewport */
+.rail { position: sticky; top: 68px; max-height: calc(100vh - 68px); overflow-y: auto; overscroll-behavior: contain; padding: 56px 28px 40px 8px; font-size: 13px; }
+.rail__head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; color: #8A8F9C; }
+.rail__head svg { width: 13px; height: 13px; }
+.rail__head span { font-size: 12.5px; }
+.rail__list { display: flex; flex-direction: column; }
+.rail__list a { padding: 6px 0 6px 13px; color: #5B6070; border-left: 2px solid rgba(21,23,31,0.12); line-height: 1.4; }
+.rail__list a:hover { color: #15171F; border-left-color: #00629B; }
+/* the symbol being read is marked, and only it shows its members */
+.rail__list a.is-active { color: #15171F; border-left-color: #00629B; }
+.rail__list a.is-sub { padding-left: 26px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; word-break: break-word; }
+
+/* ---------- article body ----------
+   Bodies come from docs-data.js as raw HTML strings with these class names
+   and these two custom properties, so they can only be styled here. */
+.doc-body { --fg-dim: #6B7080; --fg-muted: #8A8F9C; font-size: 16px; line-height: 1.75; color: #555966; }
+.doc-body > :first-child { margin-top: 0; }
+.doc-body p { margin: 0 0 18px; }
+.doc-body img, .doc-body video { max-width: 100%; display: block; border-radius: 8px; }
+/* a paragraph carrying nothing but media is a figure, not prose: its own edge
+   supplies the visual break, so it does not need the full paragraph rhythm */
+.doc-body p:has(> img:only-child), .doc-body p:has(> video:only-child) { margin-bottom: 10px; }
+.doc-figure { margin: 28px 0; }
+.doc-body .doc-figure__link { display: block; border: 1px solid rgba(21,23,31,0.12); border-radius: 8px; overflow: hidden; background: #F5F5F2; }
+.doc-body .doc-figure__link:hover { border-color: #00629B; }
+.doc-figure__link:focus-visible, .docs-menu:focus-visible { outline: 2px solid #00629B; outline-offset: 4px; }
+.doc-figure__media { display: block; }
+.doc-figure img { display: block; width: 100%; height: auto; max-height: 400px; object-fit: contain; }
+.doc-figure__media--focused { position: relative; overflow: hidden; width: min(100%, 480px); margin: 0 auto; }
+.doc-figure__media--focused img { position: absolute; width: var(--image-width); max-width: none; max-height: none; height: auto; left: var(--image-left); top: var(--image-top); }
+.doc-figure figcaption { margin-top: 10px; color: #6B7080; font-size: 12.5px; line-height: 1.6; }
+.doc-figure figcaption a { display: inline-block; margin-left: 4px; white-space: nowrap; }
+.doc-body h3 {
+  font-family: 'Archivo', 'Inter', system-ui, sans-serif; font-weight: 600; font-size: 25px;
+  letter-spacing: -0.025em; color: #15171F; margin: 34px 0 14px; scroll-margin-top: 84px;
+}
+.doc-body h4 { font-weight: 600; font-size: 15.5px; color: #15171F; margin: 24px 0 10px; scroll-margin-top: 84px; }
+.doc-body ul, .doc-body ol { margin: 0 0 20px; padding-left: 0; list-style: none; }
+.doc-body ol { counter-reset: n; }
+.doc-body li { position: relative; padding: 5px 0 5px 26px; }
+.doc-body ul > li::before { content: ""; position: absolute; left: 7px; top: 16px; width: 5px; height: 5px; border-radius: 50%; background: #C6C6C2; }
+.doc-body ol > li { counter-increment: n; }
+.doc-body ol > li::before { content: counter(n) "."; position: absolute; left: 0; top: 5px; color: #8A8F9C; font-variant-numeric: tabular-nums; }
+.doc-body li > ul, .doc-body li > ol { margin: 4px 0 0; }
+.doc-body strong { font-weight: 600; color: #15171F; }
+.doc-body a, .doc-body a.inline { color: #15171F; border-bottom: 1px solid rgba(21,23,31,0.3); }
+.doc-body a:hover { color: #00629B; border-bottom-color: #00629B; }
+/* inline code: keep the box, just quieter — no border, tighter pad, and a
+   negative margin so the tint hugs the word without inflating the line */
+.doc-body code {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.86em; font-weight: 500;
+  background: #F0F0EE; border: none; border-radius: 4px;
+  padding: 0.15em 0.34em; margin: 0 0.5px; color: #15171F; word-break: break-word;
+}
+.doc-body a:has(code), .doc-body a.inline:has(code) { border-bottom: none; }
+.doc-body a code { color: inherit; background: #EDEDEA; text-decoration: underline rgba(21,23,31,0.3); text-underline-offset: 0.15em; }
+.doc-body a:hover code { text-decoration-color: currentColor; }
+.doc-body pre { margin: 0; padding: 18px 20px; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.75; color: #1B1D24; }
+.doc-body .doc__code { border: 1px solid rgba(21,23,31,0.13); border-radius: 8px; margin: 22px 0 26px; overflow: hidden; }
+.doc-body .doc__code .bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 16px; height: 34px;
+  border-bottom: 1px solid rgba(21,23,31,0.09); font-family: 'JetBrains Mono', monospace; font-size: 11.5px; letter-spacing: 0.03em;
+}
+.doc-body .doc__code .bar > span { color: #8A8F9C !important; }
+.doc-body .doc__code .code-actions { display: flex; align-items: center; gap: 8px; }
+.doc-body .doc__code .code-toggle {
+  padding: 3px 7px; border: 1px solid rgba(21,23,31,0.14); border-radius: 6px; background: #fff;
+  color: #5B6070; font: inherit; cursor: pointer;
+}
+.doc-body .doc__code .code-toggle:hover { background: #F4F4F1; color: #15171F; }
+.doc-body .doc__code pre[hidden] { display: none; }
+/* icon-only, same chip as the article's Copy page button */
+.doc-body .doc__code .bar .copy {
+  display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px;
+  padding: 0; border: 1px solid rgba(21,23,31,0.14); border-radius: 6px; background: #fff;
+  color: #5B6070 !important; cursor: pointer; user-select: none; font-size: 0;
+  transition: background 120ms ease, color 120ms ease;
+}
+.doc-body .doc__code .bar .copy:hover { background: #F4F4F1; color: #15171F !important; }
+.doc-body .doc__code .bar .copy svg { width: 13px; height: 13px; display: block; }
+.doc-body .doc__code code { background: none; border: none; padding: 0; color: inherit; }
+.doc-body pre .tok-k { color: #C6304C; }
+.doc-body pre .tok-s { color: #1D4494; }
+.doc-body pre .tok-n { color: #1D4494; }
+.doc-body pre .tok-f { color: #1D4494; }
+.doc-body pre .tok-o { color: #C6304C; }
+.doc-body pre .tok-c { color: #8A8F9C; font-style: italic; }
+/* search hides sidebar rows in place, so the rule has to beat their own display */
+.side .is-hidden { display: none !important; }
+/* blockquotes and GitHub-style alerts (`> [!NOTE]`) */
+.doc-body blockquote { margin: 22px 0 26px; padding: 2px 0 2px 18px; border-left: 3px solid rgba(21,23,31,0.14); color: #6B7080; }
+.doc-body .doc-note { margin: 22px 0 26px; padding: 17px 22px 18px; border-radius: 9px; background: #F1F4FA; }
+.doc-body blockquote > :last-child, .doc-body .doc-note > :last-child { margin-bottom: 0; }
+/* mono label in ink: the only hue is the square marker, so a run of notes
+   reads as one family instead of a stack of colored bars */
+.doc-body .doc-note__title {
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 10.5px;
+  letter-spacing: 0.15em; text-transform: uppercase; color: #15171F; margin-bottom: 9px;
+}
+.doc-body .doc-note__title::before { content: ''; width: 7px; height: 7px; flex: none; border-radius: 2px; background: #1D4494; }
+.doc-body .doc-note--tip { background: #F0F7F2; }
+.doc-body .doc-note--tip .doc-note__title::before { background: #1E7A4A; }
+.doc-body .doc-note--warning { background: #FBF6EE; }
+.doc-body .doc-note--warning .doc-note__title::before { background: #B5680E; }
+.doc-body .doc-note--caution { background: #FBF1F3; }
+.doc-body .doc-note--caution .doc-note__title::before { background: #C6304C; }
+/* no outer frame, no header fill: a rule under the head and hairlines between
+   rows, so the columns read as text instead of a boxed grid */
+.doc-body .table-scroll { max-width: 100%; overflow-x: auto; margin: 22px 0 28px; }
+.doc-body table, .doc-body .doc-table { width: 100%; border-collapse: collapse; margin: 0; font-size: 14.5px; table-layout: auto; }
+.doc-body th {
+  text-align: left; font-size: 12px; letter-spacing: 0; text-transform: none;
+  font-weight: 500; color: #6B7080; padding: 0 18px 9px 0; border-bottom: 1px solid rgba(21,23,31,0.16);
+}
+.doc-body th:last-child, .doc-body td:last-child { padding-right: 0; }
+.doc-body td { padding: 11px 18px 11px 0; border-bottom: 1px solid rgba(21,23,31,0.07); vertical-align: baseline; line-height: 1.6; color: #555966; }
+.doc-body td:first-child { color: #15171F; }
+/* first-column identifiers are the row's label — plain mono, no chip box */
+.doc-body td:first-child code { background: none; border: none; padding: 0; font-size: 13.5px; color: #15171F; }
+.doc-body tr:last-child td { border-bottom: none; }
+.doc-body .doc-table:has(img) { table-layout: fixed; }
+.doc-body table:has(img) td { vertical-align: middle; }
+/* Overview-style tables pair a row of previews with their captions. */
+.doc-body .doc-table:has(thead :is(img, video)) {
+  display: grid; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); gap: 12px 20px;
+}
+/* a pair reads as a figure, not a band: hold it to the middle of the column */
+.doc-body .doc-table:has(thead :is(img, video)):not([style*="--cols:3"]) { max-width: 760px; margin-inline: auto; }
+.doc-body .doc-table:has(thead :is(img, video)) :is(thead, tbody, tr) { display: contents; }
+.doc-body .doc-table:has(thead :is(img, video)) :is(th, td) { min-width: 0; width: auto; padding: 0; border: 0; font-size: 14px; line-height: 1.5; }
+.doc-body .doc-table:has(thead :is(img, video)) :is(img, video) { width: 100%; height: auto; }
+.doc-body .doc-table:has(thead :is(img, video)) strong { display: block; margin-bottom: 5px; }
+.doc-body .doc-table:has(thead :is(img, video)) code { padding: 0; background: none; font-size: 13px; }
+/* diagrams: unrendered source stays legible as mono text until mermaid lands */
+.doc-body .mermaid {
+  margin: 24px 0 28px; padding: 20px 18px; overflow-x: auto; text-align: center;
+  border: 1px solid rgba(21,23,31,0.13); border-radius: 8px; background: #FBFBF9;
+  font-family: 'JetBrains Mono', monospace; font-size: 12.5px; white-space: pre;
+}
+.doc-body .mermaid[data-processed] { white-space: normal; }
+.doc-body .mermaid svg { max-width: 100%; height: auto; }
+.doc-body .mermaid:has(.framework-source) svg { min-width: 720px; }
+.doc-body .katex { font-size: 1.03em; }
+.doc-body .katex-display { margin: 20px 0; overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+
+/* ---------- generated API reference ----------
+   Built by scripts/apihtml.py from the structured metadata on the item, so
+   these class names are that renderer's contract. Sits inside .doc-body and
+   borrows its prose and code blocks for everything a docstring carries.
+
+   Everything is quiet by design: the declaration card is the only boxed thing
+   on the page, and Parameters / Returns / Members are labels rather than
+   headings, so nothing competes with the h1. */
+/* one .api per `:::` in the document, so consecutive blocks get the rule and
+   any prose between them separates them on its own */
+.api-sym { scroll-margin-top: 84px; }
+.doc-body .api { margin-top: 40px; }
+.doc-body .api + .api { margin-top: 60px; padding-top: 48px; border-top: 1px solid rgba(21,23,31,0.10); }
+
+/* one declaration card, for a published symbol and for each of its members */
+.api-card { border: 1px solid rgba(21,23,31,0.18); border-radius: 10px; padding: 16px 18px; scroll-margin-top: 84px; }
+.api-card__head { display: flex; align-items: center; gap: 9px; font-family: 'JetBrains Mono', monospace; font-size: 13.5px; color: #8A8F9C; }
+.api-card__decl { margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 13.5px; color: #8A8F9C; word-break: break-word; }
+.api-card__decl .mod { color: #8A8F9C; }
+.api-card__name { font-weight: 500; color: #15171F; }
+.api-kind {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: #00629B; background: #E7EFFA; border-radius: 4px; padding: 2px 7px;
+}
+/* pushed to the far edge of the head, opposite the kind */
+.api-from { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: #8A8F9C; }
+.api-src { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: #8A8F9C; }
+.doc-body a.api-src { border-bottom: none; }
+.api-src:hover { color: #00629B; }
+/* one parameter per line: long generic types stay readable and the block
+   scrolls on its own rather than widening the column */
+.api-sig__body { display: grid; gap: 7px; margin-top: 7px; padding-left: 16px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; overflow-x: auto; }
+.api-sig__line { white-space: pre; }
+.api-sig__close { margin-left: -16px; }
+.api-sig__line .pn { color: #15171F; }
+.api-sig__line .pt { color: #00629B; }
+.api-sig__line .pd { color: #6B7080; }
+.api-sig__line .pp, .api-card__decl .pp { color: #8A8F9C; }
+.api-card__decl .pt { color: #00629B; }
+.api-sig__bases { margin-top: 12px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #6B7080; }
+.api-sig__bases span { color: #15171F; }
+.api-sig__bases, .api-name, .api-type, .api-def, .api-from { min-width: 0; overflow-wrap: anywhere; }
+
+/* everything a declaration owns is indented under it, once per level, so the
+   card is always the flush thing and its body always sits inside it */
+.api-body { margin-top: 16px; padding-left: 22px; }
+/* the divider goes above each row after the first, so a run never trails off
+   into a rule with nothing under it */
+.api-row { padding: 13px 0; scroll-margin-top: 84px; }
+.api-row + .api-row { border-top: 1px solid rgba(21,23,31,0.08); }
+.api-row--plain, .api-row--plain + .api-row--plain { padding: 0; border-top: none; }
+.api-row__head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 9px; margin-bottom: 2px; }
+.api-row__doc { text-wrap: pretty; }
+.api-row__doc:empty { display: none; }
+.api-name { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 500; color: #15171F; }
+.api-type { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #00629B; background: #F0F0EE; border-radius: 4px; padding: 0.15em 0.34em; }
+.api-def { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #6B7080; }
+.api-req {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: #FFFFFF; background: #00629B; border-radius: 4px; padding: 2px 7px;
+}
+
+/* Every block label looks the same: Parameters, Returns and Members, plus the
+   Examples and Raises headings a docstring brings with it. */
+.api-label,
+.doc-body .api-prose h3, .doc-body .api-prose h4, .doc-body .api-prose h5,
+.doc-body .api-row__doc h3, .doc-body .api-row__doc h4, .doc-body .api-row__doc h5 {
+  font-family: 'Inter', system-ui, sans-serif; font-weight: 500; font-size: 11px;
+  letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F9C;
+  scroll-margin-top: 84px;
+}
+/* One rhythm, driven only by top margins: a neighbour's bottom margin can
+   otherwise collapse against the label's and change the gap block by block. */
+.doc-body .api-body > *, .doc-body .api-prose > *, .doc-body .api-row__doc > * { margin: 0; }
+.doc-body .api-body > * + * { margin-top: 24px; }
+.doc-body .api-prose > * + *, .doc-body .api-row__doc > * + * { margin-top: 18px; }
+.doc-body .api-prose > h3, .doc-body .api-prose > h4, .doc-body .api-prose > h5,
+.doc-body .api-row__doc > h3, .doc-body .api-row__doc > h4, .doc-body .api-row__doc > h5 { margin-top: 24px; }
+/* content hugs the label it belongs to */
+.doc-body .api-label + *,
+.doc-body .api-prose > :is(h3, h4, h5) + *, .doc-body .api-row__doc > :is(h3, h4, h5) + * { margin-top: 6px; }
+/* rows are one list, so they stay tight to each other */
+.doc-body .api-body > .api-row + .api-row { margin-top: 0; }
+
+/* a label's own rows step in again; members carry their own cards instead */
+.api-body > .api-row { padding-left: 18px; }
+.api-body > .api-row .api-name { font-size: 13px; }
+.api-body > .api-row .api-type { font-size: 12px; }
+.api-body > .api-row .api-row__doc { font-size: 15px; }
+.doc-body .api-members > .api-row + .api-row { margin-top: 26px; }
+
+@media (max-width: 1440px) {
+  .rail { display: none; }
+  .card { grid-template-columns: minmax(0, 1fr); }
+  .doc { padding: 36px 36px 96px; }
+}
+@media (max-width: 900px) {
+  .grid { grid-template-columns: minmax(0, 1fr); padding-right: 0; }
+  .side { position: static; height: auto; overflow: visible; padding: 18px 20px 22px; }
+  .docs-menu { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; min-height: 44px; padding: 10px 12px; background: #EDEDEA; border: 1px solid rgba(21,23,31,0.12); border-radius: 8px; color: #15171F; font: inherit; cursor: pointer; text-align: left; }
+  .docs-menu svg { width: 16px; height: 16px; flex: none; transition: transform 140ms ease; }
+  .docs-menu[aria-expanded="true"] svg { transform: rotate(180deg); }
+  .docs-nav { display: none; margin-top: 18px; }
+  .side.is-open .docs-nav { display: block; }
+  .card { border-radius: 0; border-left: none; border-right: none; }
+  .doc { padding: 30px 22px 96px; }
+  .doc h1 { font-size: 36px; }
+  .api-card { padding: 14px; }
+  .api-body { padding-left: 14px; }
+  .prevnext { grid-template-columns: 1fr; }
+  .prevnext a.next { grid-column: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .docs-menu svg { transition: none; }
+}
+@media (max-width: 760px) {
+  .doc-body .doc-table:has(thead :is(img, video)) { grid-template-columns: minmax(0, 1fr); }
+  .doc-body .doc-table:has(thead :is(img, video)) :is(th, td):nth-child(2) { order: 1; }
+  .doc-body .doc-table:has(thead :is(img, video)) :is(th, td):nth-child(3) { order: 2; }
+  .doc-body .doc-table:has(thead :is(img, video)) :is(th, td):empty { display: none; }
+  nav { padding: 0 16px; }
+  nav .links { display: none; }
+  nav .right button.burger { display: inline-flex; }
+}
+
+/* ---------- tabbed blocks ---------- */
+/* A `=== "uv"` tray over stacked panes: only the active pane is in flow, so the
+   block is as tall as what it shows. The panes hold ordinary .doc__code blocks,
+   which give up their own frame to the one around the whole tray. */
+.doc-body .doc-tabs {
+  border: 1px solid rgba(21,23,31,0.13); border-radius: 8px;
+  margin: 22px 0 26px; overflow: hidden;
+}
+.doc-body .doc-tabs__pane { display: none; }
+.doc-body .doc-tabs__pane.is-active { display: block; }
+.doc-body .doc-tabs .doc__code { border: 0; border-radius: 0; margin: 0; }

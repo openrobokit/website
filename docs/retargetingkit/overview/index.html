@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Overview · RetargetingKit docs · OpenRoboKit</title>
+  <meta name="description" content="Real-time human-to-robot motion retargeting, built on robokit." />
+  <link rel="canonical" href="https://openrobokit.com/docs/retargetingkit/overview/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">RetargetingKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="">
+        <span class="nm">RoboKit</span>
+      </a><a href="/docs/retargetingkit/" class="is-active">
+        <span class="nm">RetargetingKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a><a href="/docs/graspkit/" class="">
+        <span class="nm">GraspKit</span>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/retargetingkit/overview/" data-id="overview" class="is-active">Overview</a></div><div class="side__list"><a href="/docs/retargetingkit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/retargetingkit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/retargetingkit/hand-optimization/" data-id="hand-optimization" class="">Hand Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/neural-hand/" data-id="neural-hand" class="">Neural Hand Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/arm-retargeting/" data-id="arm-retargeting" class="">Arm Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/humanoid-retargeting/" data-id="humanoid-retargeting" class="">Humanoid Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/full-body/" data-id="full-body" class="">Full-Body Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/teleoperation/" data-id="teleoperation" class="">Teleoperation</a></div><div class="side__list"><a href="/docs/retargetingkit/ref-assets/" data-id="ref-assets" class="">Assets</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/retargetingkit/pipeline/" data-id="pipeline" class="">Pipeline</a></div><div class="side__list"><a href="/docs/retargetingkit/frames/" data-id="frames" class="">Canonical frames</a></div><div class="side__list"><a href="/docs/retargetingkit/protocols/" data-id="protocols" class="">Interfaces</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list">
+      <div class="side__sub is-folded" data-fold="Reference·Sources">
+        <span>Sources</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/retargetingkit/quest3/" data-id="quest3" class="">Quest 3</a><a href="/docs/retargetingkit/vision-pro/" data-id="vision-pro" class="">Apple Vision Pro</a><a href="/docs/retargetingkit/pico/" data-id="pico" class="">PICO</a><a href="/docs/retargetingkit/manus/" data-id="manus" class="">Manus</a><a href="/docs/retargetingkit/axis-studio/" data-id="axis-studio" class="">Axis Studio</a><a href="/docs/retargetingkit/realsense/" data-id="realsense" class="">RealSense</a><a href="/docs/retargetingkit/zed/" data-id="zed" class="">ZED</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Targets">
+        <span>Targets</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/retargetingkit/xarm/" data-id="xarm" class="">xArm6 and xArm7</a><a href="/docs/retargetingkit/xhand/" data-id="xhand" class="">XHand</a><a href="/docs/retargetingkit/sharpa-hand/" data-id="sharpa-hand" class="">Sharpa Wave</a><a href="/docs/retargetingkit/ability-hand/" data-id="ability-hand" class="">Ability Hand</a><a href="/docs/retargetingkit/inspire/" data-id="inspire" class="">Inspire Hand</a><a href="/docs/retargetingkit/g1/" data-id="g1" class="">G1 and SONIC</a><a href="/docs/retargetingkit/rby1/" data-id="rby1" class="">RBY1-A</a><a href="/docs/retargetingkit/dexmate/" data-id="dexmate" class="">Dexmate Vega-1</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/retargetingkit/ref-frames/" data-id="ref-frames" class="">Frames</a><a href="/docs/retargetingkit/ref-sources/" data-id="ref-sources" class="">Sources</a><a href="/docs/retargetingkit/ref-hand/" data-id="ref-hand" class="">Hand retargeters</a><a href="/docs/retargetingkit/ref-arm/" data-id="ref-arm" class="">Arm retargeter</a><a href="/docs/retargetingkit/ref-humanoid/" data-id="ref-humanoid" class="">Humanoid retargeter</a><a href="/docs/retargetingkit/ref-targets/" data-id="ref-targets" class="">Commands and targets</a><a href="/docs/retargetingkit/ref-target-configs/" data-id="ref-target-configs" class="">Target configs</a><a href="/docs/retargetingkit/ref-teleop/" data-id="ref-teleop" class="">Teleop configs</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/retargetingkit/development/" data-id="development" class="">Development</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">retargetingkit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>User Guide</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Overview</h1>
+        <div class="doc-body" id="doc-body"><figure class="doc-figure"><a class="doc-figure__link" href="/assets/docs/retargetingkit/assets/retargetingkit-banner.webp" target="_blank" rel="noopener" title="Open full-size image"><span class="doc-figure__media"><img src="/assets/docs/retargetingkit/assets/retargetingkit-banner.webp" alt="RetargetingKit" width="2000" height="500" decoding="async"></span></a><figcaption>RetargetingKit <a href="/assets/docs/retargetingkit/assets/retargetingkit-banner.webp" target="_blank" rel="noopener">Open image ↗</a></figcaption></figure><p>RetargetingKit maps human motion to robot hands, arms, and humanoids. It combines RoboKit optimization with neural hand models for recorded motion and real-time teleoperation.</p><h3 id="key-features">Key features</h3><ul><li><strong>One pipeline.</strong> Sources produce canonical motion frames; retargeters produce robot commands; targets preview or execute them.</li><li><strong>Hands and bodies.</strong> Solve finger motion, wrist poses, humanoid motion, and combined body-and-hand interactions.</li><li><strong>Optimization + neural.</strong> Choose geometry-aware optimization or trained hand inference for the task.</li><li><strong>Recorded or live.</strong> Retarget clips in parallel or drive robots from VR, gloves, and motion capture.</li></ul><h3 id="how-it-works">How it works</h3><div class="mermaid">flowchart LR
+    Source["`Source
+    *VR · gloves · mocap · recordings*`"]
+    Retargeter["`Retargeter
+    *Optimization + Neural*`"]
+    Target["`Target
+    *Viser · robot hardware*`"]
+    Source -- "Frame: hand · arm · body" --&gt; Retargeter
+    Retargeter -- "Command: joints · base pose" --&gt; Target
+    classDef endpoint fill:#dbeafe,stroke:#2563eb,color:#111827
+    classDef solver fill:#dbc8ea,stroke:#8163a1,stroke-width:2px,color:#111827
+    class Source,Target endpoint
+    class Retargeter solver</div><table class="doc-table" style="--cols:3"><thead><tr><th>Component</th><th>Role</th><th>Read more</th></tr></thead><tbody><tr><td>Source</td><td>Read a device or recording.</td><td><a class="inline" href="/docs/retargetingkit/pipeline/">Sources</a></td></tr><tr><td>Frame</td><td>Represent human hand, arm, or body motion.</td><td><a class="inline" href="/docs/retargetingkit/frames/">Frames</a></td></tr><tr><td>Retargeter</td><td>Map motion to a robot through optimization or neural inference.</td><td><a class="inline" href="/docs/retargetingkit/protocols/">Interfaces</a></td></tr><tr><td>Command</td><td>Carry robot joints and an optional base pose.</td><td><a class="inline" href="/docs/retargetingkit/ref-targets/">Commands</a></td></tr><tr><td>Target</td><td>Preview motion or command hardware.</td><td><a class="inline" href="/docs/retargetingkit/xhand/">Targets</a></td></tr></tbody></table><h3 id="features">Features</h3><table class="doc-table" style="--cols:2"><thead><tr><th><a class="inline" href="/docs/retargetingkit/hand-optimization/"><img src="/assets/docs/retargetingkit/assets/built-in-tasks/hand-retargeting.webp" alt="Hand retargeting"></a></th><th><a class="inline" href="/docs/retargetingkit/hand-optimization/#inspect-object-contact"><img src="/assets/docs/retargetingkit/assets/built-in-tasks/hand-geometry-sim.webp" alt="Geometry-aware hand retargeting"></a></th></tr></thead><tbody><tr><td><strong><a class="inline" href="/docs/retargetingkit/hand-optimization/">Hand retargeting</a></strong> Map tracked hand motion to robot joints.</td><td><strong><a class="inline" href="/docs/retargetingkit/hand-optimization/#inspect-object-contact">Geometry-aware hand retargeting</a></strong> Refine hands against object geometry.</td></tr></tbody></table><table class="doc-table" style="--cols:2"><thead><tr><th><a class="inline" href="/docs/retargetingkit/humanoid-retargeting/"><img src="/assets/docs/retargetingkit/assets/built-in-tasks/humanoid-retargeting.webp" alt="Humanoid retargeting"></a></th><th><a class="inline" href="/docs/retargetingkit/humanoid-retargeting/"><img src="/assets/docs/retargetingkit/assets/built-in-tasks/humanoid-geometry.webp" alt="Geometry-aware humanoid retargeting"></a></th></tr></thead><tbody><tr><td><strong><a class="inline" href="/docs/retargetingkit/humanoid-retargeting/">Humanoid retargeting</a></strong> Map captured body motion to humanoids.</td><td><strong><a class="inline" href="/docs/retargetingkit/humanoid-retargeting/">Geometry-aware humanoid retargeting</a></strong> Account for terrain and contact.</td></tr></tbody></table><table class="doc-table" style="--cols:2"><thead><tr><th><a class="inline" href="/docs/retargetingkit/full-body/"><img src="/assets/docs/retargetingkit/assets/built-in-tasks/full-body-retargeting.webp" alt="Full-body retargeting"></a></th><th><a class="inline" href="/docs/retargetingkit/full-body/#retarget-an-indoor-interaction"><img src="/assets/docs/retargetingkit/assets/built-in-tasks/full-body-geometry.webp" alt="Geometry-aware full-body retargeting"></a></th></tr></thead><tbody><tr><td><strong><a class="inline" href="/docs/retargetingkit/full-body/">Full-body retargeting</a></strong> Combine body and hand motion.</td><td><strong><a class="inline" href="/docs/retargetingkit/full-body/#retarget-an-indoor-interaction">Geometry-aware full-body retargeting</a></strong> Preserve scene and object interactions.</td></tr></tbody></table><h3 id="quick-links">Quick links</h3><ul><li><a class="inline" href="/docs/retargetingkit/quickstart/">Quickstart</a></li><li><a class="inline" href="/docs/retargetingkit/install/">Installation</a></li><li><a class="inline" href="/docs/retargetingkit/pipeline/">Framework concepts</a></li><li><a class="inline" href="/docs/retargetingkit/ref-assets/">Asset setup</a></li></ul></div>
+        <div class="prevnext" id="prevnext"><a class="next" href="/docs/retargetingkit/quickstart/"><span class="lbl">Next →</span><span class="nm">Quickstart</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#key-features">Key features</a><a href="#how-it-works">How it works</a><a href="#features">Features</a><a href="#quick-links">Quick links</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "retargetingkit", "id": "overview", "toc": [{"text": "Key features", "href": "#key-features"}, {"text": "How it works", "href": "#how-it-works"}, {"text": "Features", "href": "#features"}, {"text": "Quick links", "href": "#quick-links"}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Teleoperation · RetargetingKit docs · OpenRoboKit</title>
+  <meta name="description" content="Real-time human-to-robot motion retargeting, built on robokit." />
+  <link rel="canonical" href="https://openrobokit.com/docs/retargetingkit/teleoperation/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">RetargetingKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="">
+        <span class="nm">RoboKit</span>
+      </a><a href="/docs/retargetingkit/" class="is-active">
+        <span class="nm">RetargetingKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a><a href="/docs/graspkit/" class="">
+        <span class="nm">GraspKit</span>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/retargetingkit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/retargetingkit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/retargetingkit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/retargetingkit/hand-optimization/" data-id="hand-optimization" class="">Hand Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/neural-hand/" data-id="neural-hand" class="">Neural Hand Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/arm-retargeting/" data-id="arm-retargeting" class="">Arm Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/humanoid-retargeting/" data-id="humanoid-retargeting" class="">Humanoid Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/full-body/" data-id="full-body" class="">Full-Body Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/teleoperation/" data-id="teleoperation" class="is-active">Teleoperation</a></div><div class="side__list"><a href="/docs/retargetingkit/ref-assets/" data-id="ref-assets" class="">Assets</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/retargetingkit/pipeline/" data-id="pipeline" class="">Pipeline</a></div><div class="side__list"><a href="/docs/retargetingkit/frames/" data-id="frames" class="">Canonical frames</a></div><div class="side__list"><a href="/docs/retargetingkit/protocols/" data-id="protocols" class="">Interfaces</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list">
+      <div class="side__sub is-folded" data-fold="Reference·Sources">
+        <span>Sources</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/retargetingkit/quest3/" data-id="quest3" class="">Quest 3</a><a href="/docs/retargetingkit/vision-pro/" data-id="vision-pro" class="">Apple Vision Pro</a><a href="/docs/retargetingkit/pico/" data-id="pico" class="">PICO</a><a href="/docs/retargetingkit/manus/" data-id="manus" class="">Manus</a><a href="/docs/retargetingkit/axis-studio/" data-id="axis-studio" class="">Axis Studio</a><a href="/docs/retargetingkit/realsense/" data-id="realsense" class="">RealSense</a><a href="/docs/retargetingkit/zed/" data-id="zed" class="">ZED</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Targets">
+        <span>Targets</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/retargetingkit/xarm/" data-id="xarm" class="">xArm6 and xArm7</a><a href="/docs/retargetingkit/xhand/" data-id="xhand" class="">XHand</a><a href="/docs/retargetingkit/sharpa-hand/" data-id="sharpa-hand" class="">Sharpa Wave</a><a href="/docs/retargetingkit/ability-hand/" data-id="ability-hand" class="">Ability Hand</a><a href="/docs/retargetingkit/inspire/" data-id="inspire" class="">Inspire Hand</a><a href="/docs/retargetingkit/g1/" data-id="g1" class="">G1 and SONIC</a><a href="/docs/retargetingkit/rby1/" data-id="rby1" class="">RBY1-A</a><a href="/docs/retargetingkit/dexmate/" data-id="dexmate" class="">Dexmate Vega-1</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/retargetingkit/ref-frames/" data-id="ref-frames" class="">Frames</a><a href="/docs/retargetingkit/ref-sources/" data-id="ref-sources" class="">Sources</a><a href="/docs/retargetingkit/ref-hand/" data-id="ref-hand" class="">Hand retargeters</a><a href="/docs/retargetingkit/ref-arm/" data-id="ref-arm" class="">Arm retargeter</a><a href="/docs/retargetingkit/ref-humanoid/" data-id="ref-humanoid" class="">Humanoid retargeter</a><a href="/docs/retargetingkit/ref-targets/" data-id="ref-targets" class="">Commands and targets</a><a href="/docs/retargetingkit/ref-target-configs/" data-id="ref-target-configs" class="">Target configs</a><a href="/docs/retargetingkit/ref-teleop/" data-id="ref-teleop" class="">Teleop configs</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/retargetingkit/development/" data-id="development" class="">Development</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">retargetingkit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>User Guide</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Teleoperation</h1>
+        <div class="doc-body" id="doc-body"><p>A named rig connects a source, retargeter, and target in one command. Choose the flow that matches the motion you want to control, then complete the linked device setup.</p><h3 id="choose-a-flow">Choose a flow</h3><table class="doc-table" style="--cols:3"><thead><tr><th>Flow</th><th>Motion source</th><th>Robot output</th></tr></thead><tbody><tr><td><code>hand.py</code></td><td><a class="inline" href="/docs/retargetingkit/manus/">Manus</a> or <a class="inline" href="/docs/retargetingkit/vision-pro/">Vision Pro</a></td><td>One robot hand</td></tr><tr><td><code>arm.py</code></td><td><a class="inline" href="/docs/retargetingkit/vision-pro/">Vision Pro</a></td><td>One or two xArms</td></tr><tr><td><code>arm_hand.py</code></td><td><a class="inline" href="/docs/retargetingkit/vision-pro/">Vision Pro</a></td><td>Synchronized arms and hands</td></tr><tr><td><code>humanoid.py</code></td><td>BVH, <a class="inline" href="/docs/retargetingkit/axis-studio/">Axis Studio</a>, <a class="inline" href="/docs/retargetingkit/pico/">PICO</a>, or a PICO recording</td><td>G1 motion through SONIC, with optional Viser</td></tr><tr><td><code>humanoid_hand.py</code></td><td><a class="inline" href="/docs/retargetingkit/pico/">PICO</a> body motion and buttons</td><td>G1 plus two physical Inspire hands</td></tr></tbody></table><p><a class="inline" href="/docs/retargetingkit/quest3/">Quest 3</a>, <a class="inline" href="/docs/retargetingkit/realsense/">RealSense</a>, and <a class="inline" href="/docs/retargetingkit/zed/">ZED</a> have standalone device scripts. They are not inputs to these named rigs.</p><h3 id="select-a-rig">Select a rig</h3><p>List the available rigs, then inspect a selected rig's settings:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">shell</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>uv run scripts/teleop/hand.py --help
+uv run scripts/teleop/hand.py manus_xhand --help</pre></div><p>The first command lists rigs; the second shows the selected rig's fields and defaults. Install the source's dependencies before running it; each device page provides a complete command.</p><h3 id="override-settings">Override settings</h3><p>Configuration fields become dotted options. For example, replay a Vision Pro recording at its original rate and scale wrist movement:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">shell</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>uv run --extra vision-pro scripts/teleop/arm.py \
+    visionpro_xarm7 --mode viser --device cpu \
+    --source.recording-path data/vision_pro.pkl \
+    --source.recording-fps 50 \
+    --retargeters.right.translation-scale 0.5</pre></div><p>Create the recording with the <a class="inline" href="/docs/retargetingkit/vision-pro/">Vision Pro recorder</a> first. Recording files do not store frame rate, so pass the rate used when capturing.</p><table class="doc-table" style="--cols:2"><thead><tr><th>Field family</th><th>Example</th></tr></thead><tbody><tr><td>Source</td><td><code>--source.ip</code>, <code>--source.recording-path</code></td></tr><tr><td>Arm connection</td><td><code>--arms.right.ip</code></td></tr><tr><td>Arm solver in <code>arm.py</code></td><td><code>--retargeters.right.translation-scale</code></td></tr><tr><td>Arm solver in <code>arm_hand.py</code></td><td><code>--arm-retargeters.right.translation-scale</code></td></tr><tr><td>Humanoid target tuple</td><td><code>--targets.0.port</code></td></tr></tbody></table><p>The fields available depend on the selected rig. Boolean switches may use a <code>--no-</code> form; PICO's foot mapping uses <code>--source.no-use-ankle-as-foot-target</code>.</p><h3 id="choose-the-output">Choose the output</h3><p><code>hand</code>, <code>arm</code>, and <code>arm_hand</code> default to <code>viser</code>:</p><table class="doc-table" style="--cols:2"><thead><tr><th>Mode</th><th>Output</th></tr></thead><tbody><tr><td><code>--mode viser</code></td><td>Browser preview</td></tr><tr><td><code>--mode real</code></td><td>Physical robot</td></tr><tr><td><code>--mode both</code></td><td>Physical robot and browser preview</td></tr></tbody></table><p>Humanoid flows choose targets through the rig. A <code>*_sonic_viser</code> rig publishes SONIC commands and displays the same motion in Viser. The viewer works without a SONIC receiver. <code>humanoid_hand</code> opens physical Inspire hands and has no preview mode.</p><p>SONIC runs as a separate receiver. See <a class="inline" href="/docs/retargetingkit/g1/">G1 / SONIC</a> for sender and receiver settings, simulation, and deployment.</p><p>Start with <a class="inline" href="/docs/retargetingkit/humanoid-retargeting/">Humanoid teleoperation</a> for body motion, or <a class="inline" href="/docs/retargetingkit/quickstart/">Quickstart</a> for a recording that needs no hardware.</p><h3 id="use-the-python-api">Use the Python API</h3><p>A rig is a source, a retargeter, and targets. This loop runs the BVH rig without a tracking device or robot: SONIC publishes commands whether or not a receiver is running.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>from retargetingkit.configs.teleop.humanoid.bvh_g1_sonic import BVH_G1_SONIC_CONFIG
+
+config = BVH_G1_SONIC_CONFIG
+source = config.source.build()
+retargeter = config.retargeter.build(device)
+targets = [target_config.build() for target_config in config.targets]
+
+while True:
+    frame = source.get_frame()
+    if frame is not None:
+        command = retargeter.solve(frame)
+        for target in targets:
+            target.set_command(command)</pre><pre data-code-full hidden>import numpy as np
+import warp as wp
+
+device = "cuda:0" if wp.is_cuda_available() else "cpu"
+from retargetingkit.configs.teleop.humanoid.bvh_g1_sonic import BVH_G1_SONIC_CONFIG
+
+config = BVH_G1_SONIC_CONFIG
+source = config.source.build()
+retargeter = config.retargeter.build(device)
+targets = [target_config.build() for target_config in config.targets]
+
+while True:
+    frame = source.get_frame()
+    if frame is not None:
+        command = retargeter.solve(frame)
+        for target in targets:
+            target.set_command(command)
+    break
+assert command.qpos.shape == (29,)
+assert np.isfinite(command.qpos).all()
+for target in targets:
+    target.close()
+source.close()</pre></div></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/retargetingkit/full-body/"><span class="lbl">← Previous</span><span class="nm">Full-Body Retargeting</span></a><a class="next" href="/docs/retargetingkit/ref-assets/"><span class="lbl">Next →</span><span class="nm">Assets</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#choose-a-flow">Choose a flow</a><a href="#select-a-rig">Select a rig</a><a href="#override-settings">Override settings</a><a href="#choose-the-output">Choose the output</a><a href="#use-the-python-api">Use the Python API</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "retargetingkit", "id": "teleoperation", "toc": [{"text": "Choose a flow", "href": "#choose-a-flow"}, {"text": "Select a rig", "href": "#select-a-rig"}, {"text": "Override settings", "href": "#override-settings"}, {"text": "Choose the output", "href": "#choose-the-output"}, {"text": "Use the Python API", "href": "#use-the-python-api"}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

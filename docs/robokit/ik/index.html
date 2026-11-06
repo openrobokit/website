@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IK · RoboKit docs · OpenRoboKit</title>
+  <meta name="description" content="GPU-native, differentiable robotics tooling: IK, trajectory optimization, retargeting, grasping, calibration." />
+  <link rel="canonical" href="https://openrobokit.com/docs/robokit/ik/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">RoboKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="is-active">
+        <span class="nm">RoboKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="">
+        <span class="nm">GraspKit</span>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/robokit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/robokit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/robokit/rl/" data-id="rl" class="">RL</a></div><div class="side__list"><a href="/docs/robokit/sim-mpc/" data-id="sim-mpc" class="">Sim MPC</a></div><div class="side__list"><a href="/docs/robokit/ik/" data-id="ik" class="is-active">IK</a></div><div class="side__list"><a href="/docs/robokit/motion-planning/" data-id="motion-planning" class="">Motion Planning</a></div><div class="side__list"><a href="/docs/robokit/humanoid-retargeting/" data-id="humanoid-retargeting" class="">Humanoid Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand-retargeting/" data-id="hand-retargeting" class="">Hand Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand_eye_calibration/" data-id="hand_eye_calibration" class="">Hand-Eye Calibration</a></div><div class="side__list"><a href="/docs/robokit/ref-assets/" data-id="ref-assets" class="">Built-in Robots &amp; Datasets</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/robot/" data-id="robot" class="">Robot</a></div><div class="side__list"><a href="/docs/robokit/geom/" data-id="geom" class="">Geometry</a></div><div class="side__list"><a href="/docs/robokit/optimization/" data-id="optimization" class="">Optimization</a></div><div class="side__list"><a href="/docs/robokit/conventions/" data-id="conventions" class="">Conventions</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list">
+      <div class="side__sub is-folded" data-fold="Reference·Optimizers">
+        <span>Optimizers</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/opt-gd/" data-id="opt-gd" class="">GDOptimizer</a><a href="/docs/robokit/opt-lm/" data-id="opt-lm" class="">LMOptimizer</a><a href="/docs/robokit/opt-lbfgs/" data-id="opt-lbfgs" class="">LBFGSOptimizer</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Terms">
+        <span>Terms</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/term-frame/" data-id="term-frame" class="">Frame Task</a><a href="/docs/robokit/term-position/" data-id="term-position" class="">Position Task</a><a href="/docs/robokit/term-rotation/" data-id="term-rotation" class="">Rotation Tasks</a><a href="/docs/robokit/term-frame-vector/" data-id="term-frame-vector" class="">Frame Vector Task</a><a href="/docs/robokit/term-com-position/" data-id="term-com-position" class="">CoM Position Task</a><a href="/docs/robokit/term-position-limit/" data-id="term-position-limit" class="">Position Limit</a><a href="/docs/robokit/term-velocity-limit/" data-id="term-velocity-limit" class="">Velocity Limit Task</a><a href="/docs/robokit/term-configuration/" data-id="term-configuration" class="">Configuration Task</a><a href="/docs/robokit/term-smoothness/" data-id="term-smoothness" class="">Smoothness Task</a><a href="/docs/robokit/term-self-collision/" data-id="term-self-collision" class="">Self Collision Task</a><a href="/docs/robokit/term-scene-collision/" data-id="term-scene-collision" class="">Scene Collision Task</a><a href="/docs/robokit/term-scene-distance/" data-id="term-scene-distance" class="">Scene Distance Task</a><a href="/docs/robokit/term-interaction-mesh/" data-id="term-interaction-mesh" class="">Interaction Mesh Task</a><a href="/docs/robokit/term-mask-alignment/" data-id="term-mask-alignment" class="">Mask Alignment Task</a><a href="/docs/robokit/term-manipulability/" data-id="term-manipulability" class="">Manipulability Task</a><a href="/docs/robokit/term-force-closure/" data-id="term-force-closure" class="">Force Closure Task</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/api-robot/" data-id="api-robot" class="">Robot</a><a href="/docs/robokit/api-geometry/" data-id="api-geometry" class="">Geometry</a><a href="/docs/robokit/api-optimization/" data-id="api-optimization" class="">Optimization</a><a href="/docs/robokit/api-terms/" data-id="api-terms" class="">Terms</a><a href="/docs/robokit/api-ik/" data-id="api-ik" class="">Inverse Kinematics</a><a href="/docs/robokit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/robokit/api-sim-mpc/" data-id="api-sim-mpc" class="">Sim MPC</a><a href="/docs/robokit/api-humanoid-retargeting/" data-id="api-humanoid-retargeting" class="">Humanoid Retargeting</a><a href="/docs/robokit/api-hand-retargeting/" data-id="api-hand-retargeting" class="">Hand Retargeting</a><a href="/docs/robokit/api-hand_eye_calibration/" data-id="api-hand_eye_calibration" class="">Hand-Eye Calibration</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">robokit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>User Guide</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">IK</h1>
+        <div class="doc-body" id="doc-body"><table class="doc-table" style="--cols:2"><thead><tr><th><img src="/assets/docs/robokit/assets/gallery/ik.webp" alt="An arm tracking a dragged target"></th><th><img src="/assets/docs/robokit/assets/gallery/ik_legged.webp" alt="A humanoid tracking hand targets while balancing"></th></tr></thead><tbody><tr><td>An arm tracking a dragged target.</td><td>A humanoid tracking hand targets while balancing.</td></tr></tbody></table><p><code>robokit.helpers.ik</code> solves inverse kinematics. It handles multiple target links, floating bases, joint limits, smoothness, and collision avoidance.</p><p>The snippets assume <code>robot</code>, <code>device</code>, and targets are defined. Runnable examples are in <a class="inline" href="https://github.com/openrobokit/robokit/tree/main/src/robokit/examples/ik/"><code>src/robokit/examples/ik</code></a>.</p><h3 id="how-ik-works">How IK Works</h3><p>Each solve takes target link poses and an optional initial state:</p><ol><li>Sample candidate states near the initial state.</li><li>Optimize pose errors and other costs (Levenberg-Marquardt by default).</li><li>Return the best candidates as a <code>RobotState</code>.</li></ol><div class="mermaid">flowchart TD
+    INPUT[Input&lt;br/&gt;&lt;br/&gt;Target link poses&lt;br/&gt;Optional initial state]
+
+    subgraph SOLVING[Solving]
+        direction TB
+        SAMPLE[1. Sample candidates]
+        OPT[2. Optimize costs]
+        PICK[3. Select the best]
+        SAMPLE --&gt; OPT --&gt; PICK
+    end
+
+    STATE[Return RobotState]
+
+    INPUT --&gt; SAMPLE
+    PICK --&gt; STATE</div><h3 id="basic-ik">Basic IK</h3><p>An <code>IKSolver</code> takes a configuration, a robot, and <code>target_links</code>: one or more link names or indices. <code>presets.basic</code> has position, rotation, and joint-limit terms.</p><p>Pass the target as a translation-first 7D pose:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>from robokit.helpers.ik import IKSolver, presets
+
+ik = IKSolver(presets.basic, robot=robot, target_links="panda_hand", device=device)
+
+T_world_target = [0.5, 0.2, 0.5, 0.0, 0.0, 1.0, 0.0]  # x, y, z, qw, qx, qy, qz
+state = ik.solve_numpy(T_world_target)
+q = state.q.numpy()[0]</pre><pre data-code-full hidden>import numpy as np
+import warp as wp
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+from robokit.robo import Robot
+
+device = "cpu"
+robot = Robot.load(load_robot_description("panda_description"))
+q_init = np.mean(robot.spec.actuated_joint_limits, axis=1).astype(np.float32)[None]
+from robokit.helpers.ik import IKSolver, presets
+
+ik = IKSolver(presets.basic, robot=robot, target_links="panda_hand", device=device)
+
+T_world_target = [0.5, 0.2, 0.5, 0.0, 0.0, 1.0, 0.0]  # x, y, z, qw, qx, qy, qz
+state = ik.solve_numpy(T_world_target)
+q = state.q.numpy()[0]
+assert q.shape == (robot.spec.num_actuated_joints,)
+assert np.isfinite(q).all()</pre></div><p>The first solve builds the solver for its batch size. Call <code>ik.warmup(batch_size=1)</code> to build it before a control loop. Create a new <code>IK</code> to change the batch size.</p><p><code>solve()</code> takes Warp arrays.</p><h4>Tracking IK</h4><p><code>presets.smooth</code> adds a smoothness term. Pass the previous result as both <code>init_state</code> and <code>prev_state</code> when solving a moving target:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>ik = IKSolver(presets.smooth, robot=robot, target_links="panda_hand", device=device)
+
+state = None
+for T_world_target in target_trajectory:
+    state = ik.solve_numpy(T_world_target, init_state=state, prev_state=state)</pre><pre data-code-full hidden>import numpy as np
+import warp as wp
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+from robokit.robo import Robot
+
+device = "cpu"
+robot = Robot.load(load_robot_description("panda_description"))
+q_init = np.mean(robot.spec.actuated_joint_limits, axis=1).astype(np.float32)[None]
+from robokit.helpers.ik import IKSolver, IKSolverConfig, presets
+from robokit.opt.sampler import RobertsSamplerConfig
+from robokit.terms.dense.position_task import PositionTask
+from robokit.terms.dense.rotation_task import RotationTask
+from robokit.terms.dense.position_limit import PositionLimit
+from robokit.terms.dense.smoothness_task import SmoothnessTask
+
+target_trajectory = np.array([[0.5, 0.2, 0.5, 0, 0, 1, 0], [0.5, 0.21, 0.5, 0, 0, 1, 0]], dtype=np.float32)
+ik = IKSolver(presets.smooth, robot=robot, target_links="panda_hand", device=device)
+
+state = None
+for T_world_target in target_trajectory:
+    state = ik.solve_numpy(T_world_target, init_state=state, prev_state=state)
+assert np.isfinite(state.q.numpy()).all()</pre></div><p><code>init_state</code> centers new samples on the previous answer. <code>prev_state</code> feeds temporal terms. The solver keeps the previous answer if it scores better.</p><h4>Custom Terms</h4><p>Build an <code>IKSolverConfig</code> when a preset does not contain the terms you need:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>from robokit.helpers.ik import IKContext, IKSolver, IKSolverConfig
+from robokit.opt.sampler import RobertsSamplerConfig
+from robokit.terms.dense.position_limit import PositionLimit
+from robokit.terms.dense.position_task import PositionTask
+from robokit.terms.dense.rotation_task import RotationTask
+from robokit.terms.dense.smoothness_task import SmoothnessTask
+
+config = (
+    IKSolverConfig(sampler=RobertsSamplerConfig(scale=1.0, keep_first=True))
+    .add(PositionTask(frame_index=IKContext.TARGET_LINKS, T_world_target=IKContext.TARGET, weight=20.0))
+    .add(RotationTask(frame_index=IKContext.TARGET_LINKS, T_world_target=IKContext.TARGET, weight=10.0))
+    .add(PositionLimit(weight=50.0))
+    .add(SmoothnessTask(prev_var=IKContext.PREVIOUS_STATE, weight=1.0))
+)
+ik = IKSolver(config, robot=robot, target_links="panda_hand", device=device)</pre><pre data-code-full hidden>import numpy as np
+import warp as wp
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+from robokit.robo import Robot
+
+device = "cpu"
+robot = Robot.load(load_robot_description("panda_description"))
+q_init = np.mean(robot.spec.actuated_joint_limits, axis=1).astype(np.float32)[None]
+from robokit.helpers.ik import IKContext, IKSolver, IKSolverConfig
+from robokit.opt.sampler import RobertsSamplerConfig
+from robokit.terms.dense.position_limit import PositionLimit
+from robokit.terms.dense.position_task import PositionTask
+from robokit.terms.dense.rotation_task import RotationTask
+from robokit.terms.dense.smoothness_task import SmoothnessTask
+
+config = (
+    IKSolverConfig(sampler=RobertsSamplerConfig(scale=1.0, keep_first=True))
+    .add(PositionTask(frame_index=IKContext.TARGET_LINKS, T_world_target=IKContext.TARGET, weight=20.0))
+    .add(RotationTask(frame_index=IKContext.TARGET_LINKS, T_world_target=IKContext.TARGET, weight=10.0))
+    .add(PositionLimit(weight=50.0))
+    .add(SmoothnessTask(prev_var=IKContext.PREVIOUS_STATE, weight=1.0))
+)
+ik = IKSolver(config, robot=robot, target_links="panda_hand", device=device)
+assert ik.config.task("smoothness_task_0").weight == 1.0</pre></div><p>Arguments the solver fills hold <code>IKContext</code> members, such as <code>TARGET</code> (the poses passed to <code>solve</code>), <code>PREVIOUS_STATE</code> (its <code>prev_state</code>), and <code>SCENE</code> (the solver's scene). Use <code>add_score()</code> to rank candidates without changing the optimization.</p><p><code>CompositeTask(tasks, thresholds=[...])</code> mixes constraints and scores. A numeric threshold makes a child a constraint; <code>None</code> makes it a score. Candidates that pass every constraint rank first.</p><h3 id="batch-ik">Batch IK</h3><p>Add a leading batch dimension to solve several targets in one call:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>from robokit.helpers.ik import IKSolver, presets
+
+ik = IKSolver(presets.smooth, robot=robot, target_links="panda_hand", device=device)
+state = ik.solve_numpy(T_world_target_batch)
+q_batch = state.q.numpy()</pre><pre data-code-full hidden>import numpy as np
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+from robokit.robo import Robot
+
+from robokit.helpers.ik import IKSolver, presets
+
+device = "cpu"
+robot = Robot.load(load_robot_description("panda_description"))
+T_world_target_batch = np.tile(np.array([0.5, 0.2, 0.5, 0, 0, 1, 0], dtype=np.float32), (2, 1))
+ik = IKSolver(presets.smooth, robot=robot, target_links="panda_hand", device=device)
+state = ik.solve_numpy(T_world_target_batch)
+q_batch = state.q.numpy()
+assert q_batch.shape == (2, robot.spec.num_actuated_joints)</pre></div><p>The output shape is <code>(batch * ik.num_solutions, dofs)</code>. Presets return one solution per target. A custom final stage can keep more, in instance-major order.</p><h3 id="multiple-target-links">Multiple Target Links</h3><p>Pass several link names to solve them together. Target row <code>i</code> belongs to <code>links[i]</code>:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>links = ["yumi_link_7_r", "yumi_link_7_l"]
+ik = IKSolver(presets.single_candidate, robot=robot, target_links=links, device=device)
+
+# T_world_target: shape (2, 7), or (batch, 2, 7)
+state = ik.solve_numpy(T_world_target)</pre><pre data-code-full hidden>import numpy as np
+import warp as wp
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+from robokit.robo import Robot
+
+device = "cpu"
+robot = Robot.load(load_robot_description("panda_description"))
+q_init = np.mean(robot.spec.actuated_joint_limits, axis=1).astype(np.float32)[None]
+from robokit.helpers.ik import IKSolver, IKSolverConfig, presets
+from robokit.opt.sampler import RobertsSamplerConfig
+from robokit.terms.dense.position_task import PositionTask
+from robokit.terms.dense.rotation_task import RotationTask
+from robokit.terms.dense.position_limit import PositionLimit
+from robokit.terms.dense.smoothness_task import SmoothnessTask
+
+robot = Robot.load(load_robot_description("yumi_description"))
+initial = robot.forward_kinematics(robot.state())
+T_world_target = initial.T_world_link.numpy()[
+    0, [robot.spec.link_names.index(name) for name in ("yumi_link_7_r", "yumi_link_7_l")]
+]
+links = ["yumi_link_7_r", "yumi_link_7_l"]
+ik = IKSolver(presets.single_candidate, robot=robot, target_links=links, device=device)
+
+# T_world_target: shape (2, 7), or (batch, 2, 7)
+state = ik.solve_numpy(T_world_target)
+assert state.q.shape[0] == 1</pre></div><p>Pass per-link weights to <code>PositionTask</code> or <code>RotationTask</code>, such as <code>weight=[20.0, 5.0]</code>.</p><h3 id="floating-base">Floating Base</h3><p>Set <code>enable_T_world_base=True</code> to optimize the base pose with the joints. A zero in <code>base_active_mask</code> locks that DOF. This config allows planar base motion and locks z, roll, and pitch:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>config = (
+    IKSolverConfig(
+        enable_T_world_base=True,
+        sampler=RobertsSamplerConfig(scale=1.0, keep_first=True),
+        base_init_sample_range=(1.0, 1.0, 0.0),
+        base_active_mask=[1.0, 1.0, 0.0, 0.0, 0.0, 1.0],
+    )
+    .add(PositionTask(frame_index=IKContext.TARGET_LINKS, T_world_target=IKContext.TARGET, weight=10.0))
+    .add(RotationTask(frame_index=IKContext.TARGET_LINKS, T_world_target=IKContext.TARGET, weight=5.0))
+    .add(PositionLimit(weight=50.0))
+    .add(SmoothnessTask(prev_var=IKContext.PREVIOUS_STATE, weight=0.1, base_weight=0.5))
+)
+ik = IKSolver(config, robot=robot, target_links="panda_hand", device=device)
+
+state = ik.solve_numpy(T_world_target, init_state=state, prev_state=state)
+T_world_base = state.T_world_base.numpy()[0]</pre><pre data-code-full hidden>import numpy as np
+import warp as wp
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+from robokit.robo import Robot
+
+device = "cpu"
+robot = Robot.load(load_robot_description("panda_description"))
+q_init = np.mean(robot.spec.actuated_joint_limits, axis=1).astype(np.float32)[None]
+from robokit.helpers.ik import IKContext, IKSolver, IKSolverConfig, presets
+from robokit.opt.sampler import RobertsSamplerConfig
+from robokit.terms.dense.position_task import PositionTask
+from robokit.terms.dense.rotation_task import RotationTask
+from robokit.terms.dense.position_limit import PositionLimit
+from robokit.terms.dense.smoothness_task import SmoothnessTask
+
+robot = Robot.load(load_robot_description("panda_description"))
+state = None
+T_world_target = np.array([0.3, 0.0, 0.3, 1, 0, 0, 0], dtype=np.float32)
+config = (
+    IKSolverConfig(
+        enable_T_world_base=True,
+        sampler=RobertsSamplerConfig(scale=1.0, keep_first=True),
+        base_init_sample_range=(1.0, 1.0, 0.0),
+        base_active_mask=[1.0, 1.0, 0.0, 0.0, 0.0, 1.0],
+    )
+    .add(PositionTask(frame_index=IKContext.TARGET_LINKS, T_world_target=IKContext.TARGET, weight=10.0))
+    .add(RotationTask(frame_index=IKContext.TARGET_LINKS, T_world_target=IKContext.TARGET, weight=5.0))
+    .add(PositionLimit(weight=50.0))
+    .add(SmoothnessTask(prev_var=IKContext.PREVIOUS_STATE, weight=0.1, base_weight=0.5))
+)
+ik = IKSolver(config, robot=robot, target_links="panda_hand", device=device)
+
+state = ik.solve_numpy(T_world_target, init_state=state, prev_state=state)
+T_world_base = state.T_world_base.numpy()[0]
+assert T_world_base.shape == (7,)
+assert np.isfinite(T_world_base).all()</pre></div><p><code>base_init_sample_range</code> sets the per-axis translation noise around the initial base pose.</p><h3 id="collision-avoidance">Collision Avoidance</h3><p>Load the robot with collision spheres, then add scene and self-collision terms:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>from robokit.terms.dense.scene_collision_task import SceneCollisionTask
+from robokit.terms.dense.self_collision_task import SelfCollisionTask
+
+config = (
+    IKSolverConfig(sampler=RobertsSamplerConfig(scale=1.0, keep_first=True), solver=presets.smooth.solver)
+    .add(PositionTask(frame_index=IKContext.TARGET_LINKS, T_world_target=IKContext.TARGET, weight=20.0))
+    .add(RotationTask(frame_index=IKContext.TARGET_LINKS, T_world_target=IKContext.TARGET, weight=10.0))
+    .add(PositionLimit(weight=50.0))
+    .add(SmoothnessTask(prev_var=IKContext.PREVIOUS_STATE, weight=1.0))
+    .add(SceneCollisionTask(scene=IKContext.SCENE, weight=100.0, margin=0.02))
+    .add(SelfCollisionTask(robot, representation="sphere", weight=5.0, margin=0.01))
+)
+ik = IKSolver(config, robot=robot, target_links="panda_hand", device=device, scene=scene)</pre><pre data-code-full hidden>import numpy as np
+import warp as wp
+from robokit.helpers.ik import IKContext, IKSolver, IKSolverConfig, presets
+from robokit.opt.sampler import RobertsSamplerConfig
+from robokit.terms.dense.position_task import PositionTask
+from robokit.terms.dense.rotation_task import RotationTask
+from robokit.terms.dense.position_limit import PositionLimit
+from robokit.terms.dense.smoothness_task import SmoothnessTask
+
+device = "cpu"
+from robokit.robo import Robot
+from robokit.assets.robots.arms import franka_panda
+from robokit.geom import BoxGeom, WarpScene
+
+robot = Robot.load(
+    franka_panda.URDF_PATH, load_collision_spheres=True, collision_spheres_path=franka_panda.COLLISION_SPHERE_PATH
+)
+scene = WarpScene(1, device).add(
+    BoxGeom(np.array([[0.1, 0.1, 0.1]], dtype=np.float32), np.array([0, 1], dtype=np.int32))
+)
+from robokit.terms.dense.scene_collision_task import SceneCollisionTask
+from robokit.terms.dense.self_collision_task import SelfCollisionTask
+
+config = (
+    IKSolverConfig(sampler=RobertsSamplerConfig(scale=1.0, keep_first=True), solver=presets.smooth.solver)
+    .add(PositionTask(frame_index=IKContext.TARGET_LINKS, T_world_target=IKContext.TARGET, weight=20.0))
+    .add(RotationTask(frame_index=IKContext.TARGET_LINKS, T_world_target=IKContext.TARGET, weight=10.0))
+    .add(PositionLimit(weight=50.0))
+    .add(SmoothnessTask(prev_var=IKContext.PREVIOUS_STATE, weight=1.0))
+    .add(SceneCollisionTask(scene=IKContext.SCENE, weight=100.0, margin=0.02))
+    .add(SelfCollisionTask(robot, representation="sphere", weight=5.0, margin=0.01))
+)
+ik = IKSolver(config, robot=robot, target_links="panda_hand", device=device, scene=scene)
+assert ik.config.task("scene_collision_task_0").weight == 100.0</pre></div><p>The margin keeps collision spheres away from obstacles or one another. The scene layout is fixed after the solver is built. Update existing geometry poses in place; create a new <code>IK</code> only when the layout changes.</p><h3 id="runtime-changes">Runtime Changes</h3><p>Each term gets a name such as <code>position_task_0</code>. Use it to change a supported term's weight without rebuilding the solver:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>ik.set_weight("position_task_0", 20.0 * proximity_factor(state))
+ik.set_weight("rotation_task_0", [0.0, 1.5])  # one weight per target link</pre><pre data-code-full hidden>import numpy as np
+import warp as wp
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+from robokit.robo import Robot
+
+device = "cpu"
+robot = Robot.load(load_robot_description("panda_description"))
+q_init = np.mean(robot.spec.actuated_joint_limits, axis=1).astype(np.float32)[None]
+from robokit.helpers.ik import IKSolver, IKSolverConfig, presets
+from robokit.opt.sampler import RobertsSamplerConfig
+from robokit.terms.dense.position_task import PositionTask
+from robokit.terms.dense.rotation_task import RotationTask
+from robokit.terms.dense.position_limit import PositionLimit
+from robokit.terms.dense.smoothness_task import SmoothnessTask
+
+links = ["panda_hand", "panda_leftfinger"]
+ik = IKSolver(presets.smooth, robot, links, device=device)
+target = robot.forward_kinematics(robot.state(q_init)).T_world_link.numpy()[
+    0, [robot.spec.link_names.index(name) for name in links]
+]
+state = ik.solve_numpy(target)
+
+from robokit.robo.robot_state import RobotState
+
+
+def proximity_factor(state: RobotState) -&gt; float:
+    return 0.5
+
+
+ik.set_weight("position_task_0", 20.0 * proximity_factor(state))
+ik.set_weight("rotation_task_0", [0.0, 1.5])  # one weight per target link
+assert np.isfinite(state.q.numpy()).all()</pre></div><p><code>set_active_joint_mask()</code> and <code>set_active_base_mask()</code> lock DOFs at runtime. Changing links, terms, solver stages, collision margins, or scene layout needs a new <code>IK</code>.</p></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/robokit/sim-mpc/"><span class="lbl">← Previous</span><span class="nm">Sim MPC</span></a><a class="next" href="/docs/robokit/motion-planning/"><span class="lbl">Next →</span><span class="nm">Motion Planning</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#how-ik-works">How IK Works</a><a href="#basic-ik">Basic IK</a><a href="#batch-ik">Batch IK</a><a href="#multiple-target-links">Multiple Target Links</a><a href="#floating-base">Floating Base</a><a href="#collision-avoidance">Collision Avoidance</a><a href="#runtime-changes">Runtime Changes</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "robokit", "id": "ik", "toc": [{"text": "How IK Works", "href": "#how-ik-works"}, {"text": "Basic IK", "href": "#basic-ik"}, {"text": "Batch IK", "href": "#batch-ik"}, {"text": "Multiple Target Links", "href": "#multiple-target-links"}, {"text": "Floating Base", "href": "#floating-base"}, {"text": "Collision Avoidance", "href": "#collision-avoidance"}, {"text": "Runtime Changes", "href": "#runtime-changes"}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

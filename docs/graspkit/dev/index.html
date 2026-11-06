@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Development Guide · GraspKit docs · OpenRoboKit</title>
+  <meta name="description" content="Manipulation across robot embodiments, including grippers and dexterous hands." />
+  <link rel="canonical" href="https://openrobokit.com/docs/graspkit/dev/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">GraspKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="">
+        <span class="nm">RoboKit</span>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="is-active">
+        <span class="nm">GraspKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/graspkit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/graspkit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim/" data-id="grasp-optim" class="">Grasp Optimization</a></div><div class="side__list"><a href="/docs/graspkit/training/" data-id="training" class="">Policy Training</a></div><div class="side__list"><a href="/docs/graspkit/pipeline/" data-id="pipeline" class="">Pipeline</a></div><div class="side__list"><a href="/docs/graspkit/sim-deploy/" data-id="sim-deploy" class="">Sim Deployment</a></div><div class="side__list"><a href="/docs/graspkit/real-deploy/" data-id="real-deploy" class="">Real Deployment</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/concepts-overview/" data-id="concepts-overview" class="">Core Overview</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim-backends/" data-id="grasp-optim-backends" class="">Grasp Optimization Backends</a></div><div class="side__list"><a href="/docs/graspkit/concepts-sim/" data-id="concepts-sim" class="">Simulation</a></div><div class="side__list"><a href="/docs/graspkit/concepts-policies/" data-id="concepts-policies" class="">Models and Policies</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/ref-robot-hands/" data-id="ref-robot-hands" class="">Robot and Hand Catalog</a></div><div class="side__list"><a href="/docs/graspkit/ref-config-system/" data-id="ref-config-system" class="">Config System</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Data">
+        <span>Data</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/ref-data-format/" data-id="ref-data-format" class="">Data Format Specification</a><a href="/docs/graspkit/ref-assets/" data-id="ref-assets" class="">graspkit assets</a><a href="/docs/graspkit/ref-scene-descriptions/" data-id="ref-scene-descriptions" class="">Dex1B Scene Descriptions</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/api-grasp-optim/" data-id="api-grasp-optim" class="">Grasp Optimization</a><a href="/docs/graspkit/api-scene/" data-id="api-scene" class="">Scene</a><a href="/docs/graspkit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/graspkit/api-policy/" data-id="api-policy" class="">Policy</a><a href="/docs/graspkit/api-training/" data-id="api-training" class="">Training</a><a href="/docs/graspkit/api-envs/" data-id="api-envs" class="">Environments</a><a href="/docs/graspkit/api-data/" data-id="api-data" class="">Data</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/dev/" data-id="dev" class="is-active">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">graspkit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>Development</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Development Guide</h1>
+        <div class="doc-body" id="doc-body"><h3 id="setup">Setup</h3><p>GraspKit needs Python 3.10–3.14.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">shell</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>git clone https://github.com/openrobokit/graspkit.git
+cd graspkit
+uv sync --extra maniskill --extra spconv</pre></div><p><code>uv sync</code> installs the <code>dev</code> and <code>pt-cu126</code> groups by default; the full pipeline also needs the <code>maniskill</code> and <code>spconv</code> extras (Python 3.10–3.12). For another PyTorch build, see <a class="inline" href="/docs/graspkit/install/#pytorch-builds">Installation</a>.</p><h3 id="git-workflow">Git Workflow</h3><p>Create your own branch for development. Use pull requests with <strong>squash merge</strong> to merge to <code>main</code>. Delete your branch after merging. GitHub CI runs ruff and the tests on a CPU runner without Hugging Face access, where tests marked <code>cuda</code> or <code>hf_assets</code> skip, so run the full suite locally on a GPU before opening a pull request.</p><h3 id="formatting-linting-and-tests">Formatting, Linting, and Tests</h3><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">shell</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>make ci                       # format + lint + test
+make format                   # uvx ruff@0.15.22 format
+make lint                     # uvx ruff@0.15.22 check --fix
+CUDA_VISIBLE_DEVICES=0 make test  # uv run pytest tests</pre></div><p><code>tests/</code> mirrors <code>src/graspkit/</code> and <code>scripts/</code> (<code>tests/scripts/</code>), one <code>Test&lt;Feature&gt;</code> class per feature; shared fixtures live in <code>tests/conftest.py</code>. Mark tests that need a GPU with <code>@pytest.mark.cuda</code> and tests that need Hugging Face assets (robokit robots, graspkit scenes) with <code>@pytest.mark.hf_assets</code>; import such assets inside the test, since robokit downloads a robot when its module is imported.</p><p>Pre-commit hooks run ruff. Pin the same ruff version the Makefile does; a newer default rule set reports findings CI does not.</p><h3 id="running-things">Running Things</h3><ul><li>Use <code>uv run</code>, never a bare <code>python</code> or <code>pip</code>.</li><li>GPU scripts: pick a free GPU first and set <code>CUDA_VISIBLE_DEVICES</code>.</li><li>Viser scripts serve until interrupted; give them a timeout when scripting them.</li></ul><h3 id="configs">Configs</h3><p>All config <strong>classes</strong> live in <code>src/graspkit/configs/*_config.py</code>; their <strong>instances</strong> live apart, in <code>configs/experiment/</code>, <code>configs/robot/</code>, <code>configs/grasp_policy.py</code>, <code>configs/mj_hand.py</code> and <code>configs/real_env.py</code>. A new robot or experiment is a module plus one line in the registry of its package's <code>__init__.py</code>. See the <a class="inline" href="/docs/graspkit/ref-config-system/">Config System</a>.</p><h3 id="code-style">Code Style</h3><ul><li>Type hints on function arguments and return types, except <code>None</code>, <code>Any</code> and <code>object</code>.</li><li>No <code>from __future__ import annotations</code>.</li><li>Prefer fewer, larger functions; add a helper only when it removes real duplication.</li><li>No try/except, no <code>hasattr</code>, no fallback paths: assume the environment is correct and let the program crash on errors.</li></ul><h3 id="the-robokit-boundary">The robokit Boundary</h3><p>robokit holds robot-generic math (terms, solvers, lie, geom, robo); graspkit holds the research pipelines and anything tuned per experiment. Code moves to robokit only when a second consumer exists, and it is moved, never copied. robokit is pinned by git rev in <code>pyproject.toml</code> (<code>[tool.uv.sources]</code>): to pick up robokit changes, merge there, bump the rev, then <code>uv sync</code>.</p></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/graspkit/api-data/"><span class="lbl">← Previous</span><span class="nm">Data</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#setup">Setup</a><a href="#git-workflow">Git Workflow</a><a href="#formatting-linting-and-tests">Formatting, Linting, and Tests</a><a href="#running-things">Running Things</a><a href="#configs">Configs</a><a href="#code-style">Code Style</a><a href="#the-robokit-boundary">The robokit Boundary</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "graspkit", "id": "dev", "toc": [{"text": "Setup", "href": "#setup"}, {"text": "Git Workflow", "href": "#git-workflow"}, {"text": "Formatting, Linting, and Tests", "href": "#formatting-linting-and-tests"}, {"text": "Running Things", "href": "#running-things"}, {"text": "Configs", "href": "#configs"}, {"text": "Code Style", "href": "#code-style"}, {"text": "The robokit Boundary", "href": "#the-robokit-boundary"}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

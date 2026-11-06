@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Grasp Optimization Algorithms: warp_gd and warp_lm · GraspKit docs · OpenRoboKit</title>
+  <meta name="description" content="Manipulation across robot embodiments, including grippers and dexterous hands." />
+  <link rel="canonical" href="https://openrobokit.com/docs/graspkit/grasp-optim-backends/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">GraspKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="">
+        <span class="nm">RoboKit</span>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="is-active">
+        <span class="nm">GraspKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/graspkit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/graspkit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim/" data-id="grasp-optim" class="">Grasp Optimization</a></div><div class="side__list"><a href="/docs/graspkit/training/" data-id="training" class="">Policy Training</a></div><div class="side__list"><a href="/docs/graspkit/pipeline/" data-id="pipeline" class="">Pipeline</a></div><div class="side__list"><a href="/docs/graspkit/sim-deploy/" data-id="sim-deploy" class="">Sim Deployment</a></div><div class="side__list"><a href="/docs/graspkit/real-deploy/" data-id="real-deploy" class="">Real Deployment</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/concepts-overview/" data-id="concepts-overview" class="">Core Overview</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim-backends/" data-id="grasp-optim-backends" class="is-active">Grasp Optimization Backends</a></div><div class="side__list"><a href="/docs/graspkit/concepts-sim/" data-id="concepts-sim" class="">Simulation</a></div><div class="side__list"><a href="/docs/graspkit/concepts-policies/" data-id="concepts-policies" class="">Models and Policies</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/ref-robot-hands/" data-id="ref-robot-hands" class="">Robot and Hand Catalog</a></div><div class="side__list"><a href="/docs/graspkit/ref-config-system/" data-id="ref-config-system" class="">Config System</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Data">
+        <span>Data</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/ref-data-format/" data-id="ref-data-format" class="">Data Format Specification</a><a href="/docs/graspkit/ref-assets/" data-id="ref-assets" class="">graspkit assets</a><a href="/docs/graspkit/ref-scene-descriptions/" data-id="ref-scene-descriptions" class="">Dex1B Scene Descriptions</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/api-grasp-optim/" data-id="api-grasp-optim" class="">Grasp Optimization</a><a href="/docs/graspkit/api-scene/" data-id="api-scene" class="">Scene</a><a href="/docs/graspkit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/graspkit/api-policy/" data-id="api-policy" class="">Policy</a><a href="/docs/graspkit/api-training/" data-id="api-training" class="">Training</a><a href="/docs/graspkit/api-envs/" data-id="api-envs" class="">Environments</a><a href="/docs/graspkit/api-data/" data-id="api-data" class="">Data</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">graspkit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>Concepts</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Grasp Optimization Algorithms: warp_gd and warp_lm</h1>
+        <div class="doc-body" id="doc-body"><p>How the two grasp-optimizer backends work and when to use which. For running the stage see the <a class="inline" href="/docs/graspkit/grasp-optim/">grasp_optim tutorial</a>; for every parameter see the <a class="inline" href="/docs/graspkit/api-grasp-optim/">grasp optimization API</a>.</p><h3 id="the-problem">The problem</h3><p>Grasp synthesis is energy minimization over a batch of grasps. Each grasp optimizes</p><ul><li>the robot configuration <code>q</code>: hand joints, plus arm joints (fixed base) or a free SE(3) base pose (floating hand), and</li><li>a discrete contact assignment: which <code>num_contact_points</code> of the robot's predefined contact candidates are active.</li></ul><p>The energy is a weighted sum of residual terms (robokit <code>terms.dense.*</code>):</p><table class="doc-table" style="--cols:2"><thead><tr><th>Term</th><th>Pulls toward</th></tr></thead><tbody><tr><td><code>DistanceTask</code></td><td>active contact points on the object surface</td></tr><tr><td><code>ForceClosureTask</code></td><td>contact normals that balance external wrenches (stability)</td></tr><tr><td><code>SceneCollisionTask</code></td><td>hand collision spheres out of the scene (object + table)</td></tr><tr><td><code>SelfCollisionTask</code></td><td>links out of each other</td></tr><tr><td><code>PositionLimit</code></td><td>joints inside their limits</td></tr><tr><td><code>FingertipDistanceTask</code> (optional)</td><td>fingertip spheres onto the surface</td></tr><tr><td><code>HandUpAngleTask</code> (optional)</td><td>hand-up axis at least <code>angle_z_min</code> from world +z</td></tr></tbody></table><p>Both backends share this formulation, the init samplers, and the Warp scene geometry (SDF volumes / mesh BVHs). The energy is highly non-convex and the contact assignment is discrete, so plain gradient descent gets stuck; each backend has its own escape mechanism.</p><h3 id="warp-gd-simulated-annealing-gradient-descent">warp_gd: simulated-annealing gradient descent</h3><p><code>WarpGraspOptimizer</code> (<code>warp_optimizer.py</code>, backend <code>warp_gd</code>) runs each grasp as an independent annealing chain for <code>num_iters</code> (~10k) iterations, DexGraspNet-style. One iteration:</p><ol><li>RMSprop step on the continuous variables; step size decays over time, joints are clamped to limits.</li><li>With probability <code>switch_possibility</code>, propose a re-drawn contact set.</li><li>Evaluate the proposal's energy and gradient.</li><li>Metropolis accept: lower energy always wins; worse by <code>d</code> is accepted with probability <code>exp(-d / T)</code>, where the temperature <code>T</code> cools over time. Rejected grasps roll back.</li></ol><p>High <code>T</code> early lets grasps explore pose and contact assignment jointly; as <code>T</code> cools the chain settles into a low-energy basin. The whole iteration is captured as one CUDA graph, so the long loop has almost no launch overhead. Works for floating and fixed-base robots alike, which makes it the default backend.</p><h3 id="warp-lm-multi-seed-levenberg-marquardt">warp_lm: multi-seed Levenberg-Marquardt</h3><p><code>WarpGraspOptimizer</code> (backend <code>warp_lm</code>) treats the same energy as nonlinear least squares and applies robokit's <code>LMOptimizer</code>: curvature-aware steps converge in tens of iterations instead of thousands. A single LM run is purely local, so exploration comes from:</p><ul><li><strong>Multi-seed</strong>: every init grasp spawns 24 jittered copies solved in parallel; the lowest-energy seed wins.</li><li><strong>Contact resampling</strong>: LM cannot differentiate the discrete contacts, so every 8 iterations each candidate is joined by a copy with a fresh random contact set; both take the next LM steps, and the one with the lower energy stays.</li></ul><p><code>warp_lm</code> supports floating bases only. To target an arm+hand robot, set <code>enable_ik_scoring=True</code>: inits are pre-filtered by arm-IK reachability against the fixed-base robot and final seeds are ranked by <code>energy + reachability penalty</code>, so the grasps <code>GraspTrajBuilder</code> later IK-converts onto the arm are actually reachable.</p><h3 id="choosing-a-backend">Choosing a backend</h3><table class="doc-table" style="--cols:3"><thead><tr><th></th><th><code>warp_gd</code></th><th><code>warp_lm</code></th></tr></thead><tbody><tr><td>Method</td><td>RMSprop + simulated annealing</td><td>multi-seed Levenberg-Marquardt</td></tr><tr><td>Exploration</td><td>Metropolis accept over pose + contacts</td><td>24 seeds + periodic contact resampling</td></tr><tr><td>Iterations</td><td>~10000 first-order steps</td><td>64 curvature-aware steps</td></tr><tr><td>Speed</td><td>baseline</td><td>typically 2-3x faster</td></tr><tr><td>Robots</td><td>floating and fixed base</td><td>floating base only (<code>enable_ik_scoring</code> bridges to arms)</td></tr></tbody></table><p>Rule of thumb: <code>warp_gd</code> for fixed-base robots or when maximum exploration matters; <code>warp_lm</code> for floating-hand throughput, with <code>enable_ik_scoring</code> if the grasps will be converted to an arm. Both are compared in <code>scripts/benchmark/grasp_opt/bench_grasp_optim.py</code>.</p></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/graspkit/concepts-overview/"><span class="lbl">← Previous</span><span class="nm">Core Overview</span></a><a class="next" href="/docs/graspkit/concepts-sim/"><span class="lbl">Next →</span><span class="nm">Simulation</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#the-problem">The problem</a><a href="#warp-gd-simulated-annealing-gradient-descent">warp_gd: simulated-annealing gradient descent</a><a href="#warp-lm-multi-seed-levenberg-marquardt">warp_lm: multi-seed Levenberg-Marquardt</a><a href="#choosing-a-backend">Choosing a backend</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "graspkit", "id": "grasp-optim-backends", "toc": [{"text": "The problem", "href": "#the-problem"}, {"text": "warp_gd: simulated-annealing gradient descent", "href": "#warp-gd-simulated-annealing-gradient-descent"}, {"text": "warp_lm: multi-seed Levenberg-Marquardt", "href": "#warp-lm-multi-seed-levenberg-marquardt"}, {"text": "Choosing a backend", "href": "#choosing-a-backend"}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,1552 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Robot · RoboKit docs · OpenRoboKit</title>
+  <meta name="description" content="GPU-native, differentiable robotics tooling: IK, trajectory optimization, retargeting, grasping, calibration." />
+  <link rel="canonical" href="https://openrobokit.com/docs/robokit/api-robot/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">RoboKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="is-active">
+        <span class="nm">RoboKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="">
+        <span class="nm">GraspKit</span>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/robokit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/robokit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/robokit/rl/" data-id="rl" class="">RL</a></div><div class="side__list"><a href="/docs/robokit/sim-mpc/" data-id="sim-mpc" class="">Sim MPC</a></div><div class="side__list"><a href="/docs/robokit/ik/" data-id="ik" class="">IK</a></div><div class="side__list"><a href="/docs/robokit/motion-planning/" data-id="motion-planning" class="">Motion Planning</a></div><div class="side__list"><a href="/docs/robokit/humanoid-retargeting/" data-id="humanoid-retargeting" class="">Humanoid Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand-retargeting/" data-id="hand-retargeting" class="">Hand Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand_eye_calibration/" data-id="hand_eye_calibration" class="">Hand-Eye Calibration</a></div><div class="side__list"><a href="/docs/robokit/ref-assets/" data-id="ref-assets" class="">Built-in Robots &amp; Datasets</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/robot/" data-id="robot" class="">Robot</a></div><div class="side__list"><a href="/docs/robokit/geom/" data-id="geom" class="">Geometry</a></div><div class="side__list"><a href="/docs/robokit/optimization/" data-id="optimization" class="">Optimization</a></div><div class="side__list"><a href="/docs/robokit/conventions/" data-id="conventions" class="">Conventions</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list">
+      <div class="side__sub is-folded" data-fold="Reference·Optimizers">
+        <span>Optimizers</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/opt-gd/" data-id="opt-gd" class="">GDOptimizer</a><a href="/docs/robokit/opt-lm/" data-id="opt-lm" class="">LMOptimizer</a><a href="/docs/robokit/opt-lbfgs/" data-id="opt-lbfgs" class="">LBFGSOptimizer</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Terms">
+        <span>Terms</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/term-frame/" data-id="term-frame" class="">Frame Task</a><a href="/docs/robokit/term-position/" data-id="term-position" class="">Position Task</a><a href="/docs/robokit/term-rotation/" data-id="term-rotation" class="">Rotation Tasks</a><a href="/docs/robokit/term-frame-vector/" data-id="term-frame-vector" class="">Frame Vector Task</a><a href="/docs/robokit/term-com-position/" data-id="term-com-position" class="">CoM Position Task</a><a href="/docs/robokit/term-position-limit/" data-id="term-position-limit" class="">Position Limit</a><a href="/docs/robokit/term-velocity-limit/" data-id="term-velocity-limit" class="">Velocity Limit Task</a><a href="/docs/robokit/term-configuration/" data-id="term-configuration" class="">Configuration Task</a><a href="/docs/robokit/term-smoothness/" data-id="term-smoothness" class="">Smoothness Task</a><a href="/docs/robokit/term-self-collision/" data-id="term-self-collision" class="">Self Collision Task</a><a href="/docs/robokit/term-scene-collision/" data-id="term-scene-collision" class="">Scene Collision Task</a><a href="/docs/robokit/term-scene-distance/" data-id="term-scene-distance" class="">Scene Distance Task</a><a href="/docs/robokit/term-interaction-mesh/" data-id="term-interaction-mesh" class="">Interaction Mesh Task</a><a href="/docs/robokit/term-mask-alignment/" data-id="term-mask-alignment" class="">Mask Alignment Task</a><a href="/docs/robokit/term-manipulability/" data-id="term-manipulability" class="">Manipulability Task</a><a href="/docs/robokit/term-force-closure/" data-id="term-force-closure" class="">Force Closure Task</a></div>
+      <div class="side__sub" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/api-robot/" data-id="api-robot" class="is-active">Robot</a><a href="/docs/robokit/api-geometry/" data-id="api-geometry" class="">Geometry</a><a href="/docs/robokit/api-optimization/" data-id="api-optimization" class="">Optimization</a><a href="/docs/robokit/api-terms/" data-id="api-terms" class="">Terms</a><a href="/docs/robokit/api-ik/" data-id="api-ik" class="">Inverse Kinematics</a><a href="/docs/robokit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/robokit/api-sim-mpc/" data-id="api-sim-mpc" class="">Sim MPC</a><a href="/docs/robokit/api-humanoid-retargeting/" data-id="api-humanoid-retargeting" class="">Humanoid Retargeting</a><a href="/docs/robokit/api-hand-retargeting/" data-id="api-hand-retargeting" class="">Hand Retargeting</a><a href="/docs/robokit/api-hand_eye_calibration/" data-id="api-hand_eye_calibration" class="">Hand-Eye Calibration</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">robokit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>Reference</span><span class="slash">/</span><span>API</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Robot</h1>
+        <div class="doc-body" id="doc-body"><div class="api"><section class="api-sym">
+    <div class="api-card" id="robot">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot.py#L29">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">robokit.robo.</span><span class="api-card__name">Robot</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">spec</span><span class="pp">: </span><span class="pt">RobotSpec</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Robot model backed by Warp.</p><h3>Examples</h3><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; from robot_descriptions.loaders.yourdfpy import load_robot_description
+&gt;&gt;&gt; robot = Robot.load(load_robot_description("panda_description"))
+&gt;&gt;&gt; q = wp.from_numpy(np.array([0.0, -1.2, 0.0, -2.0, 0.0, 1.0, 0.0, 0.0]), dtype=wp.float32)
+&gt;&gt;&gt; state = robot.state(q=q)
+&gt;&gt;&gt; state = robot.forward_kinematics(state)
+&gt;&gt;&gt; hand_idx = robot.spec.link_names.index("panda_hand")
+&gt;&gt;&gt; link_pose = state.T_world_link[:, hand_idx]
+&gt;&gt;&gt; expected = np.array([6.0860e-02, -4.7547e-12, 7.6373e-01, 0.0382, 0.9193, 0.3808, 0.0922], dtype=np.float32)
+&gt;&gt;&gt; expected = wp.from_numpy(expected, dtype=wp_vec7)
+&gt;&gt;&gt; np.allclose(se3_to_matrix(link_pose).numpy(), se3_to_matrix(expected).numpy(), atol=1e-4)
+True</pre><pre data-code-full hidden>import numpy as np
+import warp as wp
+from robokit.robo.robot import Robot
+from robokit.lie.se3 import se3_to_matrix
+from robokit.utils.warp_utils import wp_vec7
+
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+robot = Robot.load(load_robot_description("panda_description"))
+q = wp.from_numpy(np.array([0.0, -1.2, 0.0, -2.0, 0.0, 1.0, 0.0, 0.0]), dtype=wp.float32)
+state = robot.state(q=q)
+state = robot.forward_kinematics(state)
+hand_idx = robot.spec.link_names.index("panda_hand")
+link_pose = state.T_world_link[:, hand_idx]
+expected = np.array([6.0860e-02, -4.7547e-12, 7.6373e-01, 0.0382, 0.9193, 0.3808, 0.0922], dtype=np.float32)
+expected = wp.from_numpy(expected, dtype=wp_vec7)
+np.allclose(se3_to_matrix(link_pose).numpy(), se3_to_matrix(expected).numpy(), atol=1e-4)</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">spec</span><span class="api-type">RobotSpec</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="robot-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="robot-spec">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot.py#L50">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">Robot.</span><span class="api-card__name">spec</span><span class="pp">: </span><span class="pt">RobotSpec</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robot-load">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot.py#L58">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">Robot.</span><span class="api-card__name">load</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">robot_description_or_path</span><span class="pp">: </span><span class="pt">Union[str, Path, yourdfpy.URDF]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">load_meshes</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">mesh_dir</span><span class="pp">: </span><span class="pt">Optional[Union[str, Path]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">load_collision_spheres</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">collision_spheres_path</span><span class="pp">: </span><span class="pt">Optional[Union[str, Path]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">base_link_name</span><span class="pp">: </span><span class="pt">Optional[str]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">ee_link_names</span><span class="pp">: </span><span class="pt">Optional[Union[Sequence[str], str]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">self_collision_ignore_path</span><span class="pp">: </span><span class="pt">Optional[Union[str, Path]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Robot</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Load a robot model from a URDF/MJCF path, description string, or parsed <code>yourdfpy.URDF</code>.</p><h4>Example</h4><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; from robot_descriptions.loaders.yourdfpy import load_robot_description
+&gt;&gt;&gt; robot = Robot.load(load_robot_description("panda_description"))
+&gt;&gt;&gt; robot.spec.num_actuated_joints
+8</pre><pre data-code-full hidden>from robokit.robo.robot import Robot
+
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+robot = Robot.load(load_robot_description("panda_description"))
+robot.spec.num_actuated_joints</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">robot_description_or_path</span><span class="api-type">Union[str, Path, yourdfpy.URDF]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>URDF/MJCF file path, description string, or already-parsed <code>yourdfpy.URDF</code>.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">load_meshes</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"><p>Load link visual/collision meshes.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">mesh_dir</span><span class="api-type">Optional[Union[str, Path]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Directory to resolve mesh files against.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">load_collision_spheres</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"><p>Load collision spheres from <code>collision_spheres_path</code>.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">collision_spheres_path</span><span class="api-type">Optional[Union[str, Path]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>YAML file with per-link collision spheres and optional <code>self_collision_link_buffers</code>.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">base_link_name</span><span class="api-type">Optional[str]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Base link; defaults to the URDF root.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">ee_link_names</span><span class="api-type">Optional[Union[Sequence[str], str]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>End-effector link name(s).</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">self_collision_ignore_path</span><span class="api-type">Optional[Union[str, Path]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>YAML file with link pairs self-collision terms skip.</p></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Robot</span></div><div class="api-row__doc"><p>The loaded robot model.</p></div></div></div>
+    </div><div class="api-row api-row--plain" id="robot-state">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot.py#L105">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">Robot.</span><span class="api-card__name">state</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">q</span><span class="pp">: </span><span class="pt">Optional[Union[wp.array, np.ndarray]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">T_world_base</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">RobotState</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Build a robot state for the given joint positions (defaults to <code>zero_q</code>).</p><h4>Example</h4><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; from robot_descriptions.loaders.yourdfpy import load_robot_description
+&gt;&gt;&gt; robot = Robot.load(load_robot_description("panda_description"))
+&gt;&gt;&gt; robot.state().q.shape
+(1, 8)</pre><pre data-code-full hidden>from robokit.robo.robot import Robot
+
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+robot = Robot.load(load_robot_description("panda_description"))
+robot.state().q.shape</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">q</span><span class="api-type">Optional[Union[wp.array, np.ndarray]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">T_world_base</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">RobotState</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="robot-forward_kinematics">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot.py#L131">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">Robot.</span><span class="api-card__name">forward_kinematics</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">state</span><span class="pp">: </span><span class="pt">RobotState</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">use_sequential</span><span class="pp">: </span><span class="pt">Optional[bool]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">RobotState</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Compute forward kinematics for given joint positions; returns a state with all link transforms.</p><h4>Example</h4><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; from robot_descriptions.loaders.yourdfpy import load_robot_description
+&gt;&gt;&gt; robot = Robot.load(load_robot_description("panda_description"))
+&gt;&gt;&gt; q = wp.from_numpy(np.array([0.0, -1.2, 0.0, -2.0, 0.0, 1.0, 0.0, 0.0]), dtype=wp.float32)
+&gt;&gt;&gt; state = robot.state(q=q)
+&gt;&gt;&gt; state = robot.forward_kinematics(state)
+&gt;&gt;&gt; hand_idx = robot.spec.link_names.index("panda_hand")
+&gt;&gt;&gt; link_pose = state.T_world_link[:, hand_idx]
+&gt;&gt;&gt; expected = np.array([6.0860e-02, -4.7547e-12, 7.6373e-01, 0.0382, 0.9193, 0.3808, 0.0922], dtype=np.float32)
+&gt;&gt;&gt; expected = wp.from_numpy(expected, dtype=wp_vec7)
+&gt;&gt;&gt; np.allclose(se3_to_matrix(link_pose).numpy(), se3_to_matrix(expected).numpy(), atol=1e-4)
+True
+&gt;&gt;&gt; T_world_base = wp.from_numpy(np.array([1.0, 2.0, 3.0, 0.7071, 0.0, 0.7071, 0.0]), dtype=wp_vec7)
+&gt;&gt;&gt; state = robot.state(q=q, T_world_base=T_world_base)
+&gt;&gt;&gt; state = robot.forward_kinematics(state)
+&gt;&gt;&gt; link_pose = state.T_world_link[:, hand_idx]
+&gt;&gt;&gt; expected = np.array([1.76371783, 2.0, 2.93915576, -0.24222432, 0.71524162, 0.29626278, -0.58478125], dtype=np.float32)
+&gt;&gt;&gt; expected = wp.from_numpy(expected, dtype=wp_vec7)
+&gt;&gt;&gt; np.allclose(se3_to_matrix(link_pose).numpy(), se3_to_matrix(expected).numpy(), atol=1e-4)
+True</pre><pre data-code-full hidden>import numpy as np
+import warp as wp
+from robokit.robo.robot import Robot
+from robokit.lie.se3 import se3_to_matrix
+from robokit.utils.warp_utils import wp_vec7
+
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+robot = Robot.load(load_robot_description("panda_description"))
+q = wp.from_numpy(np.array([0.0, -1.2, 0.0, -2.0, 0.0, 1.0, 0.0, 0.0]), dtype=wp.float32)
+state = robot.state(q=q)
+state = robot.forward_kinematics(state)
+hand_idx = robot.spec.link_names.index("panda_hand")
+link_pose = state.T_world_link[:, hand_idx]
+expected = np.array([6.0860e-02, -4.7547e-12, 7.6373e-01, 0.0382, 0.9193, 0.3808, 0.0922], dtype=np.float32)
+expected = wp.from_numpy(expected, dtype=wp_vec7)
+np.allclose(se3_to_matrix(link_pose).numpy(), se3_to_matrix(expected).numpy(), atol=1e-4)
+T_world_base = wp.from_numpy(np.array([1.0, 2.0, 3.0, 0.7071, 0.0, 0.7071, 0.0]), dtype=wp_vec7)
+state = robot.state(q=q, T_world_base=T_world_base)
+state = robot.forward_kinematics(state)
+link_pose = state.T_world_link[:, hand_idx]
+expected = np.array([1.76371783, 2.0, 2.93915576, -0.24222432, 0.71524162, 0.29626278, -0.58478125], dtype=np.float32)
+expected = wp.from_numpy(expected, dtype=wp_vec7)
+np.allclose(se3_to_matrix(link_pose).numpy(), se3_to_matrix(expected).numpy(), atol=1e-4)</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">state</span><span class="api-type">RobotState</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">use_sequential</span><span class="api-type">Optional[bool]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">RobotState</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="robot-forward_kinematics_via_matrix_numpy">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot.py#L273">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">Robot.</span><span class="api-card__name">forward_kinematics_via_matrix_numpy</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">q</span><span class="pp">: </span><span class="pt">Float[np.ndarray, '... num_dofs']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">T_world_base</span><span class="pp">: </span><span class="pt">Optional[Float[np.ndarray, '... 4 4']]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">Optional[str]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Float[np.ndarray, '... num_links 4 4']</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Compute forward kinematics as <code>4x4</code> matrices for NumPy arrays, without an autograd round trip.</p><h4>Example</h4><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; from robot_descriptions.loaders.yourdfpy import load_robot_description
+&gt;&gt;&gt; robot = Robot.load(load_robot_description("panda_description"))
+&gt;&gt;&gt; q = np.zeros((1, robot.spec.num_actuated_joints), dtype=np.float32)
+&gt;&gt;&gt; robot.forward_kinematics_via_matrix_numpy(q).shape
+(1, 13, 4, 4)</pre><pre data-code-full hidden>import numpy as np
+from robokit.robo.robot import Robot
+
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+robot = Robot.load(load_robot_description("panda_description"))
+q = np.zeros((1, robot.spec.num_actuated_joints), dtype=np.float32)
+robot.forward_kinematics_via_matrix_numpy(q).shape</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">q</span><span class="api-type">Float[np.ndarray, '... num_dofs']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">T_world_base</span><span class="api-type">Optional[Float[np.ndarray, '... 4 4']]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">Optional[str]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Float[np.ndarray, '... num_links 4 4']</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="robot-forward_kinematics_numpy">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot.py#L319">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">Robot.</span><span class="api-card__name">forward_kinematics_numpy</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">q</span><span class="pp">: </span><span class="pt">Float[np.ndarray, '... num_dofs']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">T_world_base</span><span class="pp">: </span><span class="pt">Optional[Float[np.ndarray, '... 7']]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">Optional[str]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Float[np.ndarray, '... num_links 7']</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Compute world link poses as translation-first 7D poses for NumPy arrays.</p><h4>Example</h4><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; from robot_descriptions.loaders.yourdfpy import load_robot_description
+&gt;&gt;&gt; robot = Robot.load(load_robot_description("panda_description"))
+&gt;&gt;&gt; q = np.zeros((1, robot.spec.num_actuated_joints), dtype=np.float32)
+&gt;&gt;&gt; robot.forward_kinematics_numpy(q).shape
+(1, 13, 7)</pre><pre data-code-full hidden>import numpy as np
+from robokit.robo.robot import Robot
+
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+robot = Robot.load(load_robot_description("panda_description"))
+q = np.zeros((1, robot.spec.num_actuated_joints), dtype=np.float32)
+robot.forward_kinematics_numpy(q).shape</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">q</span><span class="api-type">Float[np.ndarray, '... num_dofs']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">T_world_base</span><span class="api-type">Optional[Float[np.ndarray, '... 7']]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">Optional[str]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Float[np.ndarray, '... num_links 7']</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="robot-compute_center_of_mass_numpy">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot.py#L337">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">Robot.</span><span class="api-card__name">compute_center_of_mass_numpy</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">q</span><span class="pp">: </span><span class="pt">Float[np.ndarray, '... num_dofs']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">T_world_base</span><span class="pp">: </span><span class="pt">Optional[Float[np.ndarray, '... 7']]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">Optional[str]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Float[np.ndarray, '... 3']</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Compute the whole-body center of mass in world frame for NumPy arrays.</p><h4>Example</h4><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; from robot_descriptions.loaders.yourdfpy import load_robot_description
+&gt;&gt;&gt; robot = Robot.load(load_robot_description("panda_description"))
+&gt;&gt;&gt; q = np.zeros((1, robot.spec.num_actuated_joints), dtype=np.float32)
+&gt;&gt;&gt; np.allclose(robot.compute_center_of_mass_numpy(q)[0], [0.0232, 0.0061, 0.6062], atol=1e-4)
+True</pre><pre data-code-full hidden>import numpy as np
+from robokit.robo.robot import Robot
+
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+robot = Robot.load(load_robot_description("panda_description"))
+q = np.zeros((1, robot.spec.num_actuated_joints), dtype=np.float32)
+np.allclose(robot.compute_center_of_mass_numpy(q)[0], [0.0232, 0.0061, 0.6062], atol=1e-4)</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">q</span><span class="api-type">Float[np.ndarray, '... num_dofs']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">T_world_base</span><span class="api-type">Optional[Float[np.ndarray, '... 7']]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">Optional[str]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Float[np.ndarray, '... 3']</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="robot-compute_motion_subspace">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot.py#L355">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">Robot.</span><span class="api-card__name">compute_motion_subspace</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">state</span><span class="pp">: </span><span class="pt">RobotState</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">RobotState</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Store robot joint Jacobians in state for <code>state.get_link_jacobian()</code>.</p><p>Base layouts:</p><ul><li>Fixed base: joint columns only.</li><li>Floating base: prepend J_base, giving shape [batch, 6, 6 + num_dofs].</li></ul><h4>Example</h4><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; from robot_descriptions.loaders.yourdfpy import load_robot_description
+&gt;&gt;&gt; robot = Robot.load(load_robot_description("panda_description"))
+&gt;&gt;&gt; T_world_base = wp.from_numpy(np.array([1.0, 2.0, 3.0, 0.7071, 0.0, 0.7071, 0.0]), dtype=wp_vec7)
+&gt;&gt;&gt; q = wp.from_numpy(np.array([0.0, -1.2, 0.0, -2.0, 0.0, 1.0, 0.0, 0.0]), dtype=wp.float32)
+&gt;&gt;&gt; state = robot.state(q=q, T_world_base=T_world_base)
+&gt;&gt;&gt; state = robot.compute_motion_subspace(state)
+&gt;&gt;&gt; J = state.get_link_jacobian(robot.spec.link_names.index("panda_hand"), "body")
+&gt;&gt;&gt; np.allclose(J.numpy()[0, 0, :6], np.array([0.693, 0.7071, 0.1405, -0.54, 0.5207, 0.043], dtype=np.float32), atol=1e-4)
+True
+&gt;&gt;&gt; J = state.get_link_jacobian(robot.spec.link_names.index("panda_hand"), "spatial")
+&gt;&gt;&gt; np.allclose(J.numpy()[0, 0, 6:], np.array([0.0001, -3., 1.8641, 3.2647, -1.4346, 3.0467, -0.3974, 0.], dtype=np.float32), atol=1e-3)
+True
+&gt;&gt;&gt; np.allclose(J.numpy()[0, 0, :6], np.array([0.0001, 0., 1., -2., -3., 0.0001], dtype=np.float32), atol=1e-3)
+True</pre><pre data-code-full hidden>import numpy as np
+import warp as wp
+from robokit.robo.robot import Robot
+from robokit.utils.warp_utils import wp_vec7
+
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+robot = Robot.load(load_robot_description("panda_description"))
+T_world_base = wp.from_numpy(np.array([1.0, 2.0, 3.0, 0.7071, 0.0, 0.7071, 0.0]), dtype=wp_vec7)
+q = wp.from_numpy(np.array([0.0, -1.2, 0.0, -2.0, 0.0, 1.0, 0.0, 0.0]), dtype=wp.float32)
+state = robot.state(q=q, T_world_base=T_world_base)
+state = robot.compute_motion_subspace(state)
+J = state.get_link_jacobian(robot.spec.link_names.index("panda_hand"), "body")
+np.allclose(J.numpy()[0, 0, :6], np.array([0.693, 0.7071, 0.1405, -0.54, 0.5207, 0.043], dtype=np.float32), atol=1e-4)
+J = state.get_link_jacobian(robot.spec.link_names.index("panda_hand"), "spatial")
+np.allclose(J.numpy()[0, 0, 6:], np.array([0.0001, -3., 1.8641, 3.2647, -1.4346, 3.0467, -0.3974, 0.], dtype=np.float32), atol=1e-3)
+np.allclose(J.numpy()[0, 0, :6], np.array([0.0001, 0., 1., -2., -3., 0.0001], dtype=np.float32), atol=1e-3)</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">state</span><span class="api-type">RobotState</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">RobotState</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="robot-compute_center_of_mass">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot.py#L397">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">Robot.</span><span class="api-card__name">compute_center_of_mass</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">state</span><span class="pp">: </span><span class="pt">RobotState</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">RobotState</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Compute the whole-body center of mass in world frame into <code>state.com_world</code>.</p><h4>Example</h4><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; from robot_descriptions.loaders.yourdfpy import load_robot_description
+&gt;&gt;&gt; robot = Robot.load(load_robot_description("panda_description"))
+&gt;&gt;&gt; state = robot.compute_center_of_mass(robot.state())
+&gt;&gt;&gt; np.allclose(state.com_world.numpy()[0], [0.0232, 0.0061, 0.6062], atol=1e-4)
+True</pre><pre data-code-full hidden>import numpy as np
+from robokit.robo.robot import Robot
+
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+robot = Robot.load(load_robot_description("panda_description"))
+state = robot.compute_center_of_mass(robot.state())
+np.allclose(state.com_world.numpy()[0], [0.0232, 0.0061, 0.6062], atol=1e-4)</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">state</span><span class="api-type">RobotState</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">RobotState</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="robot-transform_collision_spheres">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot.py#L428">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">Robot.</span><span class="api-card__name">transform_collision_spheres</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">state</span><span class="pp">: </span><span class="pt">RobotState</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">RobotState</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Compute the collision sphere centers in world frame.</p><h4>Example</h4><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; from robot_descriptions.loaders.yourdfpy import load_robot_description
+&gt;&gt;&gt; robot = Robot.load(load_robot_description("panda_description"))
+&gt;&gt;&gt; state = robot.state()
+&gt;&gt;&gt; robot.transform_collision_spheres(state) is state  # no collision spheres loaded
+True</pre><pre data-code-full hidden>from robokit.robo.robot import Robot
+
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+robot = Robot.load(load_robot_description("panda_description"))
+state = robot.state()
+robot.transform_collision_spheres(state) is state  # no collision spheres loaded</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">state</span><span class="api-type">RobotState</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>The robot state.</p></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">RobotState</span></div><div class="api-row__doc"><p>The robot state with updated collision sphere centers.</p></div></div></div>
+    </div><div class="api-row api-row--plain" id="robot-transform_collision_capsules">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot.py#L478">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">Robot.</span><span class="api-card__name">transform_collision_capsules</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">state</span><span class="pp">: </span><span class="pt">RobotState</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">RobotState</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Compute the per-link capsule segment endpoints (a, b) in world frame.</p><h4>Example</h4><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; from robot_descriptions.loaders.yourdfpy import load_robot_description
+&gt;&gt;&gt; robot = Robot.load(load_robot_description("panda_description"))
+&gt;&gt;&gt; state = robot.state()
+&gt;&gt;&gt; robot.transform_collision_capsules(state) is state  # no link capsules loaded
+True</pre><pre data-code-full hidden>from robokit.robo.robot import Robot
+
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+robot = Robot.load(load_robot_description("panda_description"))
+state = robot.state()
+robot.transform_collision_capsules(state) is state  # no link capsules loaded</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">state</span><span class="api-type">RobotState</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">RobotState</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="robot-forward_kinematics_via_matrix_torch">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot.py#L526">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">Robot.</span><span class="api-card__name">forward_kinematics_via_matrix_torch</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">q</span><span class="pp">: </span><span class="pt">Float[torch.Tensor, '... num_dofs']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">T_world_base</span><span class="pp">: </span><span class="pt">Optional[Float[torch.Tensor, '... 4 4']]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">analytical_backward</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">True</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">record_cmd</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Float[torch.Tensor, '... num_links 4 4']</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Compute differentiable forward kinematics as <code>4x4</code> matrices for torch tensors.</p><h4>Example</h4><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; import torch
+&gt;&gt;&gt; from robot_descriptions.loaders.yourdfpy import load_robot_description
+&gt;&gt;&gt; robot = Robot.load(load_robot_description("panda_description"))
+&gt;&gt;&gt; T_world_link = robot.forward_kinematics_via_matrix_torch(torch.zeros(robot.spec.num_actuated_joints))
+&gt;&gt;&gt; T_world_link.shape
+torch.Size([13, 4, 4])</pre><pre data-code-full hidden>from robokit.robo.robot import Robot
+
+import torch
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+robot = Robot.load(load_robot_description("panda_description"))
+T_world_link = robot.forward_kinematics_via_matrix_torch(torch.zeros(robot.spec.num_actuated_joints))
+T_world_link.shape</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">q</span><span class="api-type">Float[torch.Tensor, '... num_dofs']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">T_world_base</span><span class="api-type">Optional[Float[torch.Tensor, '... 4 4']]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">analytical_backward</span><span class="api-type">bool</span><span class="api-def">= True</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">record_cmd</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Float[torch.Tensor, '... num_links 4 4']</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="robot-transform_link_points_torch">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot.py#L562">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">Robot.</span><span class="api-card__name">transform_link_points_torch</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">T_world_link</span><span class="pp">: </span><span class="pt">Float[torch.Tensor, '... num_links 4 4']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">local_points</span><span class="pp">: </span><span class="pt">Float[torch.Tensor, 'num_points 3']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">point_link_indices</span><span class="pp">: </span><span class="pt">Float[torch.Tensor, 'num_points']</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Float[torch.Tensor, '... num_points 3']</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Transform local points attached to links to world frame.</p><h4>Example</h4><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; import torch
+&gt;&gt;&gt; from robot_descriptions.loaders.yourdfpy import load_robot_description
+&gt;&gt;&gt; robot = Robot.load(load_robot_description("panda_description"))
+&gt;&gt;&gt; T_world_link = robot.forward_kinematics_via_matrix_torch(torch.zeros(robot.spec.num_actuated_joints))
+&gt;&gt;&gt; points = robot.transform_link_points_torch(T_world_link, torch.zeros(2, 3), torch.tensor([0, 1]))
+&gt;&gt;&gt; points.shape
+torch.Size([2, 3])</pre><pre data-code-full hidden>from robokit.robo.robot import Robot
+
+import torch
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+robot = Robot.load(load_robot_description("panda_description"))
+T_world_link = robot.forward_kinematics_via_matrix_torch(torch.zeros(robot.spec.num_actuated_joints))
+points = robot.transform_link_points_torch(T_world_link, torch.zeros(2, 3), torch.tensor([0, 1]))
+points.shape</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">T_world_link</span><span class="api-type">Float[torch.Tensor, '... num_links 4 4']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Link transforms in world frame [..., num_links, 4, 4]</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">local_points</span><span class="api-type">Float[torch.Tensor, 'num_points 3']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Local points in link frames [num_points, 3]</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">point_link_indices</span><span class="api-type">Float[torch.Tensor, 'num_points']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Link index for each point [num_points]</p></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Float[torch.Tensor, '... num_points 3']</span></div><div class="api-row__doc"><p>World-frame points [..., num_points, 3]</p></div></div></div>
+    </div><div class="api-row api-row--plain" id="robot-map_to_full_joint_values_torch">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot.py#L591">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">Robot.</span><span class="api-card__name">map_to_full_joint_values_torch</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">actuated_values</span><span class="pp">: </span><span class="pt">Float[torch.Tensor, '... num_actuated_joints']</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Float[torch.Tensor, '... num_joints']</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Expand actuated joint values to all joints (mimic joints follow their controlling joint).</p><h4>Example</h4><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; import torch
+&gt;&gt;&gt; from robot_descriptions.loaders.yourdfpy import load_robot_description
+&gt;&gt;&gt; robot = Robot.load(load_robot_description("panda_description"))
+&gt;&gt;&gt; robot.map_to_full_joint_values_torch(torch.zeros(robot.spec.num_actuated_joints)).shape
+torch.Size([12])</pre><pre data-code-full hidden>from robokit.robo.robot import Robot
+
+import torch
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+robot = Robot.load(load_robot_description("panda_description"))
+robot.map_to_full_joint_values_torch(torch.zeros(robot.spec.num_actuated_joints)).shape</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">actuated_values</span><span class="api-type">Float[torch.Tensor, '... num_actuated_joints']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Float[torch.Tensor, '... num_joints']</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="robot-zero_q">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot.py#L617">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">Robot.</span><span class="api-card__name">zero_q</span><span class="pp">: </span><span class="pt">wp.array</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robot-midrange_q">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot.py#L621">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">Robot.</span><span class="api-card__name">midrange_q</span><span class="pp">: </span><span class="pt">wp.array</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robot-num_actuated_joints">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot.py#L625">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">Robot.</span><span class="api-card__name">num_actuated_joints</span><span class="pp">: </span><span class="pt">int</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robot-link_names">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot.py#L629">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">Robot.</span><span class="api-card__name">link_names</span><span class="pp">: </span><span class="pt">List[str]</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robot-sample_q">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot.py#L633">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">Robot.</span><span class="api-card__name">sample_q</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">num_samples</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">1</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">rng</span><span class="pp">: </span><span class="pt">Optional[np.random.Generator]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">wp_device_type</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">wp.array</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Sample joint positions uniformly within the actuated joint limits.</p><h4>Example</h4><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; from robot_descriptions.loaders.yourdfpy import load_robot_description
+&gt;&gt;&gt; robot = Robot.load(load_robot_description("panda_description"))
+&gt;&gt;&gt; robot.sample_q(num_samples=3, rng=np.random.default_rng(0)).shape
+(3, 8)</pre><pre data-code-full hidden>import numpy as np
+from robokit.robo.robot import Robot
+
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+robot = Robot.load(load_robot_description("panda_description"))
+robot.sample_q(num_samples=3, rng=np.random.default_rng(0)).shape</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">num_samples</span><span class="api-type">int</span><span class="api-def">= 1</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">rng</span><span class="api-type">Optional[np.random.Generator]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">wp_device_type</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">wp.array</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="robotspec">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L44">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">robokit.robo.</span><span class="api-card__name">RobotSpec</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">name</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">robot_description</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">format</span><span class="pp">: </span><span class="pt">Literal['urdf', 'mjcf']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">joint_names</span><span class="pp">: </span><span class="pt">List[str]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">nonfixed_joint_names</span><span class="pp">: </span><span class="pt">List[str]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">actuated_joint_names</span><span class="pp">: </span><span class="pt">List[str]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">joint_types</span><span class="pp">: </span><span class="pt">Int[np.ndarray, num_joints]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">joint_axes</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 'num_joints 3']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">joint_twists</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 'num_joints 6']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">actuated_joint_indices</span><span class="pp">: </span><span class="pt">Int[np.ndarray, num_joints]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">parent_joint_indices</span><span class="pp">: </span><span class="pt">Int[np.ndarray, num_joints]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">parent_joint_transforms</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 'num_joints 7']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">mimic_actuated_joint_indices</span><span class="pp">: </span><span class="pt">Int[np.ndarray, num_joints]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">mimic_multipliers</span><span class="pp">: </span><span class="pt">Float[np.ndarray, num_joints]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">mimic_offsets</span><span class="pp">: </span><span class="pt">Float[np.ndarray, num_joints]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">joint_limits</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 'num_joints 2']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">joint_velocity_limits</span><span class="pp">: </span><span class="pt">Float[np.ndarray, num_joints]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">actuated_joint_limits</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 'num_actuated_joints 2']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">actuated_joint_velocity_limits</span><span class="pp">: </span><span class="pt">Float[np.ndarray, num_actuated_joints]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">link_names</span><span class="pp">: </span><span class="pt">List[str]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">link_parent_joint_indices</span><span class="pp">: </span><span class="pt">Int[np.ndarray, num_links]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">base_link_name</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">ee_link_names</span><span class="pp">: </span><span class="pt">List[str]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">link_visual_geometries</span><span class="pp">: </span><span class="pt">Dict[str, trimesh.Scene]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">link_collision_geometries</span><span class="pp">: </span><span class="pt">Dict[str, trimesh.Scene]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">local_collision_sphere_centers</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 'num_collision_spheres 3']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">collision_sphere_radii</span><span class="pp">: </span><span class="pt">Float[np.ndarray, num_collision_spheres]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">collision_spheres_link_indices</span><span class="pp">: </span><span class="pt">Int[np.ndarray, num_collision_spheres]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">self_collision_ignored_pairs</span><span class="pp">: </span><span class="pt">Int[np.ndarray, 'num_ignored_pairs 2']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">link_masses</span><span class="pp">: </span><span class="pt">Float[np.ndarray, num_links]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">link_local_com_positions</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 'num_links 3']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">loaded_link_capsule_endpoints</span><span class="pp">: </span><span class="pt">Optional[Float[np.ndarray, 'num_links 2 3']]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">loaded_link_capsule_radii</span><span class="pp">: </span><span class="pt">Optional[Float[np.ndarray, num_links]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">self_collision_link_buffers</span><span class="pp">: </span><span class="pt">Dict[str, float]</span><span class="pp"> = </span><span class="pd">dict()</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Robot specification.</p><h3>Examples</h3><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; spec = RobotSpec.parse("tests/fixtures/wx250s.urdf")
+&gt;&gt;&gt; spec.num_actuated_joints
+8
+&gt;&gt;&gt; spec.num_links
+14</pre><pre data-code-full hidden>from robokit.robo.robot_spec import RobotSpec
+
+spec = RobotSpec.parse("tests/fixtures/wx250s.urdf")
+spec.num_actuated_joints
+spec.num_links</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">name</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">robot_description</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">format</span><span class="api-type">Literal['urdf', 'mjcf']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">joint_names</span><span class="api-type">List[str]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">nonfixed_joint_names</span><span class="api-type">List[str]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">actuated_joint_names</span><span class="api-type">List[str]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">joint_types</span><span class="api-type">Int[np.ndarray, num_joints]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">joint_axes</span><span class="api-type">Float[np.ndarray, 'num_joints 3']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">joint_twists</span><span class="api-type">Float[np.ndarray, 'num_joints 6']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">actuated_joint_indices</span><span class="api-type">Int[np.ndarray, num_joints]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">parent_joint_indices</span><span class="api-type">Int[np.ndarray, num_joints]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">parent_joint_transforms</span><span class="api-type">Float[np.ndarray, 'num_joints 7']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">mimic_actuated_joint_indices</span><span class="api-type">Int[np.ndarray, num_joints]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">mimic_multipliers</span><span class="api-type">Float[np.ndarray, num_joints]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">mimic_offsets</span><span class="api-type">Float[np.ndarray, num_joints]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">joint_limits</span><span class="api-type">Float[np.ndarray, 'num_joints 2']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">joint_velocity_limits</span><span class="api-type">Float[np.ndarray, num_joints]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">actuated_joint_limits</span><span class="api-type">Float[np.ndarray, 'num_actuated_joints 2']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">actuated_joint_velocity_limits</span><span class="api-type">Float[np.ndarray, num_actuated_joints]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">link_names</span><span class="api-type">List[str]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">link_parent_joint_indices</span><span class="api-type">Int[np.ndarray, num_links]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">base_link_name</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">ee_link_names</span><span class="api-type">List[str]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">link_visual_geometries</span><span class="api-type">Dict[str, trimesh.Scene]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">link_collision_geometries</span><span class="api-type">Dict[str, trimesh.Scene]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">local_collision_sphere_centers</span><span class="api-type">Float[np.ndarray, 'num_collision_spheres 3']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">collision_sphere_radii</span><span class="api-type">Float[np.ndarray, num_collision_spheres]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">collision_spheres_link_indices</span><span class="api-type">Int[np.ndarray, num_collision_spheres]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">self_collision_ignored_pairs</span><span class="api-type">Int[np.ndarray, 'num_ignored_pairs 2']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">link_masses</span><span class="api-type">Float[np.ndarray, num_links]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">link_local_com_positions</span><span class="api-type">Float[np.ndarray, 'num_links 3']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">loaded_link_capsule_endpoints</span><span class="api-type">Optional[Float[np.ndarray, 'num_links 2 3']]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">loaded_link_capsule_radii</span><span class="api-type">Optional[Float[np.ndarray, num_links]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">self_collision_link_buffers</span><span class="api-type">Dict[str, float]</span><span class="api-def">= dict()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="robotspec-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="robotspec-name">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L58">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">name</span><span class="pp">: </span><span class="pt">str</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Name of the robot.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-robot_description">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L60">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">robot_description</span><span class="pp">: </span><span class="pt">str</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Robot description</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-format">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L62">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">format</span><span class="pp">: </span><span class="pt">Literal['urdf', 'mjcf']</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Format of the robot description.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-joint_names">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L66">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">joint_names</span><span class="pp">: </span><span class="pt">List[str]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Names of all joints, including actuated, mimic and fixed joints.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-nonfixed_joint_names">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L68">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">nonfixed_joint_names</span><span class="pp">: </span><span class="pt">List[str]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Names of non-fixed joints, including actuated and mimic joints.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-actuated_joint_names">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L70">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">actuated_joint_names</span><span class="pp">: </span><span class="pt">List[str]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Names of actuated joints.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-joint_types">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L72">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">joint_types</span><span class="pp">: </span><span class="pt">Int[np.ndarray, num_joints]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Types of all joints, see <code>JointType</code>.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-joint_axes">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L74">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">joint_axes</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 'num_joints 3']</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Axes of all joints, [x, y, z].</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-joint_twists">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L76">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">joint_twists</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 'num_joints 6']</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Twists of all joints, [linear (x, y, z), angular (x, y, z)].</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-actuated_joint_indices">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L78">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">actuated_joint_indices</span><span class="pp">: </span><span class="pt">Int[np.ndarray, num_joints]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Indices of actuated joints, -1 for mimic and non-actuated joints.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-parent_joint_indices">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L80">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">parent_joint_indices</span><span class="pp">: </span><span class="pt">Int[np.ndarray, num_joints]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Indices of parent joints, -1 for joints attached to the base link.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-parent_joint_transforms">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L82">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">parent_joint_transforms</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 'num_joints 7']</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Transforms of parent joints, [pos (x, y, z), quat (w, x, y, z)].</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-mimic_actuated_joint_indices">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L85">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">mimic_actuated_joint_indices</span><span class="pp">: </span><span class="pt">Int[np.ndarray, num_joints]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Indices of mimicked actuated joints, -1 for non-mimic joints.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-mimic_multipliers">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L87">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">mimic_multipliers</span><span class="pp">: </span><span class="pt">Float[np.ndarray, num_joints]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Multipliers of mimicked actuated joints, 1.0 for non-mimic joints.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-mimic_offsets">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L89">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">mimic_offsets</span><span class="pp">: </span><span class="pt">Float[np.ndarray, num_joints]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Offsets of mimicked actuated joints, 0.0 for non-mimic joints.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-joint_limits">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L92">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">joint_limits</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 'num_joints 2']</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Limits of all joints, [lower, upper].</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-joint_velocity_limits">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L94">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">joint_velocity_limits</span><span class="pp">: </span><span class="pt">Float[np.ndarray, num_joints]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Velocity limits of all joints.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-actuated_joint_limits">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L96">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">actuated_joint_limits</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 'num_actuated_joints 2']</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Limits of actuated joints, [lower, upper].</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-actuated_joint_velocity_limits">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L98">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">actuated_joint_velocity_limits</span><span class="pp">: </span><span class="pt">Float[np.ndarray, num_actuated_joints]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Velocity limits of actuated joints.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-link_names">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L102">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">link_names</span><span class="pp">: </span><span class="pt">List[str]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Names of all links.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-link_parent_joint_indices">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L104">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">link_parent_joint_indices</span><span class="pp">: </span><span class="pt">Int[np.ndarray, num_links]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Indices of parent joints of all links, -1 for the base link.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-base_link_name">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L106">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">base_link_name</span><span class="pp">: </span><span class="pt">str</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Base link name (root of the parsed kinematic tree).</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-ee_link_names">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L108">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">ee_link_names</span><span class="pp">: </span><span class="pt">List[str]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>End-effector (leaf) link names of the parsed kinematic tree.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-link_visual_geometries">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L112">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">link_visual_geometries</span><span class="pp">: </span><span class="pt">Dict[str, trimesh.Scene]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Visual geometries of all links.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-link_collision_geometries">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L114">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">link_collision_geometries</span><span class="pp">: </span><span class="pt">Dict[str, trimesh.Scene]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Collision geometries of all links.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-local_collision_sphere_centers">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L117">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">local_collision_sphere_centers</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 'num_collision_spheres 3']</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Collision sphere centers in link-local coordinates.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-collision_sphere_radii">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L119">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">collision_sphere_radii</span><span class="pp">: </span><span class="pt">Float[np.ndarray, num_collision_spheres]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Collision sphere radii.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-collision_spheres_link_indices">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L121">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">collision_spheres_link_indices</span><span class="pp">: </span><span class="pt">Int[np.ndarray, num_collision_spheres]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Link indices (in link_names) for each collision sphere.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-self_collision_ignored_pairs">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L123">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">self_collision_ignored_pairs</span><span class="pp">: </span><span class="pt">Int[np.ndarray, 'num_ignored_pairs 2']</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Load ignored self-collision link pairs verbatim from <code>self_collision_ignore_path</code>, or return none.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-link_masses">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L127">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">link_masses</span><span class="pp">: </span><span class="pt">Float[np.ndarray, num_links]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Mass of each link (0.0 if no inertial data).</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-link_local_com_positions">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L129">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">link_local_com_positions</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 'num_links 3']</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Center of mass position in link-local frame.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-loaded_link_capsule_endpoints">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L132">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">loaded_link_capsule_endpoints</span><span class="pp">: </span><span class="pt">Optional[Float[np.ndarray, 'num_links 2 3']] = None</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Baked capsule endpoints from <code>link_capsules_path</code>; unset means fit them from the collision meshes.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-loaded_link_capsule_radii">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L134">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">loaded_link_capsule_radii</span><span class="pp">: </span><span class="pt">Optional[Float[np.ndarray, num_links]] = None</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Baked capsule radii from <code>link_capsules_path</code>.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-self_collision_link_buffers">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L136">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">self_collision_link_buffers</span><span class="pp">: </span><span class="pt">Dict[str, float] = field(default_factory=dict)</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Per-link self-collision radius inflation from the collision-sphere YAML; world radii stay unchanged.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-parse">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L140">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">parse</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">robot_description_or_path</span><span class="pp">: </span><span class="pt">Union[str, Path, yourdfpy.URDF]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">load_meshes</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">mesh_dir</span><span class="pp">: </span><span class="pt">Optional[Union[str, Path]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">load_collision_spheres</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">collision_spheres_path</span><span class="pp">: </span><span class="pt">Optional[Union[str, Path]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">load_link_capsules</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">link_capsules_path</span><span class="pp">: </span><span class="pt">Optional[Union[str, Path]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">self_collision_ignore_path</span><span class="pp">: </span><span class="pt">Optional[Union[str, Path]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">base_link_name</span><span class="pp">: </span><span class="pt">Optional[str]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">ee_link_names</span><span class="pp">: </span><span class="pt">Optional[Union[Sequence[str], str]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">keep_mjcf_world_link</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">RobotSpec</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">robot_description_or_path</span><span class="api-type">Union[str, Path, yourdfpy.URDF]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">load_meshes</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">mesh_dir</span><span class="api-type">Optional[Union[str, Path]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">load_collision_spheres</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">collision_spheres_path</span><span class="api-type">Optional[Union[str, Path]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">load_link_capsules</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">link_capsules_path</span><span class="api-type">Optional[Union[str, Path]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">self_collision_ignore_path</span><span class="api-type">Optional[Union[str, Path]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">base_link_name</span><span class="api-type">Optional[str]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">ee_link_names</span><span class="api-type">Optional[Union[Sequence[str], str]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">keep_mjcf_world_link</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">RobotSpec</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-parse_urdf">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L283">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">parse_urdf</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">robot_description_or_path</span><span class="pp">: </span><span class="pt">Union[str, Path, yourdfpy.URDF]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">load_meshes</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">mesh_dir</span><span class="pp">: </span><span class="pt">Optional[Union[str, Path]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">load_collision_spheres</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">collision_spheres_path</span><span class="pp">: </span><span class="pt">Optional[Union[str, Path]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">load_link_capsules</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">link_capsules_path</span><span class="pp">: </span><span class="pt">Optional[Union[str, Path]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">base_link_name</span><span class="pp">: </span><span class="pt">Optional[str]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">ee_link_names</span><span class="pp">: </span><span class="pt">Optional[Union[Sequence[str], str]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">RobotSpec</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">robot_description_or_path</span><span class="api-type">Union[str, Path, yourdfpy.URDF]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">load_meshes</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">mesh_dir</span><span class="api-type">Optional[Union[str, Path]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">load_collision_spheres</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">collision_spheres_path</span><span class="api-type">Optional[Union[str, Path]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">load_link_capsules</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">link_capsules_path</span><span class="api-type">Optional[Union[str, Path]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">base_link_name</span><span class="api-type">Optional[str]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">ee_link_names</span><span class="api-type">Optional[Union[Sequence[str], str]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">RobotSpec</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-parse_mjcf">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L619">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">parse_mjcf</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">robot_description_or_path</span><span class="pp">: </span><span class="pt">Union[str, Path]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">load_meshes</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">load_collision_spheres</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">collision_spheres_path</span><span class="pp">: </span><span class="pt">Optional[Union[str, Path]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">load_link_capsules</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">link_capsules_path</span><span class="pp">: </span><span class="pt">Optional[Union[str, Path]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">base_link_name</span><span class="pp">: </span><span class="pt">Optional[str]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">ee_link_names</span><span class="pp">: </span><span class="pt">Optional[Union[Sequence[str], str]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">keep_world_link</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">RobotSpec</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Parse an MJCF robot: hinge/slide joints, equality mimics; the world body stays if kept or a root has joints. A hinge with an anchor (<code>jnt_pos</code>) turns at a synthetic <code>&lt;body&gt;_anchor</code> link, then a fixed joint shifts back.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">robot_description_or_path</span><span class="api-type">Union[str, Path]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">load_meshes</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">load_collision_spheres</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">collision_spheres_path</span><span class="api-type">Optional[Union[str, Path]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">load_link_capsules</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">link_capsules_path</span><span class="api-type">Optional[Union[str, Path]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">base_link_name</span><span class="api-type">Optional[str]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">ee_link_names</span><span class="api-type">Optional[Union[Sequence[str], str]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">keep_world_link</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">RobotSpec</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-num_joints">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L926">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">num_joints</span><span class="pp">: </span><span class="pt">int</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotspec-num_actuated_joints">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L930">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">num_actuated_joints</span><span class="pp">: </span><span class="pt">int</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotspec-num_nonfixed_joints">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L934">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">num_nonfixed_joints</span><span class="pp">: </span><span class="pt">int</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotspec-num_links">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L938">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">num_links</span><span class="pp">: </span><span class="pt">int</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotspec-zero_q">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L942">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">zero_q</span><span class="pp">: </span><span class="pt">Float[np.ndarray, num_actuated_joints]</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotspec-midrange_q">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L946">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">midrange_q</span><span class="pp">: </span><span class="pt">Float[np.ndarray, num_actuated_joints]</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotspec-parent_joint_transforms_matrix">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L951">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">parent_joint_transforms_matrix</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 'num_joints 4 4']</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Transforms of parent joints as 4x4 matrices.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-has_mimic_joints">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L958">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">has_mimic_joints</span><span class="pp">: </span><span class="pt">bool</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotspec-mimic_joint_names">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L962">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">mimic_joint_names</span><span class="pp">: </span><span class="pt">List[str]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Names of mimic joints.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-total_mass">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L971">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">total_mass</span><span class="pp">: </span><span class="pt">float</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotspec-has_collision_spheres">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L976">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">has_collision_spheres</span><span class="pp">: </span><span class="pt">bool</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotspec-local_collision_sphere_radii">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L980">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">local_collision_sphere_radii</span><span class="pp">: </span><span class="pt">Float[np.ndarray, num_collision_spheres]</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotspec-local_link_bounding_sphere_centers">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L994">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">local_link_bounding_sphere_centers</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 'num_links 3']</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Per-link bounding sphere centers in link-local coordinates (broad-phase filter).</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-link_bounding_sphere_radii">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L999">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">link_bounding_sphere_radii</span><span class="pp">: </span><span class="pt">Float[np.ndarray, num_links]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Per-link bounding sphere radii (broad-phase filter).</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-local_link_capsule_endpoints">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L1025">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">local_link_capsule_endpoints</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 'num_links 2 3']</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Per-link capsule segment endpoints (a, b) in link-local coordinates; zeros for links without a capsule.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-link_capsule_radii">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L1032">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">link_capsule_radii</span><span class="pp">: </span><span class="pt">Float[np.ndarray, num_links]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Per-link capsule radii; 0.0 for links without a capsule.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-has_link_capsules">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L1039">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">has_link_capsules</span><span class="pp">: </span><span class="pt">bool</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotspec-topological_order_joint_indices">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L1044">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">topological_order_joint_indices</span><span class="pp">: </span><span class="pt">Int[np.ndarray, num_joints]</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotspec-kinematic_tree_str">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L1071">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">kinematic_tree_str</span><span class="pp">: </span><span class="pt">str</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotspec-joints_to_actuated_mapping">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L1120">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">joints_to_actuated_mapping</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 'num_joints num_actuated_joints']</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Mapping from all joints to actuated joints.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-link_ancestor_joints_mask">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L1134">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">link_ancestor_joints_mask</span><span class="pp">: </span><span class="pt">Bool[np.ndarray, 'num_links num_joints']</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Boolean mask for ancestor joints of links.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-link_ancestor_links_mask">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L1145">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">link_ancestor_links_mask</span><span class="pp">: </span><span class="pt">Bool[np.ndarray, 'num_links num_links']</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Boolean mask for ancestor links of links.</p></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-get_link_mesh">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L1156">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">get_link_mesh</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">link_name</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">mode</span><span class="pp">: </span><span class="pt">Literal['visual', 'collision']</span><span class="pp"> = </span><span class="pd">'collision'</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">return_mesh</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">True</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Union[trimesh.Scene, trimesh.Trimesh]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Link geometry: a single concatenated mesh, or the raw <code>trimesh.Scene</code> when <code>return_mesh=False</code>.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">link_name</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">mode</span><span class="api-type">Literal['visual', 'collision']</span><span class="api-def">= 'collision'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">return_mesh</span><span class="api-type">bool</span><span class="api-def">= True</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Union[trimesh.Scene, trimesh.Trimesh]</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-get_link_meshes">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L1167">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">get_link_meshes</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">mode</span><span class="pp">: </span><span class="pt">Literal['visual', 'collision']</span><span class="pp"> = </span><span class="pd">'collision'</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">return_mesh</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">True</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Dict[str, Union[trimesh.Scene, trimesh.Trimesh]]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Per-link geometry: concatenated meshes or <code>trimesh.Scene</code>s when <code>return_mesh=False</code> (needs <code>load_meshes=True</code>).</p><h4>Example</h4><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; from robot_descriptions.loaders.yourdfpy import load_robot_description
+&gt;&gt;&gt; spec = RobotSpec.parse(load_robot_description("panda_description"), load_meshes=True)
+&gt;&gt;&gt; "panda_hand" in spec.get_link_meshes()
+True</pre><pre data-code-full hidden>from robokit.robo.robot_spec import RobotSpec
+
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+spec = RobotSpec.parse(load_robot_description("panda_description"), load_meshes=True)
+"panda_hand" in spec.get_link_meshes()</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">mode</span><span class="api-type">Literal['visual', 'collision']</span><span class="api-def">= 'collision'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">return_mesh</span><span class="api-type">bool</span><span class="api-def">= True</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Dict[str, Union[trimesh.Scene, trimesh.Trimesh]]</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-get_tensors">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L1219">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">get_tensors</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">Optional[str]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">RobotSpecTensors</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Cached Warp spec tensors for <code>device</code> (build on miss).</p><h4>Example</h4><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; from robot_descriptions.loaders.yourdfpy import load_robot_description
+&gt;&gt;&gt; spec = RobotSpec.parse(load_robot_description("panda_description"))
+&gt;&gt;&gt; spec.get_tensors() is spec.get_tensors()
+True</pre><pre data-code-full hidden>from robokit.robo.robot_spec import RobotSpec
+
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+spec = RobotSpec.parse(load_robot_description("panda_description"))
+spec.get_tensors() is spec.get_tensors()</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">Optional[str]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">RobotSpecTensors</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="robotspec-get_tensors_torch">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_spec.py#L1231">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotSpec.</span><span class="api-card__name">get_tensors_torch</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">Optional[Union[str, torch.device]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">TorchRobotSpecTensors</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Cached torch spec tensors for <code>device</code> (build on miss).</p><h4>Example</h4><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; from robot_descriptions.loaders.yourdfpy import load_robot_description
+&gt;&gt;&gt; spec = RobotSpec.parse(load_robot_description("panda_description"))
+&gt;&gt;&gt; spec.get_tensors_torch() is spec.get_tensors_torch()
+True</pre><pre data-code-full hidden>from robokit.robo.robot_spec import RobotSpec
+
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+spec = RobotSpec.parse(load_robot_description("panda_description"))
+spec.get_tensors_torch() is spec.get_tensors_torch()</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">Optional[Union[str, torch.device]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">TorchRobotSpecTensors</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="robotstate">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L41">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">robokit.robo.</span><span class="api-card__name">RobotState</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">robot</span><span class="pp">: </span><span class="pt">Robot</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">q</span><span class="pp">: </span><span class="pt">wp.array</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">T_world_base</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div><div class="api-sig__bases">Bases: <span>Var</span></div>
+  </div>
+    <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">robot</span><span class="api-type">Robot</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">q</span><span class="api-type">wp.array</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">T_world_base</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="robotstate-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="robotstate-difference">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><span class="api-from">inherited from Var</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/opt/var_values.py#L49">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">difference</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">other</span><span class="pp">: </span><span class="pt">Self</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out</span><span class="pp">: </span><span class="pt">Optional[ArrayLike]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">ArrayLike</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p><code>(batch, tangent_dim)</code> velocities that <code>integrate</code> moves each element by to reach <code>other</code>'s.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">other</span><span class="api-type">Self</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out</span><span class="api-type">Optional[ArrayLike]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">ArrayLike</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="robotstate-spec">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L55">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">spec</span><span class="pp">: </span><span class="pt">RobotSpec</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotstate-q">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L56">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">q</span><span class="pp">: </span><span class="pt">wp.array</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotstate-t_world_base">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L44">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">T_world_base</span><span class="pp">: </span><span class="pt">wp.array</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotstate-has_floating_base">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L46">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">has_floating_base</span><span class="pp">: </span><span class="pt">bool</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotstate-is_fk_computed">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L47">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">is_fk_computed</span><span class="pp">: </span><span class="pt">bool</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotstate-is_motion_subspace_computed">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L48">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">is_motion_subspace_computed</span><span class="pp">: </span><span class="pt">bool</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotstate-is_collision_spheres_computed">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L49">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">is_collision_spheres_computed</span><span class="pp">: </span><span class="pt">bool</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotstate-is_capsules_computed">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L50">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">is_capsules_computed</span><span class="pp">: </span><span class="pt">bool</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotstate-is_com_computed">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L51">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">is_com_computed</span><span class="pp">: </span><span class="pt">bool</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotstate-t_world_joint">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L77">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">T_world_joint</span><span class="pp">: </span><span class="pt">wp.array</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotstate-t_world_link">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L88">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">T_world_link</span><span class="pp">: </span><span class="pt">wp.array</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotstate-x_local">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L99">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">X_local</span><span class="pp">: </span><span class="pt">wp.array</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotstate-s_world">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L103">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">S_world</span><span class="pp">: </span><span class="pt">wp.array</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotstate-com_world">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L112">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">com_world</span><span class="pp">: </span><span class="pt">wp.array</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotstate-collision_sphere_centers_world">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L116">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">collision_sphere_centers_world</span><span class="pp">: </span><span class="pt">wp.array</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotstate-link_bounding_sphere_centers_world">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L123">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">link_bounding_sphere_centers_world</span><span class="pp">: </span><span class="pt">wp.array</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotstate-link_capsule_endpoint_a_world">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L130">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">link_capsule_endpoint_a_world</span><span class="pp">: </span><span class="pt">wp.array</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotstate-link_capsule_endpoint_b_world">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L139">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">link_capsule_endpoint_b_world</span><span class="pp">: </span><span class="pt">wp.array</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotstate-is_trajectory">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L159">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">is_trajectory</span><span class="pp">: </span><span class="pt">bool</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotstate-shape">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L163">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">shape</span><span class="pp">: </span><span class="pt">Tuple[int, ...]</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotstate-batch_size">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L167">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">batch_size</span><span class="pp">: </span><span class="pt">int</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotstate-num_elements">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L171">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">num_elements</span><span class="pp">: </span><span class="pt">int</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotstate-device">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L175">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">device</span><span class="pp">: </span><span class="pt">wp_device_type</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotstate-tangent_dim">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L179">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">tangent_dim</span><span class="pp">: </span><span class="pt">int</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotstate-get_t_world_link">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L184">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">get_T_world_link</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">link_index</span><span class="pp">: </span><span class="pt">int</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">wp.array</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">link_index</span><span class="api-type">int</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">wp.array</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="robotstate-get_link_jacobian">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L192">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">get_link_jacobian</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">link_index</span><span class="pp">: </span><span class="pt">int</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">reference_frame</span><span class="pp">: </span><span class="pt">Literal['body', 'spatial']</span><span class="pp"> = </span><span class="pd">'body'</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">wp.array</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">link_index</span><span class="api-type">int</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">reference_frame</span><span class="api-type">Literal['body', 'spatial']</span><span class="api-def">= 'body'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">wp.array</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="robotstate-invalidate">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L227">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">invalidate</span><span class="pp">()</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotstate-precompute">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L234">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">precompute</span><span class="pp">()</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="robotstate-integrate">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L238">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">integrate</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">velocity</span><span class="pp">: </span><span class="pt">ArrayLike</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out</span><span class="pp">: </span><span class="pt">Optional[RobotState]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">tangent_mask</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">weight_decay</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_velocity</span><span class="pp">: </span><span class="pt">Optional[ArrayLike]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">RobotState</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Integrate the state by a tangent-space velocity, optionally reporting the move the limits let through.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">velocity</span><span class="api-type">ArrayLike</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out</span><span class="api-type">Optional[RobotState]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">tangent_mask</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">weight_decay</span><span class="api-type">float</span><span class="api-def">= 0.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_velocity</span><span class="api-type">Optional[ArrayLike]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">RobotState</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="robotstate-clamp_q">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L314">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">clamp_q</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">tangent_mask</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">record_tape</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">True</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">RobotState</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Clamp joints while preserving masked coordinates; <code>record_tape=False</code> excludes projection from tape.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">tangent_mask</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">record_tape</span><span class="api-type">bool</span><span class="api-def">= True</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">RobotState</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="robotstate-clone">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L335">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">clone</span><span class="pp">()</span><span class="pp"> -> </span><span class="pt">RobotState</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">RobotState</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="robotstate-view">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L356">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">view</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">batch_size</span><span class="pp">: </span><span class="pt">int</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">offset</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">0</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">RobotState</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Elements <code>offset</code> to <code>offset + batch_size</code> of every buffer, sharing storage.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">batch_size</span><span class="api-type">int</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">offset</span><span class="api-type">int</span><span class="api-def">= 0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">RobotState</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="robotstate-flatten">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L381">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">flatten</span><span class="pp">()</span><span class="pp"> -> </span><span class="pt">RobotState</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Zero-copy view folding the frame axis into the batch axis so per-pose kernels run unchanged.</p></div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">RobotState</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="robotstate-gather">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L410">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">gather</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">indices</span><span class="pp">: </span><span class="pt">ArrayLike</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out</span><span class="pp">: </span><span class="pt">Optional[RobotState]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">q_only</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">True</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">RobotState</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">indices</span><span class="api-type">ArrayLike</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out</span><span class="api-type">Optional[RobotState]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">q_only</span><span class="api-type">bool</span><span class="api-def">= True</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">RobotState</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="robotstate-accept">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/robo/robot_state.py#L448">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RobotState.</span><span class="api-card__name">accept</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">accept_mask</span><span class="pp">: </span><span class="pt">ArrayLike</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">proposed</span><span class="pp">: </span><span class="pt">RobotState</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">RobotState</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Optimized accept: copies q, and the forward kinematics this state already had (1 kernel).</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">accept_mask</span><span class="api-type">ArrayLike</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">proposed</span><span class="api-type">RobotState</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">RobotState</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/robokit/term-force-closure/"><span class="lbl">← Previous</span><span class="nm">Force Closure Task</span></a><a class="next" href="/docs/robokit/api-geometry/"><span class="lbl">Next →</span><span class="nm">Geometry</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#robot">Robot</a><a href="#robotspec">RobotSpec</a><a href="#robotstate">RobotState</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "robokit", "id": "api-robot", "toc": [{"text": "Robot", "href": "#robot", "members": [{"text": "spec", "href": "#robot-spec"}, {"text": "load()", "href": "#robot-load"}, {"text": "state()", "href": "#robot-state"}, {"text": "forward_kinematics()", "href": "#robot-forward_kinematics"}, {"text": "forward_kinematics_via_matrix_numpy()", "href": "#robot-forward_kinematics_via_matrix_numpy"}, {"text": "forward_kinematics_numpy()", "href": "#robot-forward_kinematics_numpy"}, {"text": "compute_center_of_mass_numpy()", "href": "#robot-compute_center_of_mass_numpy"}, {"text": "compute_motion_subspace()", "href": "#robot-compute_motion_subspace"}, {"text": "compute_center_of_mass()", "href": "#robot-compute_center_of_mass"}, {"text": "transform_collision_spheres()", "href": "#robot-transform_collision_spheres"}, {"text": "transform_collision_capsules()", "href": "#robot-transform_collision_capsules"}, {"text": "forward_kinematics_via_matrix_torch()", "href": "#robot-forward_kinematics_via_matrix_torch"}, {"text": "transform_link_points_torch()", "href": "#robot-transform_link_points_torch"}, {"text": "map_to_full_joint_values_torch()", "href": "#robot-map_to_full_joint_values_torch"}, {"text": "zero_q", "href": "#robot-zero_q"}, {"text": "midrange_q", "href": "#robot-midrange_q"}, {"text": "num_actuated_joints", "href": "#robot-num_actuated_joints"}, {"text": "link_names", "href": "#robot-link_names"}, {"text": "sample_q()", "href": "#robot-sample_q"}]}, {"text": "RobotSpec", "href": "#robotspec", "members": [{"text": "name", "href": "#robotspec-name"}, {"text": "robot_description", "href": "#robotspec-robot_description"}, {"text": "format", "href": "#robotspec-format"}, {"text": "joint_names", "href": "#robotspec-joint_names"}, {"text": "nonfixed_joint_names", "href": "#robotspec-nonfixed_joint_names"}, {"text": "actuated_joint_names", "href": "#robotspec-actuated_joint_names"}, {"text": "joint_types", "href": "#robotspec-joint_types"}, {"text": "joint_axes", "href": "#robotspec-joint_axes"}, {"text": "joint_twists", "href": "#robotspec-joint_twists"}, {"text": "actuated_joint_indices", "href": "#robotspec-actuated_joint_indices"}, {"text": "parent_joint_indices", "href": "#robotspec-parent_joint_indices"}, {"text": "parent_joint_transforms", "href": "#robotspec-parent_joint_transforms"}, {"text": "mimic_actuated_joint_indices", "href": "#robotspec-mimic_actuated_joint_indices"}, {"text": "mimic_multipliers", "href": "#robotspec-mimic_multipliers"}, {"text": "mimic_offsets", "href": "#robotspec-mimic_offsets"}, {"text": "joint_limits", "href": "#robotspec-joint_limits"}, {"text": "joint_velocity_limits", "href": "#robotspec-joint_velocity_limits"}, {"text": "actuated_joint_limits", "href": "#robotspec-actuated_joint_limits"}, {"text": "actuated_joint_velocity_limits", "href": "#robotspec-actuated_joint_velocity_limits"}, {"text": "link_names", "href": "#robotspec-link_names"}, {"text": "link_parent_joint_indices", "href": "#robotspec-link_parent_joint_indices"}, {"text": "base_link_name", "href": "#robotspec-base_link_name"}, {"text": "ee_link_names", "href": "#robotspec-ee_link_names"}, {"text": "link_visual_geometries", "href": "#robotspec-link_visual_geometries"}, {"text": "link_collision_geometries", "href": "#robotspec-link_collision_geometries"}, {"text": "local_collision_sphere_centers", "href": "#robotspec-local_collision_sphere_centers"}, {"text": "collision_sphere_radii", "href": "#robotspec-collision_sphere_radii"}, {"text": "collision_spheres_link_indices", "href": "#robotspec-collision_spheres_link_indices"}, {"text": "self_collision_ignored_pairs", "href": "#robotspec-self_collision_ignored_pairs"}, {"text": "link_masses", "href": "#robotspec-link_masses"}, {"text": "link_local_com_positions", "href": "#robotspec-link_local_com_positions"}, {"text": "loaded_link_capsule_endpoints", "href": "#robotspec-loaded_link_capsule_endpoints"}, {"text": "loaded_link_capsule_radii", "href": "#robotspec-loaded_link_capsule_radii"}, {"text": "self_collision_link_buffers", "href": "#robotspec-self_collision_link_buffers"}, {"text": "parse()", "href": "#robotspec-parse"}, {"text": "parse_urdf()", "href": "#robotspec-parse_urdf"}, {"text": "parse_mjcf()", "href": "#robotspec-parse_mjcf"}, {"text": "num_joints", "href": "#robotspec-num_joints"}, {"text": "num_actuated_joints", "href": "#robotspec-num_actuated_joints"}, {"text": "num_nonfixed_joints", "href": "#robotspec-num_nonfixed_joints"}, {"text": "num_links", "href": "#robotspec-num_links"}, {"text": "zero_q", "href": "#robotspec-zero_q"}, {"text": "midrange_q", "href": "#robotspec-midrange_q"}, {"text": "parent_joint_transforms_matrix", "href": "#robotspec-parent_joint_transforms_matrix"}, {"text": "has_mimic_joints", "href": "#robotspec-has_mimic_joints"}, {"text": "mimic_joint_names", "href": "#robotspec-mimic_joint_names"}, {"text": "total_mass", "href": "#robotspec-total_mass"}, {"text": "has_collision_spheres", "href": "#robotspec-has_collision_spheres"}, {"text": "local_collision_sphere_radii", "href": "#robotspec-local_collision_sphere_radii"}, {"text": "local_link_bounding_sphere_centers", "href": "#robotspec-local_link_bounding_sphere_centers"}, {"text": "link_bounding_sphere_radii", "href": "#robotspec-link_bounding_sphere_radii"}, {"text": "local_link_capsule_endpoints", "href": "#robotspec-local_link_capsule_endpoints"}, {"text": "link_capsule_radii", "href": "#robotspec-link_capsule_radii"}, {"text": "has_link_capsules", "href": "#robotspec-has_link_capsules"}, {"text": "topological_order_joint_indices", "href": "#robotspec-topological_order_joint_indices"}, {"text": "kinematic_tree_str", "href": "#robotspec-kinematic_tree_str"}, {"text": "joints_to_actuated_mapping", "href": "#robotspec-joints_to_actuated_mapping"}, {"text": "link_ancestor_joints_mask", "href": "#robotspec-link_ancestor_joints_mask"}, {"text": "link_ancestor_links_mask", "href": "#robotspec-link_ancestor_links_mask"}, {"text": "get_link_mesh()", "href": "#robotspec-get_link_mesh"}, {"text": "get_link_meshes()", "href": "#robotspec-get_link_meshes"}, {"text": "get_tensors()", "href": "#robotspec-get_tensors"}, {"text": "get_tensors_torch()", "href": "#robotspec-get_tensors_torch"}]}, {"text": "RobotState", "href": "#robotstate", "members": [{"text": "difference()", "href": "#robotstate-difference"}, {"text": "spec", "href": "#robotstate-spec"}, {"text": "q", "href": "#robotstate-q"}, {"text": "T_world_base", "href": "#robotstate-t_world_base"}, {"text": "has_floating_base", "href": "#robotstate-has_floating_base"}, {"text": "is_fk_computed", "href": "#robotstate-is_fk_computed"}, {"text": "is_motion_subspace_computed", "href": "#robotstate-is_motion_subspace_computed"}, {"text": "is_collision_spheres_computed", "href": "#robotstate-is_collision_spheres_computed"}, {"text": "is_capsules_computed", "href": "#robotstate-is_capsules_computed"}, {"text": "is_com_computed", "href": "#robotstate-is_com_computed"}, {"text": "T_world_joint", "href": "#robotstate-t_world_joint"}, {"text": "T_world_link", "href": "#robotstate-t_world_link"}, {"text": "X_local", "href": "#robotstate-x_local"}, {"text": "S_world", "href": "#robotstate-s_world"}, {"text": "com_world", "href": "#robotstate-com_world"}, {"text": "collision_sphere_centers_world", "href": "#robotstate-collision_sphere_centers_world"}, {"text": "link_bounding_sphere_centers_world", "href": "#robotstate-link_bounding_sphere_centers_world"}, {"text": "link_capsule_endpoint_a_world", "href": "#robotstate-link_capsule_endpoint_a_world"}, {"text": "link_capsule_endpoint_b_world", "href": "#robotstate-link_capsule_endpoint_b_world"}, {"text": "is_trajectory", "href": "#robotstate-is_trajectory"}, {"text": "shape", "href": "#robotstate-shape"}, {"text": "batch_size", "href": "#robotstate-batch_size"}, {"text": "num_elements", "href": "#robotstate-num_elements"}, {"text": "device", "href": "#robotstate-device"}, {"text": "tangent_dim", "href": "#robotstate-tangent_dim"}, {"text": "get_T_world_link()", "href": "#robotstate-get_t_world_link"}, {"text": "get_link_jacobian()", "href": "#robotstate-get_link_jacobian"}, {"text": "invalidate()", "href": "#robotstate-invalidate"}, {"text": "precompute()", "href": "#robotstate-precompute"}, {"text": "integrate()", "href": "#robotstate-integrate"}, {"text": "clamp_q()", "href": "#robotstate-clamp_q"}, {"text": "clone()", "href": "#robotstate-clone"}, {"text": "view()", "href": "#robotstate-view"}, {"text": "flatten()", "href": "#robotstate-flatten"}, {"text": "gather()", "href": "#robotstate-gather"}, {"text": "accept()", "href": "#robotstate-accept"}]}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

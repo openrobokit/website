@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Humanoid Retargeting · RoboKit docs · OpenRoboKit</title>
+  <meta name="description" content="GPU-native, differentiable robotics tooling: IK, trajectory optimization, retargeting, grasping, calibration." />
+  <link rel="canonical" href="https://openrobokit.com/docs/robokit/api-humanoid-retargeting/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">RoboKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="is-active">
+        <span class="nm">RoboKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="">
+        <span class="nm">GraspKit</span>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/robokit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/robokit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/robokit/rl/" data-id="rl" class="">RL</a></div><div class="side__list"><a href="/docs/robokit/sim-mpc/" data-id="sim-mpc" class="">Sim MPC</a></div><div class="side__list"><a href="/docs/robokit/ik/" data-id="ik" class="">IK</a></div><div class="side__list"><a href="/docs/robokit/motion-planning/" data-id="motion-planning" class="">Motion Planning</a></div><div class="side__list"><a href="/docs/robokit/humanoid-retargeting/" data-id="humanoid-retargeting" class="">Humanoid Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand-retargeting/" data-id="hand-retargeting" class="">Hand Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand_eye_calibration/" data-id="hand_eye_calibration" class="">Hand-Eye Calibration</a></div><div class="side__list"><a href="/docs/robokit/ref-assets/" data-id="ref-assets" class="">Built-in Robots &amp; Datasets</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/robot/" data-id="robot" class="">Robot</a></div><div class="side__list"><a href="/docs/robokit/geom/" data-id="geom" class="">Geometry</a></div><div class="side__list"><a href="/docs/robokit/optimization/" data-id="optimization" class="">Optimization</a></div><div class="side__list"><a href="/docs/robokit/conventions/" data-id="conventions" class="">Conventions</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list">
+      <div class="side__sub is-folded" data-fold="Reference·Optimizers">
+        <span>Optimizers</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/opt-gd/" data-id="opt-gd" class="">GDOptimizer</a><a href="/docs/robokit/opt-lm/" data-id="opt-lm" class="">LMOptimizer</a><a href="/docs/robokit/opt-lbfgs/" data-id="opt-lbfgs" class="">LBFGSOptimizer</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Terms">
+        <span>Terms</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/term-frame/" data-id="term-frame" class="">Frame Task</a><a href="/docs/robokit/term-position/" data-id="term-position" class="">Position Task</a><a href="/docs/robokit/term-rotation/" data-id="term-rotation" class="">Rotation Tasks</a><a href="/docs/robokit/term-frame-vector/" data-id="term-frame-vector" class="">Frame Vector Task</a><a href="/docs/robokit/term-com-position/" data-id="term-com-position" class="">CoM Position Task</a><a href="/docs/robokit/term-position-limit/" data-id="term-position-limit" class="">Position Limit</a><a href="/docs/robokit/term-velocity-limit/" data-id="term-velocity-limit" class="">Velocity Limit Task</a><a href="/docs/robokit/term-configuration/" data-id="term-configuration" class="">Configuration Task</a><a href="/docs/robokit/term-smoothness/" data-id="term-smoothness" class="">Smoothness Task</a><a href="/docs/robokit/term-self-collision/" data-id="term-self-collision" class="">Self Collision Task</a><a href="/docs/robokit/term-scene-collision/" data-id="term-scene-collision" class="">Scene Collision Task</a><a href="/docs/robokit/term-scene-distance/" data-id="term-scene-distance" class="">Scene Distance Task</a><a href="/docs/robokit/term-interaction-mesh/" data-id="term-interaction-mesh" class="">Interaction Mesh Task</a><a href="/docs/robokit/term-mask-alignment/" data-id="term-mask-alignment" class="">Mask Alignment Task</a><a href="/docs/robokit/term-manipulability/" data-id="term-manipulability" class="">Manipulability Task</a><a href="/docs/robokit/term-force-closure/" data-id="term-force-closure" class="">Force Closure Task</a></div>
+      <div class="side__sub" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/api-robot/" data-id="api-robot" class="">Robot</a><a href="/docs/robokit/api-geometry/" data-id="api-geometry" class="">Geometry</a><a href="/docs/robokit/api-optimization/" data-id="api-optimization" class="">Optimization</a><a href="/docs/robokit/api-terms/" data-id="api-terms" class="">Terms</a><a href="/docs/robokit/api-ik/" data-id="api-ik" class="">Inverse Kinematics</a><a href="/docs/robokit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/robokit/api-sim-mpc/" data-id="api-sim-mpc" class="">Sim MPC</a><a href="/docs/robokit/api-humanoid-retargeting/" data-id="api-humanoid-retargeting" class="is-active">Humanoid Retargeting</a><a href="/docs/robokit/api-hand-retargeting/" data-id="api-hand-retargeting" class="">Hand Retargeting</a><a href="/docs/robokit/api-hand_eye_calibration/" data-id="api-hand_eye_calibration" class="">Hand-Eye Calibration</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">robokit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>Reference</span><span class="slash">/</span><span>API</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Humanoid Retargeting</h1>
+        <div class="doc-body" id="doc-body"><div class="api"><section class="api-sym">
+    <div class="api-card" id="humanoidretargeteronline">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/online.py#L26">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">robokit.helpers.humanoid_retargeting.</span><span class="api-card__name">HumanoidRetargeterOnline</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">config</span><span class="pp">: </span><span class="pt">HumanoidRetargeterOnlineConfig</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">robot</span><span class="pp">: </span><span class="pt">Optional[Robot]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene</span><span class="pp">: </span><span class="pt">Optional[WarpScene]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">Optional[wp_device_type]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">seed</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">0</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Online humanoid retargeting with input joints ordered by <code>human_joint_names</code>.</p><h3>Lifecycle</h3><ol><li><code>__init__</code> stores the robot, configuration, and caller-owned scene.</li><li><code>warmup(batch_size)</code> builds batch-shaped buffers and solvers.</li><li><code>solve(T_world_human)</code> advances one batched frame from Warp inputs.</li></ol></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">config</span><span class="api-type">HumanoidRetargeterOnlineConfig</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">robot</span><span class="api-type">Optional[Robot]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene</span><span class="api-type">Optional[WarpScene]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">Optional[wp_device_type]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">seed</span><span class="api-type">int</span><span class="api-def">= 0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="humanoidretargeteronline-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="humanoidretargeteronline-interaction_task">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/online.py#L95">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOnline.</span><span class="api-card__name">interaction_task</span><span class="pp">: </span><span class="pt">InteractionMeshTask</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Return the interaction task; set its first frame before warmup and update it before each solve.</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeteronline-warmup">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/online.py#L160">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOnline.</span><span class="api-card__name">warmup</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">batch_size</span><span class="pp">: </span><span class="pt">int</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Fix the online batch size and build its reusable solver state.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">batch_size</span><span class="api-type">int</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeteronline-solve">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/online.py#L220">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOnline.</span><span class="api-card__name">solve</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">T_world_human</span><span class="pp">: </span><span class="pt">wp.array</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">human_heights</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">wp.array</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Retarget one batched human frame from Warp inputs.</p><h4>Lifecycle</h4><ol><li>Validate the shape fixed by <code>warmup(...)</code>.</li><li>Update temporal terms from the previous robot state.</li><li>Compute targets and candidate states.</li><li>Solve once, retain the state, and write the requested output buffer.</li></ol></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">T_world_human</span><span class="api-type">wp.array</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Human joint transforms with shape <code>(batch, joints)</code>.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">human_heights</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional human height in meters for each batch element.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional caller-owned output with shape <code>(batch, 7 + dofs)</code>.</p></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">wp.array</span></div><div class="api-row__doc"><p><code>out</code> when provided; otherwise a reusable helper-owned buffer overwritten by the next call.</p></div></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeteronline-solve_numpy">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/online.py#L329">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOnline.</span><span class="api-card__name">solve_numpy</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">T_world_human</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">human_heights</span><span class="pp">: </span><span class="pt">Optional[np.ndarray]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">np.ndarray</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Convert NumPy inputs, call <code>solve(...)</code>, and return a NumPy copy.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">T_world_human</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">human_heights</span><span class="api-type">Optional[np.ndarray]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">np.ndarray</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeteronline-reset">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/online.py#L349">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOnline.</span><span class="api-card__name">reset</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">T_world_base</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Reset temporal state, optionally from an initial floating-base transform.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">T_world_base</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="humanoidretargeteronlineconfig">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L253">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">robokit.helpers.humanoid_retargeting.</span><span class="api-card__name">HumanoidRetargeterOnlineConfig</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">terms</span><span class="pp">: </span><span class="pt">List[ResidualTask]</span><span class="pp"> = </span><span class="pd">_default_online_terms()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">urdf_path</span><span class="pp">: </span><span class="pt">Optional[str]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">human_root_name</span><span class="pp">: </span><span class="pt">str</span><span class="pp"> = </span><span class="pd">'pelvis'</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">human_height_assumption</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">1.8</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">ground_height</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">collision_spheres_path</span><span class="pp">: </span><span class="pt">Optional[Union[str, Path]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scale_table</span><span class="pp">: </span><span class="pt">Dict[str, float]</span><span class="pp"> = </span><span class="pd">dict()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">link_mapping</span><span class="pp">: </span><span class="pt">Dict[str, LinkMapping]</span><span class="pp"> = </span><span class="pd">dict()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">correspondence_edges</span><span class="pp">: </span><span class="pt">Optional[List[CorrespondenceEdge]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">interaction_terms</span><span class="pp">: </span><span class="pt">List[ResidualTask]</span><span class="pp"> = </span><span class="pd">list()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">velocity_limit_dt</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">1.0 / 30.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">velocity_clamp_scale</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.6</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">velocity_limit_override</span><span class="pp">: </span><span class="pt">Optional[Sequence[Union[int, float]]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">solver</span><span class="pp">: </span><span class="pt">PopulationSolverConfig</span><span class="pp"> = </span><span class="pd">_default_retargeting_solver()</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>A robot's human-to-robot mapping, task templates and per-frame solver; offline retargeting reuses the mapping.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">terms</span><span class="api-type">List[ResidualTask]</span><span class="api-def">= _default_online_terms()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">urdf_path</span><span class="api-type">Optional[str]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">human_root_name</span><span class="api-type">str</span><span class="api-def">= 'pelvis'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">human_height_assumption</span><span class="api-type">float</span><span class="api-def">= 1.8</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">ground_height</span><span class="api-type">float</span><span class="api-def">= 0.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">collision_spheres_path</span><span class="api-type">Optional[Union[str, Path]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scale_table</span><span class="api-type">Dict[str, float]</span><span class="api-def">= dict()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">link_mapping</span><span class="api-type">Dict[str, LinkMapping]</span><span class="api-def">= dict()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">correspondence_edges</span><span class="api-type">Optional[List[CorrespondenceEdge]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">interaction_terms</span><span class="api-type">List[ResidualTask]</span><span class="api-def">= list()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">velocity_limit_dt</span><span class="api-type">float</span><span class="api-def">= 1.0 / 30.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">velocity_clamp_scale</span><span class="api-type">float</span><span class="api-def">= 0.6</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">velocity_limit_override</span><span class="api-type">Optional[Sequence[Union[int, float]]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">solver</span><span class="api-type">PopulationSolverConfig</span><span class="api-def">= _default_retargeting_solver()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="humanoidretargeteronlineconfig-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="humanoidretargeteronlineconfig-terms">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L257">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOnlineConfig.</span><span class="api-card__name">terms</span><span class="pp">: </span><span class="pt">List[ResidualTask] = field(default_factory=_default_online_terms)</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Task templates; each names its inputs with <code>HumanoidContext</code> members.</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeteronlineconfig-urdf_path">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L259">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOnlineConfig.</span><span class="api-card__name">urdf_path</span><span class="pp">: </span><span class="pt">Optional[str] = None</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Robot URDF, loaded when the retargeter gets no robot.</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeteronlineconfig-human_root_name">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L261">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOnlineConfig.</span><span class="api-card__name">human_root_name</span><span class="pp">: </span><span class="pt">str = 'pelvis'</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Human joint that places the robot base.</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeteronlineconfig-human_height_assumption">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L263">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOnlineConfig.</span><span class="api-card__name">human_height_assumption</span><span class="pp">: </span><span class="pt">float = 1.8</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Human height in meters when a solve gets no <code>human_heights</code>.</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeteronlineconfig-ground_height">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L265">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOnlineConfig.</span><span class="api-card__name">ground_height</span><span class="pp">: </span><span class="pt">float = 0.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Ground height of the human motion, subtracted from every target height.</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeteronlineconfig-collision_spheres_path">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L267">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOnlineConfig.</span><span class="api-card__name">collision_spheres_path</span><span class="pp">: </span><span class="pt">Optional[Union[str, Path]] = None</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Robot collision spheres, needed by a weighted self-collision task.</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeteronlineconfig-scale_table">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L269">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOnlineConfig.</span><span class="api-card__name">scale_table</span><span class="pp">: </span><span class="pt">Dict[str, float] = field(default_factory=dict)</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Target scale per human joint; absent joints use 1.0.</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeteronlineconfig-link_mapping">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L271">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOnlineConfig.</span><span class="api-card__name">link_mapping</span><span class="pp">: </span><span class="pt">Dict[str, LinkMapping] = field(default_factory=dict)</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Robot link to the human joint it tracks, in target order.</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeteronlineconfig-correspondence_edges">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L273">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOnlineConfig.</span><span class="api-card__name">correspondence_edges</span><span class="pp">: </span><span class="pt">Optional[List[CorrespondenceEdge]] = None</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Link vectors the <code>correspondence</code> task drives toward human joint vectors; None is off (online only).</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeteronlineconfig-interaction_terms">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L275">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOnlineConfig.</span><span class="api-card__name">interaction_terms</span><span class="pp">: </span><span class="pt">List[ResidualTask] = field(default_factory=list)</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Interaction-mesh task templates, built at construction so the first frame is set before warmup; empty is off.</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeteronlineconfig-velocity_limit_dt">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L277">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOnlineConfig.</span><span class="api-card__name">velocity_limit_dt</span><span class="pp">: </span><span class="pt">float = 1.0 / 30.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Time between frames, for the velocity limits and the output clamp.</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeteronlineconfig-velocity_clamp_scale">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L279">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOnlineConfig.</span><span class="api-card__name">velocity_clamp_scale</span><span class="pp">: </span><span class="pt">float = 0.6</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Clamp each output step at this fraction of the velocity limits; 0 is off.</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeteronlineconfig-velocity_limit_override">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L281">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOnlineConfig.</span><span class="api-card__name">velocity_limit_override</span><span class="pp">: </span><span class="pt">Optional[Sequence[Union[int, float]]] = None</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Joint velocity limits in rad/s, replacing the URDF's; None uses the URDF's.</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeteronlineconfig-solver">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L283">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOnlineConfig.</span><span class="api-card__name">solver</span><span class="pp">: </span><span class="pt">PopulationSolverConfig = field(default_factory=_default_retargeting_solver)</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Candidate schedule and optimizers of each frame's solve.</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeteronlineconfig-add">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L286">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOnlineConfig.</span><span class="api-card__name">add</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">term</span><span class="pp">: </span><span class="pt">ResidualTask</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">name</span><span class="pp">: </span><span class="pt">Optional[str]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">HumanoidRetargeterOnlineConfig</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Append a task, optionally assigning its input role.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; from robokit.terms.dense.configuration_task import ConfigurationTask
+&gt;&gt;&gt; config = HumanoidRetargeterOnlineConfig(terms=[]).add(ConfigurationTask(weight=0.1), name="rest")
+&gt;&gt;&gt; config.task("rest").weight
+0.1</pre><pre data-code-full hidden>from robokit.helpers.humanoid_retargeting.config import HumanoidRetargeterOnlineConfig
+
+from robokit.terms.dense.configuration_task import ConfigurationTask
+config = HumanoidRetargeterOnlineConfig(terms=[]).add(ConfigurationTask(weight=0.1), name="rest")
+config.task("rest").weight</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">term</span><span class="api-type">ResidualTask</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">name</span><span class="api-type">Optional[str]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">HumanoidRetargeterOnlineConfig</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeteronlineconfig-task">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L301">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOnlineConfig.</span><span class="api-card__name">task</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">name</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">ResidualTask</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Return a named task; raise KeyError when absent.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; from robokit.terms.dense.configuration_task import ConfigurationTask
+&gt;&gt;&gt; config = HumanoidRetargeterOnlineConfig(terms=[]).add(ConfigurationTask(weight=0.2), name="rest")
+&gt;&gt;&gt; config.task("rest").weight
+0.2</pre><pre data-code-full hidden>from robokit.helpers.humanoid_retargeting.config import HumanoidRetargeterOnlineConfig
+
+from robokit.terms.dense.configuration_task import ConfigurationTask
+config = HumanoidRetargeterOnlineConfig(terms=[]).add(ConfigurationTask(weight=0.2), name="rest")
+config.task("rest").weight</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">name</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">ResidualTask</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeteronlineconfig-human_joint_names">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L315">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOnlineConfig.</span><span class="api-card__name">human_joint_names</span><span class="pp">: </span><span class="pt">Tuple[str, ...]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Return the ordered human joints expected by the solve APIs.</p><h4>Example</h4><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; import numpy as np
+&gt;&gt;&gt; config = HumanoidRetargeterOnlineConfig(
+...     link_mapping={"torso": LinkMapping("spine", np.zeros(3), np.zeros(4))},
+... )
+&gt;&gt;&gt; config.human_joint_names  # mapped joints first, then the root
+('spine', 'pelvis')</pre><pre data-code-full hidden>from robokit.helpers.humanoid_retargeting.config import HumanoidRetargeterOnlineConfig, LinkMapping
+
+import numpy as np
+config = HumanoidRetargeterOnlineConfig(
+    link_mapping={"torso": LinkMapping("spine", np.zeros(3), np.zeros(4))},
+)
+config.human_joint_names  # mapped joints first, then the root</pre></div></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeteronlineconfig-target_arrays">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L332">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOnlineConfig.</span><span class="api-card__name">target_arrays</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">human_joint_names</span><span class="pp">: </span><span class="pt">Sequence[str]</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">TargetArrays</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Resolve <code>link_mapping</code> in input <code>human_joint_names</code> order for both solvers' <code>compute_targets_kernel</code> arrays.</p><h4>Example</h4><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; import numpy as np
+&gt;&gt;&gt; config = HumanoidRetargeterOnlineConfig(
+...     link_mapping={
+...         "torso": LinkMapping("spine", np.zeros(3), np.zeros(4)),
+...         "hip": LinkMapping("pelvis", np.zeros(3), np.zeros(4)),
+...     },
+...     scale_table={"spine": 0.9},
+... )
+&gt;&gt;&gt; arrays = config.target_arrays(config.human_joint_names)
+&gt;&gt;&gt; arrays.joint_indices.tolist(), arrays.scales.tolist()
+([0, 1], [0.8999999761581421, 1.0])
+&gt;&gt;&gt; arrays.root_joint_index, arrays.root_target_index
+(1, 1)
+&gt;&gt;&gt; arrays.rotation_offsets[0].tolist()  # zero offset normalizes to identity
+[1.0, 0.0, 0.0, 0.0]</pre><pre data-code-full hidden>from robokit.helpers.humanoid_retargeting.config import HumanoidRetargeterOnlineConfig, LinkMapping
+
+import numpy as np
+config = HumanoidRetargeterOnlineConfig(
+    link_mapping={
+        "torso": LinkMapping("spine", np.zeros(3), np.zeros(4)),
+        "hip": LinkMapping("pelvis", np.zeros(3), np.zeros(4)),
+    },
+    scale_table={"spine": 0.9},
+)
+arrays = config.target_arrays(config.human_joint_names)
+arrays.joint_indices.tolist(), arrays.scales.tolist()
+arrays.root_joint_index, arrays.root_target_index
+arrays.rotation_offsets[0].tolist()  # zero offset normalizes to identity</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">human_joint_names</span><span class="api-type">Sequence[str]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">TargetArrays</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeteronlineconfig-from_yaml">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L375">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOnlineConfig.</span><span class="api-card__name">from_yaml</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">yaml_path</span><span class="pp">: </span><span class="pt">Union[str, Path]</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">HumanoidRetargeterOnlineConfig</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">yaml_path</span><span class="api-type">Union[str, Path]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">HumanoidRetargeterOnlineConfig</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeteronlineconfig-to_dict">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L521">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOnlineConfig.</span><span class="api-card__name">to_dict</span><span class="pp">()</span><span class="pp"> -> </span><span class="pt">dict</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">dict</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeteronlineconfig-to_yaml">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L588">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOnlineConfig.</span><span class="api-card__name">to_yaml</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">yaml_path</span><span class="pp">: </span><span class="pt">Union[str, Path]</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">yaml_path</span><span class="api-type">Union[str, Path]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeteronlineconfig-load_robot">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L593">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOnlineConfig.</span><span class="api-card__name">load_robot</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">load_meshes</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Robot</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Load the config's robot, with its collision spheres when the config names them.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">load_meshes</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Robot</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="humanoidretargeteroffline">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/offline.py#L25">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">robokit.helpers.humanoid_retargeting.</span><span class="api-card__name">HumanoidRetargeterOffline</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">config</span><span class="pp">: </span><span class="pt">HumanoidRetargeterOnlineConfig</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">offline_config</span><span class="pp">: </span><span class="pt">HumanoidRetargeterOfflineConfig</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">robot</span><span class="pp">: </span><span class="pt">Optional[Robot]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">Optional[wp_device_type]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Whole-clip retargeting with input joints ordered by <code>human_joint_names</code>.</p><h3>Lifecycle</h3><ol><li><code>__init__</code> stores the robot and configuration.</li><li><code>warmup(batch_size, num_frames)</code> builds shape-specific buffers and optimizers.</li><li><code>solve(T_world_human)</code> retargets one fixed-shape Warp trajectory batch.</li></ol></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">config</span><span class="api-type">HumanoidRetargeterOnlineConfig</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">offline_config</span><span class="api-type">HumanoidRetargeterOfflineConfig</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">robot</span><span class="api-type">Optional[Robot]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">Optional[wp_device_type]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="humanoidretargeteroffline-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="humanoidretargeteroffline-warmup">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/offline.py#L53">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOffline.</span><span class="api-card__name">warmup</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">batch_size</span><span class="pp">: </span><span class="pt">int</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">num_frames</span><span class="pp">: </span><span class="pt">int</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Build and cache all state for <code>(batch_size, num_frames)</code>.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">batch_size</span><span class="api-type">int</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">num_frames</span><span class="api-type">int</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeteroffline-solve">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/offline.py#L204">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOffline.</span><span class="api-card__name">solve</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">T_world_human</span><span class="pp">: </span><span class="pt">wp.array</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">valid_lengths</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">human_heights</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">target_overrides</span><span class="pp">: </span><span class="pt">Optional[Dict[str, np.ndarray]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">wp.array</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Retarget one padded <code>[B, T, J]</code> Warp trajectory batch.</p><h4>Lifecycle</h4><ol><li>Validate the shape fixed by <code>warmup(...)</code>.</li><li>Compute all frame targets and independent IK warm starts.</li><li>Reset the cached trajectory state and valid-frame masks.</li><li>Solve once and write the requested padded output buffer.</li></ol></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">T_world_human</span><span class="api-type">wp.array</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Human joint transforms with shape <code>(batch, frames, joints)</code>.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">valid_lengths</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional valid frame count for each padded batch element.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">human_heights</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional human height in meters for each batch element.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional caller-owned output with shape <code>(batch, frames, 7 + dofs)</code>.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">target_overrides</span><span class="api-type">Optional[Dict[str, np.ndarray]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional <code>(batch, frames, 7)</code> target tracks keyed by robot link; they move the IK warm start and <code>TARGET_POSITIONS</code>, while orientation templates read <code>TARGETS</code> (the mapped poses) unless they read <code>OVERRIDDEN_TARGETS</code>.</p></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">wp.array</span></div><div class="api-row__doc"><p><code>out</code> when provided; otherwise a reusable helper-owned buffer overwritten by the next call.</p></div></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeteroffline-solve_numpy">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/offline.py#L293">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOffline.</span><span class="api-card__name">solve_numpy</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">T_world_human</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">valid_lengths</span><span class="pp">: </span><span class="pt">Optional[np.ndarray]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">human_heights</span><span class="pp">: </span><span class="pt">Optional[np.ndarray]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">target_overrides</span><span class="pp">: </span><span class="pt">Optional[Dict[str, np.ndarray]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">np.ndarray</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Convert padded <code>[B, T, J, 7]</code> NumPy inputs, warm up for their shape, solve, and return a NumPy copy.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">T_world_human</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">valid_lengths</span><span class="api-type">Optional[np.ndarray]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">human_heights</span><span class="api-type">Optional[np.ndarray]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">target_overrides</span><span class="api-type">Optional[Dict[str, np.ndarray]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">np.ndarray</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="humanoidretargeterofflineconfig">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L606">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">robokit.helpers.humanoid_retargeting.</span><span class="api-card__name">HumanoidRetargeterOfflineConfig</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">terms</span><span class="pp">: </span><span class="pt">List[ResidualTask]</span><span class="pp"> = </span><span class="pd">_default_offline_terms()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">warm_start</span><span class="pp">: </span><span class="pt">IKSolverConfig</span><span class="pp"> = </span><span class="pd">(lambda: IKSolverConfig(enable_T_world_base=True, solver=PopulationSolverConfig(stages=[Stage(6, 4, LMOptimizerConfig(lm_lambda=1.5)), Stage(3, 1)])).add(PositionTask(frame_index=IKContext.TARGET_LINKS, T_world_target=IKContext.TARGET, weight=10.0)).add(RotationTask(frame_index=IKContext.TARGET_LINKS, T_world_target=IKContext.TARGET, weight=5.0)).add(PositionLimit(weight=30.0)))()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">solver</span><span class="pp">: </span><span class="pt">LMOptimizerConfig</span><span class="pp"> = </span><span class="pd">(lambda: LMOptimizerConfig(linear_solver='cg', lm_lambda=0.5, max_iter=25, lambda_min=1e-06, lambda_max=1000000.0, rho_min=0.0001, cuda_graph_mode='full'))()</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Whole-clip optimizer settings; the paired online config supplies the mapping and velocity limits.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">terms</span><span class="api-type">List[ResidualTask]</span><span class="api-def">= _default_offline_terms()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">warm_start</span><span class="api-type">IKSolverConfig</span><span class="api-def">= (lambda: IKSolverConfig(enable_T_world_base=True, solver=PopulationSolverConfig(stages=[Stage(6, 4, LMOptimizerConfig(lm_lambda=1.5)), Stage(3, 1)])).add(PositionTask(frame_index=IKContext.TARGET_LINKS, T_world_target=IKContext.TARGET, weight=10.0)).add(RotationTask(frame_index=IKContext.TARGET_LINKS, T_world_target=IKContext.TARGET, weight=5.0)).add(PositionLimit(weight=30.0)))()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">solver</span><span class="api-type">LMOptimizerConfig</span><span class="api-def">= (lambda: LMOptimizerConfig(linear_solver='cg', lm_lambda=0.5, max_iter=25, lambda_min=1e-06, lambda_max=1000000.0, rho_min=0.0001, cuda_graph_mode='full'))()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="humanoidretargeterofflineconfig-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="humanoidretargeterofflineconfig-terms">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L610">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOfflineConfig.</span><span class="api-card__name">terms</span><span class="pp">: </span><span class="pt">List[ResidualTask] = field(default_factory=_default_offline_terms)</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Trajectory task templates; tracking weights are per link, and self-collision costs O(pairs) per frame.</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeterofflineconfig-warm_start">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L612">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOfflineConfig.</span><span class="api-card__name">warm_start</span><span class="pp">: </span><span class="pt">IKSolverConfig = field(default_factory=lambda: IKSolverConfig(enable_T_world_base=True, solver=PopulationSolverConfig(stages=[Stage(6, 4, LMOptimizerConfig(lm_lambda=1.5)), Stage(3, 1)])).add(PositionTask(frame_index=IKContext.TARGET_LINKS, T_world_target=IKContext.TARGET, weight=10.0)).add(RotationTask(frame_index=IKContext.TARGET_LINKS, T_world_target=IKContext.TARGET, weight=5.0)).add(PositionLimit(weight=30.0)))</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Per-frame IK that seeds the trajectory.</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeterofflineconfig-solver">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L624">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOfflineConfig.</span><span class="api-card__name">solver</span><span class="pp">: </span><span class="pt">LMOptimizerConfig = field(default_factory=lambda: LMOptimizerConfig(linear_solver='cg', lm_lambda=0.5, max_iter=25, lambda_min=1e-06, lambda_max=1000000.0, rho_min=0.0001, cuda_graph_mode='full'))</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Trajectory solver.</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeterofflineconfig-add">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L637">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOfflineConfig.</span><span class="api-card__name">add</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">term</span><span class="pp">: </span><span class="pt">ResidualTask</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">name</span><span class="pp">: </span><span class="pt">Optional[str]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">HumanoidRetargeterOfflineConfig</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Append a task, optionally assigning its input role.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; from robokit.terms.dense.configuration_task import ConfigurationTask
+&gt;&gt;&gt; config = HumanoidRetargeterOfflineConfig(terms=[]).add(ConfigurationTask(weight=0.1), name="rest")
+&gt;&gt;&gt; config.task("rest").weight
+0.1</pre><pre data-code-full hidden>from robokit.helpers.humanoid_retargeting.config import HumanoidRetargeterOfflineConfig
+
+from robokit.terms.dense.configuration_task import ConfigurationTask
+config = HumanoidRetargeterOfflineConfig(terms=[]).add(ConfigurationTask(weight=0.1), name="rest")
+config.task("rest").weight</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">term</span><span class="api-type">ResidualTask</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">name</span><span class="api-type">Optional[str]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">HumanoidRetargeterOfflineConfig</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeterofflineconfig-task">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L652">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOfflineConfig.</span><span class="api-card__name">task</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">name</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">ResidualTask</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Return a named task; raise KeyError when absent.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; from robokit.terms.dense.configuration_task import ConfigurationTask
+&gt;&gt;&gt; config = HumanoidRetargeterOfflineConfig(terms=[]).add(ConfigurationTask(weight=0.2), name="rest")
+&gt;&gt;&gt; config.task("rest").weight
+0.2</pre><pre data-code-full hidden>from robokit.helpers.humanoid_retargeting.config import HumanoidRetargeterOfflineConfig
+
+from robokit.terms.dense.configuration_task import ConfigurationTask
+config = HumanoidRetargeterOfflineConfig(terms=[]).add(ConfigurationTask(weight=0.2), name="rest")
+config.task("rest").weight</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">name</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">ResidualTask</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeterofflineconfig-from_yaml">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L665">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOfflineConfig.</span><span class="api-card__name">from_yaml</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">yaml_path</span><span class="pp">: </span><span class="pt">Union[str, Path]</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">HumanoidRetargeterOfflineConfig</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">yaml_path</span><span class="api-type">Union[str, Path]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">HumanoidRetargeterOfflineConfig</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidretargeterofflineconfig-to_yaml">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/humanoid_retargeting/config.py#L703">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidRetargeterOfflineConfig.</span><span class="api-card__name">to_yaml</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">yaml_path</span><span class="pp">: </span><span class="pt">Union[str, Path]</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">yaml_path</span><span class="api-type">Union[str, Path]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div></div>
+    </div></div></div>
+  </section></div></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/robokit/api-sim-mpc/"><span class="lbl">← Previous</span><span class="nm">Sim MPC</span></a><a class="next" href="/docs/robokit/api-hand-retargeting/"><span class="lbl">Next →</span><span class="nm">Hand Retargeting</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#humanoidretargeteronline">HumanoidRetargeterOnline</a><a href="#humanoidretargeteronlineconfig">HumanoidRetargeterOnlineConfig</a><a href="#humanoidretargeteroffline">HumanoidRetargeterOffline</a><a href="#humanoidretargeterofflineconfig">HumanoidRetargeterOfflineConfig</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "robokit", "id": "api-humanoid-retargeting", "toc": [{"text": "HumanoidRetargeterOnline", "href": "#humanoidretargeteronline", "members": [{"text": "interaction_task", "href": "#humanoidretargeteronline-interaction_task"}, {"text": "warmup()", "href": "#humanoidretargeteronline-warmup"}, {"text": "solve()", "href": "#humanoidretargeteronline-solve"}, {"text": "solve_numpy()", "href": "#humanoidretargeteronline-solve_numpy"}, {"text": "reset()", "href": "#humanoidretargeteronline-reset"}]}, {"text": "HumanoidRetargeterOnlineConfig", "href": "#humanoidretargeteronlineconfig", "members": [{"text": "terms", "href": "#humanoidretargeteronlineconfig-terms"}, {"text": "urdf_path", "href": "#humanoidretargeteronlineconfig-urdf_path"}, {"text": "human_root_name", "href": "#humanoidretargeteronlineconfig-human_root_name"}, {"text": "human_height_assumption", "href": "#humanoidretargeteronlineconfig-human_height_assumption"}, {"text": "ground_height", "href": "#humanoidretargeteronlineconfig-ground_height"}, {"text": "collision_spheres_path", "href": "#humanoidretargeteronlineconfig-collision_spheres_path"}, {"text": "scale_table", "href": "#humanoidretargeteronlineconfig-scale_table"}, {"text": "link_mapping", "href": "#humanoidretargeteronlineconfig-link_mapping"}, {"text": "correspondence_edges", "href": "#humanoidretargeteronlineconfig-correspondence_edges"}, {"text": "interaction_terms", "href": "#humanoidretargeteronlineconfig-interaction_terms"}, {"text": "velocity_limit_dt", "href": "#humanoidretargeteronlineconfig-velocity_limit_dt"}, {"text": "velocity_clamp_scale", "href": "#humanoidretargeteronlineconfig-velocity_clamp_scale"}, {"text": "velocity_limit_override", "href": "#humanoidretargeteronlineconfig-velocity_limit_override"}, {"text": "solver", "href": "#humanoidretargeteronlineconfig-solver"}, {"text": "add()", "href": "#humanoidretargeteronlineconfig-add"}, {"text": "task()", "href": "#humanoidretargeteronlineconfig-task"}, {"text": "human_joint_names", "href": "#humanoidretargeteronlineconfig-human_joint_names"}, {"text": "target_arrays()", "href": "#humanoidretargeteronlineconfig-target_arrays"}, {"text": "from_yaml()", "href": "#humanoidretargeteronlineconfig-from_yaml"}, {"text": "to_dict()", "href": "#humanoidretargeteronlineconfig-to_dict"}, {"text": "to_yaml()", "href": "#humanoidretargeteronlineconfig-to_yaml"}, {"text": "load_robot()", "href": "#humanoidretargeteronlineconfig-load_robot"}]}, {"text": "HumanoidRetargeterOffline", "href": "#humanoidretargeteroffline", "members": [{"text": "warmup()", "href": "#humanoidretargeteroffline-warmup"}, {"text": "solve()", "href": "#humanoidretargeteroffline-solve"}, {"text": "solve_numpy()", "href": "#humanoidretargeteroffline-solve_numpy"}]}, {"text": "HumanoidRetargeterOfflineConfig", "href": "#humanoidretargeterofflineconfig", "members": [{"text": "terms", "href": "#humanoidretargeterofflineconfig-terms"}, {"text": "warm_start", "href": "#humanoidretargeterofflineconfig-warm_start"}, {"text": "solver", "href": "#humanoidretargeterofflineconfig-solver"}, {"text": "add()", "href": "#humanoidretargeterofflineconfig-add"}, {"text": "task()", "href": "#humanoidretargeterofflineconfig-task"}, {"text": "from_yaml()", "href": "#humanoidretargeterofflineconfig-from_yaml"}, {"text": "to_yaml()", "href": "#humanoidretargeterofflineconfig-to_yaml"}]}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

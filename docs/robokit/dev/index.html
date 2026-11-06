@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Development Guide · RoboKit docs · OpenRoboKit</title>
+  <meta name="description" content="GPU-native, differentiable robotics tooling: IK, trajectory optimization, retargeting, grasping, calibration." />
+  <link rel="canonical" href="https://openrobokit.com/docs/robokit/dev/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">RoboKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="is-active">
+        <span class="nm">RoboKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="">
+        <span class="nm">GraspKit</span>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/robokit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/robokit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/robokit/rl/" data-id="rl" class="">RL</a></div><div class="side__list"><a href="/docs/robokit/sim-mpc/" data-id="sim-mpc" class="">Sim MPC</a></div><div class="side__list"><a href="/docs/robokit/ik/" data-id="ik" class="">IK</a></div><div class="side__list"><a href="/docs/robokit/motion-planning/" data-id="motion-planning" class="">Motion Planning</a></div><div class="side__list"><a href="/docs/robokit/humanoid-retargeting/" data-id="humanoid-retargeting" class="">Humanoid Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand-retargeting/" data-id="hand-retargeting" class="">Hand Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand_eye_calibration/" data-id="hand_eye_calibration" class="">Hand-Eye Calibration</a></div><div class="side__list"><a href="/docs/robokit/ref-assets/" data-id="ref-assets" class="">Built-in Robots &amp; Datasets</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/robot/" data-id="robot" class="">Robot</a></div><div class="side__list"><a href="/docs/robokit/geom/" data-id="geom" class="">Geometry</a></div><div class="side__list"><a href="/docs/robokit/optimization/" data-id="optimization" class="">Optimization</a></div><div class="side__list"><a href="/docs/robokit/conventions/" data-id="conventions" class="">Conventions</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list">
+      <div class="side__sub is-folded" data-fold="Reference·Optimizers">
+        <span>Optimizers</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/opt-gd/" data-id="opt-gd" class="">GDOptimizer</a><a href="/docs/robokit/opt-lm/" data-id="opt-lm" class="">LMOptimizer</a><a href="/docs/robokit/opt-lbfgs/" data-id="opt-lbfgs" class="">LBFGSOptimizer</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Terms">
+        <span>Terms</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/term-frame/" data-id="term-frame" class="">Frame Task</a><a href="/docs/robokit/term-position/" data-id="term-position" class="">Position Task</a><a href="/docs/robokit/term-rotation/" data-id="term-rotation" class="">Rotation Tasks</a><a href="/docs/robokit/term-frame-vector/" data-id="term-frame-vector" class="">Frame Vector Task</a><a href="/docs/robokit/term-com-position/" data-id="term-com-position" class="">CoM Position Task</a><a href="/docs/robokit/term-position-limit/" data-id="term-position-limit" class="">Position Limit</a><a href="/docs/robokit/term-velocity-limit/" data-id="term-velocity-limit" class="">Velocity Limit Task</a><a href="/docs/robokit/term-configuration/" data-id="term-configuration" class="">Configuration Task</a><a href="/docs/robokit/term-smoothness/" data-id="term-smoothness" class="">Smoothness Task</a><a href="/docs/robokit/term-self-collision/" data-id="term-self-collision" class="">Self Collision Task</a><a href="/docs/robokit/term-scene-collision/" data-id="term-scene-collision" class="">Scene Collision Task</a><a href="/docs/robokit/term-scene-distance/" data-id="term-scene-distance" class="">Scene Distance Task</a><a href="/docs/robokit/term-interaction-mesh/" data-id="term-interaction-mesh" class="">Interaction Mesh Task</a><a href="/docs/robokit/term-mask-alignment/" data-id="term-mask-alignment" class="">Mask Alignment Task</a><a href="/docs/robokit/term-manipulability/" data-id="term-manipulability" class="">Manipulability Task</a><a href="/docs/robokit/term-force-closure/" data-id="term-force-closure" class="">Force Closure Task</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/api-robot/" data-id="api-robot" class="">Robot</a><a href="/docs/robokit/api-geometry/" data-id="api-geometry" class="">Geometry</a><a href="/docs/robokit/api-optimization/" data-id="api-optimization" class="">Optimization</a><a href="/docs/robokit/api-terms/" data-id="api-terms" class="">Terms</a><a href="/docs/robokit/api-ik/" data-id="api-ik" class="">Inverse Kinematics</a><a href="/docs/robokit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/robokit/api-sim-mpc/" data-id="api-sim-mpc" class="">Sim MPC</a><a href="/docs/robokit/api-humanoid-retargeting/" data-id="api-humanoid-retargeting" class="">Humanoid Retargeting</a><a href="/docs/robokit/api-hand-retargeting/" data-id="api-hand-retargeting" class="">Hand Retargeting</a><a href="/docs/robokit/api-hand_eye_calibration/" data-id="api-hand_eye_calibration" class="">Hand-Eye Calibration</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/dev/" data-id="dev" class="is-active">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">robokit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>Development</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Development Guide</h1>
+        <div class="doc-body" id="doc-body"><h3 id="setup">Setup</h3><p>Clone the repository and install the development environment with <a class="inline" href="https://github.com/astral-sh/uv">uv</a>:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">shell</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>git clone https://github.com/openrobokit/robokit
+cd robokit
+uv sync</pre></div><p>PyTorch is optional. For examples that need it, pick the extra for your CUDA toolkit:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">shell</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>uv sync --extra pt-cu126       # CUDA 12.6
+uv sync --extra pt-cu118       # CUDA 11.8
+uv sync --extra pt-cu128       # CUDA 12.8
+uv sync --extra pt-cpu         # CPU only</pre></div><p>See <a class="inline" href="/docs/robokit/install/#extras">Installation</a> for other extras.</p><h3 id="git-workflow">Git Workflow</h3><p>Work on your own branch. Merge to <code>main</code> through a pull request with <strong>squash merge</strong>, then delete the branch. Run <code>make ci</code> before committing; it formats, lints, type-checks and runs all tests. It defaults to <code>pt-cu126</code>; use <code>make ci PT=pt-cpu</code> for CPU-only PyTorch.</p><h3 id="formatting-linting-and-type-checking">Formatting, Linting, and Type Checking</h3><ul><li>Use <code>ruff</code> for formatting and linting:</li></ul><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">shell</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>uvx ruff check
+uvx ruff format</pre></div><ul><li>Use <code>pyright</code> for type checking:</li></ul><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">shell</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>uv run pyright</pre></div><p>Warp's stubs cannot type every kernel expression. Put a needed Pyright ignore on that expression only; keep host code checked. In autograd wrappers, narrow optional gradient buffers only where they are always allocated.</p><h3 id="function-naming">Function Naming</h3><p>Start function names with one of these verbs:</p><ul><li><code>solve</code>: run an iterative optimization; may fail.</li><li><code>compute</code>: direct evaluation; always succeeds.</li><li><code>build</code>: construct objects, buffers, or kernels.</li><li><code>get</code>: cached lookup (build on miss).</li><li><code>set</code> / <code>clear</code>: mutate or drop state.</li></ul><p>Warp kernels and functions additionally:</p><ul><li>Suffix by type: <code>*_kernel</code> for <code>@wp.kernel</code>, <code>*_func</code> for <code>@wp.func</code>.</li><li>Verbs also include <code>transform</code> / <code>integrate</code> / <code>accept</code>.</li><li>Variant tags before the suffix, fixed order: representation (<code>matrix</code>), algorithm (<code>sequential</code> / <code>local</code> / <code>accum</code>), then <code>backward</code>.</li></ul><h3 id="variable-naming">Variable Naming</h3><p>Use the public <a class="inline" href="/docs/robokit/conventions/">notation</a>: <code>T_dst_src</code>, <code>t_dst_src</code>, <code>q_wxyz_dst_src</code>, and <code>q</code> for joint positions.</p><ul><li>Keep <code>wxyz</code> in quaternion parameter names to indicate ordering.</li><li>Avoid <code>pose</code>, <code>tf</code>, or similar terms, except in <code>robokit.xform</code>, whose conversions take <code>tf_mat</code> and <code>pose7</code>.</li><li>Use <code>T_dst_src</code> for batched transformations, not <code>Ts_dst_src</code>.</li></ul><h3 id="comments-and-docstrings">Comments and Docstrings</h3><p>Use the full-width separator for sections. Use the short form for class sections and long phases inside a function.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre># --- kernels ----------------------------------------------------------------
+# --- build solver ---</pre></div><p>Use lowercase fragments for section labels and short code comments:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre># skip the normal/closest math (~2x faster)</pre></div><p>Write full-sentence comments with normal capitalization and punctuation. Keep proper names, acronyms and identifiers as they are. Spell out words in section labels.</p><p>Use Google-style docstrings (<code>Args:</code> / <code>Returns:</code> / <code>Raises:</code> sections) with single-backtick inline code.</p><h3 id="testing">Testing</h3><p>Run pytest and documentation tests:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">shell</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>uv run pytest
+uv run xdoctest robokit
+uv run scripts/test_docs.py</pre></div><h4>Markdown Examples</h4><p>Each Python fence runs on its own. Include imports, small sample inputs and assertions. Wrap setup and checks in <code># docs: hide</code> / <code># docs: endhide</code> to hide them from the short view:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">text</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre># docs: hide
+values = [1, 2, 3]
+# docs: endhide
+total = sum(values)
+# docs: hide
+assert total == 6
+# docs: endhide</pre></div><p>The website shows the short view; <strong>Full</strong> and <strong>Copy</strong> use the complete code. <code>scripts/test_docs.py</code> runs every fence with xdoctest. Hide <code># xdoctest: +SKIP</code> in examples that download assets, and <code># xdoctest: +REQUIRES(...)</code> in optional ones: <code>ROBOKIT_CUDA_DOCS=1</code> for CUDA, <code>ROBOKIT_BODY_MODELS</code> for body models, <code>ROBOKIT_PARAHOME_DOCS=1</code> for ParaHome. To test the website's copies, run <code>uv run scripts/test_docs.py &lt;robokit-website&gt;/_page/docs/robokit</code>.</p><h4>Doctest</h4><p>Give every public function a doctest:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>def quaternion_multiply(
+    q_wxyz_1: Float[torch.Tensor, "... 4"], q_wxyz_2: Float[torch.Tensor, "... 4"]
+) -&gt; Float[torch.Tensor, "... 4"]:
+    """
+    Multiply two quaternions.
+
+    Example:
+        &gt;&gt;&gt; q1 = torch.tensor([0.9238795, 0.0, 0.0, 0.3826834])
+        &gt;&gt;&gt; q2 = torch.tensor([0.9238795, 0.0, 0.0, 0.3826834])
+        &gt;&gt;&gt; expected = torch.tensor([0.7071068, 0.0, 0.0, 0.7071068])
+        &gt;&gt;&gt; torch.allclose(quaternion_multiply(q1, q2), expected, atol=1e-6)
+        True
+    """
+    return _quaternion_multiply(q_wxyz_1, q_wxyz_2)</pre><pre data-code-full hidden>import torch
+from jaxtyping import Float
+from robokit.xform.warp.torch_wrappers import quaternion_multiply as _quaternion_multiply
+
+
+def quaternion_multiply(
+    q_wxyz_1: Float[torch.Tensor, "... 4"], q_wxyz_2: Float[torch.Tensor, "... 4"]
+) -&gt; Float[torch.Tensor, "... 4"]:
+    """
+    Multiply two quaternions.
+
+    Example:
+        &gt;&gt;&gt; q1 = torch.tensor([0.9238795, 0.0, 0.0, 0.3826834])
+        &gt;&gt;&gt; q2 = torch.tensor([0.9238795, 0.0, 0.0, 0.3826834])
+        &gt;&gt;&gt; expected = torch.tensor([0.7071068, 0.0, 0.0, 0.7071068])
+        &gt;&gt;&gt; torch.allclose(quaternion_multiply(q1, q2), expected, atol=1e-6)
+        True
+    """
+    return _quaternion_multiply(q_wxyz_1, q_wxyz_2)
+
+
+q = torch.tensor([0.9238795, 0.0, 0.0, 0.3826834])
+torch.testing.assert_close(quaternion_multiply(q, q), torch.tensor([0.7071068, 0, 0, 0.7071068]))</pre></div><h4>Pytest</h4><p>Tests use local fixtures. Hugging Face calls are blocked.</p><p>To test MANO PKL conversion and CPU engine parity with <a class="inline" href="/docs/robokit/ref-assets/#user-provided-body-models">local body models</a>:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">shell</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>ROBOKIT_BODY_MODELS="$HOME/.robokit/body_models" CUDA_VISIBLE_DEVICES='' \
+uv run pytest tests/assets/test_body_models.py tests/smplx/test_mano_engine.py -q --no-cov</pre></div><p>Group test cases into one class. Compare results across implementations:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>class TestQuaternionToMatrix:
+    @pytest.fixture(autouse=True)
+    def setup(self):
+        """Initialize Warp before each test."""
+        wp.init()
+
+    def _test_consistency(self, quat_torch: torch.Tensor):
+        """Helper function to test consistency between implementations."""
+        quat_np = quat_torch.numpy(force=True)
+
+        result_warp = quaternion_to_matrix_warp(quat_torch)
+        result_numpy = torch.as_tensor(
+            quaternion_to_matrix_numpy(quat_np), device=result_warp.device, dtype=result_warp.dtype
+        )
+
+        torch.testing.assert_close(result_warp, result_numpy, atol=1e-6, rtol=1e-6)
+
+        return result_warp
+
+    def test_identity_quaternion(self):
+        """Test identity quaternion conversion."""
+        quat = torch.tensor([1.0, 0.0, 0.0, 0.0])
+        result = self._test_consistency(quat)
+        expected = torch.eye(3)
+        assert result.shape == (3, 3)
+        torch.testing.assert_close(result, expected, atol=1e-6, rtol=1e-6)</pre><pre data-code-full hidden>import pytest
+import torch
+import warp as wp
+from robokit.xform.warp.torch_wrappers import quaternion_to_matrix as quaternion_to_matrix_warp
+from robokit.xform.numpy.rotation_conversions import quaternion_to_matrix as quaternion_to_matrix_numpy
+
+
+class TestQuaternionToMatrix:
+    @pytest.fixture(autouse=True)
+    def setup(self):
+        """Initialize Warp before each test."""
+        wp.init()
+
+    def _test_consistency(self, quat_torch: torch.Tensor):
+        """Helper function to test consistency between implementations."""
+        quat_np = quat_torch.numpy(force=True)
+
+        result_warp = quaternion_to_matrix_warp(quat_torch)
+        result_numpy = torch.as_tensor(
+            quaternion_to_matrix_numpy(quat_np), device=result_warp.device, dtype=result_warp.dtype
+        )
+
+        torch.testing.assert_close(result_warp, result_numpy, atol=1e-6, rtol=1e-6)
+
+        return result_warp
+
+    def test_identity_quaternion(self):
+        """Test identity quaternion conversion."""
+        quat = torch.tensor([1.0, 0.0, 0.0, 0.0])
+        result = self._test_consistency(quat)
+        expected = torch.eye(3)
+        assert result.shape == (3, 3)
+        torch.testing.assert_close(result, expected, atol=1e-6, rtol=1e-6)
+
+
+wp.init()
+TestQuaternionToMatrix().test_identity_quaternion()</pre></div><h3 id="documentation-assets">Documentation Assets</h3><p>README and docs images load from <code>https://openrobokit.com/assets/docs/robokit/assets/&lt;path&gt;</code>, so the repository stays light; the task previews are under <code>built-in-tasks/</code>. Pages link them by relative path. Gallery recordings stay in the website repository. Update assets here, then run <code>make import PROJECT=robokit SRC=/path/to/robokit</code> in the website checkout, with <code>SRC</code> pointing at this branch or worktree. Do not keep copies in the website source.</p><h3 id="asset-authoring">Asset Authoring</h3><p>Robot descriptions, datasets and collision configs live at <a class="inline" href="https://huggingface.co/datasets/openrobokit/robokit">openrobokit/robokit</a>. Import an asset module to use its path symbols. See <a class="inline" href="/docs/robokit/ref-assets/">Built-in Robots &amp; Datasets</a> for loading assets and <code>fetch()</code>.</p><h4>Layout</h4><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">text</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>~/.robokit/
+├── assets/                              # extension-preserving runtime paths
+│   └── &lt;pinned-commit&gt;/
+│       ├── robots/
+│       │   ├── robot_description/       # URDFs and meshes
+│       │   │   ├── arms/
+│       │   │   ├── end_effectors/
+│       │   │   ├── humanoids/
+│       │   │   └── assembly/
+│       │   ├── robot_mj_description/    # MJCFs and MuJoCo assets
+│       │   ├── collision_spheres/
+│       │   ├── contact_points/
+│       │   ├── contact_avoid_points/
+│       │   └── self_collision/
+│       ├── datasets/                   # one folder per source
+│       │   └── &lt;name&gt;/                 # clips, metadata, objects/ when provided
+│       ├── policies/
+│       └── calibration/
+├── body_models/                         # user-provided, never fetched from HF
+│   ├── mano/
+│   └── smplx/
+├── hf_cache/                            # Hugging Face blobs and snapshots
+│   └── datasets--openrobokit--robokit/
+│       ├── blobs/
+│       └── snapshots/
+└── hf_repo/                             # writable authoring checkout</pre></div><p>Robot files are type-major. One robot's URDF, collision spheres and contact points sit in different <code>robots/</code> subdirs under the same robot name.</p><p>Each dataset source gets a lowercase <code>datasets/&lt;name&gt;/</code> folder for its clips and object meshes. Its access module lives in <code>robokit.assets.datasets</code>.</p><h4>Robot asset naming</h4><ul><li>RoboKit-generated files use <code>&lt;model&gt;_&lt;side&gt;[_&lt;modifier&gt;...]</code>; directories use <code>&lt;model&gt;_&lt;side&gt;</code>.<ul><li>Common modifiers, in order: <code>glb</code>, <code>floating_base</code>, <code>no_mimic</code>.</li></ul></li><li>Python modules stay side-neutral. Side-specific symbols end in <code>_RIGHT</code> or <code>_LEFT</code>. Add no unsuffixed aliases.</li><li>Variant-specific symbols use a prefix, such as <code>ARM_URDF_PATH</code> and <code>ARM_REST_Q</code>.</li><li><code>REST_Q</code> maps every actuated joint name to its rest position.</li><li>Arms, humanoids and end effectors expose <code>MOUNT_LINK_NAME</code> and <code>MOUNT_COORD_SPEC</code>, with <code>_RIGHT</code> and <code>_LEFT</code> on bilateral models. The link's frame is the mounting frame. The spec gives its outward and right axes and an optional <code>mount_point_xyz</code>, all in that frame.</li><li>End effectors also expose <code>EE_COORD_SPEC</code>, a <code>HandCoordinateSpec</code> or <code>GripperCoordinateSpec</code>. Their <code>MOUNT_COORD_SPEC</code>, including <code>mount_point_xyz</code>, is derived from it.</li><li>Display names use <code>&lt;Model&gt; Right</code> or <code>&lt;Model&gt; Left</code>; side-neutral assets omit the side.</li></ul><h4>Self-collision ignore sets</h4><p><code>scripts/geom/self_collision/generate_ignore.py</code> writes <code>ignore.&lt;backend&gt;.{yml,srdf}</code> for one robot. Run it per model and backend, into the writable checkout. <code>capsule</code> needs only the URDF/MJCF; <code>sphere</code> also needs collision spheres that cover the whole model:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">shell</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>uv run scripts/geom/self_collision/generate_ignore.py &lt;urdf&gt; --backend capsule \
+    --out-dir ~/.robokit/hf_repo/robots/self_collision/&lt;robot&gt; --out-stem ignore
+uv run scripts/geom/self_collision/generate_ignore.py &lt;urdf&gt; --backend sphere --spheres &lt;yaml&gt; \
+    --out-dir ~/.robokit/hf_repo/robots/self_collision/&lt;robot&gt; --out-stem ignore</pre></div><p>Expose each file as <code>SPHERE_</code>/<code>CAPSULE_SELF_COLLISION_IGNORE_PATH</code>, with an <code>MJ_</code> prefix for MJCF variants. The <code>fcl</code> backend is not shipped.</p><h4>Publishing Assets</h4><p>Keep upstream license files and copyright notices beside copied assets, including those of each assembly component.</p><p>Create the writable checkout, edit <code>robokit_assets/</code>, then commit and push:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">shell</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>uv run python -c "from robokit.assets import checkout; checkout()"
+cd robokit_assets
+git add -A &amp;&amp; git commit -m "add &lt;asset&gt;" &amp;&amp; git push
+git rev-parse HEAD</pre></div><p>Keep the type-major layout above. In the same RoboKit change, expose the path in <code>src/robokit/assets/&lt;kind&gt;/&lt;name&gt;.py</code>. Set the pinned commit in <code>src/robokit/assets/__init__.py</code> to the printed hash.</p><div class="doc-note doc-note--note"><div class="doc-note__title">Note</div><p><code>checkout()</code> clones the writable checkout to <code>~/.robokit/hf_repo</code> and links it as <code>./robokit_assets</code>. Binary assets use Git LFS. Before adding a new binary extension, run <code>git lfs track "*.&lt;ext&gt;"</code>.</p></div></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/robokit/api-hand_eye_calibration/"><span class="lbl">← Previous</span><span class="nm">Hand-Eye Calibration</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#setup">Setup</a><a href="#git-workflow">Git Workflow</a><a href="#formatting-linting-and-type-checking">Formatting, Linting, and Type Checking</a><a href="#function-naming">Function Naming</a><a href="#variable-naming">Variable Naming</a><a href="#comments-and-docstrings">Comments and Docstrings</a><a href="#testing">Testing</a><a href="#documentation-assets">Documentation Assets</a><a href="#asset-authoring">Asset Authoring</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "robokit", "id": "dev", "toc": [{"text": "Setup", "href": "#setup"}, {"text": "Git Workflow", "href": "#git-workflow"}, {"text": "Formatting, Linting, and Type Checking", "href": "#formatting-linting-and-type-checking"}, {"text": "Function Naming", "href": "#function-naming"}, {"text": "Variable Naming", "href": "#variable-naming"}, {"text": "Comments and Docstrings", "href": "#comments-and-docstrings"}, {"text": "Testing", "href": "#testing"}, {"text": "Documentation Assets", "href": "#documentation-assets"}, {"text": "Asset Authoring", "href": "#asset-authoring"}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Teleop configs · RetargetingKit docs · OpenRoboKit</title>
+  <meta name="description" content="Real-time human-to-robot motion retargeting, built on robokit." />
+  <link rel="canonical" href="https://openrobokit.com/docs/retargetingkit/ref-teleop/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">RetargetingKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="">
+        <span class="nm">RoboKit</span>
+      </a><a href="/docs/retargetingkit/" class="is-active">
+        <span class="nm">RetargetingKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a><a href="/docs/graspkit/" class="">
+        <span class="nm">GraspKit</span>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/retargetingkit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/retargetingkit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/retargetingkit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/retargetingkit/hand-optimization/" data-id="hand-optimization" class="">Hand Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/neural-hand/" data-id="neural-hand" class="">Neural Hand Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/arm-retargeting/" data-id="arm-retargeting" class="">Arm Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/humanoid-retargeting/" data-id="humanoid-retargeting" class="">Humanoid Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/full-body/" data-id="full-body" class="">Full-Body Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/teleoperation/" data-id="teleoperation" class="">Teleoperation</a></div><div class="side__list"><a href="/docs/retargetingkit/ref-assets/" data-id="ref-assets" class="">Assets</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/retargetingkit/pipeline/" data-id="pipeline" class="">Pipeline</a></div><div class="side__list"><a href="/docs/retargetingkit/frames/" data-id="frames" class="">Canonical frames</a></div><div class="side__list"><a href="/docs/retargetingkit/protocols/" data-id="protocols" class="">Interfaces</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list">
+      <div class="side__sub is-folded" data-fold="Reference·Sources">
+        <span>Sources</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/retargetingkit/quest3/" data-id="quest3" class="">Quest 3</a><a href="/docs/retargetingkit/vision-pro/" data-id="vision-pro" class="">Apple Vision Pro</a><a href="/docs/retargetingkit/pico/" data-id="pico" class="">PICO</a><a href="/docs/retargetingkit/manus/" data-id="manus" class="">Manus</a><a href="/docs/retargetingkit/axis-studio/" data-id="axis-studio" class="">Axis Studio</a><a href="/docs/retargetingkit/realsense/" data-id="realsense" class="">RealSense</a><a href="/docs/retargetingkit/zed/" data-id="zed" class="">ZED</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Targets">
+        <span>Targets</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/retargetingkit/xarm/" data-id="xarm" class="">xArm6 and xArm7</a><a href="/docs/retargetingkit/xhand/" data-id="xhand" class="">XHand</a><a href="/docs/retargetingkit/sharpa-hand/" data-id="sharpa-hand" class="">Sharpa Wave</a><a href="/docs/retargetingkit/ability-hand/" data-id="ability-hand" class="">Ability Hand</a><a href="/docs/retargetingkit/inspire/" data-id="inspire" class="">Inspire Hand</a><a href="/docs/retargetingkit/g1/" data-id="g1" class="">G1 and SONIC</a><a href="/docs/retargetingkit/rby1/" data-id="rby1" class="">RBY1-A</a><a href="/docs/retargetingkit/dexmate/" data-id="dexmate" class="">Dexmate Vega-1</a></div>
+      <div class="side__sub" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/retargetingkit/ref-frames/" data-id="ref-frames" class="">Frames</a><a href="/docs/retargetingkit/ref-sources/" data-id="ref-sources" class="">Sources</a><a href="/docs/retargetingkit/ref-hand/" data-id="ref-hand" class="">Hand retargeters</a><a href="/docs/retargetingkit/ref-arm/" data-id="ref-arm" class="">Arm retargeter</a><a href="/docs/retargetingkit/ref-humanoid/" data-id="ref-humanoid" class="">Humanoid retargeter</a><a href="/docs/retargetingkit/ref-targets/" data-id="ref-targets" class="">Commands and targets</a><a href="/docs/retargetingkit/ref-target-configs/" data-id="ref-target-configs" class="">Target configs</a><a href="/docs/retargetingkit/ref-teleop/" data-id="ref-teleop" class="is-active">Teleop configs</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/retargetingkit/development/" data-id="development" class="">Development</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">retargetingkit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>Reference</span><span class="slash">/</span><span>API</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Teleop configs</h1>
+        <div class="doc-body" id="doc-body"><p>Each named rig run by <code>scripts/teleop/</code> is an instance of one of these configs. See <a class="inline" href="/docs/retargetingkit/teleoperation/">Teleoperation</a> for rig names and overrides.</p><div class="api"><section class="api-sym">
+    <div class="api-card" id="handteleopconfig">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L17">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">retargetingkit.configs.teleop.config.</span><span class="api-card__name">HandTeleopConfig</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">source</span><span class="pp">: </span><span class="pt">SourceConfig[HandFrame]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">target</span><span class="pp">: </span><span class="pt">TargetConfig</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">retargeter</span><span class="pp">: </span><span class="pt">RetargeterConfig[HandFrame, QPosCommand]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">side</span><span class="pp">: </span><span class="pt">Side</span><span class="pp"> = </span><span class="pd">'right'</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">rate</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">30.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">mode</span><span class="pp">: </span><span class="pt">Literal['viser', 'real', 'both']</span><span class="pp"> = </span><span class="pd">'viser'</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">str</span><span class="pp"> = </span><span class="pd">'cuda:0'</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>One hand source retargeted to one robot hand.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">source</span><span class="api-type">SourceConfig[HandFrame]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">target</span><span class="api-type">TargetConfig</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">retargeter</span><span class="api-type">RetargeterConfig[HandFrame, QPosCommand]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">side</span><span class="api-type">Side</span><span class="api-def">= 'right'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">rate</span><span class="api-type">float</span><span class="api-def">= 30.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">mode</span><span class="api-type">Literal['viser', 'real', 'both']</span><span class="api-def">= 'viser'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">str</span><span class="api-def">= 'cuda:0'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="handteleopconfig-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="handteleopconfig-source">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L21">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandTeleopConfig.</span><span class="api-card__name">source</span><span class="pp">: </span><span class="pt">SourceConfig[HandFrame]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Hand motion source blueprint.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handteleopconfig-target">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L23">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandTeleopConfig.</span><span class="api-card__name">target</span><span class="pp">: </span><span class="pt">TargetConfig</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Robot hand blueprint.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handteleopconfig-retargeter">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L25">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandTeleopConfig.</span><span class="api-card__name">retargeter</span><span class="pp">: </span><span class="pt">RetargeterConfig[HandFrame, QPosCommand]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Optimization or neural hand retargeting blueprint.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handteleopconfig-side">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L27">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandTeleopConfig.</span><span class="api-card__name">side</span><span class="pp">: </span><span class="pt">Side = 'right'</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Hand side shared by the source and retargeter.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handteleopconfig-rate">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L29">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandTeleopConfig.</span><span class="api-card__name">rate</span><span class="pp">: </span><span class="pt">float = 30.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Control-loop frequency in Hz.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handteleopconfig-mode">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L31">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandTeleopConfig.</span><span class="api-card__name">mode</span><span class="pp">: </span><span class="pt">Literal['viser', 'real', 'both'] = 'viser'</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Viser only, hardware only, or both.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handteleopconfig-device">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L33">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandTeleopConfig.</span><span class="api-card__name">device</span><span class="pp">: </span><span class="pt">str = 'cuda:0'</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Warp device used by RoboKit.</p></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="armteleopconfig">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L37">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">retargetingkit.configs.teleop.config.</span><span class="api-card__name">ArmTeleopConfig</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">source</span><span class="pp">: </span><span class="pt">SourceConfig[ArmFrame]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">arms</span><span class="pp">: </span><span class="pt">dict[Side, TargetConfig]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">retargeters</span><span class="pp">: </span><span class="pt">dict[Side, ArmRetargeterConfig]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">mode</span><span class="pp">: </span><span class="pt">Literal['viser', 'real', 'both']</span><span class="pp"> = </span><span class="pd">'viser'</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">str</span><span class="pp"> = </span><span class="pd">'cuda:0'</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>One arm source controlling one robot arm per side.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">source</span><span class="api-type">SourceConfig[ArmFrame]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">arms</span><span class="api-type">dict[Side, TargetConfig]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">retargeters</span><span class="api-type">dict[Side, ArmRetargeterConfig]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">mode</span><span class="api-type">Literal['viser', 'real', 'both']</span><span class="api-def">= 'viser'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">str</span><span class="api-def">= 'cuda:0'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="armteleopconfig-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="armteleopconfig-source">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L41">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ArmTeleopConfig.</span><span class="api-card__name">source</span><span class="pp">: </span><span class="pt">SourceConfig[ArmFrame]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Wrist motion source blueprint.</p></div></div>
+    </div><div class="api-row api-row--plain" id="armteleopconfig-arms">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L43">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ArmTeleopConfig.</span><span class="api-card__name">arms</span><span class="pp">: </span><span class="pt">dict[Side, TargetConfig]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Robot arm blueprint per side.</p></div></div>
+    </div><div class="api-row api-row--plain" id="armteleopconfig-retargeters">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L45">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ArmTeleopConfig.</span><span class="api-card__name">retargeters</span><span class="pp">: </span><span class="pt">dict[Side, ArmRetargeterConfig]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Wrist-to-arm retargeting blueprint per side.</p></div></div>
+    </div><div class="api-row api-row--plain" id="armteleopconfig-mode">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L47">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ArmTeleopConfig.</span><span class="api-card__name">mode</span><span class="pp">: </span><span class="pt">Literal['viser', 'real', 'both'] = 'viser'</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Viser only, hardware only, or both.</p></div></div>
+    </div><div class="api-row api-row--plain" id="armteleopconfig-device">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L49">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ArmTeleopConfig.</span><span class="api-card__name">device</span><span class="pp">: </span><span class="pt">str = 'cuda:0'</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Warp device used by RoboKit.</p></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="armhandteleopconfig">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L53">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">retargetingkit.configs.teleop.config.</span><span class="api-card__name">ArmHandTeleopConfig</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">source</span><span class="pp">: </span><span class="pt">SourceConfig[ArmHandFrame]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">arms</span><span class="pp">: </span><span class="pt">dict[Side, TargetConfig]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">hands</span><span class="pp">: </span><span class="pt">dict[Side, TargetConfig]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">arm_retargeters</span><span class="pp">: </span><span class="pt">dict[Side, ArmRetargeterConfig]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">hand_retargeters</span><span class="pp">: </span><span class="pt">dict[Side, RetargeterConfig[HandFrame, QPosCommand]]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">assembly_urdf</span><span class="pp">: </span><span class="pt">Path</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">mode</span><span class="pp">: </span><span class="pt">Literal['viser', 'real', 'both']</span><span class="pp"> = </span><span class="pd">'viser'</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">str</span><span class="pp"> = </span><span class="pd">'cuda:0'</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>One arm-and-hand source controlling one robot arm and one robot hand per side.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">source</span><span class="api-type">SourceConfig[ArmHandFrame]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">arms</span><span class="api-type">dict[Side, TargetConfig]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">hands</span><span class="api-type">dict[Side, TargetConfig]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">arm_retargeters</span><span class="api-type">dict[Side, ArmRetargeterConfig]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">hand_retargeters</span><span class="api-type">dict[Side, RetargeterConfig[HandFrame, QPosCommand]]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">assembly_urdf</span><span class="api-type">Path</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">mode</span><span class="api-type">Literal['viser', 'real', 'both']</span><span class="api-def">= 'viser'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">str</span><span class="api-def">= 'cuda:0'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="armhandteleopconfig-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="armhandteleopconfig-source">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L57">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ArmHandTeleopConfig.</span><span class="api-card__name">source</span><span class="pp">: </span><span class="pt">SourceConfig[ArmHandFrame]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Wrist and hand motion source blueprint.</p></div></div>
+    </div><div class="api-row api-row--plain" id="armhandteleopconfig-arms">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L59">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ArmHandTeleopConfig.</span><span class="api-card__name">arms</span><span class="pp">: </span><span class="pt">dict[Side, TargetConfig]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Robot arm blueprint per side.</p></div></div>
+    </div><div class="api-row api-row--plain" id="armhandteleopconfig-hands">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L61">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ArmHandTeleopConfig.</span><span class="api-card__name">hands</span><span class="pp">: </span><span class="pt">dict[Side, TargetConfig]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Robot hand blueprint per side.</p></div></div>
+    </div><div class="api-row api-row--plain" id="armhandteleopconfig-arm_retargeters">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L63">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ArmHandTeleopConfig.</span><span class="api-card__name">arm_retargeters</span><span class="pp">: </span><span class="pt">dict[Side, ArmRetargeterConfig]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Wrist-to-arm retargeting blueprint per side.</p></div></div>
+    </div><div class="api-row api-row--plain" id="armhandteleopconfig-hand_retargeters">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L65">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ArmHandTeleopConfig.</span><span class="api-card__name">hand_retargeters</span><span class="pp">: </span><span class="pt">dict[Side, RetargeterConfig[HandFrame, QPosCommand]]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Hand retargeting blueprint per side.</p></div></div>
+    </div><div class="api-row api-row--plain" id="armhandteleopconfig-assembly_urdf">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L67">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ArmHandTeleopConfig.</span><span class="api-card__name">assembly_urdf</span><span class="pp">: </span><span class="pt">Path</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Combined arm-and-hand URDF used only for visualization.</p></div></div>
+    </div><div class="api-row api-row--plain" id="armhandteleopconfig-mode">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L69">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ArmHandTeleopConfig.</span><span class="api-card__name">mode</span><span class="pp">: </span><span class="pt">Literal['viser', 'real', 'both'] = 'viser'</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Viser only, hardware only, or both.</p></div></div>
+    </div><div class="api-row api-row--plain" id="armhandteleopconfig-device">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L71">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ArmHandTeleopConfig.</span><span class="api-card__name">device</span><span class="pp">: </span><span class="pt">str = 'cuda:0'</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Warp device used by RoboKit.</p></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="humanoidteleopconfig">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L75">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">retargetingkit.configs.teleop.config.</span><span class="api-card__name">HumanoidTeleopConfig</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">source</span><span class="pp">: </span><span class="pt">SourceConfig[BodyFrame]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">retargeter</span><span class="pp">: </span><span class="pt">HumanoidRetargeterConfig</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">targets</span><span class="pp">: </span><span class="pt">tuple[TargetConfig, ...]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">str</span><span class="pp"> = </span><span class="pd">'cuda:0'</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>One body source retargeted to one or more humanoid targets.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">source</span><span class="api-type">SourceConfig[BodyFrame]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">retargeter</span><span class="api-type">HumanoidRetargeterConfig</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">targets</span><span class="api-type">tuple[TargetConfig, ...]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">str</span><span class="api-def">= 'cuda:0'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="humanoidteleopconfig-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="humanoidteleopconfig-source">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L79">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidTeleopConfig.</span><span class="api-card__name">source</span><span class="pp">: </span><span class="pt">SourceConfig[BodyFrame]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Body motion source blueprint.</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidteleopconfig-retargeter">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L81">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidTeleopConfig.</span><span class="api-card__name">retargeter</span><span class="pp">: </span><span class="pt">HumanoidRetargeterConfig</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Body-to-humanoid retargeting blueprint.</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidteleopconfig-targets">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L83">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidTeleopConfig.</span><span class="api-card__name">targets</span><span class="pp">: </span><span class="pt">tuple[TargetConfig, ...]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Humanoid target blueprints fed the same command.</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidteleopconfig-device">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L85">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidTeleopConfig.</span><span class="api-card__name">device</span><span class="pp">: </span><span class="pt">str = 'cuda:0'</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Warp device used by RoboKit.</p></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="humanoidhandteleopconfig">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L89">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">retargetingkit.configs.teleop.config.</span><span class="api-card__name">HumanoidHandTeleopConfig</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">source</span><span class="pp">: </span><span class="pt">PicoSourceConfig</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">retargeter</span><span class="pp">: </span><span class="pt">HumanoidRetargeterConfig</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">targets</span><span class="pp">: </span><span class="pt">tuple[TargetConfig, ...]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">left_hand</span><span class="pp">: </span><span class="pt">TargetConfig</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">right_hand</span><span class="pp">: </span><span class="pt">TargetConfig</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">open_qpos</span><span class="pp">: </span><span class="pt">tuple[float, ...]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">closed_qpos</span><span class="pp">: </span><span class="pt">tuple[float, ...]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">str</span><span class="pp"> = </span><span class="pd">'cuda:0'</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>One PICO connection controlling a humanoid and two robot hands.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">source</span><span class="api-type">PicoSourceConfig</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">retargeter</span><span class="api-type">HumanoidRetargeterConfig</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">targets</span><span class="api-type">tuple[TargetConfig, ...]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">left_hand</span><span class="api-type">TargetConfig</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">right_hand</span><span class="api-type">TargetConfig</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">open_qpos</span><span class="api-type">tuple[float, ...]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">closed_qpos</span><span class="api-type">tuple[float, ...]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">str</span><span class="api-def">= 'cuda:0'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="humanoidhandteleopconfig-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="humanoidhandteleopconfig-source">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L93">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidHandTeleopConfig.</span><span class="api-card__name">source</span><span class="pp">: </span><span class="pt">PicoSourceConfig</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>PICO body and controller source blueprint.</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidhandteleopconfig-retargeter">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L95">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidHandTeleopConfig.</span><span class="api-card__name">retargeter</span><span class="pp">: </span><span class="pt">HumanoidRetargeterConfig</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Body-to-humanoid retargeting blueprint.</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidhandteleopconfig-targets">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L97">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidHandTeleopConfig.</span><span class="api-card__name">targets</span><span class="pp">: </span><span class="pt">tuple[TargetConfig, ...]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Humanoid target blueprints fed the same command.</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidhandteleopconfig-left_hand">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L99">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidHandTeleopConfig.</span><span class="api-card__name">left_hand</span><span class="pp">: </span><span class="pt">TargetConfig</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Left robot hand blueprint.</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidhandteleopconfig-right_hand">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L101">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidHandTeleopConfig.</span><span class="api-card__name">right_hand</span><span class="pp">: </span><span class="pt">TargetConfig</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Right robot hand blueprint.</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidhandteleopconfig-open_qpos">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L103">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidHandTeleopConfig.</span><span class="api-card__name">open_qpos</span><span class="pp">: </span><span class="pt">tuple[float, ...]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Hand joint positions commanded when the trigger is released.</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidhandteleopconfig-closed_qpos">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L105">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidHandTeleopConfig.</span><span class="api-card__name">closed_qpos</span><span class="pp">: </span><span class="pt">tuple[float, ...]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Hand joint positions commanded when the trigger is pressed.</p></div></div>
+    </div><div class="api-row api-row--plain" id="humanoidhandteleopconfig-device">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/configs/teleop/config.py#L107">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HumanoidHandTeleopConfig.</span><span class="api-card__name">device</span><span class="pp">: </span><span class="pt">str = 'cuda:0'</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Warp device used by RoboKit.</p></div></div>
+    </div></div></div>
+  </section></div></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/retargetingkit/ref-target-configs/"><span class="lbl">← Previous</span><span class="nm">Target configs</span></a><a class="next" href="/docs/retargetingkit/development/"><span class="lbl">Next →</span><span class="nm">Development</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#handteleopconfig">HandTeleopConfig</a><a href="#armteleopconfig">ArmTeleopConfig</a><a href="#armhandteleopconfig">ArmHandTeleopConfig</a><a href="#humanoidteleopconfig">HumanoidTeleopConfig</a><a href="#humanoidhandteleopconfig">HumanoidHandTeleopConfig</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "retargetingkit", "id": "ref-teleop", "toc": [{"text": "HandTeleopConfig", "href": "#handteleopconfig", "members": [{"text": "source", "href": "#handteleopconfig-source"}, {"text": "target", "href": "#handteleopconfig-target"}, {"text": "retargeter", "href": "#handteleopconfig-retargeter"}, {"text": "side", "href": "#handteleopconfig-side"}, {"text": "rate", "href": "#handteleopconfig-rate"}, {"text": "mode", "href": "#handteleopconfig-mode"}, {"text": "device", "href": "#handteleopconfig-device"}]}, {"text": "ArmTeleopConfig", "href": "#armteleopconfig", "members": [{"text": "source", "href": "#armteleopconfig-source"}, {"text": "arms", "href": "#armteleopconfig-arms"}, {"text": "retargeters", "href": "#armteleopconfig-retargeters"}, {"text": "mode", "href": "#armteleopconfig-mode"}, {"text": "device", "href": "#armteleopconfig-device"}]}, {"text": "ArmHandTeleopConfig", "href": "#armhandteleopconfig", "members": [{"text": "source", "href": "#armhandteleopconfig-source"}, {"text": "arms", "href": "#armhandteleopconfig-arms"}, {"text": "hands", "href": "#armhandteleopconfig-hands"}, {"text": "arm_retargeters", "href": "#armhandteleopconfig-arm_retargeters"}, {"text": "hand_retargeters", "href": "#armhandteleopconfig-hand_retargeters"}, {"text": "assembly_urdf", "href": "#armhandteleopconfig-assembly_urdf"}, {"text": "mode", "href": "#armhandteleopconfig-mode"}, {"text": "device", "href": "#armhandteleopconfig-device"}]}, {"text": "HumanoidTeleopConfig", "href": "#humanoidteleopconfig", "members": [{"text": "source", "href": "#humanoidteleopconfig-source"}, {"text": "retargeter", "href": "#humanoidteleopconfig-retargeter"}, {"text": "targets", "href": "#humanoidteleopconfig-targets"}, {"text": "device", "href": "#humanoidteleopconfig-device"}]}, {"text": "HumanoidHandTeleopConfig", "href": "#humanoidhandteleopconfig", "members": [{"text": "source", "href": "#humanoidhandteleopconfig-source"}, {"text": "retargeter", "href": "#humanoidhandteleopconfig-retargeter"}, {"text": "targets", "href": "#humanoidhandteleopconfig-targets"}, {"text": "left_hand", "href": "#humanoidhandteleopconfig-left_hand"}, {"text": "right_hand", "href": "#humanoidhandteleopconfig-right_hand"}, {"text": "open_qpos", "href": "#humanoidhandteleopconfig-open_qpos"}, {"text": "closed_qpos", "href": "#humanoidhandteleopconfig-closed_qpos"}, {"text": "device", "href": "#humanoidhandteleopconfig-device"}]}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

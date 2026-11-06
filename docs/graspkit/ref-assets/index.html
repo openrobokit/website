@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>graspkit assets · GraspKit docs · OpenRoboKit</title>
+  <meta name="description" content="Manipulation across robot embodiments, including grippers and dexterous hands." />
+  <link rel="canonical" href="https://openrobokit.com/docs/graspkit/ref-assets/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">GraspKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="">
+        <span class="nm">RoboKit</span>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="is-active">
+        <span class="nm">GraspKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/graspkit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/graspkit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim/" data-id="grasp-optim" class="">Grasp Optimization</a></div><div class="side__list"><a href="/docs/graspkit/training/" data-id="training" class="">Policy Training</a></div><div class="side__list"><a href="/docs/graspkit/pipeline/" data-id="pipeline" class="">Pipeline</a></div><div class="side__list"><a href="/docs/graspkit/sim-deploy/" data-id="sim-deploy" class="">Sim Deployment</a></div><div class="side__list"><a href="/docs/graspkit/real-deploy/" data-id="real-deploy" class="">Real Deployment</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/concepts-overview/" data-id="concepts-overview" class="">Core Overview</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim-backends/" data-id="grasp-optim-backends" class="">Grasp Optimization Backends</a></div><div class="side__list"><a href="/docs/graspkit/concepts-sim/" data-id="concepts-sim" class="">Simulation</a></div><div class="side__list"><a href="/docs/graspkit/concepts-policies/" data-id="concepts-policies" class="">Models and Policies</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/ref-robot-hands/" data-id="ref-robot-hands" class="">Robot and Hand Catalog</a></div><div class="side__list"><a href="/docs/graspkit/ref-config-system/" data-id="ref-config-system" class="">Config System</a></div>
+      <div class="side__sub" data-fold="Reference·Data">
+        <span>Data</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/ref-data-format/" data-id="ref-data-format" class="">Data Format Specification</a><a href="/docs/graspkit/ref-assets/" data-id="ref-assets" class="is-active">graspkit assets</a><a href="/docs/graspkit/ref-scene-descriptions/" data-id="ref-scene-descriptions" class="">Dex1B Scene Descriptions</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/api-grasp-optim/" data-id="api-grasp-optim" class="">Grasp Optimization</a><a href="/docs/graspkit/api-scene/" data-id="api-scene" class="">Scene</a><a href="/docs/graspkit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/graspkit/api-policy/" data-id="api-policy" class="">Policy</a><a href="/docs/graspkit/api-training/" data-id="api-training" class="">Training</a><a href="/docs/graspkit/api-envs/" data-id="api-envs" class="">Environments</a><a href="/docs/graspkit/api-data/" data-id="api-data" class="">Data</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">graspkit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>Reference</span><span class="slash">/</span><span>Data</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">graspkit assets</h1>
+        <div class="doc-body" id="doc-body"><p>graspkit's own assets (scene descriptions, object-mesh datasets) live in the HF dataset <a class="inline" href="https://huggingface.co/datasets/openrobokit/graspkit"><code>openrobokit/graspkit</code></a>. Robot assets (URDFs, spheres, contact points, self-collision ignores) live in <strong>robokit's</strong> dataset and are consumed via modules such as <code>robokit.assets.robots.end_effectors.sharpa_hand</code>. <code>import graspkit</code> downloads nothing. A robot module fetches its subtree into <code>~/.robokit/assets/&lt;pinned-commit&gt;/</code>; graspkit assets use <code>~/.graspkit/assets/&lt;graspkit.assets.REVISION&gt;/</code>, fetched by the same <code>robokit.assets.fetch</code>.</p><p><code>RobotConfig.self_collision_ignore_path</code> points to one robot's ignore YAML. Files named <code>*.sphere.yml</code> and <code>*.capsule.yml</code> select the sibling matching the term's representation. Grasp optimization defaults to spheres; select <code>spen_representation="capsule"</code> for capsule terms. Motion planning and sphere filters always select sphere ignores. An enabled term warns at construction if its matching file is unavailable; an invalid supplied path still raises. Runtime assemblies have no ignore path unless one is supplied on their resulting config.</p><h3 id="layout">Layout</h3><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">text</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>calib/                 # per-rig camera extrinsics/intrinsics + joint offsets
+data/scene_description/ # per-task scene msgpacks (dex1b/, ...)
+data/object_data/       # mesh archives (dex_diffuser*, dexgraspnet, objaverse_dex1b_v2),
+                        #   extracted at import; dexgraspnet_official_splits/ = train/test lists</pre></div><p><code>~/.graspkit/</code>: <code>assets/</code> = fetched HF files (what code reads), <code>hf_cache/</code> = HF blobs; <code>data/</code>+<code>logs/</code> = pipeline output (S3-backed, not assets). <code>data/logs</code> live under home (not the repo), so graspkit works as a library too; <code>graspkit.link()</code> symlinks them into your checkout for browsing.</p><h3 id="consuming">Consuming</h3><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>from graspkit.assets import calib
+from graspkit.assets.scene_descriptions import dex1b_v0_4
+from graspkit.assets.objects import dex_diffuser
+
+dex1b_v0_4.FLOATING_MINI_PATH                       # importing fetches only v0.4
+dex_diffuser.DATA_DIR / "processed/ycb"             # importing fetches + extracts the archive
+calib.calib_file("xarm/26-06-21-camera_pose.json")  # fetches calib/, returns a Path</pre></div><ul><li><strong>Objects</strong> are archives: <code>objects.&lt;src&gt;</code> fetches + extracts into <code>DATA_ROOT/object_data/&lt;src&gt;</code> (marker-guarded) as <code>DATA_DIR</code>; <code>dexgraspnet_official_splits</code> is archive-free (<code>DIR</code>).</li><li><strong>Scenes</strong>: one module per dex1b version (<code>_DIR = fetch([...], REVISION, HF_REPO_ID, GRASPKIT_HOME)</code> + <code>*_PATH</code>). Add a scene = add a <code>*_PATH</code> + its <code>fetch</code> pattern.</li><li>Ad-hoc: <code>robokit.assets.fetch(["data/scene_description/**"], REVISION, HF_REPO_ID, GRASPKIT_HOME) / "..."</code>. Bump <code>graspkit.assets.REVISION</code> after uploading new data.</li></ul><p>Configs/experiments resolve by name, importing only what's needed (so only its assets download):</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>from graspkit.configs.robot import build_robot_config
+from graspkit.configs.experiment import build_experiment_config
+
+build_robot_config("sharpa_right")                       # downloads only sharpa_right's robot assets
+build_experiment_config("sharpa_right_dex1b_v0_4_mini_floating")</pre></div><h3 id="authoring">Authoring</h3><p>The dataset is too large to clone, so there's no local git checkout. Upload directly through the HF API (uploads only new xet chunks; no git or git-xet plugin needed):</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">shell</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>uv run scripts/tools/upload_to_hf.py data/scene_description/dex1b/v0.4/x.msgpack</pre></div><p>It pushes the file/dir to the same repo-relative path (<code>upload_file</code>/<code>upload_folder</code>). Then expose it: add a module/symbol under <code>src/graspkit/assets/scene_descriptions/</code> or <code>objects/</code> (eager <code>_DIR = fetch([...], REVISION, HF_REPO_ID, GRASPKIT_HOME)</code> + typed <code>Path</code> symbols), keeping the <code>data/</code> layout above, and bump <code>graspkit.assets.REVISION</code> to the new dataset commit.</p><p>To pull only a subset back, <code>fetch</code> with a pattern (or <code>snapshot_download(allow_patterns=[...])</code>): never the whole repo.</p><p>Robot assets are authored in <strong>robokit's</strong> (small) dataset via its own git-xet checkout: see robokit.</p></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/graspkit/ref-data-format/"><span class="lbl">← Previous</span><span class="nm">Data Format Specification</span></a><a class="next" href="/docs/graspkit/ref-scene-descriptions/"><span class="lbl">Next →</span><span class="nm">Dex1B Scene Descriptions</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#layout">Layout</a><a href="#consuming">Consuming</a><a href="#authoring">Authoring</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "graspkit", "id": "ref-assets", "toc": [{"text": "Layout", "href": "#layout"}, {"text": "Consuming", "href": "#consuming"}, {"text": "Authoring", "href": "#authoring"}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

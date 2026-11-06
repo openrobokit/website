@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="196 27 200 135">
+<style>
+@keyframes nA{0%,100%{fill:#DCE5FC}14%{fill:#5B8AF2}36%{fill:#DCE5FC}}
+@keyframes nB{0%,100%{fill:#fff}14%{fill:#9DBAF7}36%{fill:#fff}}
+@keyframes edge{0%,100%{stroke:#C7D5F8}14%{stroke:#1F5EEA}40%{stroke:#C7D5F8}}
+.e{animation:edge 2.8s ease-in-out infinite}
+.e1{animation-delay:.18s}.e2{animation-delay:.54s}.e3{animation-delay:.9s}
+.na{animation:nA 2.8s ease-in-out infinite}
+.nb{animation:nB 2.8s ease-in-out infinite}
+.d1{animation-delay:.36s}.d2{animation-delay:.72s}.d3{animation-delay:1.08s}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<g class="e e1" stroke="#C7D5F8" stroke-width="2.4">
+<line x1="226" y1="68.9" x2="254.6" y2="43.5"></line><line x1="226" y1="68.9" x2="254.6" y2="94.6"></line><line x1="226" y1="68.9" x2="254.6" y2="145.8"></line><line x1="226" y1="120.4" x2="254.6" y2="43.5"></line><line x1="226" y1="120.4" x2="254.6" y2="94.6"></line><line x1="226" y1="120.4" x2="254.6" y2="145.8"></line>
+</g>
+<g class="e e2" stroke="#C7D5F8" stroke-width="2.4">
+<line x1="281.7" y1="43.5" x2="310.2" y2="43.5"></line><line x1="281.7" y1="43.5" x2="310.2" y2="94.6"></line><line x1="281.7" y1="43.5" x2="310.2" y2="145.8"></line><line x1="281.7" y1="94.6" x2="310.2" y2="43.5"></line><line x1="281.7" y1="94.6" x2="310.2" y2="94.6"></line><line x1="281.7" y1="94.6" x2="310.2" y2="145.8"></line><line x1="281.7" y1="145.8" x2="310.2" y2="43.5"></line><line x1="281.7" y1="145.8" x2="310.2" y2="94.6"></line><line x1="281.7" y1="145.8" x2="310.2" y2="145.8"></line>
+</g>
+<g class="e e3" stroke="#C7D5F8" stroke-width="2.4">
+<line x1="337.3" y1="43.5" x2="365.8" y2="68.9"></line><line x1="337.3" y1="94.6" x2="365.8" y2="68.9"></line><line x1="337.3" y1="145.8" x2="365.8" y2="68.9"></line><line x1="337.3" y1="43.5" x2="365.8" y2="120.4"></line><line x1="337.3" y1="94.6" x2="365.8" y2="120.4"></line><line x1="337.3" y1="145.8" x2="365.8" y2="120.4"></line>
+</g>
+<g stroke="#1F5EEA" stroke-width="3.4">
+<circle class="na" cx="212.5" cy="68.9" r="13.5" fill="#DCE5FC"></circle>
+<circle class="na" cx="212.5" cy="120.4" r="13.5" fill="#DCE5FC"></circle>
+<circle class="nb d1" cx="268.1" cy="43.5" r="13.5" fill="#fff"></circle>
+<circle class="nb d1" cx="268.1" cy="94.6" r="13.5" fill="#fff"></circle>
+<circle class="nb d1" cx="268.1" cy="145.8" r="13.5" fill="#fff"></circle>
+<circle class="nb d2" cx="323.8" cy="43.5" r="13.5" fill="#fff"></circle>
+<circle class="nb d2" cx="323.8" cy="94.6" r="13.5" fill="#fff"></circle>
+<circle class="nb d2" cx="323.8" cy="145.8" r="13.5" fill="#fff"></circle>
+<circle class="na d3" cx="379.4" cy="68.9" r="13.5" fill="#DCE5FC"></circle>
+<circle class="na d3" cx="379.4" cy="120.4" r="13.5" fill="#DCE5FC"></circle>
+</g>
+</svg>

@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Scene · GraspKit docs · OpenRoboKit</title>
+  <meta name="description" content="Manipulation across robot embodiments, including grippers and dexterous hands." />
+  <link rel="canonical" href="https://openrobokit.com/docs/graspkit/api-scene/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">GraspKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="">
+        <span class="nm">RoboKit</span>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="is-active">
+        <span class="nm">GraspKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/graspkit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/graspkit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim/" data-id="grasp-optim" class="">Grasp Optimization</a></div><div class="side__list"><a href="/docs/graspkit/training/" data-id="training" class="">Policy Training</a></div><div class="side__list"><a href="/docs/graspkit/pipeline/" data-id="pipeline" class="">Pipeline</a></div><div class="side__list"><a href="/docs/graspkit/sim-deploy/" data-id="sim-deploy" class="">Sim Deployment</a></div><div class="side__list"><a href="/docs/graspkit/real-deploy/" data-id="real-deploy" class="">Real Deployment</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/concepts-overview/" data-id="concepts-overview" class="">Core Overview</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim-backends/" data-id="grasp-optim-backends" class="">Grasp Optimization Backends</a></div><div class="side__list"><a href="/docs/graspkit/concepts-sim/" data-id="concepts-sim" class="">Simulation</a></div><div class="side__list"><a href="/docs/graspkit/concepts-policies/" data-id="concepts-policies" class="">Models and Policies</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/ref-robot-hands/" data-id="ref-robot-hands" class="">Robot and Hand Catalog</a></div><div class="side__list"><a href="/docs/graspkit/ref-config-system/" data-id="ref-config-system" class="">Config System</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Data">
+        <span>Data</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/ref-data-format/" data-id="ref-data-format" class="">Data Format Specification</a><a href="/docs/graspkit/ref-assets/" data-id="ref-assets" class="">graspkit assets</a><a href="/docs/graspkit/ref-scene-descriptions/" data-id="ref-scene-descriptions" class="">Dex1B Scene Descriptions</a></div>
+      <div class="side__sub" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/api-grasp-optim/" data-id="api-grasp-optim" class="">Grasp Optimization</a><a href="/docs/graspkit/api-scene/" data-id="api-scene" class="is-active">Scene</a><a href="/docs/graspkit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/graspkit/api-policy/" data-id="api-policy" class="">Policy</a><a href="/docs/graspkit/api-training/" data-id="api-training" class="">Training</a><a href="/docs/graspkit/api-envs/" data-id="api-envs" class="">Environments</a><a href="/docs/graspkit/api-data/" data-id="api-data" class="">Data</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">graspkit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>Reference</span><span class="slash">/</span><span>API</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Scene</h1>
+        <div class="doc-body" id="doc-body"><div class="api"><section class="api-sym">
+    <div class="api-card" id="scenedescription">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_description.py#L61">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">graspkit.scene.scene_description.</span><span class="api-card__name">SceneDescription</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">scene_id</span><span class="pp">: </span><span class="pt">str</span><span class="pp"> = </span><span class="pd">''</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">target_actor_id</span><span class="pp">: </span><span class="pt">str</span><span class="pp"> = </span><span class="pd">''</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">boxes</span><span class="pp">: </span><span class="pt">Dict[str, BoxDescription]</span><span class="pp"> = </span><span class="pd">dict()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">meshes</span><span class="pp">: </span><span class="pt">Dict[str, MeshDescription]</span><span class="pp"> = </span><span class="pd">dict()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">floating_scene_id</span><span class="pp">: </span><span class="pt">Optional[str]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">canonical_tabletop_scene_id</span><span class="pp">: </span><span class="pt">Optional[str]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Per-scene geometry with a scene id and a manipulation-target actor id.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_id</span><span class="api-type">str</span><span class="api-def">= ''</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">target_actor_id</span><span class="api-type">str</span><span class="api-def">= ''</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">boxes</span><span class="api-type">Dict[str, BoxDescription]</span><span class="api-def">= dict()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">meshes</span><span class="api-type">Dict[str, MeshDescription]</span><span class="api-def">= dict()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">floating_scene_id</span><span class="api-type">Optional[str]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">canonical_tabletop_scene_id</span><span class="api-type">Optional[str]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="scenedescription-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="scenedescription-scene_id">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_description.py#L65">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SceneDescription.</span><span class="api-card__name">scene_id</span><span class="pp">: </span><span class="pt">str = ''</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="scenedescription-target_actor_id">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_description.py#L66">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SceneDescription.</span><span class="api-card__name">target_actor_id</span><span class="pp">: </span><span class="pt">str = ''</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="scenedescription-boxes">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_description.py#L67">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SceneDescription.</span><span class="api-card__name">boxes</span><span class="pp">: </span><span class="pt">Dict[str, BoxDescription] = field(default_factory=dict)</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="scenedescription-meshes">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_description.py#L68">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SceneDescription.</span><span class="api-card__name">meshes</span><span class="pp">: </span><span class="pt">Dict[str, MeshDescription] = field(default_factory=dict)</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="scenedescription-floating_scene_id">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_description.py#L69">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SceneDescription.</span><span class="api-card__name">floating_scene_id</span><span class="pp">: </span><span class="pt">Optional[str] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="scenedescription-canonical_tabletop_scene_id">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_description.py#L70">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SceneDescription.</span><span class="api-card__name">canonical_tabletop_scene_id</span><span class="pp">: </span><span class="pt">Optional[str] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="scenedescription-load_scene_descriptions_msgpack">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_description.py#L72">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SceneDescription.</span><span class="api-card__name">load_scene_descriptions_msgpack</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">msgpack_path</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">return_splits</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Union[Dict[str, SceneDescription], Dict[Literal['train', 'test'], Dict[str, SceneDescription]]]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">msgpack_path</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">return_splits</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Union[Dict[str, SceneDescription], Dict[Literal['train', 'test'], Dict[str, SceneDescription]]]</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="scenedescription-save_scene_descriptions_msgpack">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_description.py#L81">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SceneDescription.</span><span class="api-card__name">save_scene_descriptions_msgpack</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">scene_descriptions</span><span class="pp">: </span><span class="pt">Union[Dict[str, SceneDescription], Dict[Literal['train', 'test'], Dict[str, SceneDescription]]]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">msgpack_path</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">None</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_descriptions</span><span class="api-type">Union[Dict[str, SceneDescription], Dict[Literal['train', 'test'], Dict[str, SceneDescription]]]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">msgpack_path</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">None</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="meshdescription">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_description.py#L26">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">graspkit.scene.scene_description.</span><span class="api-card__name">MeshDescription</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">actor_id</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">collision_mesh_path</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scales</span><span class="pp">: </span><span class="pt">Tuple[float, float, float]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">position</span><span class="pp">: </span><span class="pt">Tuple[float, float, float]</span><span class="pp"> = </span><span class="pd">(0.0, 0.0, 0.0)</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">quaternion</span><span class="pp">: </span><span class="pt">Tuple[float, float, float, float]</span><span class="pp"> = </span><span class="pd">(1.0, 0.0, 0.0, 0.0)</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">visual_mesh_path</span><span class="pp">: </span><span class="pt">Optional[str]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">bounds</span><span class="pp">: </span><span class="pt">Optional[Tuple[Tuple[float, float], Tuple[float, float], Tuple[float, float]]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Triangle mesh with actor id, optional visual-mesh path, and cached bounds.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">actor_id</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">collision_mesh_path</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scales</span><span class="api-type">Tuple[float, float, float]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">position</span><span class="api-type">Tuple[float, float, float]</span><span class="api-def">= (0.0, 0.0, 0.0)</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">quaternion</span><span class="api-type">Tuple[float, float, float, float]</span><span class="api-def">= (1.0, 0.0, 0.0, 0.0)</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">visual_mesh_path</span><span class="api-type">Optional[str]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">bounds</span><span class="api-type">Optional[Tuple[Tuple[float, float], Tuple[float, float], Tuple[float, float]]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="meshdescription-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="meshdescription-actor_id">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_description.py#L30">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MeshDescription.</span><span class="api-card__name">actor_id</span><span class="pp">: </span><span class="pt">str</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="meshdescription-collision_mesh_path">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_description.py#L31">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MeshDescription.</span><span class="api-card__name">collision_mesh_path</span><span class="pp">: </span><span class="pt">str</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="meshdescription-scales">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_description.py#L32">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MeshDescription.</span><span class="api-card__name">scales</span><span class="pp">: </span><span class="pt">Tuple[float, float, float]</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="meshdescription-position">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_description.py#L33">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MeshDescription.</span><span class="api-card__name">position</span><span class="pp">: </span><span class="pt">Tuple[float, float, float] = (0.0, 0.0, 0.0)</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="meshdescription-quaternion">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_description.py#L34">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MeshDescription.</span><span class="api-card__name">quaternion</span><span class="pp">: </span><span class="pt">Tuple[float, float, float, float] = (1.0, 0.0, 0.0, 0.0)</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="meshdescription-visual_mesh_path">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_description.py#L35">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MeshDescription.</span><span class="api-card__name">visual_mesh_path</span><span class="pp">: </span><span class="pt">Optional[str] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="meshdescription-bounds">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_description.py#L36">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MeshDescription.</span><span class="api-card__name">bounds</span><span class="pp">: </span><span class="pt">Optional[Tuple[Tuple[float, float], Tuple[float, float], Tuple[float, float]]] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="meshdescription-get_visual_mesh_path">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_description.py#L38">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MeshDescription.</span><span class="api-card__name">get_visual_mesh_path</span><span class="pp">()</span><span class="pp"> -> </span><span class="pt">str</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Return the visual mesh path, falling back to the collision mesh.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; MeshDescription("o", "c.obj", (1.0, 1.0, 1.0)).get_visual_mesh_path()
+'c.obj'
+&gt;&gt;&gt; MeshDescription("o", "c.obj", (1.0, 1.0, 1.0), visual_mesh_path="v.obj").get_visual_mesh_path()
+'v.obj'</pre><pre data-code-full hidden>from graspkit.scene.scene_description import MeshDescription
+
+MeshDescription("o", "c.obj", (1.0, 1.0, 1.0)).get_visual_mesh_path()
+MeshDescription("o", "c.obj", (1.0, 1.0, 1.0), visual_mesh_path="v.obj").get_visual_mesh_path()</pre></div></div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">str</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="meshdescription-get_bounds">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_description.py#L48">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MeshDescription.</span><span class="api-card__name">get_bounds</span><span class="pp">()</span><span class="pp"> -> </span><span class="pt">Tuple[Tuple[float, float], Tuple[float, float], Tuple[float, float]]</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Tuple[Tuple[float, float], Tuple[float, float], Tuple[float, float]]</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="boxdescription">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_description.py#L16">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">graspkit.scene.scene_description.</span><span class="api-card__name">BoxDescription</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">actor_id</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">size</span><span class="pp">: </span><span class="pt">Tuple[float, float, float]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">position</span><span class="pp">: </span><span class="pt">Tuple[float, float, float]</span><span class="pp"> = </span><span class="pd">(0.0, 0.0, 0.0)</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">quaternion</span><span class="pp">: </span><span class="pt">Tuple[float, float, float, float]</span><span class="pp"> = </span><span class="pd">(1.0, 0.0, 0.0, 0.0)</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Box primitive, usually for static elements like tables.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">actor_id</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">size</span><span class="api-type">Tuple[float, float, float]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">position</span><span class="api-type">Tuple[float, float, float]</span><span class="api-def">= (0.0, 0.0, 0.0)</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">quaternion</span><span class="api-type">Tuple[float, float, float, float]</span><span class="api-def">= (1.0, 0.0, 0.0, 0.0)</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="boxdescription-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="boxdescription-actor_id">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_description.py#L20">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BoxDescription.</span><span class="api-card__name">actor_id</span><span class="pp">: </span><span class="pt">str</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="boxdescription-size">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_description.py#L21">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BoxDescription.</span><span class="api-card__name">size</span><span class="pp">: </span><span class="pt">Tuple[float, float, float]</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="boxdescription-position">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_description.py#L22">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BoxDescription.</span><span class="api-card__name">position</span><span class="pp">: </span><span class="pt">Tuple[float, float, float] = (0.0, 0.0, 0.0)</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="boxdescription-quaternion">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_description.py#L23">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BoxDescription.</span><span class="api-card__name">quaternion</span><span class="pp">: </span><span class="pt">Tuple[float, float, float, float] = (1.0, 0.0, 0.0, 0.0)</span></div>
+    
+  </div>
+      
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="scenegeom">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_geom.py#L17">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">graspkit.scene.scene_geom.</span><span class="api-card__name">SceneGeom</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">scene_descriptions</span><span class="pp">: </span><span class="pt">List[SceneDescription]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">Device</span><span class="pp"> = </span><span class="pd">'cpu'</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Per-scene mesh-backed WarpScenes for grasp / motion optimizers.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_descriptions</span><span class="api-type">List[SceneDescription]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">Device</span><span class="api-def">= 'cpu'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="scenegeom-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="scenegeom-target_scene">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_geom.py#L34">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SceneGeom.</span><span class="api-card__name">target_scene</span><span class="pp">: </span><span class="pt">WarpScene</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>The target mesh of each scene (none for a table-only scene); built lazily on first access.</p></div></div>
+    </div><div class="api-row api-row--plain" id="scenegeom-update">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_geom.py#L47">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SceneGeom.</span><span class="api-card__name">update</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">scene_descriptions</span><span class="pp">: </span><span class="pt">List[SceneDescription]</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">None</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Update geometry in place for a scene batch with the same layout; captured pointers stay valid.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_descriptions</span><span class="api-type">List[SceneDescription]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">None</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="scenegeom-build_collision_scene_in_base">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_geom.py#L87">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SceneGeom.</span><span class="api-card__name">build_collision_scene_in_base</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">T_world_robot</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">WarpScene</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>One `<code>WarpScene</code><code> (mesh+box) for </code><code>MotionPlanner.plan()</code>`, in robot base frame (FK is base-relative).</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">T_world_robot</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">WarpScene</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="scenegeom-query_target_object_signed_distances">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_geom.py#L94">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SceneGeom.</span><span class="api-card__name">query_target_object_signed_distances</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">query_points</span><span class="pp">: </span><span class="pt">torch.Tensor</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Tuple[torch.Tensor, torch.Tensor, torch.Tensor]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Differentiable per-scene target-object SDF (single mesh -&gt; diff path).</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">query_points</span><span class="api-type">torch.Tensor</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Tuple[torch.Tensor, torch.Tensor, torch.Tensor]</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="scenegeom-query_scene_signed_distances">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_geom.py#L100">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SceneGeom.</span><span class="api-card__name">query_scene_signed_distances</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">query_points</span><span class="pp">: </span><span class="pt">torch.Tensor</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Tuple[torch.Tensor, torch.Tensor, torch.Tensor]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Full-scene SDF (meshes+primitives), differentiable; drives penetration gradient in motion/grasp-GD.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">query_points</span><span class="api-type">torch.Tensor</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Tuple[torch.Tensor, torch.Tensor, torch.Tensor]</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="scenegeom-solver_scenes">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/scene/scene_geom.py#L113">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SceneGeom.</span><span class="api-card__name">solver_scenes</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">backend</span><span class="pp">: </span><span class="pt">Literal['mesh', 'sdf_volume']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">sdf_bake_padding</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.25</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">sdf_resolution</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">64</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">sdf_voxel_size</span><span class="pp">: </span><span class="pt">Optional[float]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Tuple[WarpScene, WarpScene]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p><code>(target_scene, collision_scene)</code>; <code>sdf_volume</code> swaps the target mesh for an SDF (params in mesh units).</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">backend</span><span class="api-type">Literal['mesh', 'sdf_volume']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">sdf_bake_padding</span><span class="api-type">float</span><span class="api-def">= 0.25</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">sdf_resolution</span><span class="api-type">int</span><span class="api-def">= 64</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">sdf_voxel_size</span><span class="api-type">Optional[float]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Tuple[WarpScene, WarpScene]</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/graspkit/api-grasp-optim/"><span class="lbl">← Previous</span><span class="nm">Grasp Optimization</span></a><a class="next" href="/docs/graspkit/api-motion-plan/"><span class="lbl">Next →</span><span class="nm">Motion Planning</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#scenedescription">SceneDescription</a><a href="#meshdescription">MeshDescription</a><a href="#boxdescription">BoxDescription</a><a href="#scenegeom">SceneGeom</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "graspkit", "id": "api-scene", "toc": [{"text": "SceneDescription", "href": "#scenedescription", "members": [{"text": "scene_id", "href": "#scenedescription-scene_id"}, {"text": "target_actor_id", "href": "#scenedescription-target_actor_id"}, {"text": "boxes", "href": "#scenedescription-boxes"}, {"text": "meshes", "href": "#scenedescription-meshes"}, {"text": "floating_scene_id", "href": "#scenedescription-floating_scene_id"}, {"text": "canonical_tabletop_scene_id", "href": "#scenedescription-canonical_tabletop_scene_id"}, {"text": "load_scene_descriptions_msgpack()", "href": "#scenedescription-load_scene_descriptions_msgpack"}, {"text": "save_scene_descriptions_msgpack()", "href": "#scenedescription-save_scene_descriptions_msgpack"}]}, {"text": "MeshDescription", "href": "#meshdescription", "members": [{"text": "actor_id", "href": "#meshdescription-actor_id"}, {"text": "collision_mesh_path", "href": "#meshdescription-collision_mesh_path"}, {"text": "scales", "href": "#meshdescription-scales"}, {"text": "position", "href": "#meshdescription-position"}, {"text": "quaternion", "href": "#meshdescription-quaternion"}, {"text": "visual_mesh_path", "href": "#meshdescription-visual_mesh_path"}, {"text": "bounds", "href": "#meshdescription-bounds"}, {"text": "get_visual_mesh_path()", "href": "#meshdescription-get_visual_mesh_path"}, {"text": "get_bounds()", "href": "#meshdescription-get_bounds"}]}, {"text": "BoxDescription", "href": "#boxdescription", "members": [{"text": "actor_id", "href": "#boxdescription-actor_id"}, {"text": "size", "href": "#boxdescription-size"}, {"text": "position", "href": "#boxdescription-position"}, {"text": "quaternion", "href": "#boxdescription-quaternion"}]}, {"text": "SceneGeom", "href": "#scenegeom", "members": [{"text": "target_scene", "href": "#scenegeom-target_scene"}, {"text": "update()", "href": "#scenegeom-update"}, {"text": "build_collision_scene_in_base()", "href": "#scenegeom-build_collision_scene_in_base"}, {"text": "query_target_object_signed_distances()", "href": "#scenegeom-query_target_object_signed_distances"}, {"text": "query_scene_signed_distances()", "href": "#scenegeom-query_scene_signed_distances"}, {"text": "solver_scenes()", "href": "#scenegeom-solver_scenes"}]}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Motion Planning · RoboKit docs · OpenRoboKit</title>
+  <meta name="description" content="GPU-native, differentiable robotics tooling: IK, trajectory optimization, retargeting, grasping, calibration." />
+  <link rel="canonical" href="https://openrobokit.com/docs/robokit/api-motion-plan/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">RoboKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="is-active">
+        <span class="nm">RoboKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="">
+        <span class="nm">GraspKit</span>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/robokit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/robokit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/robokit/rl/" data-id="rl" class="">RL</a></div><div class="side__list"><a href="/docs/robokit/sim-mpc/" data-id="sim-mpc" class="">Sim MPC</a></div><div class="side__list"><a href="/docs/robokit/ik/" data-id="ik" class="">IK</a></div><div class="side__list"><a href="/docs/robokit/motion-planning/" data-id="motion-planning" class="">Motion Planning</a></div><div class="side__list"><a href="/docs/robokit/humanoid-retargeting/" data-id="humanoid-retargeting" class="">Humanoid Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand-retargeting/" data-id="hand-retargeting" class="">Hand Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand_eye_calibration/" data-id="hand_eye_calibration" class="">Hand-Eye Calibration</a></div><div class="side__list"><a href="/docs/robokit/ref-assets/" data-id="ref-assets" class="">Built-in Robots &amp; Datasets</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/robot/" data-id="robot" class="">Robot</a></div><div class="side__list"><a href="/docs/robokit/geom/" data-id="geom" class="">Geometry</a></div><div class="side__list"><a href="/docs/robokit/optimization/" data-id="optimization" class="">Optimization</a></div><div class="side__list"><a href="/docs/robokit/conventions/" data-id="conventions" class="">Conventions</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list">
+      <div class="side__sub is-folded" data-fold="Reference·Optimizers">
+        <span>Optimizers</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/opt-gd/" data-id="opt-gd" class="">GDOptimizer</a><a href="/docs/robokit/opt-lm/" data-id="opt-lm" class="">LMOptimizer</a><a href="/docs/robokit/opt-lbfgs/" data-id="opt-lbfgs" class="">LBFGSOptimizer</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Terms">
+        <span>Terms</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/term-frame/" data-id="term-frame" class="">Frame Task</a><a href="/docs/robokit/term-position/" data-id="term-position" class="">Position Task</a><a href="/docs/robokit/term-rotation/" data-id="term-rotation" class="">Rotation Tasks</a><a href="/docs/robokit/term-frame-vector/" data-id="term-frame-vector" class="">Frame Vector Task</a><a href="/docs/robokit/term-com-position/" data-id="term-com-position" class="">CoM Position Task</a><a href="/docs/robokit/term-position-limit/" data-id="term-position-limit" class="">Position Limit</a><a href="/docs/robokit/term-velocity-limit/" data-id="term-velocity-limit" class="">Velocity Limit Task</a><a href="/docs/robokit/term-configuration/" data-id="term-configuration" class="">Configuration Task</a><a href="/docs/robokit/term-smoothness/" data-id="term-smoothness" class="">Smoothness Task</a><a href="/docs/robokit/term-self-collision/" data-id="term-self-collision" class="">Self Collision Task</a><a href="/docs/robokit/term-scene-collision/" data-id="term-scene-collision" class="">Scene Collision Task</a><a href="/docs/robokit/term-scene-distance/" data-id="term-scene-distance" class="">Scene Distance Task</a><a href="/docs/robokit/term-interaction-mesh/" data-id="term-interaction-mesh" class="">Interaction Mesh Task</a><a href="/docs/robokit/term-mask-alignment/" data-id="term-mask-alignment" class="">Mask Alignment Task</a><a href="/docs/robokit/term-manipulability/" data-id="term-manipulability" class="">Manipulability Task</a><a href="/docs/robokit/term-force-closure/" data-id="term-force-closure" class="">Force Closure Task</a></div>
+      <div class="side__sub" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/api-robot/" data-id="api-robot" class="">Robot</a><a href="/docs/robokit/api-geometry/" data-id="api-geometry" class="">Geometry</a><a href="/docs/robokit/api-optimization/" data-id="api-optimization" class="">Optimization</a><a href="/docs/robokit/api-terms/" data-id="api-terms" class="">Terms</a><a href="/docs/robokit/api-ik/" data-id="api-ik" class="">Inverse Kinematics</a><a href="/docs/robokit/api-motion-plan/" data-id="api-motion-plan" class="is-active">Motion Planning</a><a href="/docs/robokit/api-sim-mpc/" data-id="api-sim-mpc" class="">Sim MPC</a><a href="/docs/robokit/api-humanoid-retargeting/" data-id="api-humanoid-retargeting" class="">Humanoid Retargeting</a><a href="/docs/robokit/api-hand-retargeting/" data-id="api-hand-retargeting" class="">Hand Retargeting</a><a href="/docs/robokit/api-hand_eye_calibration/" data-id="api-hand_eye_calibration" class="">Hand-Eye Calibration</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">robokit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>Reference</span><span class="slash">/</span><span>API</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Motion Planning</h1>
+        <div class="doc-body" id="doc-body"><div class="api"><section class="api-sym">
+    <div class="api-card" id="motionplanner">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L350">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">robokit.helpers.motion_plan.</span><span class="api-card__name">MotionPlanner</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">config</span><span class="pp">: </span><span class="pt">MotionPlannerConfig</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">robot</span><span class="pp">: </span><span class="pt">Robot</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">target_links</span><span class="pp">: </span><span class="pt">Union[str, int, Sequence[Union[str, int]]]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene</span><span class="pp">: </span><span class="pt">Optional[WarpScene]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">Optional[wp_device_type]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Batched motion planning with goal IK, trajectory optimization stages, and retry.</p><h3>Lifecycle</h3><ol><li><code>__init__</code> copies configuration and constructs goal IK, the optimizer stages, and their retiming.</li><li><code>warmup(batch_size)</code> fixes the batch size and allocates all batch-shaped state.</li><li><code>solve_offline(...)</code>, which <code>solve_offline_numpy</code> and <code>solve_offline_torch</code> wrap, places the waypoints, builds candidates, solves and retries trajectories, then retimes them with the last stage's <code>retime</code> and computes <code>motion_time</code>.</li><li><code>solve_online(...)</code> runs a fresh gradient solve with executed-history smoothing, or updates the retained MPPI action distribution.</li></ol></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">config</span><span class="api-type">MotionPlannerConfig</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Planner configuration.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">robot</span><span class="api-type">Robot</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Robot model.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">target_links</span><span class="api-type">Union[str, int, Sequence[Union[str, int]]]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>One target link or a sequence, using names or indices.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene</span><span class="api-type">Optional[WarpScene]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional collision scene.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">Optional[wp_device_type]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Warp device.</p></div>
+    </div><div class="api-label" id="motionplanner-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="motionplanner-warmup">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L537">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlanner.</span><span class="api-card__name">warmup</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">batch_size</span><span class="pp">: </span><span class="pt">int</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Fix the planner batch size and allocate its batch-shaped buffers.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">batch_size</span><span class="api-type">int</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Number of queries solved together.</p></div>
+    </div></div>
+    </div><div class="api-row api-row--plain" id="motionplanner-set_active_joint_mask">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L674">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlanner.</span><span class="api-card__name">set_active_joint_mask</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">joint_mask</span><span class="pp">: </span><span class="pt">Sequence[float]</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Set which actuated joints IK and trajectory optimization may change; before the first solve it also limits the trajectory collision Jacobians to the active joints, which later masks must stay within.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">joint_mask</span><span class="api-type">Sequence[float]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>One value per actuated joint; zero pins the joint.</p></div>
+    </div></div>
+    </div><div class="api-row api-row--plain" id="motionplanner-solve_offline">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L1253">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlanner.</span><span class="api-card__name">solve_offline</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">waypoints</span><span class="pp">: </span><span class="pt">Sequence[Union[wp.array, Dict[str, wp.array]]]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">start_T_world_base</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">seed_q</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_indices</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">segment_check_collision</span><span class="pp">: </span><span class="pt">Optional[Sequence[bool]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">segment_fixed_duration</span><span class="pp">: </span><span class="pt">Optional[Sequence[Optional[float]]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">segment_locked</span><span class="pp">: </span><span class="pt">Optional[Sequence[bool]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">attached_objects</span><span class="pp">: </span><span class="pt">Optional[Sequence[AttachedObject]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">fixed_relative_poses</span><span class="pp">: </span><span class="pt">Optional[Sequence[FixedRelativePose]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">MotionPlanResult[wp.array]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Plan batched Warp trajectories through waypoints, start first and goal last; the NumPy and Torch APIs wrap it.</p><h4>Lifecycle</h4><ol><li>Parse segments: each segment's world collision flag, fixed duration and lock.</li><li>Solve waypoint IK: each pose but a final goal by goal IK (scene collision, no self collision), resting at its neighbors' blend.</li><li>Create split: each segment's frames by its duration, else evenly, then the locked frames and collision.</li><li>Solve: <code>_solve_offline_attempt</code> with retries, one CUDA graph under <code>cuda_graph="solve"</code> but for durations; it builds each guess's goal by goal IK, its later poses' answers nearest its neighbors' blend, and straight lines through its waypoints, on frames resplit by the time each line needs; after the first stage, several segments resplit their frames again.</li><li>Retime: every plan under the last stage's retime, its fixed segments held still, and its motion time.</li></ol></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">waypoints</span><span class="api-type">Sequence[Union[wp.array, Dict[str, wp.array]]]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Ordered list of at least two: joint arrays <code>(batch, dofs)</code> in <code>robot.spec.actuated_joint_names</code> order, <code>wp_vec7</code> arrays <code>(batch,)</code> or <code>(batch, target links)</code> posing the target links, or dicts of target link names to <code>wp_vec7</code> <code>(batch,)</code> posing some of them (other keys are ignored). A link a dict leaves out is free at its frame, so each link reaches its own waypoints in turn: the first guess keeps it at its pose of the waypoint before (blended toward any later joint waypoint; a start pose's at <code>seed_q</code> or the next joint waypoint, one needed), and the stages move it from there only as their costs pull. Every link passes each waypoint at the same instant, and the goal names all. An inner waypoint holds the links it names at its joints or IK answer, contact included.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">start_T_world_base</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>A floating base's start poses, <code>wp_vec7</code> <code>(batch,)</code>; such plans take a start and a goal.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">seed_q</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional IK seed: the goal IK's initialization, or the rest of a pose waypoint before any joint one.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_indices</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional scene index per batch row; defaults to zero.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">segment_check_collision</span><span class="api-type">Optional[Sequence[bool]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>One flag per segment (waypoint <code>i</code> to <code>i + 1</code>); False drops world collision there (self collision stays), and from the checks of anchors only such segments touch, e.g. a contact. Defaults to all True. Every <code>segment_*</code> and <code>waypoint_*</code> list applies to all batch rows alike.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">segment_fixed_duration</span><span class="api-type">Optional[Sequence[Optional[float]]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Seconds per segment, or None to let the planner time it. A duration gives the segment <code>round(duration / dt)</code> frames (at least two) in the solve, keeps them through the resplit and is its time in <code>interpolate</code>; None segments share the rest of <code>num_timesteps</code>, which the durations must fit.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">segment_locked</span><span class="api-type">Optional[Sequence[bool]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>One flag per segment; True keeps its frames on the straight joint-space line between its waypoints (the tool's path between them is not straight), whatever it passes through, and holds the links both its waypoints name.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">attached_objects</span><span class="api-type">Optional[Sequence[AttachedObject]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Objects the robot carries, on the spheres <code>max_attached_spheres</code> reserves on the target link each one's <code>link</code> is rigid with: checked by world and self collision over their segments (an inner waypoint: those both its segments carry), in the stages, their scores and waypoint and goal IK.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">fixed_relative_poses</span><span class="api-type">Optional[Sequence[FixedRelativePose]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Link pairs whose relative pose the gradient stages hold over their segments, at most <code>max_fixed_relative_poses</code>.</p></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">MotionPlanResult[wp.array]</span></div><div class="api-row__doc"><p>last and only their rows return; more raise <code>ValueError("Batch size mismatch")</code>.</p></div></div></div>
+    </div><div class="api-row api-row--plain" id="motionplanner-solve_offline_numpy">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L1596">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlanner.</span><span class="api-card__name">solve_offline_numpy</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">waypoints</span><span class="pp">: </span><span class="pt">Sequence[Union[np.ndarray, Dict[str, np.ndarray]]]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">start_T_world_base</span><span class="pp">: </span><span class="pt">Optional[np.ndarray]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">seed_q</span><span class="pp">: </span><span class="pt">Optional[np.ndarray]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_indices</span><span class="pp">: </span><span class="pt">Optional[np.ndarray]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">segment_check_collision</span><span class="pp">: </span><span class="pt">Optional[Sequence[bool]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">segment_fixed_duration</span><span class="pp">: </span><span class="pt">Optional[Sequence[Optional[float]]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">segment_locked</span><span class="pp">: </span><span class="pt">Optional[Sequence[bool]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">attached_objects</span><span class="pp">: </span><span class="pt">Optional[Sequence[AttachedObject]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">fixed_relative_poses</span><span class="pp">: </span><span class="pt">Optional[Sequence[FixedRelativePose]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">MotionPlanResult[np.ndarray]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>NumPy wrapper for <code>solve_offline</code>: a pose waypoint is a dict of target links to 4x4 or <code>[x, y, z, qw, qx, qy, qz]</code> poses, unbatched values broadcast across queries, and the result holds owned copies.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">waypoints</span><span class="api-type">Sequence[Union[np.ndarray, Dict[str, np.ndarray]]]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">start_T_world_base</span><span class="api-type">Optional[np.ndarray]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">seed_q</span><span class="api-type">Optional[np.ndarray]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_indices</span><span class="api-type">Optional[np.ndarray]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">segment_check_collision</span><span class="api-type">Optional[Sequence[bool]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">segment_fixed_duration</span><span class="api-type">Optional[Sequence[Optional[float]]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">segment_locked</span><span class="api-type">Optional[Sequence[bool]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">attached_objects</span><span class="api-type">Optional[Sequence[AttachedObject]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">fixed_relative_poses</span><span class="api-type">Optional[Sequence[FixedRelativePose]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">MotionPlanResult[np.ndarray]</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="motionplanner-solve_offline_torch">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L1654">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlanner.</span><span class="api-card__name">solve_offline_torch</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">waypoints</span><span class="pp">: </span><span class="pt">Sequence[Union[torch.Tensor, Dict[str, torch.Tensor]]]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">start_T_world_base</span><span class="pp">: </span><span class="pt">Optional[torch.Tensor]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">seed_q</span><span class="pp">: </span><span class="pt">Optional[torch.Tensor]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_indices</span><span class="pp">: </span><span class="pt">Optional[torch.Tensor]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">segment_check_collision</span><span class="pp">: </span><span class="pt">Optional[Sequence[bool]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">segment_fixed_duration</span><span class="pp">: </span><span class="pt">Optional[Sequence[Optional[float]]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">segment_locked</span><span class="pp">: </span><span class="pt">Optional[Sequence[bool]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">attached_objects</span><span class="pp">: </span><span class="pt">Optional[Sequence[AttachedObject]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">fixed_relative_poses</span><span class="pp">: </span><span class="pt">Optional[Sequence[FixedRelativePose]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">MotionPlanResult[torch.Tensor]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Torch wrapper for <code>solve_offline</code>, as <code>solve_offline_numpy</code> with 4x4 pose matrices; plans without waypoint IK stay on device.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">waypoints</span><span class="api-type">Sequence[Union[torch.Tensor, Dict[str, torch.Tensor]]]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">start_T_world_base</span><span class="api-type">Optional[torch.Tensor]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">seed_q</span><span class="api-type">Optional[torch.Tensor]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_indices</span><span class="api-type">Optional[torch.Tensor]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">segment_check_collision</span><span class="api-type">Optional[Sequence[bool]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">segment_fixed_duration</span><span class="api-type">Optional[Sequence[Optional[float]]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">segment_locked</span><span class="api-type">Optional[Sequence[bool]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">attached_objects</span><span class="api-type">Optional[Sequence[AttachedObject]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">fixed_relative_poses</span><span class="api-type">Optional[Sequence[FixedRelativePose]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">MotionPlanResult[torch.Tensor]</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="motionplanner-solve_online">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L1820">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlanner.</span><span class="api-card__name">solve_online</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">start_state</span><span class="pp">: </span><span class="pt">RobotState</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">T_world_target</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">target_q</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">online_state</span><span class="pp">: </span><span class="pt">Optional[OnlineState]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_indices</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Tuple[RobotState, OnlineState]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Solve one online planning update.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">start_state</span><span class="api-type">RobotState</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Current configurations with <code>q</code> shaped <code>(batch, dofs)</code>, and base poses for a floating base.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">T_world_target</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional <code>wp_vec7</code> pose goals, <code>(batch,)</code> or <code>(batch, target links)</code>.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">target_q</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional solved IK goals or joint-space goals with shape <code>(batch, dofs)</code>.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">online_state</span><span class="api-type">Optional[OnlineState]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional state returned by the previous update.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_indices</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional scene indices with shape <code>(batch,)</code>.</p></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Tuple[RobotState, OnlineState]</span></div><div class="api-row__doc"><p>The optimized trajectories, a borrowed buffer, and the caller-owned online state.</p></div></div></div>
+    </div><div class="api-row api-row--plain" id="motionplanner-solve_online_numpy">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L1851">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlanner.</span><span class="api-card__name">solve_online_numpy</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">start_q</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">start_T_world_base</span><span class="pp">: </span><span class="pt">Optional[np.ndarray]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">T_world_target</span><span class="pp">: </span><span class="pt">Optional[np.ndarray]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">target_q</span><span class="pp">: </span><span class="pt">Optional[np.ndarray]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">online_state</span><span class="pp">: </span><span class="pt">Optional[OnlineState]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_indices</span><span class="pp">: </span><span class="pt">Optional[np.ndarray]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">MotionPlanResult[np.ndarray]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>NumPy wrapper for <code>solve_online</code>.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">start_q</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">start_T_world_base</span><span class="api-type">Optional[np.ndarray]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">T_world_target</span><span class="api-type">Optional[np.ndarray]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">target_q</span><span class="api-type">Optional[np.ndarray]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">online_state</span><span class="api-type">Optional[OnlineState]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_indices</span><span class="api-type">Optional[np.ndarray]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">MotionPlanResult[np.ndarray]</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="motionplanner-compute_metrics">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L1882">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlanner.</span><span class="api-card__name">compute_metrics</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">state</span><span class="pp">: </span><span class="pt">RobotState</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">T_world_target</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">target_q</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_indices</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">position_threshold_m</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.005</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">orientation_threshold_rad</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.05</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">q_threshold</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.05</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">penetration_threshold_mm</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">5.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out</span><span class="pp">: </span><span class="pt">Optional[MotionPlanMetrics[wp.array]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">MotionPlanMetrics[wp.array]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Endpoint accuracy of <code>state</code> against exactly one pose or joint goal, independent of term weights.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">state</span><span class="api-type">RobotState</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Trajectories with shape <code>(batch, frames, dofs)</code>; any planner's output works.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">T_world_target</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional batched pose goals.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">target_q</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional batched joint-space goals.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_indices</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">position_threshold_m</span><span class="api-type">float</span><span class="api-def">= 0.005</span></div>
+      <div class="api-row__doc"><p>Success threshold on translation error.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">orientation_threshold_rad</span><span class="api-type">float</span><span class="api-def">= 0.05</span></div>
+      <div class="api-row__doc"><p>Success threshold on rotation error.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">q_threshold</span><span class="api-type">float</span><span class="api-def">= 0.05</span></div>
+      <div class="api-row__doc"><p>Success threshold on joint error, for a joint goal.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">penetration_threshold_mm</span><span class="api-type">float</span><span class="api-def">= 5.0</span></div>
+      <div class="api-row__doc"><p>Success threshold on scene penetration.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out</span><span class="api-type">Optional[MotionPlanMetrics[wp.array]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Buffers to write in place, from an earlier call; allocated when omitted.</p></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">MotionPlanMetrics[wp.array]</span></div><div class="api-row__doc"><p>Endpoint errors and success per batch element.</p></div></div></div>
+    </div><div class="api-row api-row--plain" id="motionplanner-compute_metrics_numpy">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L1930">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlanner.</span><span class="api-card__name">compute_metrics_numpy</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">q_traj</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">T_world_base_traj</span><span class="pp">: </span><span class="pt">Optional[np.ndarray]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">T_world_target</span><span class="pp">: </span><span class="pt">Optional[np.ndarray]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">target_q</span><span class="pp">: </span><span class="pt">Optional[np.ndarray]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_indices</span><span class="pp">: </span><span class="pt">Optional[np.ndarray]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">position_threshold_m</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.005</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">orientation_threshold_rad</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.05</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">q_threshold</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.05</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">penetration_threshold_mm</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">5.0</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">MotionPlanMetrics[np.ndarray]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p><code>compute_metrics</code> for numpy inputs, returning numpy arrays.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">q_traj</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">T_world_base_traj</span><span class="api-type">Optional[np.ndarray]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">T_world_target</span><span class="api-type">Optional[np.ndarray]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">target_q</span><span class="api-type">Optional[np.ndarray]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_indices</span><span class="api-type">Optional[np.ndarray]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">position_threshold_m</span><span class="api-type">float</span><span class="api-def">= 0.005</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">orientation_threshold_rad</span><span class="api-type">float</span><span class="api-def">= 0.05</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">q_threshold</span><span class="api-type">float</span><span class="api-def">= 0.05</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">penetration_threshold_mm</span><span class="api-type">float</span><span class="api-def">= 5.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">MotionPlanMetrics[np.ndarray]</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="motionplannerconfig">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L271">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">robokit.helpers.motion_plan.</span><span class="api-card__name">MotionPlannerConfig</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">num_timesteps</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">32</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">dt</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.25</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">max_attached_spheres</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">max_fixed_relative_poses</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">fixed_relative_pose_weight</span><span class="pp">: </span><span class="pt">Tuple[float, float]</span><span class="pp"> = </span><span class="pd">(3000.0, 1000.0)</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">acceleration_limit</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">15.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">jerk_limit</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">500.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">duration_weight</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">goal_ik</span><span class="pp">: </span><span class="pt">IKSolverConfig</span><span class="pp"> = </span><span class="pd">build_default_motion_plan_ik_config()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">init_sample_range</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.2</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">init_detour_samples</span><span class="pp">: </span><span class="pt">Tuple[int, int]</span><span class="pp"> = </span><span class="pd">(16, 64)</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">stages</span><span class="pp">: </span><span class="pt">Tuple[Union[GradientTrajectoryOptimizerConfig, MppiTrajectoryOptimizerConfig], ...]</span><span class="pp"> = </span><span class="pd">(lambda: (build_default_gradient_trajectory_optimizer_config(),))()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">stage_dt_scale</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">stage_retime</span><span class="pp">: </span><span class="pt">Optional[RetimeConfig]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">stage_retries</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">stage_retry_iters</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">stage_retry_dt_growth</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">1.025</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">max_retries</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">1</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">retime</span><span class="pp">: </span><span class="pt">Optional[RetimeConfig]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">resplit_waypoints</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">True</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">cuda_graph</span><span class="pp">: </span><span class="pt">Literal['none', 'stages', 'solve']</span><span class="pp"> = </span><span class="pd">'stages'</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Configuration for offline or online motion planning.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">num_timesteps</span><span class="api-type">int</span><span class="api-def">= 32</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">dt</span><span class="api-type">float</span><span class="api-def">= 0.25</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">max_attached_spheres</span><span class="api-type">int</span><span class="api-def">= 0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">max_fixed_relative_poses</span><span class="api-type">int</span><span class="api-def">= 0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">fixed_relative_pose_weight</span><span class="api-type">Tuple[float, float]</span><span class="api-def">= (3000.0, 1000.0)</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">acceleration_limit</span><span class="api-type">float</span><span class="api-def">= 15.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">jerk_limit</span><span class="api-type">float</span><span class="api-def">= 500.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">duration_weight</span><span class="api-type">float</span><span class="api-def">= 0.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">goal_ik</span><span class="api-type">IKSolverConfig</span><span class="api-def">= build_default_motion_plan_ik_config()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">init_sample_range</span><span class="api-type">float</span><span class="api-def">= 0.2</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">init_detour_samples</span><span class="api-type">Tuple[int, int]</span><span class="api-def">= (16, 64)</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">stages</span><span class="api-type">Tuple[Union[GradientTrajectoryOptimizerConfig, MppiTrajectoryOptimizerConfig], ...]</span><span class="api-def">= (lambda: (build_default_gradient_trajectory_optimizer_config(),))()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">stage_dt_scale</span><span class="api-type">float</span><span class="api-def">= 0.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">stage_retime</span><span class="api-type">Optional[RetimeConfig]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">stage_retries</span><span class="api-type">int</span><span class="api-def">= 0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">stage_retry_iters</span><span class="api-type">int</span><span class="api-def">= 0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">stage_retry_dt_growth</span><span class="api-type">float</span><span class="api-def">= 1.025</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">max_retries</span><span class="api-type">int</span><span class="api-def">= 1</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">retime</span><span class="api-type">Optional[RetimeConfig]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">resplit_waypoints</span><span class="api-type">bool</span><span class="api-def">= True</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">cuda_graph</span><span class="api-type">Literal['none', 'stages', 'solve']</span><span class="api-def">= 'stages'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="motionplannerconfig-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="motionplannerconfig-num_timesteps">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L276">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">num_timesteps</span><span class="pp">: </span><span class="pt">int = 32</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Steps per plan; a plan has one more frame.</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-dt">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L278">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">dt</span><span class="pp">: </span><span class="pt">float = 0.25</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Planning step (s).</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-max_attached_spheres">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L280">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">max_attached_spheres</span><span class="pp">: </span><span class="pt">int = 0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Collision spheres reserved on each target link for <code>attached_objects</code>, which every solve places there.</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-max_fixed_relative_poses">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L282">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">max_fixed_relative_poses</span><span class="pp">: </span><span class="pt">int = 0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Link pairs reserved for <code>fixed_relative_poses</code>, which every solve sets.</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-fixed_relative_pose_weight">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L284">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">fixed_relative_pose_weight</span><span class="pp">: </span><span class="pt">Tuple[float, float] = (3000.0, 1000.0)</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Position and rotation weights of <code>fixed_relative_poses</code>, per m and per rad of drift.</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-acceleration_limit">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L286">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">acceleration_limit</span><span class="pp">: </span><span class="pt">float = 15.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Joint acceleration limit (rad/s²): the stages' bounds and ranking, MPPI rollouts, retimes and resplits.</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-jerk_limit">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L288">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">jerk_limit</span><span class="pp">: </span><span class="pt">float = 500.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Joint jerk limit (rad/s³): the stages' bounds and ranking, retimes and resplits.</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-duration_weight">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L290">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">duration_weight</span><span class="pp">: </span><span class="pt">float = 0.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><blockquote><p>0: the last stage also optimizes each free segment's duration, from the query's step, at this cost per second</p></blockquote><p>of plan time; its derivative bounds use the optimized durations, which the returned retime only lengthens.</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-goal_ik">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L295">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">goal_ik</span><span class="pp">: </span><span class="pt">IKSolverConfig = field(default_factory=build_default_motion_plan_ik_config)</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Goal IK, which turns pose goals into joint goals; fewer goals than trajectory candidates repeat across them.</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-init_sample_range">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L299">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">init_sample_range</span><span class="pp">: </span><span class="pt">float = 0.2</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Spread of the sampled seed candidates, as a fraction of each joint range; MPPI stages sample their own.</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-init_detour_samples">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L301">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">init_detour_samples</span><span class="pp">: </span><span class="pt">Tuple[int, int] = (16, 64)</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Random-midpoint detours per detour candidate (first round, retries); the shortest collision-free one seeds it.</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-stages">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L305">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">stages</span><span class="pp">: </span><span class="pt">Tuple[Union[GradientTrajectoryOptimizerConfig, MppiTrajectoryOptimizerConfig], ...] = field(default_factory=lambda: (build_default_gradient_trajectory_optimizer_config(),))</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Optimizer stages, run in order on the candidate population every planning round.</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-stage_dt_scale">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L309">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">stage_dt_scale</span><span class="pp">: </span><span class="pt">float = 0.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><blockquote><p>0: each later stage optimizes at this multiple of the previous stage's fastest feasible retimed step.</p></blockquote></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-stage_retime">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L311">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">stage_retime</span><span class="pp">: </span><span class="pt">Optional[RetimeConfig] = None</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Retime between stages (<code>stage_dt_scale</code>); its <code>minimum_dt</code> floors the later stages' steps.</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-stage_retries">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L313">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">stage_retries</span><span class="pp">: </span><span class="pt">int = 0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Reruns of a failed last stage whose predecessor passed, at a growing step; each query keeps its better plan.</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-stage_retry_iters">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L315">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">stage_retry_iters</span><span class="pp">: </span><span class="pt">int = 0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Iterations of each stage retry.</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-stage_retry_dt_growth">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L317">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">stage_retry_dt_growth</span><span class="pp">: </span><span class="pt">float = 1.025</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Factor each stage retry grows the step by.</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-max_retries">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L321">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">max_retries</span><span class="pp">: </span><span class="pt">int = 1</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Rounds retrying failed plans with new goals and seeds; needs a gradient first stage with several candidates.</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-retime">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L325">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">retime</span><span class="pp">: </span><span class="pt">Optional[RetimeConfig] = None</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Retime of the returned plan; None keeps the planning step.</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-resplit_waypoints">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L327">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">resplit_waypoints</span><span class="pp">: </span><span class="pt">bool = True</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Resplit a waypoint plan's frames by the time each part needs, so a short segment takes fewer: its straight lines' before the solve, and its paths' after the first stage, which the later gradient stages smooth; False keeps the even split.</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-cuda_graph">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L329">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">cuda_graph</span><span class="pp">: </span><span class="pt">Literal['none', 'stages', 'solve'] = 'stages'</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>CUDA graphs: none, each stage's and goal IK's solve, or the whole NumPy solve with its device-side retries; a capture makes a planner's first solve take seconds longer.</p></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="motionplanresult">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L114">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">robokit.helpers.motion_plan.</span><span class="api-card__name">MotionPlanResult</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">q_traj</span><span class="pp">: </span><span class="pt">ArrayT</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">T_world_base_traj</span><span class="pp">: </span><span class="pt">Optional[ArrayT]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">motion_time</span><span class="pp">: </span><span class="pt">Optional[ArrayT]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">online_state</span><span class="pp">: </span><span class="pt">Optional[OnlineState]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">waypoint_indices</span><span class="pp">: </span><span class="pt">Optional[Tuple[int, ...]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">segment_fixed_duration</span><span class="pp">: </span><span class="pt">Optional[Tuple[Optional[float], ...]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">segment_duration</span><span class="pp">: </span><span class="pt">Optional[ArrayT]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div><div class="api-sig__bases">Bases: <span>Generic[ArrayT]</span></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Planner output with offline timing or online state.</p><p>Offline: <code>q_traj</code> <code>(batch, frames, dofs)</code> with <code>frames = num_timesteps + 1</code>, <code>motion_time</code> <code>(batch,)</code> (s) and <code>waypoint_indices</code> each waypoint's frame in <code>q_traj</code> (one per waypoint, 0 first, the same for every row).</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">q_traj</span><span class="api-type">ArrayT</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">T_world_base_traj</span><span class="api-type">Optional[ArrayT]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">motion_time</span><span class="api-type">Optional[ArrayT]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">online_state</span><span class="api-type">Optional[OnlineState]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">waypoint_indices</span><span class="api-type">Optional[Tuple[int, ...]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">segment_fixed_duration</span><span class="api-type">Optional[Tuple[Optional[float], ...]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">segment_duration</span><span class="api-type">Optional[ArrayT]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="motionplanresult-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="motionplanresult-q_traj">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L122">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlanResult.</span><span class="api-card__name">q_traj</span><span class="pp">: </span><span class="pt">ArrayT</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="motionplanresult-t_world_base_traj">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L123">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlanResult.</span><span class="api-card__name">T_world_base_traj</span><span class="pp">: </span><span class="pt">Optional[ArrayT] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="motionplanresult-motion_time">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L124">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlanResult.</span><span class="api-card__name">motion_time</span><span class="pp">: </span><span class="pt">Optional[ArrayT] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="motionplanresult-online_state">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L125">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlanResult.</span><span class="api-card__name">online_state</span><span class="pp">: </span><span class="pt">Optional[OnlineState] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="motionplanresult-waypoint_indices">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L126">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlanResult.</span><span class="api-card__name">waypoint_indices</span><span class="pp">: </span><span class="pt">Optional[Tuple[int, ...]] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="motionplanresult-segment_fixed_duration">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L127">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlanResult.</span><span class="api-card__name">segment_fixed_duration</span><span class="pp">: </span><span class="pt">Optional[Tuple[Optional[float], ...]] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="motionplanresult-segment_duration">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L130">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlanResult.</span><span class="api-card__name">segment_duration</span><span class="pp">: </span><span class="pt">Optional[ArrayT] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="motionplanresult-interpolate">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/motion_plan/motion_planner.py#L132">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlanResult.</span><span class="api-card__name">interpolate</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">dt</span><span class="pp">: </span><span class="pt">float</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">speed_scale</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">1.0</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">ArrayT</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Joint trajectories sampled every <code>dt</code> (s) or slightly less across <code>motion_time</code>.</p><p>Each segment between waypoints spreads <code>ceil(its time / dt)</code> steps evenly over its frames, so every waypoint is a sample; a plan then holds its last frame, so a batch shares one length. A segment with a fixed <code>segment_fixed_duration</code> takes that time; the others run at the plan's retimed step or <code>segment_duration</code>.</p><h4>Example</h4><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; import numpy as np
+&gt;&gt;&gt; q_traj = np.array([[[0.0], [1.0], [2.0]]], np.float32)
+&gt;&gt;&gt; MotionPlanResult(q_traj, motion_time=np.array([1.0], np.float32)).interpolate(0.25)[0, :, 0]
+array([0. , 0.5, 1. , 1.5, 2. ], dtype=float32)</pre><pre data-code-full hidden>from robokit.helpers.motion_plan.motion_planner import MotionPlanResult
+
+import numpy as np
+q_traj = np.array([[[0.0], [1.0], [2.0]]], np.float32)
+MotionPlanResult(q_traj, motion_time=np.array([1.0], np.float32)).interpolate(0.25)[0, :, 0]</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">dt</span><span class="api-type">float</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Control step (s).</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">speed_scale</span><span class="api-type">float</span><span class="api-def">= 1.0</span></div>
+      <div class="api-row__doc"><p>Fraction of the plan's speed; 0.5 plays its retimed segments over twice their time.</p></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">ArrayT</span></div><div class="api-row__doc"><p>Joint positions with shape <code>(batch, samples, dofs)</code>, NumPy or Torch as <code>q_traj</code>.</p></div></div></div>
+    </div></div></div>
+  </section></div><h3 id="objective-configuration">Objective configuration</h3><p><code>GradientTrajectoryOptimizerConfig</code> and <code>MppiTrajectoryOptimizerConfig</code> accept <code>terms</code>, a list of <code>ResidualTask</code> templates. Objective weights and cost options are task constructor parameters. Use <code>config.task(name)</code> to retrieve a named task; for <code>TrajectoryTask</code>, configure its <code>dense_task</code>. <code>deepcopy(config)</code> creates an independent preset whose task attributes can be assigned directly. Config-level cost-weight arguments have been removed. IK objectives are supplied through <code>MotionPlannerConfig.goal_ik</code>.</p></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/robokit/api-ik/"><span class="lbl">← Previous</span><span class="nm">Inverse Kinematics</span></a><a class="next" href="/docs/robokit/api-sim-mpc/"><span class="lbl">Next →</span><span class="nm">Sim MPC</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#motionplanner">MotionPlanner</a><a href="#motionplannerconfig">MotionPlannerConfig</a><a href="#motionplanresult">MotionPlanResult</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "robokit", "id": "api-motion-plan", "toc": [{"text": "MotionPlanner", "href": "#motionplanner", "members": [{"text": "warmup()", "href": "#motionplanner-warmup"}, {"text": "set_active_joint_mask()", "href": "#motionplanner-set_active_joint_mask"}, {"text": "solve_offline()", "href": "#motionplanner-solve_offline"}, {"text": "solve_offline_numpy()", "href": "#motionplanner-solve_offline_numpy"}, {"text": "solve_offline_torch()", "href": "#motionplanner-solve_offline_torch"}, {"text": "solve_online()", "href": "#motionplanner-solve_online"}, {"text": "solve_online_numpy()", "href": "#motionplanner-solve_online_numpy"}, {"text": "compute_metrics()", "href": "#motionplanner-compute_metrics"}, {"text": "compute_metrics_numpy()", "href": "#motionplanner-compute_metrics_numpy"}]}, {"text": "MotionPlannerConfig", "href": "#motionplannerconfig", "members": [{"text": "num_timesteps", "href": "#motionplannerconfig-num_timesteps"}, {"text": "dt", "href": "#motionplannerconfig-dt"}, {"text": "max_attached_spheres", "href": "#motionplannerconfig-max_attached_spheres"}, {"text": "max_fixed_relative_poses", "href": "#motionplannerconfig-max_fixed_relative_poses"}, {"text": "fixed_relative_pose_weight", "href": "#motionplannerconfig-fixed_relative_pose_weight"}, {"text": "acceleration_limit", "href": "#motionplannerconfig-acceleration_limit"}, {"text": "jerk_limit", "href": "#motionplannerconfig-jerk_limit"}, {"text": "duration_weight", "href": "#motionplannerconfig-duration_weight"}, {"text": "goal_ik", "href": "#motionplannerconfig-goal_ik"}, {"text": "init_sample_range", "href": "#motionplannerconfig-init_sample_range"}, {"text": "init_detour_samples", "href": "#motionplannerconfig-init_detour_samples"}, {"text": "stages", "href": "#motionplannerconfig-stages"}, {"text": "stage_dt_scale", "href": "#motionplannerconfig-stage_dt_scale"}, {"text": "stage_retime", "href": "#motionplannerconfig-stage_retime"}, {"text": "stage_retries", "href": "#motionplannerconfig-stage_retries"}, {"text": "stage_retry_iters", "href": "#motionplannerconfig-stage_retry_iters"}, {"text": "stage_retry_dt_growth", "href": "#motionplannerconfig-stage_retry_dt_growth"}, {"text": "max_retries", "href": "#motionplannerconfig-max_retries"}, {"text": "retime", "href": "#motionplannerconfig-retime"}, {"text": "resplit_waypoints", "href": "#motionplannerconfig-resplit_waypoints"}, {"text": "cuda_graph", "href": "#motionplannerconfig-cuda_graph"}]}, {"text": "MotionPlanResult", "href": "#motionplanresult", "members": [{"text": "q_traj", "href": "#motionplanresult-q_traj"}, {"text": "T_world_base_traj", "href": "#motionplanresult-t_world_base_traj"}, {"text": "motion_time", "href": "#motionplanresult-motion_time"}, {"text": "online_state", "href": "#motionplanresult-online_state"}, {"text": "waypoint_indices", "href": "#motionplanresult-waypoint_indices"}, {"text": "segment_fixed_duration", "href": "#motionplanresult-segment_fixed_duration"}, {"text": "segment_duration", "href": "#motionplanresult-segment_duration"}, {"text": "interpolate()", "href": "#motionplanresult-interpolate"}]}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

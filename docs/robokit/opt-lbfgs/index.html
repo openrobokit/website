@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LBFGSOptimizer · RoboKit docs · OpenRoboKit</title>
+  <meta name="description" content="GPU-native, differentiable robotics tooling: IK, trajectory optimization, retargeting, grasping, calibration." />
+  <link rel="canonical" href="https://openrobokit.com/docs/robokit/opt-lbfgs/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">RoboKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="is-active">
+        <span class="nm">RoboKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="">
+        <span class="nm">GraspKit</span>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/robokit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/robokit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/robokit/rl/" data-id="rl" class="">RL</a></div><div class="side__list"><a href="/docs/robokit/sim-mpc/" data-id="sim-mpc" class="">Sim MPC</a></div><div class="side__list"><a href="/docs/robokit/ik/" data-id="ik" class="">IK</a></div><div class="side__list"><a href="/docs/robokit/motion-planning/" data-id="motion-planning" class="">Motion Planning</a></div><div class="side__list"><a href="/docs/robokit/humanoid-retargeting/" data-id="humanoid-retargeting" class="">Humanoid Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand-retargeting/" data-id="hand-retargeting" class="">Hand Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand_eye_calibration/" data-id="hand_eye_calibration" class="">Hand-Eye Calibration</a></div><div class="side__list"><a href="/docs/robokit/ref-assets/" data-id="ref-assets" class="">Built-in Robots &amp; Datasets</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/robot/" data-id="robot" class="">Robot</a></div><div class="side__list"><a href="/docs/robokit/geom/" data-id="geom" class="">Geometry</a></div><div class="side__list"><a href="/docs/robokit/optimization/" data-id="optimization" class="">Optimization</a></div><div class="side__list"><a href="/docs/robokit/conventions/" data-id="conventions" class="">Conventions</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list">
+      <div class="side__sub" data-fold="Reference·Optimizers">
+        <span>Optimizers</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/opt-gd/" data-id="opt-gd" class="">GDOptimizer</a><a href="/docs/robokit/opt-lm/" data-id="opt-lm" class="">LMOptimizer</a><a href="/docs/robokit/opt-lbfgs/" data-id="opt-lbfgs" class="is-active">LBFGSOptimizer</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Terms">
+        <span>Terms</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/term-frame/" data-id="term-frame" class="">Frame Task</a><a href="/docs/robokit/term-position/" data-id="term-position" class="">Position Task</a><a href="/docs/robokit/term-rotation/" data-id="term-rotation" class="">Rotation Tasks</a><a href="/docs/robokit/term-frame-vector/" data-id="term-frame-vector" class="">Frame Vector Task</a><a href="/docs/robokit/term-com-position/" data-id="term-com-position" class="">CoM Position Task</a><a href="/docs/robokit/term-position-limit/" data-id="term-position-limit" class="">Position Limit</a><a href="/docs/robokit/term-velocity-limit/" data-id="term-velocity-limit" class="">Velocity Limit Task</a><a href="/docs/robokit/term-configuration/" data-id="term-configuration" class="">Configuration Task</a><a href="/docs/robokit/term-smoothness/" data-id="term-smoothness" class="">Smoothness Task</a><a href="/docs/robokit/term-self-collision/" data-id="term-self-collision" class="">Self Collision Task</a><a href="/docs/robokit/term-scene-collision/" data-id="term-scene-collision" class="">Scene Collision Task</a><a href="/docs/robokit/term-scene-distance/" data-id="term-scene-distance" class="">Scene Distance Task</a><a href="/docs/robokit/term-interaction-mesh/" data-id="term-interaction-mesh" class="">Interaction Mesh Task</a><a href="/docs/robokit/term-mask-alignment/" data-id="term-mask-alignment" class="">Mask Alignment Task</a><a href="/docs/robokit/term-manipulability/" data-id="term-manipulability" class="">Manipulability Task</a><a href="/docs/robokit/term-force-closure/" data-id="term-force-closure" class="">Force Closure Task</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/api-robot/" data-id="api-robot" class="">Robot</a><a href="/docs/robokit/api-geometry/" data-id="api-geometry" class="">Geometry</a><a href="/docs/robokit/api-optimization/" data-id="api-optimization" class="">Optimization</a><a href="/docs/robokit/api-terms/" data-id="api-terms" class="">Terms</a><a href="/docs/robokit/api-ik/" data-id="api-ik" class="">Inverse Kinematics</a><a href="/docs/robokit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/robokit/api-sim-mpc/" data-id="api-sim-mpc" class="">Sim MPC</a><a href="/docs/robokit/api-humanoid-retargeting/" data-id="api-humanoid-retargeting" class="">Humanoid Retargeting</a><a href="/docs/robokit/api-hand-retargeting/" data-id="api-hand-retargeting" class="">Hand Retargeting</a><a href="/docs/robokit/api-hand_eye_calibration/" data-id="api-hand_eye_calibration" class="">Hand-Eye Calibration</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">robokit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>Reference</span><span class="slash">/</span><span>Optimizers</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">LBFGSOptimizer</h1>
+        <div class="doc-body" id="doc-body"><p>Implements batched <a class="inline" href="https://en.wikipedia.org/wiki/Limited-memory_BFGS">L-BFGS</a> on manifold-valued variables. Source: <code>src/robokit/opt/lbfgs_optimizer.py</code>.</p><h3 id="overview">Overview</h3><p>For the variable $\mathbf{x}$, each iteration computes the cost $c(\mathbf{x})$ and gradient $\mathbf{g}=\nabla c(\mathbf{x})$. $\mathbf{g}$ and the history give a descent direction $\mathbf{d}$. With no history, $\mathbf{d}$ follows $-\mathbf{g}$. A line search picks a step size $\alpha^*$, and $\mathbf{x}$ moves by $\alpha^*\mathbf{d}$.</p><div class="mermaid">flowchart TB
+    I[Initial variable x] --&gt; E["Cost c(x) and gradient g"]
+    E --&gt; D["Descent direction d&lt;br/&gt;&lt;i&gt;computed using g and history&lt;/i&gt;"]
+    D --&gt; L["Line-search step size α*"]
+    L --&gt; U[Update x]
+    U -- Next iteration --&gt; E</div><h3 id="descent-direction">Descent direction</h3><p>The direction $\mathbf{d}$ comes from the gradient $\mathbf{g}$ and a short history of steps. Iteration $t$, from $\mathbf{x}_t$ to $\mathbf{x}_{t+1}$, adds one history pair:</p><ul><li>$\mathbf{s}_t = \alpha_t^* \mathbf{d}_t$: the tangent step applied to $\mathbf{x}_t$.</li><li>$\mathbf{y}_t = \mathbf{g}_{t+1} - \mathbf{g}_t$: the gradient change from $\mathbf{s}_t$. To first order,</li></ul><p>$$\mathbf{g}(\mathbf{x}_t+\mathbf{s}_t)
+\approx \mathbf{g}(\mathbf{x}_t)+J_{\mathbf{g}}(\mathbf{x}_t)\mathbf{s}_t.$$</p><p>The gradient Jacobian is the cost Hessian, $J_{\mathbf{g}}(\mathbf{x})=H(\mathbf{x})=\nabla^2 c(\mathbf{x})$, so $\mathbf{y}_t\approx H(\mathbf{x}_t)\mathbf{s}_t$.</p><p><a class="inline" href="https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization">Newton's method</a> uses $\mathbf{d}=-H(\mathbf{x})^{-1}\mathbf{g}$. L-BFGS replaces the exact inverse with an approximation $A$:</p><p>$$A\approx H(\mathbf{x})^{-1},
+\qquad
+\mathbf{d}=-A\mathbf{g}.$$</p><p>Below, $i$ indexes the history pairs, oldest first. $A_i$ is the approximation after $i$ pairs, with $A_0=\gamma I$. BFGS adds pair $i$ by</p><p>$$A_{i+1}=V_iA_iV_i^\top+\rho_i \mathbf{s}_i \mathbf{s}_i^\top,
+\qquad
+V_i=I-\rho_i \mathbf{s}_i \mathbf{y}_i^\top,
+\qquad
+\rho_i=\frac{1}{\mathbf{y}_i^\top \mathbf{s}_i}.$$</p><p>A pair is used only when $\mathbf{y}_i^\top\mathbf{s}_i&gt;0$; otherwise it is dropped. The update enforces $A_{i+1}\mathbf{y}_i=\mathbf{s}_i$ and keeps $A_{i+1}$ symmetric positive definite.</p><details><summary>Why does the update work?</summary><ol><li>Why does it enforce $A_{i+1}\mathbf{y}_i=\mathbf{s}_i$?</li></ol><p>Since $\rho_i(\mathbf{y}_i^\top \mathbf{s}_i)=1$, $V_i^\top \mathbf{y}_i=\mathbf{y}_i-\rho_i\mathbf{y}_i (\mathbf{y}_i^\top \mathbf{s}_i)=\mathbf{0}$. Substituting into the update gives</p><p>$$A_{i+1}\mathbf{y}_i
+=V_iA_iV_i^\top \mathbf{y}_i
++\rho_i\mathbf{s}_i(\mathbf{y}_i^\top \mathbf{s}_i)
+=\mathbf{0}+\rho_i\mathbf{s}_i(\mathbf{y}_i^\top \mathbf{s}_i)
+=\mathbf{s}_i.$$</p><ol><li>Why does it stay symmetric positive definite?</li></ol><p>Let $A_i$ be symmetric positive definite. Then $V_iA_iV_i^\top$ and $\rho_i\mathbf{s}_i\mathbf{s}_i^\top$ are symmetric. If $\mathbf{y}_i^\top\mathbf{s}_i&gt;0$, then $\rho_i&gt;0$, and for any nonzero $\mathbf{z}$,</p><p>$$\mathbf{z}^\top A_{i+1}\mathbf{z}
+=(V_i^\top \mathbf{z})^\top A_i(V_i^\top \mathbf{z})
++\rho_i(\mathbf{s}_i^\top \mathbf{z})^2&gt;0.$$</p><p>So $A_{i+1}$ stays symmetric positive definite.</p></details><p>After all pairs, $A$ approximates $H(\mathbf{x})^{-1}$ and gives $\mathbf{d}=-A\mathbf{g}$. L-BFGS never builds the $n\times n$ matrix $A$. A two-loop recursion over $m$ history pairs computes $A\mathbf{g}$ in $O(mn)$ memory and $O(mn)$ operations, where $m\ll n$.</p><p><strong>Normalization.</strong> By default, <code>normalize_direction=False</code> keeps the direction's length. Set it to <code>True</code> to scale the direction to unit length before the line search.</p><details><summary>How does the matrix update become two loops?</summary><p>The direction needs $A_m\mathbf{g}$, where $m$ is the number of history pairs. Expanding $A_m\mathbf{g}$ with the BFGS update gives</p><p>$$\begin{aligned}
+A_m\mathbf{g}
+&amp;=V_{m-1}A_{m-1}(V_{m-1}^\top\mathbf{g})
++\rho_{m-1}\mathbf{s}_{m-1}
+(\mathbf{s}_{m-1}^\top\mathbf{g}) \\
+&amp;=V_{m-1}\Big[
+V_{m-2}A_{m-2}(V_{m-2}^\top V_{m-1}^\top\mathbf{g})
++\rho_{m-2}\mathbf{s}_{m-2}
+(\mathbf{s}_{m-2}^\top V_{m-1}^\top\mathbf{g})
+\Big] \\
+&amp;\quad+\rho_{m-1}\mathbf{s}_{m-1}
+(\mathbf{s}_{m-1}^\top\mathbf{g}) \\
+&amp;=\cdots \\
+&amp;=V_{m-1}\cdots V_0A_0
+(V_0^\top\cdots V_{m-1}^\top\mathbf{g}) \\
+&amp;\quad+\cdots+\rho_{m-1}\mathbf{s}_{m-1}
+(\mathbf{s}_{m-1}^\top\mathbf{g}).
+\end{aligned}$$</p><p>The first loop computes the product $V_0^\top\cdots V_{m-1}^\top\mathbf{g}$. Define $\mathbf{q}_0=V_0^\top\cdots V_{m-1}^\top\mathbf{g}$. Each step goes from $\mathbf{q}_{i+1}$ to $\mathbf{q}_i$:</p><p>$$\mathbf{q}_i
+=V_i^\top\mathbf{q}_{i+1}
+=\mathbf{q}_{i+1}
+-\rho_i\mathbf{y}_i(\mathbf{s}_i^\top\mathbf{q}_{i+1}).$$</p><p>Starting from $\mathbf{q}_m=\mathbf{g}$, the loop runs backward from $i=m-1$ to $i=0$ and yields $\mathbf{q}_0$.</p><p>The second loop evaluates the remaining terms, starting from $A_0\mathbf{q}_0$. Define $\mathbf{r}_0=A_0\mathbf{q}_0=\gamma\mathbf{q}_0$. Each step goes from $\mathbf{r}_i$ to $\mathbf{r}_{i+1}$:</p><p>$$\mathbf{r}_{i+1}
+=V_i\mathbf{r}_i
++\rho_i\mathbf{s}_i(\mathbf{s}_i^\top\mathbf{q}_{i+1})
+=\mathbf{r}_i+\rho_i\mathbf{s}_i
+(\mathbf{s}_i^\top\mathbf{q}_{i+1}-\mathbf{y}_i^\top\mathbf{r}_i).$$</p><p>Starting from $\mathbf{r}_0$, the loop runs forward from $i=0$ to $i=m-1$ and yields $\mathbf{r}_m=A_m\mathbf{g}$.</p><p>Pseudocode:</p><p>$$\begin{array}{l}
+\textbf{input}: \mathbf{g},\ \text{history},\ \gamma \\
+\textbf{initialize}: \mathbf{q}_m\leftarrow\mathbf{g} \\
+\textbf{for }i=m-1,\ldots,0 \\
+\hspace{5mm} \mathbf{q}_i\leftarrow\mathbf{q}_{i+1}
+-\rho_i\mathbf{y}_i(\mathbf{s}_i^\top\mathbf{q}_{i+1}) \\
+\mathbf{r}_0\leftarrow\gamma\mathbf{q}_0 \\
+\textbf{for }i=0,\ldots,m-1 \\
+\hspace{5mm} \mathbf{r}_{i+1}\leftarrow\mathbf{r}_i
++\rho_i\mathbf{s}_i
+(\mathbf{s}_i^\top\mathbf{q}_{i+1}-\mathbf{y}_i^\top\mathbf{r}_i) \\
+\textbf{return}: \mathbf{d}\leftarrow-\mathbf{r}_m
+\end{array}$$</p></details><p><strong>Initial scale.</strong> The start is $A_0=\gamma I$, with $\gamma$ fixed or adaptive. <a class="inline" href="https://en.wikipedia.org/wiki/Barzilai%E2%80%93Borwein_method">Barzilai-Borwein scaling</a> picks $\gamma$ from the newest pair $(\mathbf{s}_{m-1},\mathbf{y}_{m-1})$, so $\gamma\mathbf{y}_{m-1}$ best fits $\mathbf{s}_{m-1}$:</p><p>$$\gamma
+=\frac{\mathbf{s}_{m-1}^\top\mathbf{y}_{m-1}}
+{\mathbf{y}_{m-1}^\top\mathbf{y}_{m-1}}.$$</p><h3 id="line-search">Line search</h3><p>The line search tries a fixed set of step sizes $\alpha_j$ at once and picks</p><p>$$\alpha^*
+=
+\begin{cases}
+\displaystyle
+\max_j\left\{
+\alpha_j
+\;\middle|\;
+c(\mathbf{x}\oplus\alpha_j\mathbf{d})
+\le c(\mathbf{x})+c_1\alpha_j\mathbf{g}^\top\mathbf{d}
+\right\},
+&amp; \text{if any candidate passes},
+\\[3mm]
+0,
+&amp; \text{otherwise}.
+\end{cases}$$</p><p>Since $A$ is positive definite, $\mathbf{g}^\top A\mathbf{g}&gt;0, \mathbf{g}^\top\mathbf{d}&lt;0$. The <a class="inline" href="https://en.wikipedia.org/wiki/Wolfe_conditions">Armijo condition</a> $c(\mathbf{x}\oplus\alpha_j\mathbf{d})\le c(\mathbf{x})+c_1\alpha_j\mathbf{g}^\top\mathbf{d}$ requires the actual decrease to be at least $c_1$ of the predicted first-order decrease. $c_1$ defaults to $10^{-4}$; a larger value requires more decrease.</p></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/robokit/opt-lm/"><span class="lbl">← Previous</span><span class="nm">LMOptimizer</span></a><a class="next" href="/docs/robokit/term-frame/"><span class="lbl">Next →</span><span class="nm">Frame Task</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#overview">Overview</a><a href="#descent-direction">Descent direction</a><a href="#line-search">Line search</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "robokit", "id": "opt-lbfgs", "toc": [{"text": "Overview", "href": "#overview"}, {"text": "Descent direction", "href": "#descent-direction"}, {"text": "Line search", "href": "#line-search"}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

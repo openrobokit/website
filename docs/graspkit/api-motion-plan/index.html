@@ -1,0 +1,699 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Motion Planning · GraspKit docs · OpenRoboKit</title>
+  <meta name="description" content="Manipulation across robot embodiments, including grippers and dexterous hands." />
+  <link rel="canonical" href="https://openrobokit.com/docs/graspkit/api-motion-plan/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">GraspKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="">
+        <span class="nm">RoboKit</span>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="is-active">
+        <span class="nm">GraspKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/graspkit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/graspkit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim/" data-id="grasp-optim" class="">Grasp Optimization</a></div><div class="side__list"><a href="/docs/graspkit/training/" data-id="training" class="">Policy Training</a></div><div class="side__list"><a href="/docs/graspkit/pipeline/" data-id="pipeline" class="">Pipeline</a></div><div class="side__list"><a href="/docs/graspkit/sim-deploy/" data-id="sim-deploy" class="">Sim Deployment</a></div><div class="side__list"><a href="/docs/graspkit/real-deploy/" data-id="real-deploy" class="">Real Deployment</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/concepts-overview/" data-id="concepts-overview" class="">Core Overview</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim-backends/" data-id="grasp-optim-backends" class="">Grasp Optimization Backends</a></div><div class="side__list"><a href="/docs/graspkit/concepts-sim/" data-id="concepts-sim" class="">Simulation</a></div><div class="side__list"><a href="/docs/graspkit/concepts-policies/" data-id="concepts-policies" class="">Models and Policies</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/ref-robot-hands/" data-id="ref-robot-hands" class="">Robot and Hand Catalog</a></div><div class="side__list"><a href="/docs/graspkit/ref-config-system/" data-id="ref-config-system" class="">Config System</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Data">
+        <span>Data</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/ref-data-format/" data-id="ref-data-format" class="">Data Format Specification</a><a href="/docs/graspkit/ref-assets/" data-id="ref-assets" class="">graspkit assets</a><a href="/docs/graspkit/ref-scene-descriptions/" data-id="ref-scene-descriptions" class="">Dex1B Scene Descriptions</a></div>
+      <div class="side__sub" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/api-grasp-optim/" data-id="api-grasp-optim" class="">Grasp Optimization</a><a href="/docs/graspkit/api-scene/" data-id="api-scene" class="">Scene</a><a href="/docs/graspkit/api-motion-plan/" data-id="api-motion-plan" class="is-active">Motion Planning</a><a href="/docs/graspkit/api-policy/" data-id="api-policy" class="">Policy</a><a href="/docs/graspkit/api-training/" data-id="api-training" class="">Training</a><a href="/docs/graspkit/api-envs/" data-id="api-envs" class="">Environments</a><a href="/docs/graspkit/api-data/" data-id="api-data" class="">Data</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">graspkit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>Reference</span><span class="slash">/</span><span>API</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Motion Planning</h1>
+        <div class="doc-body" id="doc-body"><p><code>GraspTrajBuilder</code> filters grasps, optionally IK-converts them onto an arm, then plans with <code>build_motion_planner</code>: a <code>WarpPlanner</code> by default, or its base <code>TorchPlanner</code> when <code>MotionPlannerConfig.backend</code> is <code>"torch"</code>.</p><div class="api"><section class="api-sym">
+    <div class="api-card" id="grasptrajbuilder">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/stages/grasp_traj_build/builder.py#L31">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">graspkit.stages.grasp_traj_build.</span><span class="api-card__name">GraspTrajBuilder</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">cfg</span><span class="pp">: </span><span class="pt">GraspTrajBuilderConfig</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">Device</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Convert floating-base grasps into deployable trajectories: filter, optional IK-convert to fixed, then plan.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">cfg</span><span class="api-type">GraspTrajBuilderConfig</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">Device</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="grasptrajbuilder-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="grasptrajbuilder-filters">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/stages/grasp_traj_build/builder.py#L50">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspTrajBuilder.</span><span class="api-card__name">filters</span><span class="pp">: </span><span class="pt">List[Filter]</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="grasptrajbuilder-build">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/stages/grasp_traj_build/builder.py#L60">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspTrajBuilder.</span><span class="api-card__name">build</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">batch</span><span class="pp">: </span><span class="pt">GraspKitData</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">start_qpos</span><span class="pp">: </span><span class="pt">Optional[Float[torch.Tensor, ...]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">skip_filter</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">target_xy</span><span class="pp">: </span><span class="pt">Optional[torch.Tensor]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Tuple[GraspKitData, Bool[torch.Tensor, 'B K']]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p><code>target_xy</code> (S, 2) overrides the ori-gate target when scenes lack a target mesh (e.g. deploy perception).</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">batch</span><span class="api-type">GraspKitData</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">start_qpos</span><span class="api-type">Optional[Float[torch.Tensor, ...]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">skip_filter</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">target_xy</span><span class="api-type">Optional[torch.Tensor]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Tuple[GraspKitData, Bool[torch.Tensor, 'B K']]</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="grasptrajbuilder-filter_grasps">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/stages/grasp_traj_build/builder.py#L113">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspTrajBuilder.</span><span class="api-card__name">filter_grasps</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">batch</span><span class="pp">: </span><span class="pt">GraspKitData</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">success</span><span class="pp">: </span><span class="pt">Bool[torch.Tensor, 'B K']</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Tuple[Bool[torch.Tensor, 'B K'], List[str]]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">batch</span><span class="api-type">GraspKitData</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">success</span><span class="api-type">Bool[torch.Tensor, 'B K']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Tuple[Bool[torch.Tensor, 'B K'], List[str]]</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="grasptrajbuilderconfig">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L293">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">graspkit.configs.experiment_config.</span><span class="api-card__name">GraspTrajBuilderConfig</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">fixed_base_robot_config</span><span class="pp">: </span><span class="pt">Optional[RobotConfig]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">floating_base_robot_config</span><span class="pp">: </span><span class="pt">Optional[RobotConfig]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">convert_to_fixed</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">motion_planner</span><span class="pp">: </span><span class="pt">MotionPlannerConfig</span><span class="pp"> = </span><span class="pd">MotionPlannerConfig()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">hand_axis</span><span class="pp">: </span><span class="pt">Optional[HandAxis]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">hand_axis_target</span><span class="pp">: </span><span class="pt">Tuple[float, float, float]</span><span class="pp"> = </span><span class="pd">(0.0, 0.0, 1.0)</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">filter_hand_axis_max_angle_deg</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">30.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">contact_avoid_filter</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">pen_filter</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">pen_filter_threshold</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.005</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">rest_pose_filter_max_dist</span><span class="pp">: </span><span class="pt">Optional[float]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">arm_range_fraction</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.3</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">ori_threshold_deg</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">45.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">plan_table_only</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Grasp traj builder: floating-base grasps -&gt; deployable trajectories (stages/traj_builder).</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">fixed_base_robot_config</span><span class="api-type">Optional[RobotConfig]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">floating_base_robot_config</span><span class="api-type">Optional[RobotConfig]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">convert_to_fixed</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">motion_planner</span><span class="api-type">MotionPlannerConfig</span><span class="api-def">= MotionPlannerConfig()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">hand_axis</span><span class="api-type">Optional[HandAxis]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">hand_axis_target</span><span class="api-type">Tuple[float, float, float]</span><span class="api-def">= (0.0, 0.0, 1.0)</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">filter_hand_axis_max_angle_deg</span><span class="api-type">float</span><span class="api-def">= 30.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">contact_avoid_filter</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">pen_filter</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">pen_filter_threshold</span><span class="api-type">float</span><span class="api-def">= 0.005</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">rest_pose_filter_max_dist</span><span class="api-type">Optional[float]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">arm_range_fraction</span><span class="api-type">float</span><span class="api-def">= 0.3</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">ori_threshold_deg</span><span class="api-type">float</span><span class="api-def">= 45.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">plan_table_only</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="grasptrajbuilderconfig-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="grasptrajbuilderconfig-fixed_base_robot_config">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L297">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspTrajBuilderConfig.</span><span class="api-card__name">fixed_base_robot_config</span><span class="pp">: </span><span class="pt">Optional[RobotConfig] = None</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Fixed-base arm+hand robot trajectories are planned for; also the camera-mount robot. None if floating-only.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasptrajbuilderconfig-floating_base_robot_config">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L299">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspTrajBuilderConfig.</span><span class="api-card__name">floating_base_robot_config</span><span class="pp">: </span><span class="pt">Optional[RobotConfig] = None</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Floating-base hand-only robot the input grasps come from.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasptrajbuilderconfig-convert_to_fixed">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L301">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspTrajBuilderConfig.</span><span class="api-card__name">convert_to_fixed</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>True: filter + IK-convert floating grasps, build trajectories for the fixed robot. False: plan grasps as-is.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasptrajbuilderconfig-motion_planner">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L303">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspTrajBuilderConfig.</span><span class="api-card__name">motion_planner</span><span class="pp">: </span><span class="pt">MotionPlannerConfig = field(default_factory=MotionPlannerConfig)</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Motion planner config for the trajectory from the init pose to the grasp pose.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasptrajbuilderconfig-hand_axis">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L305">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspTrajBuilderConfig.</span><span class="api-card__name">hand_axis</span><span class="pp">: </span><span class="pt">Optional[HandAxis] = None</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Hand-axis cone filter on optimized grasps: which <code>hand_coord_spec</code> axis to check. None disables it.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasptrajbuilderconfig-hand_axis_target">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L307">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspTrajBuilderConfig.</span><span class="api-card__name">hand_axis_target</span><span class="pp">: </span><span class="pt">Tuple[float, float, float] = (0.0, 0.0, 1.0)</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Direction <code>hand_axis</code> should point, in the robot base frame (world for floating hands).</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasptrajbuilderconfig-filter_hand_axis_max_angle_deg">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L309">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspTrajBuilderConfig.</span><span class="api-card__name">filter_hand_axis_max_angle_deg</span><span class="pp">: </span><span class="pt">float = 30.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Hand-axis cone half-angle in degrees.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasptrajbuilderconfig-contact_avoid_filter">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L311">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspTrajBuilderConfig.</span><span class="api-card__name">contact_avoid_filter</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Reject grasps where the contact-avoid point is closer to the target than the contact point on that link.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasptrajbuilderconfig-pen_filter">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L313">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspTrajBuilderConfig.</span><span class="api-card__name">pen_filter</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Reject grasps whose hand spheres overlap the target by more than pen_filter_threshold (m); fingertip ok.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasptrajbuilderconfig-pen_filter_threshold">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L315">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspTrajBuilderConfig.</span><span class="api-card__name">pen_filter_threshold</span><span class="pp">: </span><span class="pt">float = 0.005</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="grasptrajbuilderconfig-rest_pose_filter_max_dist">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L316">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspTrajBuilderConfig.</span><span class="api-card__name">rest_pose_filter_max_dist</span><span class="pp">: </span><span class="pt">Optional[float] = None</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Reject grasps whose arm qpos (L2 over arm joints) is further than this from robot rest pose; None disables.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasptrajbuilderconfig-arm_range_fraction">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L319">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspTrajBuilderConfig.</span><span class="api-card__name">arm_range_fraction</span><span class="pp">: </span><span class="pt">float = 0.3</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Half-width (fraction of each arm joint's range around its midpoint) the IK solution must lie in; 1.0 disables.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasptrajbuilderconfig-ori_threshold_deg">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L321">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspTrajBuilderConfig.</span><span class="api-card__name">ori_threshold_deg</span><span class="pp">: </span><span class="pt">float = 45.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Ori-gate half-angle (deg) for the floating-&gt;fixed IK conversion; 45 = default, 90 effectively disables.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasptrajbuilderconfig-plan_table_only">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L323">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspTrajBuilderConfig.</span><span class="api-card__name">plan_table_only</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Plan against a table-only scene (object removed), mirroring deployment. Pre/post qpos use the real scene.</p></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="warpplanner">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/stages/motion_plan/warp_planner.py#L77">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">graspkit.stages.motion_plan.</span><span class="api-card__name">WarpPlanner</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">cfg</span><span class="pp">: </span><span class="pt">MotionPlannerConfig</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">robot_config</span><span class="pp">: </span><span class="pt">RobotConfig</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">Device</span><span class="pp"> = </span><span class="pd">'cpu'</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div><div class="api-sig__bases">Bases: <span>TorchPlanner</span></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>TorchPlanner on robokit's MotionPlanner: joint-goal plans, or one plan from start through the lift.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">cfg</span><span class="api-type">MotionPlannerConfig</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">robot_config</span><span class="api-type">RobotConfig</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">Device</span><span class="api-def">= 'cpu'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="warpplanner-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="warpplanner-plan">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><span class="api-from">inherited from TorchPlanner</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/stages/motion_plan/torch_planner.py#L38">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">WarpPlanner.</span><span class="api-card__name">plan</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">batch</span><span class="pp">: </span><span class="pt">GraspKitData</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">start_qpos</span><span class="pp">: </span><span class="pt">Optional[Float[torch.Tensor, num_dofs]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">return_pre_post_only</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">GraspKitData</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Plan a padded batch: needs grasp_qpos, returns pre/post-grasp qpos + full_traj_qpos unless pre-post-only.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">batch</span><span class="api-type">GraspKitData</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">start_qpos</span><span class="api-type">Optional[Float[torch.Tensor, num_dofs]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">return_pre_post_only</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">GraspKitData</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="warpplanner-get_pre_post_grasp_qpos">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><span class="api-from">inherited from TorchPlanner</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/stages/motion_plan/torch_planner.py#L200">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">WarpPlanner.</span><span class="api-card__name">get_pre_post_grasp_qpos</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">scene_geom</span><span class="pp">: </span><span class="pt">SceneGeom</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">grasp_qpos</span><span class="pp">: </span><span class="pt">Float[torch.Tensor, 'n_scenes n_grasps num_dofs']</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Tuple[Float[torch.Tensor, 'n_scenes n_grasps num_dofs'], Float[torch.Tensor, 'n_scenes n_grasps num_dofs']]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_geom</span><span class="api-type">SceneGeom</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">grasp_qpos</span><span class="api-type">Float[torch.Tensor, 'n_scenes n_grasps num_dofs']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Tuple[Float[torch.Tensor, 'n_scenes n_grasps num_dofs'], Float[torch.Tensor, 'n_scenes n_grasps num_dofs']]</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="warpplanner-interpolate_qpos">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><span class="api-from">inherited from TorchPlanner</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/stages/motion_plan/torch_planner.py#L255">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">WarpPlanner.</span><span class="api-card__name">interpolate_qpos</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">init_qpos</span><span class="pp">: </span><span class="pt">Float[torch.Tensor, '... num_dofs']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">end_qpos</span><span class="pp">: </span><span class="pt">Float[torch.Tensor, '... num_dofs']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">num_steps</span><span class="pp">: </span><span class="pt">int</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Float[torch.Tensor, '... num_steps num_dofs']</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">init_qpos</span><span class="api-type">Float[torch.Tensor, '... num_dofs']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">end_qpos</span><span class="api-type">Float[torch.Tensor, '... num_dofs']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">num_steps</span><span class="api-type">int</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Float[torch.Tensor, '... num_steps num_dofs']</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="warpplanner-compute_pose_penetration">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><span class="api-from">inherited from TorchPlanner</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/stages/motion_plan/torch_planner.py#L267">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">WarpPlanner.</span><span class="api-card__name">compute_pose_penetration</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">qpos</span><span class="pp">: </span><span class="pt">Float[torch.Tensor, '... num_dofs']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_geom</span><span class="pp">: </span><span class="pt">SceneGeom</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Float[torch.Tensor, ...]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">qpos</span><span class="api-type">Float[torch.Tensor, '... num_dofs']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_geom</span><span class="api-type">SceneGeom</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Float[torch.Tensor, ...]</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="warpplanner-interpolate_trajs">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><span class="api-from">inherited from TorchPlanner</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/stages/motion_plan/torch_planner.py#L288">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">WarpPlanner.</span><span class="api-card__name">interpolate_trajs</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">orig_trajs</span><span class="pp">: </span><span class="pt">Float[torch.Tensor, 'n_scenes n_trajs n_steps num_dofs']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">num_steps</span><span class="pp">: </span><span class="pt">int</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Float[torch.Tensor, 'n_scenes n_trajs num_steps num_dofs']</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">orig_trajs</span><span class="api-type">Float[torch.Tensor, 'n_scenes n_trajs n_steps num_dofs']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">num_steps</span><span class="api-type">int</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Float[torch.Tensor, 'n_scenes n_trajs num_steps num_dofs']</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="warpplanner-compute_energy">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><span class="api-from">inherited from TorchPlanner</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/stages/motion_plan/torch_planner.py#L310">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">WarpPlanner.</span><span class="api-card__name">compute_energy</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">full_traj_qpos</span><span class="pp">: </span><span class="pt">Float[torch.Tensor, 'n_scenes n_trajs n_steps num_dofs']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_geom</span><span class="pp">: </span><span class="pt">SceneGeom</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">dict[str, torch.Tensor]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Compute E_pen + E_smooth for a trajectory; mirrors <code>optimize_trajs</code> loss, a benchmark reference metric.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">full_traj_qpos</span><span class="api-type">Float[torch.Tensor, 'n_scenes n_trajs n_steps num_dofs']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_geom</span><span class="api-type">SceneGeom</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">dict[str, torch.Tensor]</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="warpplanner-get_lifting_target_qpos">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><span class="api-from">inherited from TorchPlanner</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/stages/motion_plan/torch_planner.py#L428">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">WarpPlanner.</span><span class="api-card__name">get_lifting_target_qpos</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">post_grasp_qpos</span><span class="pp">: </span><span class="pt">Float[torch.Tensor, 'n_scenes n_grasps num_dofs']</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Float[torch.Tensor, 'n_scenes n_grasps num_dofs']</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">post_grasp_qpos</span><span class="api-type">Float[torch.Tensor, 'n_scenes n_grasps num_dofs']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Float[torch.Tensor, 'n_scenes n_grasps num_dofs']</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="warpplanner-plan_full">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/stages/motion_plan/warp_planner.py#L127">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">WarpPlanner.</span><span class="api-card__name">plan_full</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">start_qpos</span><span class="pp">: </span><span class="pt">Float[torch.Tensor, 'n_scenes n_grasps num_dofs']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">pre_grasp_qpos</span><span class="pp">: </span><span class="pt">Float[torch.Tensor, 'n_scenes n_grasps num_dofs']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">grasp_qpos</span><span class="pp">: </span><span class="pt">Float[torch.Tensor, 'n_scenes n_grasps num_dofs']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">post_grasp_qpos</span><span class="pp">: </span><span class="pt">Float[torch.Tensor, 'n_scenes n_grasps num_dofs']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">lift_qpos</span><span class="pp">: </span><span class="pt">Optional[Float[torch.Tensor, 'n_scenes n_grasps num_dofs']]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_geom</span><span class="pp">: </span><span class="pt">SceneGeom</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Tuple[Float[torch.Tensor, 'n_scenes n_grasps num_steps num_dofs'], Float[torch.Tensor, 'n_scenes n_grasps']]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>One robokit plan: start → pre-grasp against the scene, then grasp, the locked hold and the lift without it.</p><p>robokit times every segment but the hold, which keeps num_steps_holding; the plan is sampled every control_dt and padded with its last frame to num_steps when shorter. Returns it and the start → pre-grasp penetration.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">start_qpos</span><span class="api-type">Float[torch.Tensor, 'n_scenes n_grasps num_dofs']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">pre_grasp_qpos</span><span class="api-type">Float[torch.Tensor, 'n_scenes n_grasps num_dofs']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">grasp_qpos</span><span class="api-type">Float[torch.Tensor, 'n_scenes n_grasps num_dofs']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">post_grasp_qpos</span><span class="api-type">Float[torch.Tensor, 'n_scenes n_grasps num_dofs']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">lift_qpos</span><span class="api-type">Optional[Float[torch.Tensor, 'n_scenes n_grasps num_dofs']]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_geom</span><span class="api-type">SceneGeom</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Tuple[Float[torch.Tensor, 'n_scenes n_grasps num_steps num_dofs'], Float[torch.Tensor, 'n_scenes n_grasps']]</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="warpplanner-optimize_trajs">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/stages/motion_plan/warp_planner.py#L185">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">WarpPlanner.</span><span class="api-card__name">optimize_trajs</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">init_trajs</span><span class="pp">: </span><span class="pt">Float[torch.Tensor, '... num_steps num_dofs']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_geom</span><span class="pp">: </span><span class="pt">SceneGeom</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Tuple[Float[torch.Tensor, '... num_steps num_dofs'], Float[torch.Tensor, ...]]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">init_trajs</span><span class="api-type">Float[torch.Tensor, '... num_steps num_dofs']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_geom</span><span class="api-type">SceneGeom</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Tuple[Float[torch.Tensor, '... num_steps num_dofs'], Float[torch.Tensor, ...]]</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="motionplannerconfig">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L223">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">graspkit.configs.experiment_config.</span><span class="api-card__name">MotionPlannerConfig</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">backend</span><span class="pp">: </span><span class="pt">Literal['torch', 'warp']</span><span class="pp"> = </span><span class="pd">'warp'</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">pre_grasp_arm_grad_move</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.001</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">pre_grasp_hand_grad_move</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">post_grasp_hand_grad_move</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">1.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">lifting_dist</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.3</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">padding_dist</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.025</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">opt_steps</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">300</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">pen_weight</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">1.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">arm_smooth_weight</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">100.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">hand_smooth_weight</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">10.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">vel_smooth_weight</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.1</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">num_steps_pre_grasp</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">150</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">num_steps_pre_to_grasp</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">25</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">num_steps_holding</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">75</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">close_during_holding</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">num_steps_post_grasp</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">50</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">control_dt</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.02</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">enable_joint_optimization</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">traj_opt_max_iter</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">100</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">traj_opt_smoothness_weight</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">200.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">traj_opt_accel_smoothness_weight</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">30.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">traj_opt_self_collision_weight</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">traj_opt_self_collision_margin</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.02</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">start_from_grasp_dof_indices</span><span class="pp">: </span><span class="pt">Optional[Tuple[int, ...]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">num_samples_per_batch</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">2048</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">num_grasps_per_scene</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">32</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Trajectory optimization params — hand-independent defaults.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">backend</span><span class="api-type">Literal['torch', 'warp']</span><span class="api-def">= 'warp'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">pre_grasp_arm_grad_move</span><span class="api-type">float</span><span class="api-def">= 0.001</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">pre_grasp_hand_grad_move</span><span class="api-type">float</span><span class="api-def">= 0.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">post_grasp_hand_grad_move</span><span class="api-type">float</span><span class="api-def">= 1.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">lifting_dist</span><span class="api-type">float</span><span class="api-def">= 0.3</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">padding_dist</span><span class="api-type">float</span><span class="api-def">= 0.025</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">opt_steps</span><span class="api-type">int</span><span class="api-def">= 300</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">pen_weight</span><span class="api-type">float</span><span class="api-def">= 1.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">arm_smooth_weight</span><span class="api-type">float</span><span class="api-def">= 100.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">hand_smooth_weight</span><span class="api-type">float</span><span class="api-def">= 10.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">vel_smooth_weight</span><span class="api-type">float</span><span class="api-def">= 0.1</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">num_steps_pre_grasp</span><span class="api-type">int</span><span class="api-def">= 150</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">num_steps_pre_to_grasp</span><span class="api-type">int</span><span class="api-def">= 25</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">num_steps_holding</span><span class="api-type">int</span><span class="api-def">= 75</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">close_during_holding</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">num_steps_post_grasp</span><span class="api-type">int</span><span class="api-def">= 50</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">control_dt</span><span class="api-type">float</span><span class="api-def">= 0.02</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">enable_joint_optimization</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">traj_opt_max_iter</span><span class="api-type">int</span><span class="api-def">= 100</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">traj_opt_smoothness_weight</span><span class="api-type">float</span><span class="api-def">= 200.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">traj_opt_accel_smoothness_weight</span><span class="api-type">float</span><span class="api-def">= 30.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">traj_opt_self_collision_weight</span><span class="api-type">float</span><span class="api-def">= 0.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">traj_opt_self_collision_margin</span><span class="api-type">float</span><span class="api-def">= 0.02</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">start_from_grasp_dof_indices</span><span class="api-type">Optional[Tuple[int, ...]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">num_samples_per_batch</span><span class="api-type">int</span><span class="api-def">= 2048</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">num_grasps_per_scene</span><span class="api-type">int</span><span class="api-def">= 32</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="motionplannerconfig-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="motionplannerconfig-backend">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L227">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">backend</span><span class="pp">: </span><span class="pt">Literal['torch', 'warp'] = 'warp'</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Motion planner backend. 'warp' (default; robokit MotionPlanner, fixed-base only) is faster than 'torch'.</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-pre_grasp_arm_grad_move">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L231">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">pre_grasp_arm_grad_move</span><span class="pp">: </span><span class="pt">float = 0.001</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Pre-grasp arm gradient move</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-pre_grasp_hand_grad_move">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L233">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">pre_grasp_hand_grad_move</span><span class="pp">: </span><span class="pt">float = 0.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Pre-grasp hand gradient move</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-post_grasp_hand_grad_move">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L235">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">post_grasp_hand_grad_move</span><span class="pp">: </span><span class="pt">float = 1.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Post-grasp hand gradient move</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-lifting_dist">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L237">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">lifting_dist</span><span class="pp">: </span><span class="pt">float = 0.3</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Lifting distance</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-padding_dist">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L239">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">padding_dist</span><span class="pp">: </span><span class="pt">float = 0.025</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Padding distance</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-opt_steps">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L241">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">opt_steps</span><span class="pp">: </span><span class="pt">int = 300</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Optimization steps</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-pen_weight">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L243">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">pen_weight</span><span class="pp">: </span><span class="pt">float = 1.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Penetration weight</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-arm_smooth_weight">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L245">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">arm_smooth_weight</span><span class="pp">: </span><span class="pt">float = 100.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Arm smooth weight</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-hand_smooth_weight">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L247">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">hand_smooth_weight</span><span class="pp">: </span><span class="pt">float = 10.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Hand smooth weight</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-vel_smooth_weight">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L249">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">vel_smooth_weight</span><span class="pp">: </span><span class="pt">float = 0.1</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Velocity smooth weight</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-num_steps_pre_grasp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L251">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">num_steps_pre_grasp</span><span class="pp">: </span><span class="pt">int = 150</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Number of steps in pre-grasp</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-num_steps_pre_to_grasp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L253">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">num_steps_pre_to_grasp</span><span class="pp">: </span><span class="pt">int = 25</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Number of steps in pre-to-grasp</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-num_steps_holding">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L255">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">num_steps_holding</span><span class="pp">: </span><span class="pt">int = 75</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Number of steps in holding</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-close_during_holding">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L257">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">close_during_holding</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Close gradually during holding instead of settling at the closed pose.</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-num_steps_post_grasp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L259">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">num_steps_post_grasp</span><span class="pp">: </span><span class="pt">int = 50</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Number of steps in post-grasp</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-control_dt">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L261">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">control_dt</span><span class="pp">: </span><span class="pt">float = 0.02</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Seconds per trajectory step, the simulator's control period.</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-enable_joint_optimization">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L263">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">enable_joint_optimization</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Fixed base, warp: one robokit plan through start, pre-grasp, grasp, hold and lift, timed by robokit except the hold (num_steps_holding); at least num_steps long. False optimizes start → pre-grasp alone and fills the other phases at their step counts.</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-traj_opt_max_iter">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L269">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">traj_opt_max_iter</span><span class="pp">: </span><span class="pt">int = 100</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-traj_opt_smoothness_weight">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L270">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">traj_opt_smoothness_weight</span><span class="pp">: </span><span class="pt">float = 200.0</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-traj_opt_accel_smoothness_weight">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L271">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">traj_opt_accel_smoothness_weight</span><span class="pp">: </span><span class="pt">float = 30.0</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-traj_opt_self_collision_weight">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L272">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">traj_opt_self_collision_weight</span><span class="pp">: </span><span class="pt">float = 0.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Self-collision weight (warp only). 0 disables the term; the robokit q_goal preset ships it off.</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-traj_opt_self_collision_margin">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L274">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">traj_opt_self_collision_margin</span><span class="pp">: </span><span class="pt">float = 0.02</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Self-collision margin in metres; only read when the weight is &gt; 0.</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-start_from_grasp_dof_indices">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L277">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">start_from_grasp_dof_indices</span><span class="pp">: </span><span class="pt">Optional[Tuple[int, ...]] = None</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>DOF indices whose start values come from grasp_qpos, not init pose; also locked during post-grasp lift IK.</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-num_samples_per_batch">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L281">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">num_samples_per_batch</span><span class="pp">: </span><span class="pt">int = 2048</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Number of samples per batch</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-num_grasps_per_scene">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L283">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">num_grasps_per_scene</span><span class="pp">: </span><span class="pt">int = 32</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Number of grasps to plan per scene (pad/truncate to this)</p></div></div>
+    </div><div class="api-row api-row--plain" id="motionplannerconfig-num_steps">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L287">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MotionPlannerConfig.</span><span class="api-card__name">num_steps</span><span class="pp">: </span><span class="pt">int</span></div>
+    
+  </div>
+      
+    </div></div></div>
+  </section></div></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/graspkit/api-scene/"><span class="lbl">← Previous</span><span class="nm">Scene</span></a><a class="next" href="/docs/graspkit/api-policy/"><span class="lbl">Next →</span><span class="nm">Policy</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#grasptrajbuilder">GraspTrajBuilder</a><a href="#grasptrajbuilderconfig">GraspTrajBuilderConfig</a><a href="#warpplanner">WarpPlanner</a><a href="#motionplannerconfig">MotionPlannerConfig</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "graspkit", "id": "api-motion-plan", "toc": [{"text": "GraspTrajBuilder", "href": "#grasptrajbuilder", "members": [{"text": "filters", "href": "#grasptrajbuilder-filters"}, {"text": "build()", "href": "#grasptrajbuilder-build"}, {"text": "filter_grasps()", "href": "#grasptrajbuilder-filter_grasps"}]}, {"text": "GraspTrajBuilderConfig", "href": "#grasptrajbuilderconfig", "members": [{"text": "fixed_base_robot_config", "href": "#grasptrajbuilderconfig-fixed_base_robot_config"}, {"text": "floating_base_robot_config", "href": "#grasptrajbuilderconfig-floating_base_robot_config"}, {"text": "convert_to_fixed", "href": "#grasptrajbuilderconfig-convert_to_fixed"}, {"text": "motion_planner", "href": "#grasptrajbuilderconfig-motion_planner"}, {"text": "hand_axis", "href": "#grasptrajbuilderconfig-hand_axis"}, {"text": "hand_axis_target", "href": "#grasptrajbuilderconfig-hand_axis_target"}, {"text": "filter_hand_axis_max_angle_deg", "href": "#grasptrajbuilderconfig-filter_hand_axis_max_angle_deg"}, {"text": "contact_avoid_filter", "href": "#grasptrajbuilderconfig-contact_avoid_filter"}, {"text": "pen_filter", "href": "#grasptrajbuilderconfig-pen_filter"}, {"text": "pen_filter_threshold", "href": "#grasptrajbuilderconfig-pen_filter_threshold"}, {"text": "rest_pose_filter_max_dist", "href": "#grasptrajbuilderconfig-rest_pose_filter_max_dist"}, {"text": "arm_range_fraction", "href": "#grasptrajbuilderconfig-arm_range_fraction"}, {"text": "ori_threshold_deg", "href": "#grasptrajbuilderconfig-ori_threshold_deg"}, {"text": "plan_table_only", "href": "#grasptrajbuilderconfig-plan_table_only"}]}, {"text": "WarpPlanner", "href": "#warpplanner", "members": [{"text": "plan()", "href": "#warpplanner-plan"}, {"text": "get_pre_post_grasp_qpos()", "href": "#warpplanner-get_pre_post_grasp_qpos"}, {"text": "interpolate_qpos()", "href": "#warpplanner-interpolate_qpos"}, {"text": "compute_pose_penetration()", "href": "#warpplanner-compute_pose_penetration"}, {"text": "interpolate_trajs()", "href": "#warpplanner-interpolate_trajs"}, {"text": "compute_energy()", "href": "#warpplanner-compute_energy"}, {"text": "get_lifting_target_qpos()", "href": "#warpplanner-get_lifting_target_qpos"}, {"text": "plan_full()", "href": "#warpplanner-plan_full"}, {"text": "optimize_trajs()", "href": "#warpplanner-optimize_trajs"}]}, {"text": "MotionPlannerConfig", "href": "#motionplannerconfig", "members": [{"text": "backend", "href": "#motionplannerconfig-backend"}, {"text": "pre_grasp_arm_grad_move", "href": "#motionplannerconfig-pre_grasp_arm_grad_move"}, {"text": "pre_grasp_hand_grad_move", "href": "#motionplannerconfig-pre_grasp_hand_grad_move"}, {"text": "post_grasp_hand_grad_move", "href": "#motionplannerconfig-post_grasp_hand_grad_move"}, {"text": "lifting_dist", "href": "#motionplannerconfig-lifting_dist"}, {"text": "padding_dist", "href": "#motionplannerconfig-padding_dist"}, {"text": "opt_steps", "href": "#motionplannerconfig-opt_steps"}, {"text": "pen_weight", "href": "#motionplannerconfig-pen_weight"}, {"text": "arm_smooth_weight", "href": "#motionplannerconfig-arm_smooth_weight"}, {"text": "hand_smooth_weight", "href": "#motionplannerconfig-hand_smooth_weight"}, {"text": "vel_smooth_weight", "href": "#motionplannerconfig-vel_smooth_weight"}, {"text": "num_steps_pre_grasp", "href": "#motionplannerconfig-num_steps_pre_grasp"}, {"text": "num_steps_pre_to_grasp", "href": "#motionplannerconfig-num_steps_pre_to_grasp"}, {"text": "num_steps_holding", "href": "#motionplannerconfig-num_steps_holding"}, {"text": "close_during_holding", "href": "#motionplannerconfig-close_during_holding"}, {"text": "num_steps_post_grasp", "href": "#motionplannerconfig-num_steps_post_grasp"}, {"text": "control_dt", "href": "#motionplannerconfig-control_dt"}, {"text": "enable_joint_optimization", "href": "#motionplannerconfig-enable_joint_optimization"}, {"text": "traj_opt_max_iter", "href": "#motionplannerconfig-traj_opt_max_iter"}, {"text": "traj_opt_smoothness_weight", "href": "#motionplannerconfig-traj_opt_smoothness_weight"}, {"text": "traj_opt_accel_smoothness_weight", "href": "#motionplannerconfig-traj_opt_accel_smoothness_weight"}, {"text": "traj_opt_self_collision_weight", "href": "#motionplannerconfig-traj_opt_self_collision_weight"}, {"text": "traj_opt_self_collision_margin", "href": "#motionplannerconfig-traj_opt_self_collision_margin"}, {"text": "start_from_grasp_dof_indices", "href": "#motionplannerconfig-start_from_grasp_dof_indices"}, {"text": "num_samples_per_batch", "href": "#motionplannerconfig-num_samples_per_batch"}, {"text": "num_grasps_per_scene", "href": "#motionplannerconfig-num_grasps_per_scene"}, {"text": "num_steps", "href": "#motionplannerconfig-num_steps"}]}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

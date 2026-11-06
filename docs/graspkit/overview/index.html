@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Overview · GraspKit docs · OpenRoboKit</title>
+  <meta name="description" content="Manipulation across robot embodiments, including grippers and dexterous hands." />
+  <link rel="canonical" href="https://openrobokit.com/docs/graspkit/overview/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">GraspKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="">
+        <span class="nm">RoboKit</span>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="is-active">
+        <span class="nm">GraspKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/overview/" data-id="overview" class="is-active">Overview</a></div><div class="side__list"><a href="/docs/graspkit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/graspkit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim/" data-id="grasp-optim" class="">Grasp Optimization</a></div><div class="side__list"><a href="/docs/graspkit/training/" data-id="training" class="">Policy Training</a></div><div class="side__list"><a href="/docs/graspkit/pipeline/" data-id="pipeline" class="">Pipeline</a></div><div class="side__list"><a href="/docs/graspkit/sim-deploy/" data-id="sim-deploy" class="">Sim Deployment</a></div><div class="side__list"><a href="/docs/graspkit/real-deploy/" data-id="real-deploy" class="">Real Deployment</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/concepts-overview/" data-id="concepts-overview" class="">Core Overview</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim-backends/" data-id="grasp-optim-backends" class="">Grasp Optimization Backends</a></div><div class="side__list"><a href="/docs/graspkit/concepts-sim/" data-id="concepts-sim" class="">Simulation</a></div><div class="side__list"><a href="/docs/graspkit/concepts-policies/" data-id="concepts-policies" class="">Models and Policies</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/ref-robot-hands/" data-id="ref-robot-hands" class="">Robot and Hand Catalog</a></div><div class="side__list"><a href="/docs/graspkit/ref-config-system/" data-id="ref-config-system" class="">Config System</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Data">
+        <span>Data</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/ref-data-format/" data-id="ref-data-format" class="">Data Format Specification</a><a href="/docs/graspkit/ref-assets/" data-id="ref-assets" class="">graspkit assets</a><a href="/docs/graspkit/ref-scene-descriptions/" data-id="ref-scene-descriptions" class="">Dex1B Scene Descriptions</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/api-grasp-optim/" data-id="api-grasp-optim" class="">Grasp Optimization</a><a href="/docs/graspkit/api-scene/" data-id="api-scene" class="">Scene</a><a href="/docs/graspkit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/graspkit/api-policy/" data-id="api-policy" class="">Policy</a><a href="/docs/graspkit/api-training/" data-id="api-training" class="">Training</a><a href="/docs/graspkit/api-envs/" data-id="api-envs" class="">Environments</a><a href="/docs/graspkit/api-data/" data-id="api-data" class="">Data</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">graspkit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>User Guide</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Overview</h1>
+        <div class="doc-body" id="doc-body"><p><img src="/assets/docs/graspkit/assets/graspkit-banner.webp" alt="GraspKit"></p><p>GraspKit is an end-to-end toolkit for manipulation across various robot embodiments, including grippers and dexterous hands. It synthesizes grasps, plans trajectories, trains policies, and deploys them in simulation or on real robots; it is built on top of <a class="inline" href="https://github.com/openrobokit/robokit">RoboKit</a>.</p><h3 id="key-features">Key features</h3><ul><li><strong>Fast grasp optimization.</strong> GPU optimizers refine thousands of grasp seeds per batch against cached scene geometry. See <a class="inline" href="/docs/graspkit/grasp-optim/">Grasp optimization</a>.</li><li><strong>Performant policy training.</strong> Train grasp policies on processed point clouds and successful trajectories, with multi-GPU support. See <a class="inline" href="/docs/graspkit/training/">Training</a>.</li><li><strong>Across embodiments.</strong> Use grippers and dexterous hands in arm, hand, and humanoid configurations. See the <a class="inline" href="/docs/graspkit/ref-robot-hands/">robot catalog</a>.</li><li><strong>Simulation validation.</strong> Filter and motion-plan grasps, then test them in physics simulation. See <a class="inline" href="/docs/graspkit/sim-deploy/">Simulation deployment</a>.</li><li><strong>Real-world validation.</strong> Run trained policies on xArm and Vega robots with calibrated cameras and collision-checked motions. See <a class="inline" href="/docs/graspkit/real-deploy/">Real deployment</a>.</li></ul><table class="doc-table" style="--cols:2"><thead><tr><th><a class="inline" href="/docs/graspkit/grasp-optim/"><img src="/assets/docs/graspkit/assets/features/grasp-optimization.webp" alt="Fast grasp optimization"></a></th><th><a class="inline" href="/docs/graspkit/training/"><img src="/assets/docs/graspkit/assets/features/policy-learning.webp" alt="Policy training"></a></th></tr></thead><tbody><tr><td><strong><a class="inline" href="/docs/graspkit/grasp-optim/">Fast grasp optimization</a></strong></td><td><strong><a class="inline" href="/docs/graspkit/training/">Performant policy training</a></strong></td></tr><tr><td><a class="inline" href="/docs/graspkit/ref-robot-hands/"><img src="/assets/docs/graspkit/assets/features/embodiments.webp" alt="All arms, all hands"></a></td><td><a class="inline" href="/docs/graspkit/real-deploy/"><img src="/assets/docs/graspkit/assets/features/sim-to-real.webp" alt="Real-world robustness"></a></td></tr><tr><td><strong><a class="inline" href="/docs/graspkit/ref-robot-hands/">All arms, all hands</a></strong></td><td><strong><a class="inline" href="/docs/graspkit/real-deploy/">Real-world robustness</a></strong></td></tr></tbody></table><h3 id="how-it-works">How it works</h3><table class="doc-table" style="--cols:3"><thead><tr><th>Stage</th><th>Role</th><th>Read more</th></tr></thead><tbody><tr><td>Scene descriptions</td><td>Objects, scales and poses on a table, as msgpack.</td><td><a class="inline" href="/docs/graspkit/ref-scene-descriptions/">Scene descriptions</a></td></tr><tr><td>Grasp optimization</td><td>Energy minimization to grasp poses, then filters, motion planning and sim validation.</td><td><a class="inline" href="/docs/graspkit/grasp-optim/">Grasp optimization</a></td></tr><tr><td>Rendering</td><td>Point-cloud observations of the same scenes, from calibrated cameras.</td><td><a class="inline" href="/docs/graspkit/pipeline/">Pipeline</a></td></tr><tr><td>Training</td><td>A CVAE policy that maps an object point cloud to pre-grasp, grasp and post-grasp poses.</td><td><a class="inline" href="/docs/graspkit/training/">Training</a></td></tr><tr><td>Deployment</td><td>Policy inference plus trajectory building, in sim or on hardware.</td><td><a class="inline" href="/docs/graspkit/sim-deploy/">Sim</a>, <a class="inline" href="/docs/graspkit/real-deploy/">real</a></td></tr></tbody></table><p>For the graph of stages and the artifacts between them, see <a class="inline" href="/docs/graspkit/concepts-overview/">Core overview</a>.</p><h3 id="quick-links">Quick links</h3><ul><li><a class="inline" href="/docs/graspkit/quickstart/">Quickstart</a></li><li><a class="inline" href="/docs/graspkit/install/">Installation</a></li><li><a class="inline" href="https://github.com/openrobokit/graspkit">GitHub</a></li></ul></div>
+        <div class="prevnext" id="prevnext"><a class="next" href="/docs/graspkit/quickstart/"><span class="lbl">Next →</span><span class="nm">Quickstart</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#key-features">Key features</a><a href="#how-it-works">How it works</a><a href="#quick-links">Quick links</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "graspkit", "id": "overview", "toc": [{"text": "Key features", "href": "#key-features"}, {"text": "How it works", "href": "#how-it-works"}, {"text": "Quick links", "href": "#quick-links"}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Models and Policies · GraspKit docs · OpenRoboKit</title>
+  <meta name="description" content="Manipulation across robot embodiments, including grippers and dexterous hands." />
+  <link rel="canonical" href="https://openrobokit.com/docs/graspkit/concepts-policies/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">GraspKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="">
+        <span class="nm">RoboKit</span>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="is-active">
+        <span class="nm">GraspKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/graspkit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/graspkit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim/" data-id="grasp-optim" class="">Grasp Optimization</a></div><div class="side__list"><a href="/docs/graspkit/training/" data-id="training" class="">Policy Training</a></div><div class="side__list"><a href="/docs/graspkit/pipeline/" data-id="pipeline" class="">Pipeline</a></div><div class="side__list"><a href="/docs/graspkit/sim-deploy/" data-id="sim-deploy" class="">Sim Deployment</a></div><div class="side__list"><a href="/docs/graspkit/real-deploy/" data-id="real-deploy" class="">Real Deployment</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/concepts-overview/" data-id="concepts-overview" class="">Core Overview</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim-backends/" data-id="grasp-optim-backends" class="">Grasp Optimization Backends</a></div><div class="side__list"><a href="/docs/graspkit/concepts-sim/" data-id="concepts-sim" class="">Simulation</a></div><div class="side__list"><a href="/docs/graspkit/concepts-policies/" data-id="concepts-policies" class="is-active">Models and Policies</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/ref-robot-hands/" data-id="ref-robot-hands" class="">Robot and Hand Catalog</a></div><div class="side__list"><a href="/docs/graspkit/ref-config-system/" data-id="ref-config-system" class="">Config System</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Data">
+        <span>Data</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/ref-data-format/" data-id="ref-data-format" class="">Data Format Specification</a><a href="/docs/graspkit/ref-assets/" data-id="ref-assets" class="">graspkit assets</a><a href="/docs/graspkit/ref-scene-descriptions/" data-id="ref-scene-descriptions" class="">Dex1B Scene Descriptions</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/api-grasp-optim/" data-id="api-grasp-optim" class="">Grasp Optimization</a><a href="/docs/graspkit/api-scene/" data-id="api-scene" class="">Scene</a><a href="/docs/graspkit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/graspkit/api-policy/" data-id="api-policy" class="">Policy</a><a href="/docs/graspkit/api-training/" data-id="api-training" class="">Training</a><a href="/docs/graspkit/api-envs/" data-id="api-envs" class="">Environments</a><a href="/docs/graspkit/api-data/" data-id="api-data" class="">Data</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">graspkit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>Concepts</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Models and Policies</h1>
+        <div class="doc-body" id="doc-body"><p><code>GraspPolicy</code> in <code>src/graspkit/models/grasp_policy.py</code> maps an observation to a grasp: three hand poses (pre-grasp, grasp, post-grasp) that the trajectory builder turns into an executable motion.</p><p>Open and closed loop use the same policy. The execution controller decides when to observe and predict again; the benchmark's closed-loop mode refreshes the observation and replans at step 75.</p><p>The policy selects <code>CVAE</code> from <code>models/cvae.py</code> or <code>FlowMatching</code> from <code>models/flow_matching.py</code> using <code>generative_model</code> (<code>cvae</code>, <code>flow</code>, <code>flow_transformer</code>). Both generators expose <code>forward</code>, <code>decode</code> and <code>sample</code>; access the selected component as <code>policy.generator</code>. No shared base class is needed.</p><p>Saved configuration field names and the checkpoint's <code>cvae.*</code> parameter keys are unchanged. The policy registers its generator under that historical checkpoint name, while callers use <code>generator</code>. Existing state dictionaries load strictly without migration. Imports use <code>GraspPolicy</code>, <code>GraspPolicyConfig</code> and <code>build_grasp_policy</code>; the training CLI subcommand is <code>agent:grasp_policy_config</code>.</p><h3 id="the-cvae">The CVAE</h3><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">text</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>point cloud (B, N, 3)
+   -&gt; [yaw canonicalization / augmentation] -&gt; [centering] -&gt; vision encoder (SpUNet or PointNet)
+        |                                            |
+        | global feature                             | per-point features
+        |                                            +-&gt; objectness head  (target vs background)
+        |                                            +-&gt; graspness head   (where to grasp)
+        v
+   CVAE encoder (training: ground-truth actions) -&gt; z -&gt; decoder -&gt; (B, n, 3, d) actions</pre></div><p><code>d</code> is the hand's joint count for a fixed base; a floating base prepends a translation and a rotation, <code>[xyz, rotation, hand joints]</code>, where the rotation is either Euler <code>rxyz</code> or a 6D representation. The three queries are pre-grasp, grasp and post-grasp, in that order.</p><p>At inference the encoder is skipped: the graspness head picks the top-<code>k</code> points, and the CVAE decodes a latent per point — the mean latent when <code>use_mean</code>, otherwise a sample scaled by <code>cvae_temperature</code>. With <code>use_mean</code> the diversity comes from the distinct query points, not the latent. <code>grasp_evaluator_guidance_steps</code> instead refines the latent by ascending a frozen grasp evaluator inside a ball of radius <code>grasp_evaluator_guidance_radius</code>.</p><p>The vision encoders include a sparse-convolution U-Net (<code>vision_encoder="spconv"</code>, the default, voxel size 5 mm), a BN-free PointNet and RGB CNN/ResNet variants. RGB construction and shared training/inference preprocessing live in <code>models/vision_encoder/rgb.py</code>; the policy keeps state/camera conditioning and generator selection. The CVAE is an MLP encoder/decoder over the flattened action vector, conditioned on the vision feature, optionally with a learned prior.</p><p>Flow matching uses the same visual conditioning and action representation. Its velocity network is an MLP (<code>flow</code>) or transformer (<code>flow_transformer</code>), trained along a linear noise-to-action path. Sampling integrates eight Euler steps and restores physical joint units using the bank's action mean/std. Flow returns zero latent moments through the shared training interface, so its KL contribution is zero; joint reconstruction uses MSE.</p><h3 id="losses">Losses</h3><table class="doc-table" style="--cols:3"><thead><tr><th>Loss</th><th>Weight field</th><th>Penalizes</th></tr></thead><tbody><tr><td><code>qpos</code></td><td><code>qpos_weight</code></td><td>L1 on the reconstructed hand joints</td></tr><tr><td><code>tl</code>, <code>rot</code></td><td><code>tl_weight</code>, <code>rot_weight</code></td><td>L1 on floating-base translation and rotation</td></tr><tr><td><code>kl</code></td><td><code>kl_weight</code></td><td>Posterior against the standard or learned prior</td></tr><tr><td><code>objectness</code></td><td><code>objectness_weight</code></td><td>Per-point target-vs-background BCE, positives upweighted</td></tr><tr><td><code>graspness</code></td><td><code>graspness_weight</code></td><td>KL between predicted and labelled graspness distributions</td></tr><tr><td><code>kinematic</code></td><td><code>kinematic_weight</code></td><td>MSE between the FK link positions of predicted and ground-truth actions</td></tr><tr><td><code>penetration</code></td><td><code>penetration_weight</code></td><td>Collision-sphere overlap into the object beyond <code>penetration_threshold</code>, on prior samples</td></tr><tr><td><code>prior_fingertip</code></td><td><code>prior_fingertip_weight</code></td><td>Distance of fingertip spheres to the object surface</td></tr></tbody></table><p>The last two need scene geometry at training time; the trainer builds it only every <code>penetration_every</code> steps and after <code>penetration_warmup_iters</code>.</p><h3 id="representation-flags">Representation flags</h3><ul><li><code>convert_rxyz_to_rot6d</code> — 6D rotation inside the CVAE, decoded back to Euler. <code>analytic_euler</code> picks the closed-form decode over the iterative one.</li><li><code>coupled_floating_base</code> — all three queries share the grasp rotation, and grasp and post-grasp share its translation.</li><li><code>center_pointcloud</code> — predict translations relative to the cloud centroid.</li><li><code>canonical_yaw</code> — rotate into a deterministic yaw frame derived from the cloud's second moment.</li><li><code>train_yaw_augmentation</code> — random training-time yaw applied to points and targets together.</li></ul><h3 id="data">Data</h3><p><code>GraspDataset</code> reads the processed HDF5: per scene, one rendered view is drawn uniformly per access, points are sampled (object-only or whole scene), and actions are sampled per grasp. With graspness enabled, the per-action best points are placed first and the rest sampled around them. Graspness labels come from the contact extractor's palm-cone weighting during <code>process_sim_data</code>. Fresh flow models use <code>meta/action_mean</code> and <code>meta/action_std</code> to normalize their action space. CVAE training uses raw poses.</p><h3 id="training">Training</h3><p>AdamW at <code>lr=1e-4</code>, weight decay <code>1e-4</code>, a 10x step decay two thirds of the way through, DDP when distributed. Every step scans the gradients and skips the update if any rank saw a NaN or Inf. Checkpoints hold <code>{"agent": state_dict}</code>; the provenance keys the benchmark expects (<code>experiment</code>, <code>policy_config</code>, <code>training</code>) are added by the packaging scripts. Evaluation is described in <a class="inline" href="/docs/graspkit/sim-deploy/">Sim deployment</a>.</p><h3 id="from-prediction-to-motion">From prediction to motion</h3><p>A predicted grasp is not executable on its own. <code>GraspTrajBuilder</code> applies the filters (hand-axis cone, contact-avoid, penetration, rest pose), optionally IK-converts a floating grasp onto an arm with an orientation gate and an arm-range band, and plans the approach, closing, holding and lift segments. The benchmark runs the filters; deployment skips them and relies on the IK gate, since a real capture has no ground-truth object pose.</p></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/graspkit/concepts-sim/"><span class="lbl">← Previous</span><span class="nm">Simulation</span></a><a class="next" href="/docs/graspkit/ref-robot-hands/"><span class="lbl">Next →</span><span class="nm">Robot and Hand Catalog</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#the-cvae">The CVAE</a><a href="#losses">Losses</a><a href="#representation-flags">Representation flags</a><a href="#data">Data</a><a href="#training">Training</a><a href="#from-prediction-to-motion">From prediction to motion</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "graspkit", "id": "concepts-policies", "toc": [{"text": "The CVAE", "href": "#the-cvae"}, {"text": "Losses", "href": "#losses"}, {"text": "Representation flags", "href": "#representation-flags"}, {"text": "Data", "href": "#data"}, {"text": "Training", "href": "#training"}, {"text": "From prediction to motion", "href": "#from-prediction-to-motion"}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

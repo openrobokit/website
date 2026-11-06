@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Core Overview · GraspKit docs · OpenRoboKit</title>
+  <meta name="description" content="Manipulation across robot embodiments, including grippers and dexterous hands." />
+  <link rel="canonical" href="https://openrobokit.com/docs/graspkit/concepts-overview/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">GraspKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="">
+        <span class="nm">RoboKit</span>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="is-active">
+        <span class="nm">GraspKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/graspkit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/graspkit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim/" data-id="grasp-optim" class="">Grasp Optimization</a></div><div class="side__list"><a href="/docs/graspkit/training/" data-id="training" class="">Policy Training</a></div><div class="side__list"><a href="/docs/graspkit/pipeline/" data-id="pipeline" class="">Pipeline</a></div><div class="side__list"><a href="/docs/graspkit/sim-deploy/" data-id="sim-deploy" class="">Sim Deployment</a></div><div class="side__list"><a href="/docs/graspkit/real-deploy/" data-id="real-deploy" class="">Real Deployment</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/concepts-overview/" data-id="concepts-overview" class="is-active">Core Overview</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim-backends/" data-id="grasp-optim-backends" class="">Grasp Optimization Backends</a></div><div class="side__list"><a href="/docs/graspkit/concepts-sim/" data-id="concepts-sim" class="">Simulation</a></div><div class="side__list"><a href="/docs/graspkit/concepts-policies/" data-id="concepts-policies" class="">Models and Policies</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/ref-robot-hands/" data-id="ref-robot-hands" class="">Robot and Hand Catalog</a></div><div class="side__list"><a href="/docs/graspkit/ref-config-system/" data-id="ref-config-system" class="">Config System</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Data">
+        <span>Data</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/ref-data-format/" data-id="ref-data-format" class="">Data Format Specification</a><a href="/docs/graspkit/ref-assets/" data-id="ref-assets" class="">graspkit assets</a><a href="/docs/graspkit/ref-scene-descriptions/" data-id="ref-scene-descriptions" class="">Dex1B Scene Descriptions</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/api-grasp-optim/" data-id="api-grasp-optim" class="">Grasp Optimization</a><a href="/docs/graspkit/api-scene/" data-id="api-scene" class="">Scene</a><a href="/docs/graspkit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/graspkit/api-policy/" data-id="api-policy" class="">Policy</a><a href="/docs/graspkit/api-training/" data-id="api-training" class="">Training</a><a href="/docs/graspkit/api-envs/" data-id="api-envs" class="">Environments</a><a href="/docs/graspkit/api-data/" data-id="api-data" class="">Data</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">graspkit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>Concepts</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Core Overview</h1>
+        <div class="doc-body" id="doc-body"><p>How the stages fit together, what flows between them, and where robokit ends and GraspKit begins.</p><h3 id="the-graph">The graph</h3><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">text</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>scene descriptions (msgpack)            scripts/stages/scene_desc/*
+        |
+        +---------------------------+
+        |                           |
+   [render_data]              [optimize_grasps]              (sharded: scenes[rank::world_size])
+   Renderer / ManiSkill        WarpGraspOptimizer
+   kinematic replay,           -&gt; GraspTrajBuilder: filters -&gt; (IK convert) -&gt; motion plan
+   point-cloud obs             -&gt; optional in-loop sim eval
+        |                           |
+   rendered_data_path          grasp_output_dir
+   (h5 per scene)              (h5 per scene: pre / grasp / post qpos)
+        +------------+--------------+
+                     |
+            [process_sim_data]  -&gt; processed_data_path (obs + actions per scene)
+                     |
+                  [train]  GraspDataset -&gt; Trainer (DDP through torchrun)
+                     |
+          logs/train/&lt;name&gt;/checkpoints/*.pt</pre></div><p><code>scripts/launch.py</code> dispatches these by name; the order is whatever <code>ExperimentConfig.steps</code> lists, by default <code>render_data</code>, <code>optimize_grasps</code>, <code>process_sim_data</code>, <code>train</code>. A fifth step, <code>sample_point_cloud</code>, exists for object-only clouds but no shipped experiment uses it.</p><h3 id="stages">Stages</h3><table class="doc-table" style="--cols:4"><thead><tr><th>Stage</th><th>In</th><th>Out</th><th>Config</th></tr></thead><tbody><tr><td><code>optimize_grasps</code></td><td>scene descriptions</td><td>grasp h5 (pre/grasp/post qpos)</td><td><code>GraspOptimConfig</code>, <code>GraspTrajBuilderConfig</code></td></tr><tr><td><code>render_data</code></td><td>scene descriptions</td><td>rendered h5 (point clouds, segmentation, camera poses)</td><td><code>RendererConfig</code></td></tr><tr><td><code>process_sim_data</code></td><td>rendered h5 + grasp h5</td><td>processed h5 (obs joined to actions)</td><td><code>ExperimentConfig</code></td></tr><tr><td><code>train</code></td><td>processed h5</td><td>checkpoints</td><td><code>TrainerConfig</code>, <code>DatasetConfig</code>, <code>GraspPolicyConfig</code></td></tr></tbody></table><p>Grasp optimization is the compound stage: it optimizes, then filters (hand-axis cone, contact-avoid, penetration, rest pose), optionally IK-converts floating grasps onto an arm, plans a trajectory, and keeps only what a physics evaluator accepts.</p><h3 id="resuming-and-sharding">Resuming and sharding</h3><p>Each stage writes a completion marker (<code>.optim_complete</code>, <code>.render_complete</code>, <code>.process_sim_data_complete</code>, <code>.train_complete</code>) and skips itself when the marker exists. With multiple ranks the marker is written per rank and promoted once every rank is done; <code>s3://</code> outputs get no marker. <code>--restart-from &lt;step&gt;</code> deletes the marker and outputs for that step and everything downstream, <code>--append</code> keeps the output and deletes only the marker. Grasp optimization additionally resumes per scene: it re-runs scenes whose output is smaller than <code>min_grasps_threshold</code>.</p><p>Only grasp optimization uses every GPU, one process per card with scenes striped across ranks; non-zero ranks sleep 20 s so rank 0 compiles the Warp kernels first. Rendering and processing pin to the first GPU, and training goes through <code>torchrun</code>.</p><h3 id="artifacts">Artifacts</h3><p><code>GraspKitData</code> is the tensor payload that crosses stages, in a padded <code>(B, K, ...)</code> or packed <code>(N, ...)</code> layout, saved as HDF5. Scene descriptions are msgpack with a train/test split. The processed file holds <code>data/&lt;scene&gt;/obs</code>, <code>data/&lt;scene&gt;/actions</code> and <code>meta/action_{mean,std}</code>; the trainer consumes it through <code>GraspDataset</code>.</p><h3 id="floating-base-versus-fixed-base">Floating base versus fixed base</h3><p><code>RobotConfig.base_type</code> decides the action layout: a floating hand prepends six base DOFs, baked as <code>[xyz, euler_rxyz, hand joints]</code>. A floating hand is always optimized with the floating-base sampler, and the Levenberg-Marquardt backend is floating-only. Setting <code>GraspTrajBuilderConfig.convert_to_fixed</code> filters those grasps and IK-converts them onto an arm before planning; inside grasp optimization the conversion is always off, so the planner plans for the robot being optimized.</p><h3 id="robokit-versus-graspkit">robokit versus GraspKit</h3><p>robokit supplies the cost terms, optimizers, contact sampling, warp scenes, SDF baking, the robot model and the motion planner. GraspKit owns the energy assembly, the init samplers, the grasp filters, the scene-description adapter, the renderer, the datasets, the policy and the trainer. Code graduates to robokit only when a second consumer exists.</p></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/graspkit/real-deploy/"><span class="lbl">← Previous</span><span class="nm">Real Deployment</span></a><a class="next" href="/docs/graspkit/grasp-optim-backends/"><span class="lbl">Next →</span><span class="nm">Grasp Optimization Backends</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#the-graph">The graph</a><a href="#stages">Stages</a><a href="#resuming-and-sharding">Resuming and sharding</a><a href="#artifacts">Artifacts</a><a href="#floating-base-versus-fixed-base">Floating base versus fixed base</a><a href="#robokit-versus-graspkit">robokit versus GraspKit</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "graspkit", "id": "concepts-overview", "toc": [{"text": "The graph", "href": "#the-graph"}, {"text": "Stages", "href": "#stages"}, {"text": "Resuming and sharding", "href": "#resuming-and-sharding"}, {"text": "Artifacts", "href": "#artifacts"}, {"text": "Floating base versus fixed base", "href": "#floating-base-versus-fixed-base"}, {"text": "robokit versus GraspKit", "href": "#robokit-versus-graspkit"}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>
