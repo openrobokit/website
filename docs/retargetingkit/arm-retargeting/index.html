@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Arm Retargeting · RetargetingKit docs · OpenRoboKit</title>
+  <meta name="description" content="Real-time human-to-robot motion retargeting, built on robokit." />
+  <link rel="canonical" href="https://openrobokit.com/docs/retargetingkit/arm-retargeting/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">RetargetingKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="">
+        <span class="nm">RoboKit</span>
+      </a><a href="/docs/retargetingkit/" class="is-active">
+        <span class="nm">RetargetingKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a><a href="/docs/graspkit/" class="">
+        <span class="nm">GraspKit</span>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/retargetingkit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/retargetingkit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/retargetingkit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/retargetingkit/hand-optimization/" data-id="hand-optimization" class="">Hand Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/neural-hand/" data-id="neural-hand" class="">Neural Hand Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/arm-retargeting/" data-id="arm-retargeting" class="is-active">Arm Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/humanoid-retargeting/" data-id="humanoid-retargeting" class="">Humanoid Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/full-body/" data-id="full-body" class="">Full-Body Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/teleoperation/" data-id="teleoperation" class="">Teleoperation</a></div><div class="side__list"><a href="/docs/retargetingkit/ref-assets/" data-id="ref-assets" class="">Assets</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/retargetingkit/pipeline/" data-id="pipeline" class="">Pipeline</a></div><div class="side__list"><a href="/docs/retargetingkit/frames/" data-id="frames" class="">Canonical frames</a></div><div class="side__list"><a href="/docs/retargetingkit/protocols/" data-id="protocols" class="">Interfaces</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list">
+      <div class="side__sub is-folded" data-fold="Reference·Sources">
+        <span>Sources</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/retargetingkit/quest3/" data-id="quest3" class="">Quest 3</a><a href="/docs/retargetingkit/vision-pro/" data-id="vision-pro" class="">Apple Vision Pro</a><a href="/docs/retargetingkit/pico/" data-id="pico" class="">PICO</a><a href="/docs/retargetingkit/manus/" data-id="manus" class="">Manus</a><a href="/docs/retargetingkit/axis-studio/" data-id="axis-studio" class="">Axis Studio</a><a href="/docs/retargetingkit/realsense/" data-id="realsense" class="">RealSense</a><a href="/docs/retargetingkit/zed/" data-id="zed" class="">ZED</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Targets">
+        <span>Targets</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/retargetingkit/xarm/" data-id="xarm" class="">xArm6 and xArm7</a><a href="/docs/retargetingkit/xhand/" data-id="xhand" class="">XHand</a><a href="/docs/retargetingkit/sharpa-hand/" data-id="sharpa-hand" class="">Sharpa Wave</a><a href="/docs/retargetingkit/ability-hand/" data-id="ability-hand" class="">Ability Hand</a><a href="/docs/retargetingkit/inspire/" data-id="inspire" class="">Inspire Hand</a><a href="/docs/retargetingkit/g1/" data-id="g1" class="">G1 and SONIC</a><a href="/docs/retargetingkit/rby1/" data-id="rby1" class="">RBY1-A</a><a href="/docs/retargetingkit/dexmate/" data-id="dexmate" class="">Dexmate Vega-1</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/retargetingkit/ref-frames/" data-id="ref-frames" class="">Frames</a><a href="/docs/retargetingkit/ref-sources/" data-id="ref-sources" class="">Sources</a><a href="/docs/retargetingkit/ref-hand/" data-id="ref-hand" class="">Hand retargeters</a><a href="/docs/retargetingkit/ref-arm/" data-id="ref-arm" class="">Arm retargeter</a><a href="/docs/retargetingkit/ref-humanoid/" data-id="ref-humanoid" class="">Humanoid retargeter</a><a href="/docs/retargetingkit/ref-targets/" data-id="ref-targets" class="">Commands and targets</a><a href="/docs/retargetingkit/ref-target-configs/" data-id="ref-target-configs" class="">Target configs</a><a href="/docs/retargetingkit/ref-teleop/" data-id="ref-teleop" class="">Teleop configs</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/retargetingkit/development/" data-id="development" class="">Development</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">retargetingkit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>User Guide</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Arm Retargeting</h1>
+        <div class="doc-body" id="doc-body"><p>Map a tracked wrist to an xArm6 or xArm7 end effector. The arm solver uses RoboKit inverse kinematics with position, orientation, joint-limit, and smoothness terms.</p><h3 id="how-retargeting-works">How Retargeting Works</h3><p>The source reports wrist poses in an <code>ArmFrame</code>. Calibration establishes the robot's home pose; inverse kinematics then maps relative wrist motion to a joint-position command for each arm.</p><h3 id="preview-one-arm">Preview one arm</h3><p>Complete <a class="inline" href="/docs/retargetingkit/vision-pro/">Vision Pro setup</a>, then run:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">shell</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>uv run --extra vision-pro scripts/teleop/arm.py \
+    visionpro_xarm7 --mode viser --device cpu \
+    --source.ip &lt;VISION_PRO_IP&gt;</pre></div><p>Open the Viser URL printed in the terminal. <code>visionpro_xarm6</code> selects xArm6; <code>visionpro_dual_xarm7</code> controls two independent arms.</p><h3 id="use-the-python-api">Use the Python API</h3><p>Build the rig's right-arm retargeter and pass it one <code>ArmFrame</code> per update:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>from retargetingkit.configs.teleop.arm.visionpro_xarm7 import RIGHT_VISIONPRO_XARM7_CONFIG
+
+retargeter = RIGHT_VISIONPRO_XARM7_CONFIG.retargeters["right"].build(device)
+
+for frame in stream:  # ArmFrame: world-frame wrist [x, y, z, qw, qx, qy, qz]
+    command = retargeter.solve(frame)
+    qpos = command.qpos  # (7,), xArm7 joint positions</pre><pre data-code-full hidden>import numpy as np
+import warp as wp
+
+from retargetingkit.sources.frames import ArmFrame
+
+device = "cuda:0" if wp.is_cuda_available() else "cpu"
+# A right wrist moving 10 cm forward.
+stream = [ArmFrame({"right": np.array([x, -0.2, 1.1, 1, 0, 0, 0], dtype=np.float32)}) for x in (0.0, 0.05, 0.1)]
+from retargetingkit.configs.teleop.arm.visionpro_xarm7 import RIGHT_VISIONPRO_XARM7_CONFIG
+
+retargeter = RIGHT_VISIONPRO_XARM7_CONFIG.retargeters["right"].build(device)
+
+for frame in stream:  # ArmFrame: world-frame wrist [x, y, z, qw, qx, qy, qz]
+    command = retargeter.solve(frame)
+    qpos = command.qpos  # (7,), xArm7 joint positions
+assert qpos.shape == (7,)
+assert np.isfinite(qpos).all()</pre></div><p>The first frame is the calibration origin, so it returns the home pose.</p><h3 id="retarget-an-arm-and-hand">Retarget an arm and hand</h3><p>Optimize the arm and fingers from each synchronized <code>ArmHandFrame</code>. The wrist pose is in world coordinates; hand keypoints are wrist-local. This example builds only the solvers and needs no tracking device or robot connection.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>from retargetingkit.configs.teleop.arm_hand.visionpro_xarm7_xhand import RIGHT_VISIONPRO_XARM7_XHAND_CONFIG
+
+config = RIGHT_VISIONPRO_XARM7_XHAND_CONFIG
+arm = config.arm_retargeters["right"].build(device)
+hand = config.hand_retargeters["right"].build(device)
+
+for frame in stream:  # ArmHandFrame: synchronized wrist and finger poses
+    arm_qpos = arm.solve(frame.arm).qpos  # (7,), xArm7 joints
+    hand_qpos = hand.solve(frame.hand).qpos  # (12,), XHand joints</pre><pre data-code-full hidden>import pickle
+
+import numpy as np
+import warp as wp
+
+from retargetingkit.assets.example_data import MANUS_DATA_RIGHT_PKL
+from retargetingkit.sources.frames import ArmFrame, ArmHandFrame, HandFrame, HandPose
+
+device = "cuda:0" if wp.is_cuda_available() else "cpu"
+keypoints = pickle.load(open(MANUS_DATA_RIGHT_PKL, "rb"))["keypoints"][:3]
+# Recorded finger poses paired with a wrist moving 10 cm forward.
+stream = [
+    ArmHandFrame(
+        ArmFrame({"right": np.array([0.05 * i, -0.2, 1.1, 1, 0, 0, 0], dtype=np.float32)}),
+        HandFrame({"right": HandPose(points)}),
+    )
+    for i, points in enumerate(keypoints)
+]
+from retargetingkit.configs.teleop.arm_hand.visionpro_xarm7_xhand import RIGHT_VISIONPRO_XARM7_XHAND_CONFIG
+
+config = RIGHT_VISIONPRO_XARM7_XHAND_CONFIG
+arm = config.arm_retargeters["right"].build(device)
+hand = config.hand_retargeters["right"].build(device)
+
+for frame in stream:  # ArmHandFrame: synchronized wrist and finger poses
+    arm_qpos = arm.solve(frame.arm).qpos  # (7,), xArm7 joints
+    hand_qpos = hand.solve(frame.hand).qpos  # (12,), XHand joints
+assert arm_qpos.shape == (7,)
+assert hand_qpos.shape == (12,)
+assert np.isfinite(arm_qpos).all()
+assert np.isfinite(hand_qpos).all()</pre></div><h3 id="calibration-and-motion">Calibration and motion</h3><p>The first tracked wrist pose becomes the calibration origin and maps to the robot's configured home pose. Wrist movement is then applied relative to that origin.</p><table class="doc-table" style="--cols:3"><thead><tr><th>Override for the right arm</th><th>Effect</th><th>Default</th></tr></thead><tbody><tr><td><code>--retargeters.right.translation-scale</code></td><td>Scale wrist translation</td><td><code>1.5</code></td></tr><tr><td><code>--retargeters.right.ee-gain</code></td><td>Blend each new end-effector pose with the previous pose</td><td><code>1.0</code></td></tr></tbody></table><p>A smaller gain smooths movement more. Use <code>visionpro_xarm7 --help</code> for all settings. Arm-hand rigs use the prefix <code>--arm-retargeters.right</code> instead.</p><h3 id="connect-a-robot">Connect a robot</h3><p>Use the <a class="inline" href="/docs/retargetingkit/xarm/">xArm guide</a> for SDK installation, network setup, and hardware mode. At startup, hardware mode moves each arm to its model-specific home pose.</p><p>To move fingers along with the wrist, choose a supported assembly on the <a class="inline" href="/docs/retargetingkit/vision-pro/">Vision Pro page</a>. Quest controller teleoperation has its own <a class="inline" href="/docs/retargetingkit/quest3/">standalone workflow</a> and button calibration.</p></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/retargetingkit/neural-hand/"><span class="lbl">← Previous</span><span class="nm">Neural Hand Retargeting</span></a><a class="next" href="/docs/retargetingkit/humanoid-retargeting/"><span class="lbl">Next →</span><span class="nm">Humanoid Retargeting</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#how-retargeting-works">How Retargeting Works</a><a href="#preview-one-arm">Preview one arm</a><a href="#use-the-python-api">Use the Python API</a><a href="#retarget-an-arm-and-hand">Retarget an arm and hand</a><a href="#calibration-and-motion">Calibration and motion</a><a href="#connect-a-robot">Connect a robot</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "retargetingkit", "id": "arm-retargeting", "toc": [{"text": "How Retargeting Works", "href": "#how-retargeting-works"}, {"text": "Preview one arm", "href": "#preview-one-arm"}, {"text": "Use the Python API", "href": "#use-the-python-api"}, {"text": "Retarget an arm and hand", "href": "#retarget-an-arm-and-hand"}, {"text": "Calibration and motion", "href": "#calibration-and-motion"}, {"text": "Connect a robot", "href": "#connect-a-robot"}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

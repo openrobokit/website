@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Training · GraspKit docs · OpenRoboKit</title>
+  <meta name="description" content="Manipulation across robot embodiments, including grippers and dexterous hands." />
+  <link rel="canonical" href="https://openrobokit.com/docs/graspkit/api-training/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">GraspKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="">
+        <span class="nm">RoboKit</span>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="is-active">
+        <span class="nm">GraspKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/graspkit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/graspkit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim/" data-id="grasp-optim" class="">Grasp Optimization</a></div><div class="side__list"><a href="/docs/graspkit/training/" data-id="training" class="">Policy Training</a></div><div class="side__list"><a href="/docs/graspkit/pipeline/" data-id="pipeline" class="">Pipeline</a></div><div class="side__list"><a href="/docs/graspkit/sim-deploy/" data-id="sim-deploy" class="">Sim Deployment</a></div><div class="side__list"><a href="/docs/graspkit/real-deploy/" data-id="real-deploy" class="">Real Deployment</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/concepts-overview/" data-id="concepts-overview" class="">Core Overview</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim-backends/" data-id="grasp-optim-backends" class="">Grasp Optimization Backends</a></div><div class="side__list"><a href="/docs/graspkit/concepts-sim/" data-id="concepts-sim" class="">Simulation</a></div><div class="side__list"><a href="/docs/graspkit/concepts-policies/" data-id="concepts-policies" class="">Models and Policies</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/ref-robot-hands/" data-id="ref-robot-hands" class="">Robot and Hand Catalog</a></div><div class="side__list"><a href="/docs/graspkit/ref-config-system/" data-id="ref-config-system" class="">Config System</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Data">
+        <span>Data</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/ref-data-format/" data-id="ref-data-format" class="">Data Format Specification</a><a href="/docs/graspkit/ref-assets/" data-id="ref-assets" class="">graspkit assets</a><a href="/docs/graspkit/ref-scene-descriptions/" data-id="ref-scene-descriptions" class="">Dex1B Scene Descriptions</a></div>
+      <div class="side__sub" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/api-grasp-optim/" data-id="api-grasp-optim" class="">Grasp Optimization</a><a href="/docs/graspkit/api-scene/" data-id="api-scene" class="">Scene</a><a href="/docs/graspkit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/graspkit/api-policy/" data-id="api-policy" class="">Policy</a><a href="/docs/graspkit/api-training/" data-id="api-training" class="is-active">Training</a><a href="/docs/graspkit/api-envs/" data-id="api-envs" class="">Environments</a><a href="/docs/graspkit/api-data/" data-id="api-data" class="">Data</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">graspkit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>Reference</span><span class="slash">/</span><span>API</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Training</h1>
+        <div class="doc-body" id="doc-body"><div class="api"><section class="api-sym">
+    <div class="api-card" id="trainer">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/stages/trainer.py#L32">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">graspkit.stages.trainer.</span><span class="api-card__name">Trainer</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">exp_cfg</span><span class="pp">: </span><span class="pt">ExperimentConfig</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">policy_cls</span><span class="pp">: </span><span class="pt">Callable[..., GraspPolicy]</span><span class="pp"> = </span><span class="pd">GraspPolicy</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Trains a <code>GraspPolicy</code> on <code>GraspDataset</code> batches, with DDP, checkpoints and periodic simulation evaluation.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">exp_cfg</span><span class="api-type">ExperimentConfig</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">policy_cls</span><span class="api-type">Callable[..., GraspPolicy]</span><span class="api-def">= GraspPolicy</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="trainer-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="trainer-traj_builder">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/stages/trainer.py#L62">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">Trainer.</span><span class="api-card__name">traj_builder</span><span class="pp">: </span><span class="pt">GraspTrajBuilder | None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="trainer-evaluator">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/stages/trainer.py#L63">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">Trainer.</span><span class="api-card__name">evaluator</span><span class="pp">: </span><span class="pt">BaseEnv | None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="trainer-train">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/stages/trainer.py#L95">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">Trainer.</span><span class="api-card__name">train</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">train_dataloader</span><span class="pp">: </span><span class="pt">DataLoader</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">test_dataloader</span><span class="pp">: </span><span class="pt">DataLoader | None</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">checkpoint_dir</span><span class="pp">: </span><span class="pt">Path | None</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">metadata</span><span class="pp">: </span><span class="pt">dict | None</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">resume</span><span class="pp">: </span><span class="pt">dict | None</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">publish</span><span class="pp">: </span><span class="pt">Callable[[Path], None] | None</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Train normally, or save resumable single-device milestones and publish them.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">train_dataloader</span><span class="api-type">DataLoader</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">test_dataloader</span><span class="api-type">DataLoader | None</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">checkpoint_dir</span><span class="api-type">Path | None</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">metadata</span><span class="api-type">dict | None</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">resume</span><span class="api-type">dict | None</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">publish</span><span class="api-type">Callable[[Path], None] | None</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div></div>
+    </div><div class="api-row api-row--plain" id="trainer-train_graph">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/stages/trainer.py#L294">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">Trainer.</span><span class="api-card__name">train_graph</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">dataset</span><span class="pp">: </span><span class="pt">GraspDataset</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">index_loader</span><span class="pp">: </span><span class="pt">DataLoader</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p><code>train</code> for <code>TrainerConfig.cuda_graph</code>: the same updates, with the step captured once as a CUDA graph.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">dataset</span><span class="api-type">GraspDataset</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">index_loader</span><span class="api-type">DataLoader</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div></div>
+    </div><div class="api-row api-row--plain" id="trainer-evaluate">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/stages/trainer.py#L375">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">Trainer.</span><span class="api-card__name">evaluate</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">test_dataloader</span><span class="pp">: </span><span class="pt">DataLoader</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">num_samples_per_scene</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">1</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">test_dataloader</span><span class="api-type">DataLoader</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">num_samples_per_scene</span><span class="api-type">int</span><span class="api-def">= 1</span></div>
+      <div class="api-row__doc"></div>
+    </div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="trainerconfig">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L390">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">graspkit.configs.experiment_config.</span><span class="api-card__name">TrainerConfig</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">seed</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">evaluator</span><span class="pp">: </span><span class="pt">Optional[EnvConfig]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">eval_only</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">eval_on_train</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">track</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">wandb_project_name</span><span class="pp">: </span><span class="pt">str</span><span class="pp"> = </span><span class="pd">'GraspKit'</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">batch_size</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">32</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">eval_num_envs</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">32</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">max_eval_batches</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">100</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">eval_pen_threshold</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.005</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">total_iters</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">100000</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">num_dataloader_workers</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">12</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">lr</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.0001</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">weight_decay</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.0001</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">log_freq</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">100</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">eval_freq</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">10000</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">save_freq</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">10000</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">cuda_graph</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">fast_step</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">grad_clip_norm</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.0</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Training-loop parameters for <code>Trainer</code>.</p><p>AdamW's learning rate drops 10x at two thirds of <code>total_iters</code>; that schedule has no field.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">seed</span><span class="api-type">int</span><span class="api-def">= 0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">evaluator</span><span class="api-type">Optional[EnvConfig]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">eval_only</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">eval_on_train</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">track</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">wandb_project_name</span><span class="api-type">str</span><span class="api-def">= 'GraspKit'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">batch_size</span><span class="api-type">int</span><span class="api-def">= 32</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">eval_num_envs</span><span class="api-type">int</span><span class="api-def">= 32</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">max_eval_batches</span><span class="api-type">int</span><span class="api-def">= 100</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">eval_pen_threshold</span><span class="api-type">float</span><span class="api-def">= 0.005</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">total_iters</span><span class="api-type">int</span><span class="api-def">= 100000</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">num_dataloader_workers</span><span class="api-type">int</span><span class="api-def">= 12</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">lr</span><span class="api-type">float</span><span class="api-def">= 0.0001</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">weight_decay</span><span class="api-type">float</span><span class="api-def">= 0.0001</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">log_freq</span><span class="api-type">int</span><span class="api-def">= 100</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">eval_freq</span><span class="api-type">int</span><span class="api-def">= 10000</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">save_freq</span><span class="api-type">int</span><span class="api-def">= 10000</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">cuda_graph</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">fast_step</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">grad_clip_norm</span><span class="api-type">float</span><span class="api-def">= 0.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="trainerconfig-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="trainerconfig-seed">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L397">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">TrainerConfig.</span><span class="api-card__name">seed</span><span class="pp">: </span><span class="pt">int = 0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Seeds model initialization, dataset workers and sampling.</p></div></div>
+    </div><div class="api-row api-row--plain" id="trainerconfig-evaluator">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L399">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">TrainerConfig.</span><span class="api-card__name">evaluator</span><span class="pp">: </span><span class="pt">Optional[EnvConfig] = None</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Simulation for periodic evaluation, built with <code>build_env</code>; None disables evaluation.</p></div></div>
+    </div><div class="api-row api-row--plain" id="trainerconfig-eval_only">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L401">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">TrainerConfig.</span><span class="api-card__name">eval_only</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Skip training, load <code>ExperimentConfig.ckpt_path</code> and evaluate one trajectory per scene.</p></div></div>
+    </div><div class="api-row api-row--plain" id="trainerconfig-eval_on_train">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L403">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">TrainerConfig.</span><span class="api-card__name">eval_on_train</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Evaluate on the train split instead of test, for small scene sets without test scenes.</p></div></div>
+    </div><div class="api-row api-row--plain" id="trainerconfig-track">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L405">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">TrainerConfig.</span><span class="api-card__name">track</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Log to Weights &amp; Biases, which also syncs the TensorBoard scalars.</p></div></div>
+    </div><div class="api-row api-row--plain" id="trainerconfig-wandb_project_name">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L407">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">TrainerConfig.</span><span class="api-card__name">wandb_project_name</span><span class="pp">: </span><span class="pt">str = 'GraspKit'</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>W&amp;B project used when <code>track</code> is set.</p></div></div>
+    </div><div class="api-row api-row--plain" id="trainerconfig-batch_size">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L409">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">TrainerConfig.</span><span class="api-card__name">batch_size</span><span class="pp">: </span><span class="pt">int = 32</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Global batch size in scenes; each DDP rank gets <code>batch_size // world_size</code>.</p></div></div>
+    </div><div class="api-row api-row--plain" id="trainerconfig-eval_num_envs">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L411">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">TrainerConfig.</span><span class="api-card__name">eval_num_envs</span><span class="pp">: </span><span class="pt">int = 32</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Evaluator parallelism; capped at <code>batch_size</code> during training.</p></div></div>
+    </div><div class="api-row api-row--plain" id="trainerconfig-max_eval_batches">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L413">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">TrainerConfig.</span><span class="api-card__name">max_eval_batches</span><span class="pp">: </span><span class="pt">int = 100</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Stop evaluation after this many data-loader batches.</p></div></div>
+    </div><div class="api-row api-row--plain" id="trainerconfig-eval_pen_threshold">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L415">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">TrainerConfig.</span><span class="api-card__name">eval_pen_threshold</span><span class="pp">: </span><span class="pt">float = 0.005</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Penetration depth (m) below which an eval grasp counts toward pass-rate (report-only).</p></div></div>
+    </div><div class="api-row api-row--plain" id="trainerconfig-total_iters">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L417">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">TrainerConfig.</span><span class="api-card__name">total_iters</span><span class="pp">: </span><span class="pt">int = 100000</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Final training iteration; the loop runs iterations 0 through this value.</p></div></div>
+    </div><div class="api-row api-row--plain" id="trainerconfig-num_dataloader_workers">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L419">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">TrainerConfig.</span><span class="api-card__name">num_dataloader_workers</span><span class="pp">: </span><span class="pt">int = 12</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Worker processes for the training and evaluation data loaders.</p></div></div>
+    </div><div class="api-row api-row--plain" id="trainerconfig-lr">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L421">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">TrainerConfig.</span><span class="api-card__name">lr</span><span class="pp">: </span><span class="pt">float = 0.0001</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>AdamW learning rate.</p></div></div>
+    </div><div class="api-row api-row--plain" id="trainerconfig-weight_decay">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L423">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">TrainerConfig.</span><span class="api-card__name">weight_decay</span><span class="pp">: </span><span class="pt">float = 0.0001</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>AdamW weight decay.</p></div></div>
+    </div><div class="api-row api-row--plain" id="trainerconfig-log_freq">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L425">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">TrainerConfig.</span><span class="api-card__name">log_freq</span><span class="pp">: </span><span class="pt">int = 100</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Iterations between loss logs, and TensorBoard scalars when tracking.</p></div></div>
+    </div><div class="api-row api-row--plain" id="trainerconfig-eval_freq">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L427">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">TrainerConfig.</span><span class="api-card__name">eval_freq</span><span class="pp">: </span><span class="pt">int = 10000</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Iterations between simulation evaluations; iteration 0 is skipped.</p></div></div>
+    </div><div class="api-row api-row--plain" id="trainerconfig-save_freq">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L429">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">TrainerConfig.</span><span class="api-card__name">save_freq</span><span class="pp">: </span><span class="pt">int = 10000</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Iterations between <code>iter_&lt;N&gt;.pt</code> checkpoints, iteration 0 included.</p></div></div>
+    </div><div class="api-row api-row--plain" id="trainerconfig-cuda_graph">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L431">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">TrainerConfig.</span><span class="api-card__name">cuda_graph</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Capture training on prepared HDF5 views as a CUDA graph; single GPU without evaluation.</p></div></div>
+    </div><div class="api-row api-row--plain" id="trainerconfig-fast_step">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L433">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">TrainerConfig.</span><span class="api-card__name">fast_step</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Use TF32 and fused AdamW for ordinary training steps.</p></div></div>
+    </div><div class="api-row api-row--plain" id="trainerconfig-grad_clip_norm">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L435">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">TrainerConfig.</span><span class="api-card__name">grad_clip_norm</span><span class="pp">: </span><span class="pt">float = 0.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Clip the gradient norm before an optimizer step; zero disables clipping.</p></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="graspdataset">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/grasp_dataset.py#L17">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">graspkit.datasets.grasp_dataset.</span><span class="api-card__name">GraspDataset</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">cfg</span><span class="pp">: </span><span class="pt">DatasetConfig</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">h5_path</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_description_path</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">split</span><span class="pp">: </span><span class="pt">Literal['train', 'test'] | None</span><span class="pp"> = </span><span class="pd">'train'</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">indices_only</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div><div class="api-sig__bases">Bases: <span>Dataset</span></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Per-scene point-cloud observations and successful grasp trajectories from a processed HDF5.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">cfg</span><span class="api-type">DatasetConfig</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">h5_path</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_description_path</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">split</span><span class="api-type">Literal['train', 'test'] | None</span><span class="api-def">= 'train'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">indices_only</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="graspdataset-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="graspdataset-to_device">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/grasp_dataset.py#L70">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspDataset.</span><span class="api-card__name">to_device</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">str | torch.device</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">dict[str, torch.Tensor]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Load prepared observations and actions once for CUDA batch gathering.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">str | torch.device</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">dict[str, torch.Tensor]</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="datasetconfig">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L439">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">graspkit.configs.experiment_config.</span><span class="api-card__name">DatasetConfig</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">num_actions</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">64</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">num_points</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">2048</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">return_actions</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">True</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">return_graspness</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">return_object_pointcloud_only</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">cache_in_memory</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">return_rgb</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">True</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">fuse_views</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">view_noise</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">point_noise</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">aug_prob</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">aug_keep_min</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.1</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">aug_voxel_max</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">aug_drop_wrist_prob</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">aug_rgb_prob</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.0</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Dataset loading parameters for <code>GraspDataset</code>.</p><p>One index is one scene, not one grasp; raw views resample points and actions on every access.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">num_actions</span><span class="api-type">int</span><span class="api-def">= 64</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">num_points</span><span class="api-type">int</span><span class="api-def">= 2048</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">return_actions</span><span class="api-type">bool</span><span class="api-def">= True</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">return_graspness</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">return_object_pointcloud_only</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">cache_in_memory</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">return_rgb</span><span class="api-type">bool</span><span class="api-def">= True</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">fuse_views</span><span class="api-type">int</span><span class="api-def">= 0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">view_noise</span><span class="api-type">float</span><span class="api-def">= 0.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">point_noise</span><span class="api-type">float</span><span class="api-def">= 0.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">aug_prob</span><span class="api-type">float</span><span class="api-def">= 0.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">aug_keep_min</span><span class="api-type">float</span><span class="api-def">= 0.1</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">aug_voxel_max</span><span class="api-type">float</span><span class="api-def">= 0.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">aug_drop_wrist_prob</span><span class="api-type">float</span><span class="api-def">= 0.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">aug_rgb_prob</span><span class="api-type">float</span><span class="api-def">= 0.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="datasetconfig-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="datasetconfig-num_actions">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L446">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">DatasetConfig.</span><span class="api-card__name">num_actions</span><span class="pp">: </span><span class="pt">int = 64</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Successful action trajectories sampled per scene, with replacement when a scene has fewer.</p></div></div>
+    </div><div class="api-row api-row--plain" id="datasetconfig-num_points">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L448">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">DatasetConfig.</span><span class="api-card__name">num_points</span><span class="pp">: </span><span class="pt">int = 2048</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Point-cloud points per scene, with replacement when the cloud is smaller.</p></div></div>
+    </div><div class="api-row api-row--plain" id="datasetconfig-return_actions">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L450">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">DatasetConfig.</span><span class="api-card__name">return_actions</span><span class="pp">: </span><span class="pt">bool = True</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Return the <code>(num_actions, 3, D)</code> supervision tensor; training needs it and evaluation turns it off.</p></div></div>
+    </div><div class="api-row api-row--plain" id="datasetconfig-return_graspness">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L452">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">DatasetConfig.</span><span class="api-card__name">return_graspness</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Return per-point graspness and the best conditioning-point indices, for local-feature SpConv policies; needs data processed with <code>enable_contact_extraction</code>.</p></div></div>
+    </div><div class="api-row api-row--plain" id="datasetconfig-return_object_pointcloud_only">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L455">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">DatasetConfig.</span><span class="api-card__name">return_object_pointcloud_only</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Sample only target-object points instead of the full cropped scene cloud.</p></div></div>
+    </div><div class="api-row api-row--plain" id="datasetconfig-cache_in_memory">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L457">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">DatasetConfig.</span><span class="api-card__name">cache_in_memory</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Cache observations and actions in RAM; sampling stays unchanged.</p></div></div>
+    </div><div class="api-row api-row--plain" id="datasetconfig-return_rgb">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L459">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">DatasetConfig.</span><span class="api-card__name">return_rgb</span><span class="pp">: </span><span class="pt">bool = True</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Include RGB and camera poses when available.</p></div></div>
+    </div><div class="api-row api-row--plain" id="datasetconfig-fuse_views">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L461">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">DatasetConfig.</span><span class="api-card__name">fuse_views</span><span class="pp">: </span><span class="pt">int = 0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Object-only multi-view data: fuse view 0 (the head) with up to this many other views, a random count per sample, into one cloud. 0: one random view.</p></div></div>
+    </div><div class="api-row api-row--plain" id="datasetconfig-view_noise">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L464">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">DatasetConfig.</span><span class="api-card__name">view_noise</span><span class="pp">: </span><span class="pt">float = 0.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>With fuse_views: std of each view's rigid misalignment, meters (translation) and x10 radians (rotation).</p></div></div>
+    </div><div class="api-row api-row--plain" id="datasetconfig-point_noise">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L466">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">DatasetConfig.</span><span class="api-card__name">point_noise</span><span class="pp">: </span><span class="pt">float = 0.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>With fuse_views: std of per-point Gaussian noise (m).</p></div></div>
+    </div><div class="api-row api-row--plain" id="datasetconfig-aug_prob">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L468">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">DatasetConfig.</span><span class="api-card__name">aug_prob</span><span class="pp">: </span><span class="pt">float = 0.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>With fuse_views: probability of the perception augmentation (<code>datasets/perception_aug.py</code>) per sample; needs renders that keep the neighbours (extract_segments=[]) and camera poses in the processed h5.</p></div></div>
+    </div><div class="api-row api-row--plain" id="datasetconfig-aug_keep_min">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L471">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">DatasetConfig.</span><span class="api-card__name">aug_keep_min</span><span class="pp">: </span><span class="pt">float = 0.1</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Perception aug: fused-cloud keep fraction, log-uniform in [aug_keep_min, 1].</p></div></div>
+    </div><div class="api-row api-row--plain" id="datasetconfig-aug_voxel_max">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L473">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">DatasetConfig.</span><span class="api-card__name">aug_voxel_max</span><span class="pp">: </span><span class="pt">float = 0.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Perception aug: voxel dedup size (m), applied with p 0.5 (the old gate pipeline's 3 mm thinning).</p></div></div>
+    </div><div class="api-row api-row--plain" id="datasetconfig-aug_drop_wrist_prob">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L475">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">DatasetConfig.</span><span class="api-card__name">aug_drop_wrist_prob</span><span class="pp">: </span><span class="pt">float = 0.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Perception aug: probability of the head view alone (no wrist view).</p></div></div>
+    </div><div class="api-row api-row--plain" id="datasetconfig-aug_rgb_prob">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/experiment_config.py#L477">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">DatasetConfig.</span><span class="api-card__name">aug_rgb_prob</span><span class="pp">: </span><span class="pt">float = 0.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Perception aug: probability of the RGB / MoGe depth-error model (per sample).</p></div></div>
+    </div></div></div>
+  </section></div></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/graspkit/api-policy/"><span class="lbl">← Previous</span><span class="nm">Policy</span></a><a class="next" href="/docs/graspkit/api-envs/"><span class="lbl">Next →</span><span class="nm">Environments</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#trainer">Trainer</a><a href="#trainerconfig">TrainerConfig</a><a href="#graspdataset">GraspDataset</a><a href="#datasetconfig">DatasetConfig</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "graspkit", "id": "api-training", "toc": [{"text": "Trainer", "href": "#trainer", "members": [{"text": "traj_builder", "href": "#trainer-traj_builder"}, {"text": "evaluator", "href": "#trainer-evaluator"}, {"text": "train()", "href": "#trainer-train"}, {"text": "train_graph()", "href": "#trainer-train_graph"}, {"text": "evaluate()", "href": "#trainer-evaluate"}]}, {"text": "TrainerConfig", "href": "#trainerconfig", "members": [{"text": "seed", "href": "#trainerconfig-seed"}, {"text": "evaluator", "href": "#trainerconfig-evaluator"}, {"text": "eval_only", "href": "#trainerconfig-eval_only"}, {"text": "eval_on_train", "href": "#trainerconfig-eval_on_train"}, {"text": "track", "href": "#trainerconfig-track"}, {"text": "wandb_project_name", "href": "#trainerconfig-wandb_project_name"}, {"text": "batch_size", "href": "#trainerconfig-batch_size"}, {"text": "eval_num_envs", "href": "#trainerconfig-eval_num_envs"}, {"text": "max_eval_batches", "href": "#trainerconfig-max_eval_batches"}, {"text": "eval_pen_threshold", "href": "#trainerconfig-eval_pen_threshold"}, {"text": "total_iters", "href": "#trainerconfig-total_iters"}, {"text": "num_dataloader_workers", "href": "#trainerconfig-num_dataloader_workers"}, {"text": "lr", "href": "#trainerconfig-lr"}, {"text": "weight_decay", "href": "#trainerconfig-weight_decay"}, {"text": "log_freq", "href": "#trainerconfig-log_freq"}, {"text": "eval_freq", "href": "#trainerconfig-eval_freq"}, {"text": "save_freq", "href": "#trainerconfig-save_freq"}, {"text": "cuda_graph", "href": "#trainerconfig-cuda_graph"}, {"text": "fast_step", "href": "#trainerconfig-fast_step"}, {"text": "grad_clip_norm", "href": "#trainerconfig-grad_clip_norm"}]}, {"text": "GraspDataset", "href": "#graspdataset", "members": [{"text": "to_device()", "href": "#graspdataset-to_device"}]}, {"text": "DatasetConfig", "href": "#datasetconfig", "members": [{"text": "num_actions", "href": "#datasetconfig-num_actions"}, {"text": "num_points", "href": "#datasetconfig-num_points"}, {"text": "return_actions", "href": "#datasetconfig-return_actions"}, {"text": "return_graspness", "href": "#datasetconfig-return_graspness"}, {"text": "return_object_pointcloud_only", "href": "#datasetconfig-return_object_pointcloud_only"}, {"text": "cache_in_memory", "href": "#datasetconfig-cache_in_memory"}, {"text": "return_rgb", "href": "#datasetconfig-return_rgb"}, {"text": "fuse_views", "href": "#datasetconfig-fuse_views"}, {"text": "view_noise", "href": "#datasetconfig-view_noise"}, {"text": "point_noise", "href": "#datasetconfig-point_noise"}, {"text": "aug_prob", "href": "#datasetconfig-aug_prob"}, {"text": "aug_keep_min", "href": "#datasetconfig-aug_keep_min"}, {"text": "aug_voxel_max", "href": "#datasetconfig-aug_voxel_max"}, {"text": "aug_drop_wrist_prob", "href": "#datasetconfig-aug_drop_wrist_prob"}, {"text": "aug_rgb_prob", "href": "#datasetconfig-aug_rgb_prob"}]}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

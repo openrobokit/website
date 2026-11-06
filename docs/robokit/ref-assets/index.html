@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Built-in Robots &amp; Datasets · RoboKit docs · OpenRoboKit</title>
+  <meta name="description" content="GPU-native, differentiable robotics tooling: IK, trajectory optimization, retargeting, grasping, calibration." />
+  <link rel="canonical" href="https://openrobokit.com/docs/robokit/ref-assets/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">RoboKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="is-active">
+        <span class="nm">RoboKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="">
+        <span class="nm">GraspKit</span>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/robokit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/robokit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/robokit/rl/" data-id="rl" class="">RL</a></div><div class="side__list"><a href="/docs/robokit/sim-mpc/" data-id="sim-mpc" class="">Sim MPC</a></div><div class="side__list"><a href="/docs/robokit/ik/" data-id="ik" class="">IK</a></div><div class="side__list"><a href="/docs/robokit/motion-planning/" data-id="motion-planning" class="">Motion Planning</a></div><div class="side__list"><a href="/docs/robokit/humanoid-retargeting/" data-id="humanoid-retargeting" class="">Humanoid Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand-retargeting/" data-id="hand-retargeting" class="">Hand Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand_eye_calibration/" data-id="hand_eye_calibration" class="">Hand-Eye Calibration</a></div><div class="side__list"><a href="/docs/robokit/ref-assets/" data-id="ref-assets" class="is-active">Built-in Robots &amp; Datasets</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/robot/" data-id="robot" class="">Robot</a></div><div class="side__list"><a href="/docs/robokit/geom/" data-id="geom" class="">Geometry</a></div><div class="side__list"><a href="/docs/robokit/optimization/" data-id="optimization" class="">Optimization</a></div><div class="side__list"><a href="/docs/robokit/conventions/" data-id="conventions" class="">Conventions</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list">
+      <div class="side__sub is-folded" data-fold="Reference·Optimizers">
+        <span>Optimizers</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/opt-gd/" data-id="opt-gd" class="">GDOptimizer</a><a href="/docs/robokit/opt-lm/" data-id="opt-lm" class="">LMOptimizer</a><a href="/docs/robokit/opt-lbfgs/" data-id="opt-lbfgs" class="">LBFGSOptimizer</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Terms">
+        <span>Terms</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/term-frame/" data-id="term-frame" class="">Frame Task</a><a href="/docs/robokit/term-position/" data-id="term-position" class="">Position Task</a><a href="/docs/robokit/term-rotation/" data-id="term-rotation" class="">Rotation Tasks</a><a href="/docs/robokit/term-frame-vector/" data-id="term-frame-vector" class="">Frame Vector Task</a><a href="/docs/robokit/term-com-position/" data-id="term-com-position" class="">CoM Position Task</a><a href="/docs/robokit/term-position-limit/" data-id="term-position-limit" class="">Position Limit</a><a href="/docs/robokit/term-velocity-limit/" data-id="term-velocity-limit" class="">Velocity Limit Task</a><a href="/docs/robokit/term-configuration/" data-id="term-configuration" class="">Configuration Task</a><a href="/docs/robokit/term-smoothness/" data-id="term-smoothness" class="">Smoothness Task</a><a href="/docs/robokit/term-self-collision/" data-id="term-self-collision" class="">Self Collision Task</a><a href="/docs/robokit/term-scene-collision/" data-id="term-scene-collision" class="">Scene Collision Task</a><a href="/docs/robokit/term-scene-distance/" data-id="term-scene-distance" class="">Scene Distance Task</a><a href="/docs/robokit/term-interaction-mesh/" data-id="term-interaction-mesh" class="">Interaction Mesh Task</a><a href="/docs/robokit/term-mask-alignment/" data-id="term-mask-alignment" class="">Mask Alignment Task</a><a href="/docs/robokit/term-manipulability/" data-id="term-manipulability" class="">Manipulability Task</a><a href="/docs/robokit/term-force-closure/" data-id="term-force-closure" class="">Force Closure Task</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/api-robot/" data-id="api-robot" class="">Robot</a><a href="/docs/robokit/api-geometry/" data-id="api-geometry" class="">Geometry</a><a href="/docs/robokit/api-optimization/" data-id="api-optimization" class="">Optimization</a><a href="/docs/robokit/api-terms/" data-id="api-terms" class="">Terms</a><a href="/docs/robokit/api-ik/" data-id="api-ik" class="">Inverse Kinematics</a><a href="/docs/robokit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/robokit/api-sim-mpc/" data-id="api-sim-mpc" class="">Sim MPC</a><a href="/docs/robokit/api-humanoid-retargeting/" data-id="api-humanoid-retargeting" class="">Humanoid Retargeting</a><a href="/docs/robokit/api-hand-retargeting/" data-id="api-hand-retargeting" class="">Hand Retargeting</a><a href="/docs/robokit/api-hand_eye_calibration/" data-id="api-hand_eye_calibration" class="">Hand-Eye Calibration</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">robokit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>User Guide</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Built-in Robots &amp; Datasets</h1>
+        <div class="doc-body" id="doc-body"><p>Robot descriptions and datasets live in the HuggingFace dataset <a class="inline" href="https://huggingface.co/datasets/openrobokit/robokit"><code>openrobokit/robokit</code></a>.</p><p>Assets are under their own licenses; see <a class="inline" href="https://huggingface.co/datasets/openrobokit/robokit/blob/6c7d94e4ace25a1ec674cce237ef90ff9c159f22/LICENSES.md">license files and outstanding gaps</a>.</p><h3 id="consuming">Consuming</h3><p>Import a named asset module and use its static <code>Path</code> symbols. Required files are downloaded and cached automatically. Use <code>fetch()</code> for paths without static symbols:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>from robokit.assets import fetch
+from robokit.assets.robots.humanoids import unitree_g1
+
+unitree_g1.URDF_PATH
+unitree_g1.COLLISION_SPHERE_PATH
+fetch(["datasets/sfu/**"]) / "datasets/sfu/0005/x.npz"</pre><pre data-code-full hidden>from robokit.assets import fetch
+from robokit.assets.robots.humanoids import unitree_g1
+
+unitree_g1.URDF_PATH
+unitree_g1.COLLISION_SPHERE_PATH
+fetch(["datasets/sfu/**"]) / "datasets/sfu/0005/x.npz"
+assert unitree_g1.URDF_PATH.is_file()</pre></div><div class="doc-note doc-note--note"><div class="doc-note__title">Note</div><p>Files are pinned to one dataset commit and cached under <code>~/.robokit/</code>, so imports work offline.</p></div><h4>Self-collision ignore sets</h4><p>Each robot lists the link pairs that always touch, so self-collision terms skip them. Each geometry representation has its own set. Match it to your <code>SelfCollisionTask</code> representation (<code>sphere</code> by default):</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>robot = Robot.load(
+    xhand.URDF_PATH_RIGHT,
+    load_collision_spheres=True,
+    collision_spheres_path=xhand.COLLISION_SPHERE_PATH_RIGHT,
+    self_collision_ignore_path=xhand.SPHERE_SELF_COLLISION_IGNORE_PATH_RIGHT,  # or CAPSULE_...
+)</pre><pre data-code-full hidden>from robokit.robo import Robot
+from robokit.assets.robots.end_effectors import xhand
+
+robot = Robot.load(
+    xhand.URDF_PATH_RIGHT,
+    load_collision_spheres=True,
+    collision_spheres_path=xhand.COLLISION_SPHERE_PATH_RIGHT,
+    self_collision_ignore_path=xhand.SPHERE_SELF_COLLISION_IGNORE_PATH_RIGHT,  # or CAPSULE_...
+)
+assert robot.spec.has_collision_spheres</pre></div><p>MJCF variants have only <code>MJ_CAPSULE_...</code> sets. Robots without collision spheres have no sphere set.</p><p>For asset layout and authoring, see the <a class="inline" href="/docs/robokit/dev/">Development Guide</a>.</p><h3 id="robots">Robots</h3><p>Licenses are upstream. <code>—</code> means unavailable or unspecified. A side, such as <code>(right)</code>, means only that side is available.</p><h4>Arms</h4><table>
+<thead>
+<tr><th>Name</th><th>Format</th><th>Source</th><th>License</th><th>Collision spheres</th><th>Self-collision ignore</th></tr>
+</thead>
+<tbody>
+<tr><td rowspan="2"><code>franka_panda</code></td><td>URDF</td><td><a href="https://github.com/mani-skill/ManiSkill/blob/main/mani_skill/assets/robots/panda/panda_v2.urdf">ManiSkill</a></td><td><a href="https://github.com/mani-skill/ManiSkill/blob/main/LICENSE">Apache-2.0</a></td><td>YAML (<a href="https://github.com/NVlabs/curobo/blob/v0.7.8/LICENSE">NVIDIA non-commercial</a>)</td><td>✓</td></tr>
+<tr><td>MJCF</td><td><a href="https://github.com/google-deepmind/mujoco_menagerie">Menagerie</a></td><td><a href="https://huggingface.co/datasets/openrobokit/robokit/blob/6c7d94e4ace25a1ec674cce237ef90ff9c159f22/robots/robot_mj_description/arms/franka_panda/LICENSE">Apache-2.0</a></td><td>—</td><td>✓</td></tr>
+<tr><td><code>xarm6</code></td><td>URDF</td><td><a href="https://github.com/xArm-Developer/xarm_ros">UFACTORY</a></td><td><a href="https://github.com/xArm-Developer/xarm_ros/blob/master/LICENSE">BSD-3-Clause</a></td><td>YAML</td><td>✓</td></tr>
+<tr><td rowspan="2"><code>xarm7</code></td><td>URDF</td><td><a href="https://github.com/xArm-Developer/xarm_ros">UFACTORY</a> / <a href="https://github.com/sapien-sim/xarm7">SAPIEN</a></td><td><a href="https://github.com/xArm-Developer/xarm_ros/blob/master/LICENSE">BSD-3-Clause</a> + —</td><td>—</td><td>✓</td></tr>
+<tr><td>MJCF</td><td><a href="https://github.com/google-deepmind/mujoco_menagerie">Menagerie</a></td><td><a href="https://huggingface.co/datasets/openrobokit/robokit/blob/6c7d94e4ace25a1ec674cce237ef90ff9c159f22/robots/robot_mj_description/arms/xarm7/LICENSE">BSD-3-Clause</a></td><td>—</td><td>✓</td></tr>
+<tr><td><code>yumi</code></td><td>YAML</td><td>—</td><td>—</td><td>YAML</td><td>✓</td></tr>
+</tbody>
+</table><h4>End effectors</h4><table>
+<thead>
+<tr><th>Name</th><th>Format</th><th>Source</th><th>License</th><th>Collision spheres</th><th>Self-collision ignore</th></tr>
+</thead>
+<tbody>
+<tr><td><code>ability_hand</code></td><td>URDF</td><td><a href="https://github.com/psyonicinc/ability-hand-api">PSYONIC</a></td><td><a href="https://github.com/psyonicinc/ability-hand-api/blob/master/LICENSE">MIT</a></td><td>YAML (right)</td><td>✓ (right)</td></tr>
+<tr><td><code>allegro_hand</code></td><td>URDF</td><td>SimLab</td><td><a href="https://huggingface.co/datasets/openrobokit/robokit/blob/6c7d94e4ace25a1ec674cce237ef90ff9c159f22/robots/robot_description/end_effectors/allegro_hand/LICENSE">BSD-style</a></td><td>YAML (right)</td><td>✓ (right)</td></tr>
+<tr><td><code>arx_x5_gripper</code></td><td>URDF</td><td><a href="https://github.com/yuechen0614/RoboDojo">RoboDojo</a></td><td>MIT</td><td>YAML</td><td>✓</td></tr>
+<tr><td><code>barrett_hand</code></td><td>URDF</td><td>Barrett Technology</td><td><a href="https://huggingface.co/datasets/openrobokit/robokit/blob/6c7d94e4ace25a1ec674cce237ef90ff9c159f22/robots/robot_description/end_effectors/barrett_hand/LICENSE">BSD-style</a></td><td>YAML</td><td>✓</td></tr>
+<tr><td><code>dclaw_gripper</code></td><td>URDF</td><td>ROBEL</td><td><a href="https://huggingface.co/datasets/openrobokit/robokit/blob/6c7d94e4ace25a1ec674cce237ef90ff9c159f22/robots/robot_description/end_effectors/dclaw_gripper/LICENSE">Apache-2.0</a></td><td>YAML</td><td>✓</td></tr>
+<tr><td><code>inspire_hand</code></td><td>URDF</td><td>Inspire Robots</td><td><a href="https://github.com/dexsuite/dex-urdf#robot-source">CC-BY-NC-SA-4.0</a></td><td>YAML</td><td>✓</td></tr>
+<tr><td><code>leap_hand</code></td><td>URDF</td><td>Ananye Agarwal</td><td><a href="https://huggingface.co/datasets/openrobokit/robokit/blob/6c7d94e4ace25a1ec674cce237ef90ff9c159f22/robots/robot_description/end_effectors/leap_hand/LICENSE.txt">MIT</a></td><td>YAML (right)</td><td>✓ (right)</td></tr>
+<tr><td><code>mano_hand</code></td><td>URDF (right)</td><td><a href="https://mano.is.tue.mpg.de/">MANO</a></td><td><a href="https://mano.is.tue.mpg.de/license.html">MANO</a></td><td>YAML (right)</td><td>✓ (right)</td></tr>
+<tr><td><code>orcahand</code></td><td>URDF (right)</td><td><a href="https://github.com/orcahand/orcahand_description">ORCA</a></td><td><a href="https://github.com/orcahand/orcahand_description#license">MIT</a></td><td>YAML (right)</td><td>✓ (right)</td></tr>
+<tr><td><code>paxini_hand</code></td><td>URDF</td><td><a href="https://paxini.com/robot/dex/gen2">PaXini</a></td><td>—</td><td>YAML (right)</td><td>✓ (right)</td></tr>
+<tr><td><code>robotiq_2f85</code></td><td>URDF</td><td><a href="https://github.com/a-price/robotiq_arg85_description">a-price</a></td><td><a href="https://github.com/a-price/robotiq_arg85_description/blob/master/package.xml">BSD</a></td><td>YAML</td><td>✓</td></tr>
+<tr><td><code>schunk_hand</code></td><td>URDF</td><td><a href="https://github.com/SCHUNK-SE-Co-KG/schunk_svh_ros_driver">SCHUNK</a></td><td><a href="https://huggingface.co/datasets/openrobokit/robokit/blob/6c7d94e4ace25a1ec674cce237ef90ff9c159f22/robots/robot_description/end_effectors/schunk_hand/LICENSE">GPLv3</a></td><td>YAML (right)</td><td>✓ (right)</td></tr>
+<tr><td rowspan="2"><code>shadow_hand</code></td><td>URDF</td><td><a href="https://github.com/shadow-robot/sr_common">Shadow Robot</a></td><td><a href="https://huggingface.co/datasets/openrobokit/robokit/blob/6c7d94e4ace25a1ec674cce237ef90ff9c159f22/robots/robot_description/end_effectors/shadow_hand/shadow_hand_right.urdf">BSD-3-Clause</a> + <a href="https://huggingface.co/datasets/openrobokit/robokit/blob/6c7d94e4ace25a1ec674cce237ef90ff9c159f22/robots/robot_description/end_effectors/shadow_hand/LICENSE">Apache-2.0</a></td><td>YAML (right)</td><td>✓ (right)</td></tr>
+<tr><td>MJCF (right)</td><td><a href="https://github.com/google-deepmind/mujoco_menagerie">Menagerie</a> / <a href="https://github.com/PKU-EPIC/DexGraspNet/blob/main/grasp_generation/mjcf/shadow_hand_wrist_free.xml">DexGraspNet</a></td><td><a href="https://github.com/google-deepmind/mujoco_menagerie/blob/main/shadow_hand/LICENSE">Apache-2.0</a> + <a href="https://huggingface.co/datasets/openrobokit/robokit/blob/6c7d94e4ace25a1ec674cce237ef90ff9c159f22/robots/robot_description/end_effectors/shadow_hand_mjcf/LICENSE-CC-BY-NC-4.0.txt">CC-BY-NC-4.0</a></td><td>YAML (right)</td><td>—</td></tr>
+<tr><td><code>sharpa_hand</code></td><td>URDF</td><td><a href="https://github.com/sharpa-robotics/sharpa-urdf-usd-xml">Sharpa Robotics</a></td><td><a href="https://github.com/sharpa-robotics/sharpa-urdf-usd-xml/blob/main/LICENSE.txt">Apache-2.0</a></td><td>YAML</td><td>✓</td></tr>
+<tr><td><code>umi_gripper</code></td><td>MJCF</td><td><a href="https://github.com/google-deepmind/mujoco_menagerie">Menagerie</a></td><td><a href="https://huggingface.co/datasets/openrobokit/robokit/blob/6c7d94e4ace25a1ec674cce237ef90ff9c159f22/robots/robot_mj_description/end_effectors/umi_gripper/LICENSE">MIT</a></td><td>—</td><td>—</td></tr>
+<tr><td rowspan="2"><code>xhand</code></td><td>URDF</td><td><a href="https://www.robotera.com/en/">RobotEra</a></td><td>—</td><td>YAML (right)</td><td>✓ (right)</td></tr>
+<tr><td>MJCF (right)</td><td><a href="https://www.robotera.com/en/">RobotEra</a></td><td>—</td><td>—</td><td>✓</td></tr>
+<tr><td rowspan="2"><code>wuji_hand</code> (Hand 1)</td><td>URDF</td><td><a href="https://github.com/wuji-technology/wuji-description">Wuji Technology</a></td><td><a href="https://github.com/wuji-technology/wuji-description/blob/main/LICENSE">MIT</a></td><td>YAML</td><td>✓</td></tr>
+<tr><td>MJCF</td><td><a href="https://github.com/wuji-technology/wuji-description">Wuji Technology</a></td><td><a href="https://github.com/wuji-technology/wuji-description/blob/main/LICENSE">MIT</a></td><td>—</td><td>—</td></tr>
+<tr><td rowspan="2"><code>wuji_hand_2_2</code> (Hand 2.2)</td><td>URDF</td><td><a href="https://github.com/wuji-technology/wuji-description">Wuji Technology</a></td><td><a href="https://github.com/wuji-technology/wuji-description/blob/main/LICENSE">MIT</a></td><td>YAML</td><td>✓</td></tr>
+<tr><td>MJCF</td><td><a href="https://github.com/wuji-technology/wuji-description">Wuji Technology</a></td><td><a href="https://github.com/wuji-technology/wuji-description/blob/main/LICENSE">MIT</a></td><td>—</td><td>—</td></tr>
+<tr><td rowspan="2"><code>yam_gripper</code></td><td>URDF</td><td><a href="https://github.com/i2rt-robotics/i2rt">I2RT</a></td><td><a href="https://github.com/i2rt-robotics/i2rt/blob/main/LICENSE">MIT</a></td><td>YAML</td><td>✓</td></tr>
+<tr><td>MJCF</td><td><a href="https://github.com/i2rt-robotics/i2rt">I2RT</a></td><td><a href="https://github.com/i2rt-robotics/i2rt/blob/main/LICENSE">MIT</a></td><td>—</td><td>✓</td></tr>
+</tbody>
+</table><h4>Humanoids</h4><table>
+<thead>
+<tr><th>Name</th><th>Format</th><th>Source</th><th>License</th><th>Collision spheres</th><th>Self-collision ignore</th></tr>
+</thead>
+<tbody>
+<tr><td><code>berkeley_humanoid_lite</code></td><td>URDF</td><td><a href="https://github.com/HybridRobotics/Berkeley-Humanoid-Lite-Assets">Hybrid Robotics</a></td><td><a href="https://github.com/HybridRobotics/Berkeley-Humanoid-Lite-Assets/blob/main/LICENCE">CC-BY-SA-4.0</a></td><td>YAML</td><td>✓</td></tr>
+<tr><td><code>booster_k1</code></td><td>URDF</td><td><a href="https://github.com/BoosterRobotics/booster_assets/tree/3c2dfa99e09beddf092e0d6521dbbcec7e7903ed/robots/K1">Booster</a></td><td><a href="https://github.com/BoosterRobotics/booster_assets/blob/3c2dfa99e09beddf092e0d6521dbbcec7e7903ed/LICENSE">BSD-3-Clause</a></td><td>YAML</td><td>✓</td></tr>
+<tr><td><code>booster_t1</code></td><td>URDF</td><td><a href="https://github.com/BoosterRobotics/booster_assets/tree/3c2dfa99e09beddf092e0d6521dbbcec7e7903ed/robots/T1">Booster</a></td><td><a href="https://github.com/BoosterRobotics/booster_assets/blob/3c2dfa99e09beddf092e0d6521dbbcec7e7903ed/LICENSE">BSD-3-Clause</a></td><td>YAML</td><td>✓</td></tr>
+<tr><td><code>engineai_pm01</code></td><td>URDF</td><td><a href="https://github.com/engineai-robotics/engineai_amp/tree/83ba64bb/source/engineai_lab/assets/pm01">EngineAI</a></td><td><a href="https://github.com/engineai-robotics/engineai_amp/blob/83ba64bb/LICENSE">BSD-3-Clause</a></td><td>YAML</td><td>✓</td></tr>
+<tr><td><code>fourier_gr3</code></td><td>URDF</td><td><a href="https://github.com/FFTAI/Wiki-GRx-Models/blob/master/GRX/GR3/gr3v2_1_1/basic_urdf/gr3v2_1_1_dummy_hand.urdf">Fourier</a></td><td><a href="https://github.com/FFTAI/Wiki-GRx-Models/blob/master/LICENSE">GPLv3</a></td><td>YAML</td><td>✓</td></tr>
+<tr><td><code>pal_talos</code></td><td>URDF</td><td><a href="https://github.com/stack-of-tasks/talos-data/blob/dc636c94/urdf/talos_reduced_v2.urdf">PAL Robotics / Stack of Tasks</a></td><td><a href="https://github.com/stack-of-tasks/talos-data/blob/dc636c94/LICENSE">LGPL-3.0</a></td><td>YAML</td><td>✓</td></tr>
+<tr><td><code>pnd_adam_lite</code></td><td>URDF</td><td><a href="https://github.com/pndbotics/pnd_models/tree/38420a65/adam_lite">PNDbotics</a></td><td><a href="https://github.com/pndbotics/pnd_models/blob/38420a65/adam_license.txt">BSD-3-Clause</a></td><td>YAML</td><td>✓</td></tr>
+<tr><td><code>tienkung_lite</code></td><td>URDF</td><td><a href="https://github.com/Open-X-Humanoid/TienKung_URDF/tree/4c2c061d/lite_urdf_publish">X-Humanoid</a></td><td><a href="https://github.com/Open-X-Humanoid/TienKung_URDF/blob/4c2c061d/licence">OpenAtom Open Hardware 1.0</a></td><td>YAML</td><td>✓</td></tr>
+<tr><td><code>toddlerbot_2xc</code></td><td>URDF</td><td><a href="https://github.com/hshi74/toddlerbot/tree/e337f3b1/toddlerbot/descriptions/toddlerbot_2xc">ToddlerBot</a></td><td><a href="https://github.com/hshi74/toddlerbot/blob/e337f3b1/LICENSE">MIT</a></td><td>YAML</td><td>✓</td></tr>
+<tr><td><code>unitree_g1</code></td><td>URDF</td><td><a href="https://github.com/unitreerobotics/unitree_ros/tree/master/robots/g1_description">Unitree</a></td><td><a href="https://github.com/unitreerobotics/unitree_ros/blob/master/LICENSE">BSD-3-Clause</a></td><td>YAML</td><td>✓</td></tr>
+<tr><td><code>unitree_h1</code></td><td>URDF</td><td><a href="https://github.com/unitreerobotics/unitree_ros/tree/ccfc6fd8/robots/h1_description">Unitree</a></td><td><a href="https://github.com/unitreerobotics/unitree_ros/blob/master/LICENSE">BSD-3-Clause</a></td><td>YAML</td><td>✓</td></tr>
+<tr><td><code>unitree_h1_2</code></td><td>URDF</td><td><a href="https://github.com/unitreerobotics/unitree_ros/blob/master/robots/h1_2_description/h1_2_handless.urdf">Unitree</a></td><td><a href="https://github.com/unitreerobotics/unitree_ros/blob/master/LICENSE">BSD-3-Clause</a></td><td>YAML</td><td>✓</td></tr>
+</tbody>
+</table><h3 id="datasets">Datasets</h3><table>
+<thead>
+<tr><th>Name</th><th>Format</th><th>Source</th><th>License</th></tr>
+</thead>
+<tbody>
+<tr><td><code>climb</code></td><td>NPY, OBJ</td><td>OmniRetarget / <a href="https://github.com/amazon-far/holosoma/tree/bccd4d7451640a2800ddc77e469d911a84f91994/src/holosoma_retargeting/holosoma_retargeting/demo_data/climb/mocap_climb_seq_0">Holosoma</a></td><td><a href="https://github.com/amazon-far/holosoma/blob/bccd4d7451640a2800ddc77e469d911a84f91994/LICENSE">Apache-2.0</a></td></tr>
+<tr><td><code>dex_retargeting</code></td><td>PKL</td><td><a href="https://github.com/dexsuite/dex-retargeting">dex-retargeting</a> / <a href="https://dex-ycb.github.io/">DexYCB</a></td><td><a href="https://huggingface.co/datasets/openrobokit/robokit/blob/6c7d94e4ace25a1ec674cce237ef90ff9c159f22/datasets/dex_retargeting/LICENSE-CC-BY-NC-4.0.txt">CC-BY-NC-4.0</a></td></tr>
+<tr><td><code>dexmachina</code></td><td>NPZ</td><td><a href="https://project-dexmachina.github.io/">DexMachina</a> / <a href="https://arctic.is.tue.mpg.de/">ARCTIC</a></td><td><a href="https://arctic.is.tue.mpg.de/license.html">ARCTIC</a></td></tr>
+<tr><td><code>dexycb</code></td><td>NPZ, JSON, OBJ</td><td><a href="https://dex-ycb.github.io/">DexYCB</a></td><td><a href="https://dex-ycb.github.io/#license">CC-BY-NC-4.0</a></td></tr>
+<tr><td><code>gigahands</code></td><td>NPZ</td><td><a href="https://github.com/brown-ivl/gigahands">GigaHands</a></td><td><a href="https://github.com/brown-ivl/gigahands#license">CC-BY-NC-4.0</a></td></tr>
+<tr><td><code>nist_assembly</code></td><td>XML, NPZ</td><td><a href="https://github.com/suniique/assembly-nist">AssembleNIST</a> / <a href="https://github.com/UW-Lab/UWLab">UW Lab</a></td><td><a href="https://huggingface.co/datasets/openrobokit/robokit/blob/7f93a3a7ad57d6bde5b5fc47bbfad02c027db387/datasets/nist_assembly/NOTICE.md">MIT</a></td></tr>
+<tr><td><code>oakink2</code></td><td>NPZ</td><td><a href="https://huggingface.co/datasets/kelvin34501/OakInk-v2">OakInk-v2</a></td><td><a href="https://huggingface.co/datasets/openrobokit/robokit/blob/6c7d94e4ace25a1ec674cce237ef90ff9c159f22/datasets/oakink2/LICENSE-CC-BY-SA-4.0.txt">CC-BY-SA-4.0</a></td></tr>
+<tr><td><code>omomo</code></td><td>PT, PKL, OBJ</td><td><a href="https://lijiaman.github.io/projects/omomo/">OMOMO</a> / <a href="https://sirui-xu.github.io/InterMimic/">InterMimic</a></td><td><a href="https://huggingface.co/datasets/openrobokit/robokit/blob/6c7d94e4ace25a1ec674cce237ef90ff9c159f22/datasets/omomo/NOTICE.md">—</a></td></tr>
+<tr><td><code>parahome</code></td><td>PKL, JSON, OBJ</td><td><a href="https://github.com/snuvclab/ParaHome">ParaHome</a></td><td><a href="https://github.com/snuvclab/ParaHome#license">CC-BY-NC-SA-4.0</a></td></tr>
+</tbody>
+</table><h3 id="user-provided-body-models">User-provided body models</h3><p>Download <a class="inline" href="https://mano.is.tue.mpg.de/">MANO</a> or <a class="inline" href="https://smpl-x.is.tue.mpg.de/">SMPL-X</a> from its official website after accepting its license. Put the files you need under <code>~/.robokit/body_models/</code>, or set <code>ROBOKIT_BODY_MODELS</code> to another folder:</p><ul><li><code>mano/MANO_RIGHT.pkl</code> or <code>mano/MANO_LEFT.pkl</code></li><li><code>smplx/SMPLX_NEUTRAL.npz</code>, <code>smplx/SMPLX_MALE.npz</code>, or <code>smplx/SMPLX_FEMALE.npz</code></li></ul><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>from robokit.smplx import load_mano, load_smplx
+
+hand = load_mano()  # or load_mano("/path/to/MANO_RIGHT.pkl")
+body = load_smplx()</pre><pre data-code-full hidden>from robokit.smplx import load_mano, load_smplx
+
+hand = load_mano()  # or load_mano("/path/to/MANO_RIGHT.pkl")
+body = load_smplx()
+assert hand is not None and body is not None</pre></div><p>NPZs load directly. PKLs convert once beside the originals, so the folder must be writable. RoboKit never downloads body models.</p></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/robokit/hand_eye_calibration/"><span class="lbl">← Previous</span><span class="nm">Hand-Eye Calibration</span></a><a class="next" href="/docs/robokit/robot/"><span class="lbl">Next →</span><span class="nm">Robot</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#consuming">Consuming</a><a href="#robots">Robots</a><a href="#datasets">Datasets</a><a href="#user-provided-body-models">User-provided body models</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "robokit", "id": "ref-assets", "toc": [{"text": "Consuming", "href": "#consuming"}, {"text": "Robots", "href": "#robots"}, {"text": "Datasets", "href": "#datasets"}, {"text": "User-provided body models", "href": "#user-provided-body-models"}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

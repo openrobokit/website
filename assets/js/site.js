@@ -15,26 +15,34 @@
   // because they are also the package name and the URL segment; everything
   // that renders a kit to a reader goes through here.
   window.RK_NAMES = {
-    roboskills: 'RoboSkills',
     robokit: 'RoboKit',
     retargetingkit: 'RetargetingKit',
     graspkit: 'GraspKit',
+    roboskills: 'RoboSkills',
   };
 
   // Every project is a directory, so its paper-friendly URL is just its key.
-  const NAV = ['roboskills'].map((k) => ({ key: k, label: window.RK_NAMES[k], href: `/${k}/` }));
+  const NAV = [
+    ...Object.keys(window.RK_NAMES).map((k) => ({ key: k, label: window.RK_NAMES[k], href: `/${k}/` })),
+    // straight to the first page, not through /docs/'s redirect stub
+    { key: 'docs', label: 'Docs', href: '/docs/robokit/overview/' },
+  ];
 
-  const GITHUB_URL = 'https://github.com/openrobokit/roboskills';
+  const GITHUB_URL = 'https://github.com/openrobokit/robokit';
 
-  // `active` is the NAV key to mark.
+  // `active` is a NAV key, or anything absent from it (the landing page passes
+  // nothing) to leave every entry unmarked.
   window.rkRenderNav = function (active) {
     const link = (n, dot) =>
       `<a href="${n.href}" class="${n.key === active ? 'is-active' : ''}">` +
       `${dot && n.key === active ? '<span class="dot"></span>' : ''}${n.label}</a>`;
 
-    document.body.insertAdjacentHTML('afterbegin', `
+    // A page may nominate its own mount with data-nav-mount when the nav has to
+    // sit inside a positioned wrapper; otherwise it goes at the top of <body>.
+    const mount = document.querySelector('[data-nav-mount]') || document.body;
+    mount.insertAdjacentHTML('afterbegin', `
       <nav class="site-nav" aria-label="Main navigation">
-        <a class="brand" href="/roboskills/" aria-label="RoboSkills home">
+        <a class="brand" href="/" aria-label="OpenRoboKit home">
           <img src="/assets/brand/gear/robokit-ucsd.svg" alt="" />
           <span class="wordmark"><span class="o">open</span>robokit</span>
         </a>
@@ -46,7 +54,7 @@
       </nav>
       <div class="menu" id="rk-nav-menu">${NAV.map((n) => link(n, false)).join('')}</div>
     `);
-    const nav = document.querySelector('.site-nav');
+    const nav = mount.querySelector('.site-nav');
     const updateNav = () => nav.classList.toggle('is-scrolled', window.scrollY > 8);
     window.addEventListener('scroll', updateNav, { passive: true });
     updateNav();

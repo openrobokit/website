@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Optimization · RoboKit docs · OpenRoboKit</title>
+  <meta name="description" content="GPU-native, differentiable robotics tooling: IK, trajectory optimization, retargeting, grasping, calibration." />
+  <link rel="canonical" href="https://openrobokit.com/docs/robokit/optimization/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">RoboKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="is-active">
+        <span class="nm">RoboKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="">
+        <span class="nm">GraspKit</span>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/robokit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/robokit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/robokit/rl/" data-id="rl" class="">RL</a></div><div class="side__list"><a href="/docs/robokit/sim-mpc/" data-id="sim-mpc" class="">Sim MPC</a></div><div class="side__list"><a href="/docs/robokit/ik/" data-id="ik" class="">IK</a></div><div class="side__list"><a href="/docs/robokit/motion-planning/" data-id="motion-planning" class="">Motion Planning</a></div><div class="side__list"><a href="/docs/robokit/humanoid-retargeting/" data-id="humanoid-retargeting" class="">Humanoid Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand-retargeting/" data-id="hand-retargeting" class="">Hand Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand_eye_calibration/" data-id="hand_eye_calibration" class="">Hand-Eye Calibration</a></div><div class="side__list"><a href="/docs/robokit/ref-assets/" data-id="ref-assets" class="">Built-in Robots &amp; Datasets</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/robot/" data-id="robot" class="">Robot</a></div><div class="side__list"><a href="/docs/robokit/geom/" data-id="geom" class="">Geometry</a></div><div class="side__list"><a href="/docs/robokit/optimization/" data-id="optimization" class="is-active">Optimization</a></div><div class="side__list"><a href="/docs/robokit/conventions/" data-id="conventions" class="">Conventions</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list">
+      <div class="side__sub is-folded" data-fold="Reference·Optimizers">
+        <span>Optimizers</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/opt-gd/" data-id="opt-gd" class="">GDOptimizer</a><a href="/docs/robokit/opt-lm/" data-id="opt-lm" class="">LMOptimizer</a><a href="/docs/robokit/opt-lbfgs/" data-id="opt-lbfgs" class="">LBFGSOptimizer</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Terms">
+        <span>Terms</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/term-frame/" data-id="term-frame" class="">Frame Task</a><a href="/docs/robokit/term-position/" data-id="term-position" class="">Position Task</a><a href="/docs/robokit/term-rotation/" data-id="term-rotation" class="">Rotation Tasks</a><a href="/docs/robokit/term-frame-vector/" data-id="term-frame-vector" class="">Frame Vector Task</a><a href="/docs/robokit/term-com-position/" data-id="term-com-position" class="">CoM Position Task</a><a href="/docs/robokit/term-position-limit/" data-id="term-position-limit" class="">Position Limit</a><a href="/docs/robokit/term-velocity-limit/" data-id="term-velocity-limit" class="">Velocity Limit Task</a><a href="/docs/robokit/term-configuration/" data-id="term-configuration" class="">Configuration Task</a><a href="/docs/robokit/term-smoothness/" data-id="term-smoothness" class="">Smoothness Task</a><a href="/docs/robokit/term-self-collision/" data-id="term-self-collision" class="">Self Collision Task</a><a href="/docs/robokit/term-scene-collision/" data-id="term-scene-collision" class="">Scene Collision Task</a><a href="/docs/robokit/term-scene-distance/" data-id="term-scene-distance" class="">Scene Distance Task</a><a href="/docs/robokit/term-interaction-mesh/" data-id="term-interaction-mesh" class="">Interaction Mesh Task</a><a href="/docs/robokit/term-mask-alignment/" data-id="term-mask-alignment" class="">Mask Alignment Task</a><a href="/docs/robokit/term-manipulability/" data-id="term-manipulability" class="">Manipulability Task</a><a href="/docs/robokit/term-force-closure/" data-id="term-force-closure" class="">Force Closure Task</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/api-robot/" data-id="api-robot" class="">Robot</a><a href="/docs/robokit/api-geometry/" data-id="api-geometry" class="">Geometry</a><a href="/docs/robokit/api-optimization/" data-id="api-optimization" class="">Optimization</a><a href="/docs/robokit/api-terms/" data-id="api-terms" class="">Terms</a><a href="/docs/robokit/api-ik/" data-id="api-ik" class="">Inverse Kinematics</a><a href="/docs/robokit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/robokit/api-sim-mpc/" data-id="api-sim-mpc" class="">Sim MPC</a><a href="/docs/robokit/api-humanoid-retargeting/" data-id="api-humanoid-retargeting" class="">Humanoid Retargeting</a><a href="/docs/robokit/api-hand-retargeting/" data-id="api-hand-retargeting" class="">Hand Retargeting</a><a href="/docs/robokit/api-hand_eye_calibration/" data-id="api-hand_eye_calibration" class="">Hand-Eye Calibration</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">robokit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>Concepts</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Optimization</h1>
+        <div class="doc-body" id="doc-body"><p><code>robokit.opt</code> solves batched nonlinear optimization problems on the GPU. Variables live on manifolds. Costs come from <code>robokit.terms</code>. IK, motion planning, retargeting, hand-eye calibration and grasp synthesis build on it.</p><h3 id="overview">Overview</h3><p>A <strong>solver</strong> keeps a population of candidates per problem. An <strong>optimizer</strong> moves each candidate. A <strong>sampler</strong> draws tangent noise around them.</p><div class="mermaid">flowchart TD
+    subgraph Solver
+        PS[PopulationSolver]
+    end
+    subgraph Optimizers
+        OPT["(Sparse) LMOptimizer · LBFGSOptimizer · GDOptimizer"]
+    end
+    subgraph Samplers
+        SMP["RobertsSampler · GaussianSampler"]
+    end
+    subgraph Problem
+        TASKS["Tasks: ResidualTask · GradientTask"]
+        VAR["VarValues: container of multiple Var"]
+    end
+    PS -- builds --&gt; OPT
+    PS -- builds --&gt; SMP
+    PS -- costs --&gt; TASKS
+    OPT -- residuals · Jacobians --&gt; TASKS
+    OPT -- tangent steps --&gt; VAR
+    SMP -- tangent noise --&gt; VAR</div><p>One round over the population:</p><div class="mermaid">flowchart LR
+    subgraph Solver
+        direction LR
+        N["sample&lt;br/&gt;&lt;i&gt;Sampler&lt;/i&gt;"] --&gt; U["optimize&lt;br/&gt;&lt;i&gt;Optimizer&lt;/i&gt;"]
+        U --&gt; S["score&lt;br/&gt;&lt;i&gt;Task&lt;/i&gt;"] --&gt; K[select]
+        K -.next round.-&gt; N
+    end</div><ul><li><strong>sample</strong>: a sampler moves each candidate by the last scores, then draws new ones around it.</li><li><strong>optimize</strong>: the optimizer moves every candidate toward lower cost.</li><li><strong>score</strong>: the tasks cost every candidate.</li><li><strong>select</strong>: keep the best candidates per problem.</li></ul><p>Each method is a schedule over these four. Multi-candidate LM: optimize, score, select. MPPI: sample, score. ES: sample, score, select.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>state = robot.state(q=q_init)  # a Var leaf
+task = FrameTask(robot, frame_index=ee, T_world_target=target)  # a Task
+
+optimizer = LBFGSOptimizer(terms=[task], device=state.q.device)
+values, costs = optimizer.solve(VarValues({VarKey.ROBOT: state}))  # one final cost per returned instance
+state = values.get(VarKey.ROBOT)
+
+values = VarValues({VarKey.ROBOT: state, Key.EE: ee_traj})  # co-optimize multiple Vars
+values, costs = LBFGSOptimizer(terms=[task, ee_task], device=state.q.device).solve(values)
+
+solver = PopulationSolver(terms=[[task]], config=cfg, device=state.q.device)
+best_values, best_costs = solver.solve(seed_values)  # B × num_candidates candidates in, the candidates</pre><pre data-code-full hidden>import numpy as np
+import warp as wp
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+from robokit.robo import Robot
+
+device = "cpu"
+robot = Robot.load(load_robot_description("panda_description"))
+q_init = np.mean(robot.spec.actuated_joint_limits, axis=1).astype(np.float32)[None]
+from robokit.lie.se3 import SE3Var
+from robokit.opt.lbfgs_optimizer import LBFGSOptimizer
+from robokit.opt.lm_optimizer import LMOptimizerConfig
+from robokit.opt.population_solver import PopulationSolver, PopulationSolverConfig, Stage
+from robokit.opt.var_values import VarKey, VarValues
+from robokit.terms.dense.configuration_task import ConfigurationTask
+from robokit.terms.dense.frame_task import FrameTask
+from enum import Enum
+
+
+class Key(Enum):  # a problem's own variables get their own enum
+    EE = 0
+
+
+initial = robot.forward_kinematics(robot.state(q_init))
+ee = robot.spec.link_names.index("panda_hand")
+target = initial.get_T_world_link(ee)
+ee_traj = SE3Var(wp.clone(target))
+ee_task = ConfigurationTask(T_world_base_rest=target, base_weight=1.0, include_joints=False, var_key=Key.EE)
+cfg = PopulationSolverConfig(stages=[Stage(2, 1, LMOptimizerConfig())])
+seed_values = VarValues({VarKey.ROBOT: robot.state(q_init)})
+state = robot.state(q=q_init)  # a Var leaf
+task = FrameTask(robot, frame_index=ee, T_world_target=target)  # a Task
+
+optimizer = LBFGSOptimizer(terms=[task], device=state.q.device)
+values, costs = optimizer.solve(VarValues({VarKey.ROBOT: state}))  # one final cost per returned instance
+state = values.get(VarKey.ROBOT)
+
+values = VarValues({VarKey.ROBOT: state, Key.EE: ee_traj})  # co-optimize multiple Vars
+values, costs = LBFGSOptimizer(terms=[task, ee_task], device=state.q.device).solve(values)
+
+solver = PopulationSolver(terms=[[task]], config=cfg, device=state.q.device)
+best_values, best_costs = solver.solve(seed_values)  # B × num_candidates candidates in, the candidates
+assert np.isfinite(best_costs.numpy()).all()</pre></div><h3 id="variables">Variables</h3><p><code>Var</code> is an optimizable value on a manifold, such as joint angles or an SE(3) pose. <code>VarValues</code> maps keys to <code>Var</code> instances. Optimizers and tasks see it as one variable.</p><div class="mermaid">flowchart LR
+    OPT[Optimizer] --&gt;|update| VV[VarValues]
+    OPT --&gt;|evaluate| TASK[Tasks]
+    TASK --&gt;|read| VV
+    TASK --&gt;|results| OPT</div><p>Common methods:</p><ul><li><code>integrate(delta, out=None)</code> applies a tangent step. Joint angles add it; poses use <code>T·exp(δ)</code>.</li><li><code>accept(mask, proposed)</code> takes the proposed rows where <code>mask</code> is set and keeps the rest.</li><li><code>invalidate()</code> marks the <code>Var</code> instances as changed and invalidates their caches.</li></ul><p><code>VarValues</code> lays out tangent columns in insertion order:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">text</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>tangent columns: [   robot (T=7)   |   ee (T=6)   ]
+                     offset=0          offset=7</pre></div><p>Subclass <code>VarValues</code> to give a group its own tangent or sampling rule. For example, one variable is optimized and the rest follow from it; the tangent then covers only the free one.</p><h3 id="tasks">Tasks</h3><p>Tasks come from <code>robokit.terms</code>. Both interfaces subclass <code>Task</code>:</p><table class="doc-table" style="--cols:3"><thead><tr><th>Term</th><th>Contract</th><th>Consumed by</th></tr></thead><tbody><tr><td><code>ResidualTask</code></td><td>residual vector <code>r</code> (+ Jacobian)</td><td>LM; GD/LBFGS residual modes</td></tr><tr><td><code>GradientTask</code></td><td>per-batch scalar cost (+ gradient)</td><td>GD/LBFGS</td></tr></tbody></table><p><code>SparseTask</code> is a <code>ResidualTask</code> with a sparse Jacobian. <code>EagerTask</code> is a <code>ResidualTask</code> with hooks for work outside captured CUDA graphs.</p><p>A task can implement both. <code>SmoothnessTask(ResidualTask, GradientTask)</code> gives residuals and gradients.</p><h3 id="optimizers">Optimizers</h3><p>Optimizers come from <code>robokit.opt</code>. All three share one lifecycle:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>class Optimizer:
+    def solve(self, var: VarValues) -&gt; Tuple[VarValues, wp.array]:
+        """`reset` then `max_iter` × `step`, in place; returns `var` and one cost per candidate."""
+
+    def reset(self, var: VarValues) -&gt; None: ...
+    def step(self, var: VarValues) -&gt; None: ...</pre><pre data-code-full hidden>from typing import Optional, Tuple
+import warp as wp
+from robokit.opt.var_values import VarValues
+
+
+class Optimizer:
+    def solve(self, var: VarValues) -&gt; Tuple[VarValues, wp.array]:
+        """`reset` then `max_iter` × `step`, in place; returns `var` and one cost per candidate."""
+
+    def reset(self, var: VarValues) -&gt; None: ...
+    def step(self, var: VarValues) -&gt; None: ...
+
+
+assert callable(Optimizer.solve)</pre></div><table class="doc-table" style="--cols:2"><thead><tr><th>Optimizer</th><th>Method</th></tr></thead><tbody><tr><td><code>LMOptimizer</code></td><td>Damped Gauss–Newton (Cholesky or CG)</td></tr><tr><td><code>LBFGSOptimizer</code></td><td>Quasi-Newton with line search</td></tr><tr><td><code>GDOptimizer</code></td><td>GD, Adam, or AdamW</td></tr></tbody></table><p>One optimization step:</p><ol><li>Changed <code>VarValues</code> invalidate their caches.</li><li>The optimizer calls each task's <code>precompute()</code>, one at a time.</li><li>Tasks compute costs and derivatives, in parallel when enabled.</li><li>The optimizer updates the values, or accepts or rejects a proposal.</li></ol><h3 id="samplers">Samplers</h3><p>A sampler owns one named variable and one method:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>class Sampler:
+    var_key: str
+
+    def reset(self) -&gt; None:
+        """Reopen the spread at the start of a solve."""
+
+    def sample(self, var: VarValues, scores: Optional[wp.array]) -&gt; VarValues:
+        """Move each candidate by `scores` (its costs, None before any), then draw new ones around it.
+        The population handed in is the one that moves; the returned one is the one to score."""</pre><pre data-code-full hidden>from typing import Optional, Tuple
+import warp as wp
+from robokit.opt.var_values import VarValues
+
+
+class Sampler:
+    var_key: str
+
+    def reset(self) -&gt; None:
+        """Reopen the spread at the start of a solve."""
+
+    def sample(self, var: VarValues, scores: Optional[wp.array]) -&gt; VarValues:
+        """Move each candidate by `scores` (its costs, None before any), then draw new ones around it.
+        The population handed in is the one that moves; the returned one is the one to score."""
+
+
+assert callable(Sampler.sample)</pre></div><table class="doc-table" style="--cols:2"><thead><tr><th>Sampler</th><th>Draws</th></tr></thead><tbody><tr><td><code>RobertsSampler</code></td><td>A low-discrepancy spread; no move</td></tr><tr><td><code>GaussianSampler</code></td><td>Normals around a mean moved by the scores (MPPI, ES)</td></tr><tr><td><code>ContactSampler</code></td><td>A copy with fresh contacts; the better one stays (grasp)</td></tr></tbody></table><h3 id="solvers">Solvers</h3><p>A solver runs sampler and optimizer configs as a schedule of stages:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>class PopulationSolver:
+    def solve(self, var: VarValues) -&gt; Tuple[VarValues, wp.array]:
+        """`batch × num_candidates[0]` candidates in; the best per problem and its cost out."""</pre><pre data-code-full hidden>from typing import Optional, Tuple
+import warp as wp
+from robokit.opt.var_values import VarValues
+
+
+class PopulationSolver:
+    def solve(self, var: VarValues) -&gt; Tuple[VarValues, wp.array]:
+        """`batch × num_candidates[0]` candidates in; the best per problem and its cost out."""
+
+
+assert callable(PopulationSolver.solve)</pre></div><p>Each iteration of <code>solve</code>:</p><ol><li><strong>sample</strong>, per <code>Stage.sample_every</code>: each sampler moves its candidates by the last scores, then draws new ones.</li><li><strong>optimize</strong>: the stage's optimizer steps every candidate.</li><li><strong>score</strong>: the tasks, or the score term, cost every candidate.</li><li><strong>select</strong>, at each new stage: keep its best <code>num_candidates</code> per problem; its optimizer takes over.</li></ol><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>from robokit.helpers.grasp import ContactSamplerConfig
+from robokit.opt.sampler import GaussianSamplerConfig, RobertsSamplerConfig
+
+roberts = RobertsSamplerConfig(scale=0.2)
+mppi = GaussianSamplerConfig(num_draws=64)
+contacts = ContactSamplerConfig()
+
+# multi-candidate LM: Roberts noise spreads 64 candidates at iteration 0, LM steps them, selects narrow 64 → 4 → 1
+PopulationSolverConfig(stages=[Stage(6, 64, sample_every=6), Stage(10, 4), Stage(0, 1)], samplers=[roberts])
+# MPPI: every iteration moves each candidate by its draws' scores and draws again; a last sample
+# after the final score moves it once more, and the solve ends on the moved candidates
+PopulationSolverConfig(stages=[Stage(6)], samplers=[mppi])
+# grasp LM: every 8 iterations each candidate is joined by a copy with fresh contacts, LM steps both,
+# and the next sample keeps the better; the final select picks one of the last pair
+PopulationSolverConfig(stages=[Stage(64, 1, lm, sample_every=8)], samplers=[contacts])</pre><pre data-code-full hidden>from robokit.opt.population_solver import PopulationSolverConfig, Stage
+from robokit.opt.lm_optimizer import LMOptimizerConfig
+
+lm = LMOptimizerConfig()
+from robokit.helpers.grasp import ContactSamplerConfig
+from robokit.opt.sampler import GaussianSamplerConfig, RobertsSamplerConfig
+
+roberts = RobertsSamplerConfig(scale=0.2)
+mppi = GaussianSamplerConfig(num_draws=64)
+contacts = ContactSamplerConfig()
+
+# multi-candidate LM: Roberts noise spreads 64 candidates at iteration 0, LM steps them, selects narrow 64 → 4 → 1
+PopulationSolverConfig(stages=[Stage(6, 64, sample_every=6), Stage(10, 4), Stage(0, 1)], samplers=[roberts])
+# MPPI: every iteration moves each candidate by its draws' scores and draws again; a last sample
+# after the final score moves it once more, and the solve ends on the moved candidates
+PopulationSolverConfig(stages=[Stage(6)], samplers=[mppi])
+# grasp LM: every 8 iterations each candidate is joined by a copy with fresh contacts, LM steps both,
+# and the next sample keeps the better; the final select picks one of the last pair
+PopulationSolverConfig(stages=[Stage(64, 1, lm, sample_every=8)], samplers=[contacts])
+assert contacts.num_draws == 2</pre></div></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/robokit/geom/"><span class="lbl">← Previous</span><span class="nm">Geometry</span></a><a class="next" href="/docs/robokit/conventions/"><span class="lbl">Next →</span><span class="nm">Conventions</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#overview">Overview</a><a href="#variables">Variables</a><a href="#tasks">Tasks</a><a href="#optimizers">Optimizers</a><a href="#samplers">Samplers</a><a href="#solvers">Solvers</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "robokit", "id": "optimization", "toc": [{"text": "Overview", "href": "#overview"}, {"text": "Variables", "href": "#variables"}, {"text": "Tasks", "href": "#tasks"}, {"text": "Optimizers", "href": "#optimizers"}, {"text": "Samplers", "href": "#samplers"}, {"text": "Solvers", "href": "#solvers"}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

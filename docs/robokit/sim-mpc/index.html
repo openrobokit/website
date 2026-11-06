@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sim MPC · RoboKit docs · OpenRoboKit</title>
+  <meta name="description" content="GPU-native, differentiable robotics tooling: IK, trajectory optimization, retargeting, grasping, calibration." />
+  <link rel="canonical" href="https://openrobokit.com/docs/robokit/sim-mpc/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">RoboKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="is-active">
+        <span class="nm">RoboKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="">
+        <span class="nm">GraspKit</span>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/robokit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/robokit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/robokit/rl/" data-id="rl" class="">RL</a></div><div class="side__list"><a href="/docs/robokit/sim-mpc/" data-id="sim-mpc" class="is-active">Sim MPC</a></div><div class="side__list"><a href="/docs/robokit/ik/" data-id="ik" class="">IK</a></div><div class="side__list"><a href="/docs/robokit/motion-planning/" data-id="motion-planning" class="">Motion Planning</a></div><div class="side__list"><a href="/docs/robokit/humanoid-retargeting/" data-id="humanoid-retargeting" class="">Humanoid Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand-retargeting/" data-id="hand-retargeting" class="">Hand Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand_eye_calibration/" data-id="hand_eye_calibration" class="">Hand-Eye Calibration</a></div><div class="side__list"><a href="/docs/robokit/ref-assets/" data-id="ref-assets" class="">Built-in Robots &amp; Datasets</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/robot/" data-id="robot" class="">Robot</a></div><div class="side__list"><a href="/docs/robokit/geom/" data-id="geom" class="">Geometry</a></div><div class="side__list"><a href="/docs/robokit/optimization/" data-id="optimization" class="">Optimization</a></div><div class="side__list"><a href="/docs/robokit/conventions/" data-id="conventions" class="">Conventions</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list">
+      <div class="side__sub is-folded" data-fold="Reference·Optimizers">
+        <span>Optimizers</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/opt-gd/" data-id="opt-gd" class="">GDOptimizer</a><a href="/docs/robokit/opt-lm/" data-id="opt-lm" class="">LMOptimizer</a><a href="/docs/robokit/opt-lbfgs/" data-id="opt-lbfgs" class="">LBFGSOptimizer</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Terms">
+        <span>Terms</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/term-frame/" data-id="term-frame" class="">Frame Task</a><a href="/docs/robokit/term-position/" data-id="term-position" class="">Position Task</a><a href="/docs/robokit/term-rotation/" data-id="term-rotation" class="">Rotation Tasks</a><a href="/docs/robokit/term-frame-vector/" data-id="term-frame-vector" class="">Frame Vector Task</a><a href="/docs/robokit/term-com-position/" data-id="term-com-position" class="">CoM Position Task</a><a href="/docs/robokit/term-position-limit/" data-id="term-position-limit" class="">Position Limit</a><a href="/docs/robokit/term-velocity-limit/" data-id="term-velocity-limit" class="">Velocity Limit Task</a><a href="/docs/robokit/term-configuration/" data-id="term-configuration" class="">Configuration Task</a><a href="/docs/robokit/term-smoothness/" data-id="term-smoothness" class="">Smoothness Task</a><a href="/docs/robokit/term-self-collision/" data-id="term-self-collision" class="">Self Collision Task</a><a href="/docs/robokit/term-scene-collision/" data-id="term-scene-collision" class="">Scene Collision Task</a><a href="/docs/robokit/term-scene-distance/" data-id="term-scene-distance" class="">Scene Distance Task</a><a href="/docs/robokit/term-interaction-mesh/" data-id="term-interaction-mesh" class="">Interaction Mesh Task</a><a href="/docs/robokit/term-mask-alignment/" data-id="term-mask-alignment" class="">Mask Alignment Task</a><a href="/docs/robokit/term-manipulability/" data-id="term-manipulability" class="">Manipulability Task</a><a href="/docs/robokit/term-force-closure/" data-id="term-force-closure" class="">Force Closure Task</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/api-robot/" data-id="api-robot" class="">Robot</a><a href="/docs/robokit/api-geometry/" data-id="api-geometry" class="">Geometry</a><a href="/docs/robokit/api-optimization/" data-id="api-optimization" class="">Optimization</a><a href="/docs/robokit/api-terms/" data-id="api-terms" class="">Terms</a><a href="/docs/robokit/api-ik/" data-id="api-ik" class="">Inverse Kinematics</a><a href="/docs/robokit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/robokit/api-sim-mpc/" data-id="api-sim-mpc" class="">Sim MPC</a><a href="/docs/robokit/api-humanoid-retargeting/" data-id="api-humanoid-retargeting" class="">Humanoid Retargeting</a><a href="/docs/robokit/api-hand-retargeting/" data-id="api-hand-retargeting" class="">Hand Retargeting</a><a href="/docs/robokit/api-hand_eye_calibration/" data-id="api-hand_eye_calibration" class="">Hand-Eye Calibration</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">robokit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>User Guide</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Sim MPC</h1>
+        <div class="doc-body" id="doc-body"><table class="doc-table" style="--cols:2"><thead><tr><th><img src="/assets/docs/robokit/assets/simulation/g1-box.webp" alt="A G1 lifting and carrying a box"></th><th><img src="/assets/docs/robokit/assets/simulation/pen.webp" alt="A Sharpa hand spinning a pen"></th></tr></thead><tbody><tr><td>A G1 lifts and carries a box.</td><td>A Sharpa hand spins a pen in its fingers.</td></tr></tbody></table><p><code>robokit.helpers.sim_mpc</code> is sampling MPC in simulation, with features including motion-capture tracking, legged gaits, hand-object manipulation, pushing, and batched scenes.</p><p>This tutorial covers the main SimMPC workflows. Rollouts run in <a class="inline" href="https://github.com/google-deepmind/mujoco_warp">MuJoCo Warp</a> (<code>MjWarpSim</code>) or <a class="inline" href="https://github.com/newton-physics/newton">Newton</a> (<code>robokit.sim.newton.NewtonSim</code>); install MuJoCo Warp with the <code>mj</code> and <code>mjwarp</code> <a class="inline" href="/docs/robokit/install/#extras">extras</a>. Complete runnable examples are in <a class="inline" href="https://github.com/openrobokit/robokit/tree/main/src/robokit/examples/sim_mpc/"><code>src/robokit/examples/sim_mpc</code></a>.</p><h3 id="how-simmpc-works">How SimMPC Works</h3><p>Each <code>plan(data, t0)</code> starts from the given state, then follows four steps:</p><ol><li>Sample control offsets around the current plan; draw zero is the plan itself.</li><li>Roll every draw out in parallel worlds for <code>horizon_steps</code> and sum its costs.</li><li>Move the plan toward the low-cost draws, until it stops improving or reaches <code>max_iterations</code>.</li><li>Return the first <code>ctrl_steps</code> commands and shift the plan forward.</li></ol><div class="mermaid">flowchart TD
+    INPUT[Input&lt;br/&gt;&lt;br/&gt;Current state&lt;br/&gt;Sim step t0]
+
+    subgraph PLANNING[Planning]
+        direction TB
+        SAMPLE[1. Sample control offsets]
+        ROLL[2. Roll out and score]
+        MOVE[3. Move the plan]
+        SAMPLE --&gt; ROLL --&gt; MOVE
+        MOVE --&gt;|repeat| SAMPLE
+    end
+
+    OUTPUT[Return the next commands]
+
+    INPUT --&gt; SAMPLE
+    MOVE --&gt; OUTPUT</div><p>Controls are <code>ctrl_ref</code> plus offsets interpolated between nodes every <code>node_steps</code> sim steps. The sampler is robokit's MPPI, the one motion planning runs. SimMPC runs on the current Warp device; on a CUDA GPU every sim step replays a captured CUDA graph, and the CPU is much slower.</p><h3 id="basic-simmpc">Basic SimMPC</h3><p>A <code>SimMPC</code> combines a <code>SimMPCConfig</code>, a planning simulator, and <code>ctrl_ref</code>. This drives a cart on a slide joint from <code>x = 0</code> to <code>x = 0.3</code>:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>import mujoco
+import numpy as np
+from robokit.helpers.sim_mpc import SimMPC, SimMPCConfig
+from robokit.sim import MjWarpSim
+from robokit.terms import SensorTask
+
+model = mujoco.MjModel.from_xml_string("""
+&lt;mujoco&gt;
+  &lt;option timestep="0.01"/&gt;
+  &lt;worldbody&gt;
+    &lt;body name="cart"&gt;
+      &lt;joint name="x" type="slide" axis="1 0 0" damping="5"/&gt;
+      &lt;geom type="box" size="0.05 0.05 0.05" mass="1"/&gt;
+    &lt;/body&gt;
+  &lt;/worldbody&gt;
+  &lt;actuator&gt;&lt;position joint="x" kp="50"/&gt;&lt;/actuator&gt;
+  &lt;sensor&gt;&lt;jointpos name="x" joint="x"/&gt;&lt;/sensor&gt;
+&lt;/mujoco&gt;
+""")
+data = mujoco.MjData(model)
+mujoco.mj_forward(model, data)
+
+steps = 100
+config = SimMPCConfig(num_samples=64, horizon_steps=30, node_steps=10, ctrl_steps=10, max_iterations=4, ctrl_std=0.1)
+ctrl_ref = np.zeros((steps + config.horizon_steps, model.nu))  # a row for every step a horizon reaches
+sensor_ref = np.full((len(ctrl_ref), model.nsensordata), 0.3)
+config.add(SensorTask(sensor_ref, weight={"x": 100.0}))
+mpc = SimMPC(config, MjWarpSim(model, 1, data), ctrl_ref)  # plans on resized copies of this simulator
+(rollout,), (plans,) = mpc.execute(MjWarpSim(model, 1, data), steps)  # one rollout and one plan list per instance
+
+qpos = rollout["qpos"]  # (steps, nq), row k is the state at sim step k
+
+# or execute the commands yourself, here in MuJoCo on the CPU
+mpc = SimMPC(config, MjWarpSim(model, 1, data), ctrl_ref)
+for t0 in range(0, steps, config.ctrl_steps):
+    commands, infos = mpc.plan(data, t0)  # (ctrl_steps, batch_size, nu); the plan then shifts by ctrl_steps
+    for command in commands.numpy()[:, 0]:
+        data.ctrl[:] = command
+        mujoco.mj_step(model, data)</pre><pre data-code-full hidden>import mujoco
+import numpy as np
+from robokit.helpers.sim_mpc import SimMPC, SimMPCConfig
+from robokit.sim import MjWarpSim
+from robokit.terms import SensorTask
+
+model = mujoco.MjModel.from_xml_string("""
+&lt;mujoco&gt;
+  &lt;option timestep="0.01"/&gt;
+  &lt;worldbody&gt;
+    &lt;body name="cart"&gt;
+      &lt;joint name="x" type="slide" axis="1 0 0" damping="5"/&gt;
+      &lt;geom type="box" size="0.05 0.05 0.05" mass="1"/&gt;
+    &lt;/body&gt;
+  &lt;/worldbody&gt;
+  &lt;actuator&gt;&lt;position joint="x" kp="50"/&gt;&lt;/actuator&gt;
+  &lt;sensor&gt;&lt;jointpos name="x" joint="x"/&gt;&lt;/sensor&gt;
+&lt;/mujoco&gt;
+""")
+data = mujoco.MjData(model)
+mujoco.mj_forward(model, data)
+
+steps = 100
+config = SimMPCConfig(num_samples=64, horizon_steps=30, node_steps=10, ctrl_steps=10, max_iterations=4, ctrl_std=0.1)
+ctrl_ref = np.zeros((steps + config.horizon_steps, model.nu))  # a row for every step a horizon reaches
+sensor_ref = np.full((len(ctrl_ref), model.nsensordata), 0.3)
+config.add(SensorTask(sensor_ref, weight={"x": 100.0}))
+mpc = SimMPC(config, MjWarpSim(model, 1, data), ctrl_ref)  # plans on resized copies of this simulator
+(rollout,), (plans,) = mpc.execute(MjWarpSim(model, 1, data), steps)  # one rollout and one plan list per instance
+
+qpos = rollout["qpos"]  # (steps, nq), row k is the state at sim step k
+assert qpos.shape == (steps, model.nq) and rollout["ctrl"].shape == (steps, model.nu)
+assert abs(qpos[-1, 0] - 0.3) &lt; 0.05, qpos[-1, 0]
+
+# or execute the commands yourself, here in MuJoCo on the CPU
+mpc = SimMPC(config, MjWarpSim(model, 1, data), ctrl_ref)
+for t0 in range(0, steps, config.ctrl_steps):
+    commands, infos = mpc.plan(data, t0)  # (ctrl_steps, batch_size, nu); the plan then shifts by ctrl_steps
+    for command in commands.numpy()[:, 0]:
+        data.ctrl[:] = command
+        mujoco.mj_step(model, data)
+assert abs(data.qpos[0] - 0.3) &lt; 0.05, data.qpos[0]</pre></div><p><code>execute(sim, num_steps)</code> runs the closed loop on <code>sim</code> and returns each instance's executed <code>time</code>, <code>qpos</code>, <code>qvel</code>, <code>sensordata</code> and <code>ctrl</code> at every sim step, plus one info dict per plan. <code>plan(data, t0)</code> takes a simulator's <code>data</code> or one <code>mujoco.MjData</code>; <code>t0</code> indexes <code>ctrl_ref</code> and the references.</p><p><code>ctrl_std</code> sets each actuator's sampling noise, and <code>ctrl_range</code> bounds the commands (default: the actuator ranges). SimMPC resizes the planning simulator into its worlds, so size its contact buffers up front: <code>MjWarpSim(model, 1, data, nconmax=..., njmax=...)</code>.</p><h3 id="costs">Costs</h3><p>A cost is a <code>robokit.terms</code> task that reads the simulator's arrays after each step. Row <code>k</code> of a reference array describes sim step <code>k</code>, matching the rows <code>execute</code> returns.</p><table class="doc-table" style="--cols:2"><thead><tr><th>Term</th><th>Per step</th></tr></thead><tbody><tr><td><code>StateTask(qpos_ref, qvel_ref, dof_weight)</code></td><td>Weighted <code>qpos</code> and <code>qvel</code> error to the reference.</td></tr><tr><td><code>SensorTask(sensor_ref, weight)</code></td><td>Weighted error of the named sensors to the reference.</td></tr><tr><td><code>ControlTask(weight, ctrl_ref)</code></td><td>Weighted squared deviation of the controls from <code>ctrl_ref</code>.</td></tr><tr><td><code>AlignTask(origin, sensor, target_ref, weight)</code></td><td>Pushes an object toward a goal.</td></tr><tr><td><code>ContactTask(geoms, target, radius, allowed, weight, penalty, margin)</code></td><td>Rewards contacts in target discs (or a <code>box</code> around each target, at a <code>height</code>); penalizes touches outside allowed ones.</td></tr><tr><td><code>GraspTask(gripper, obj, offset, weight)</code></td><td>Distance from a gripper body to an object body.</td></tr></tbody></table><p><code>config.add(term, running_scale=1.0, terminal_scale=None)</code> scales a term at every step and at the horizon's last step; <code>running_scale=0</code> makes it terminal-only.</p><h4>Custom Costs</h4><p>A new cost subclasses <code>Task</code>: its constructor stores <code>SimContext</code> placeholders, <code>resolve</code> swaps them for the simulator's arrays, and <code>compute_weighted_cost</code> launches Warp kernels. Terms read only <code>SimContext</code> values, so one can be checked without a simulator:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>import numpy as np
+import warp as wp
+from robokit.terms import ControlTask, SimContext
+
+context = {
+    SimContext.CTRL: wp.array([[1.0, 2.0], [0.0, 1.0]], dtype=float, device="cpu"),
+    SimContext.CLOCK: wp.array([0, 0, 1], dtype=int, device="cpu"),
+    SimContext.NUM_INSTANCES: 1,
+    SimContext.WORLDS_PER_INSTANCE: 2,
+}
+term, out = ControlTask(weight=[0.5, 1.0]), wp.zeros(2, dtype=float, device="cpu")
+term.resolve(None, context)
+term.compute_weighted_cost(None, out_cost=out)  # each world's 0.5 * u0**2 + 1.0 * u1**2</pre><pre data-code-full hidden>import numpy as np
+import warp as wp
+from robokit.terms import ControlTask, SimContext
+
+context = {
+    SimContext.CTRL: wp.array([[1.0, 2.0], [0.0, 1.0]], dtype=float, device="cpu"),
+    SimContext.CLOCK: wp.array([0, 0, 1], dtype=int, device="cpu"),
+    SimContext.NUM_INSTANCES: 1,
+    SimContext.WORLDS_PER_INSTANCE: 2,
+}
+term, out = ControlTask(weight=[0.5, 1.0]), wp.zeros(2, dtype=float, device="cpu")
+term.resolve(None, context)
+term.compute_weighted_cost(None, out_cost=out)  # each world's 0.5 * u0**2 + 1.0 * u1**2
+assert np.allclose(out.numpy(), [4.5, 1.0])</pre></div><h3 id="faster-planning">Faster Planning</h3><p>The planning simulator may be cheaper than the executed one if <code>nq</code>, <code>nv</code>, <code>nu</code> and <code>nsensordata</code> match:</p><ul><li><code>MjWarpSim.build_coarse_spec(spec, CoarseConfig(max_hull_vertices, qpos_ref))</code> caps each mesh's convex hull and keeps only the contact pairs that come near along the motion.</li><li><code>config.stages</code> runs <code>SimMPCStage(iters, dt)</code> stages in order. <code>dt=[(0.25, None), (1.0, 0.04)]</code> steps the first quarter of the horizon at the timestep and the rest at 40 ms. By default, SimMPC picks 4x or 2x steps when their rollouts stay close to fine ones.</li></ul><p>Contacts exist only near a geom. To reward a foot before it lands, give the planning model geoms that detect far but push at the usual distance: <code>margin="1" gap="0.999"</code> before MuJoCo 3.10, and <code>margin="0.001" gap="0.999"</code> from 3.10.</p><h3 id="batch-planning">Batch Planning</h3><p><code>SimMPCConfig.batch_size</code> plans several instances of one model at once, such as several clips of one scene. Give <code>plan</code> one state per instance; <code>ctrl_ref</code> and reference arrays take a leading instance axis, or are shared without one. Rollout worlds are instance-major.</p><p>Instances whose scenes differ, such as one hand with a different object each, plan on <code>MjWarpSim(specs, [1] * batch_size)</code>. The scenes must share bodies, joints, actuators and sensors.</p><h3 id="control-maps">Control Maps</h3><p><code>SimMPCConfig.control_map(sim, clock)</code> turns sampled commands into actuator controls before every step. <code>CartesianControl(model, body, ...)</code> reads the first six commands as a world-frame twist of <code>body</code> and solves damped least squares for joint velocities; the scene needs velocity actuators on scalar joints.</p></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/robokit/rl/"><span class="lbl">← Previous</span><span class="nm">RL</span></a><a class="next" href="/docs/robokit/ik/"><span class="lbl">Next →</span><span class="nm">IK</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#how-simmpc-works">How SimMPC Works</a><a href="#basic-simmpc">Basic SimMPC</a><a href="#costs">Costs</a><a href="#faster-planning">Faster Planning</a><a href="#batch-planning">Batch Planning</a><a href="#control-maps">Control Maps</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "robokit", "id": "sim-mpc", "toc": [{"text": "How SimMPC Works", "href": "#how-simmpc-works"}, {"text": "Basic SimMPC", "href": "#basic-simmpc"}, {"text": "Costs", "href": "#costs"}, {"text": "Faster Planning", "href": "#faster-planning"}, {"text": "Batch Planning", "href": "#batch-planning"}, {"text": "Control Maps", "href": "#control-maps"}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

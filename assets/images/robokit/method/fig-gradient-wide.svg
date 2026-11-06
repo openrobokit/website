@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 96">
+<style>
+@keyframes draw{0%,3%{stroke-dashoffset:100}63%,100%{stroke-dashoffset:0}}
+@keyframes gp0{0%,2%{opacity:0;transform:scale(.2)}7%,100%{opacity:1;transform:scale(1)}}
+@keyframes gp1{0%,22%{opacity:0;transform:scale(.2)}27%,100%{opacity:1;transform:scale(1)}}
+@keyframes gp2{0%,39%{opacity:0;transform:scale(.2)}44%,100%{opacity:1;transform:scale(1)}}
+@keyframes gp3{0%,53%{opacity:0;transform:scale(.2)}58%,100%{opacity:1;transform:scale(1)}}
+@keyframes hit{0%,61%{opacity:0;transform:scale(.2)}68%{opacity:1;transform:scale(1.55)}76%,100%{opacity:1;transform:scale(1)}}
+.path{animation:draw 3.6s linear infinite}
+.p0,.p1,.p2,.p3,.goal{animation-duration:3.6s;animation-timing-function:cubic-bezier(.3,1.5,.5,1);animation-iteration-count:infinite}
+.p0{transform-origin:22px 16px;animation-name:gp0}
+.p1{transform-origin:46px 25px;animation-name:gp1}
+.p2{transform-origin:66px 35px;animation-name:gp2}
+.p3{transform-origin:82px 45px;animation-name:gp3}
+.goal{transform-origin:92px 52px;animation-name:hit;animation-timing-function:cubic-bezier(.3,1.4,.5,1)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<g fill="none" stroke-width="1.5">
+<ellipse cx="92" cy="52" rx="74" ry="34" stroke="#C7D5F8"></ellipse>
+<ellipse cx="92" cy="52" rx="48" ry="21.5" stroke="#B3C6F0"></ellipse>
+<ellipse cx="92" cy="52" rx="23" ry="10" stroke="#9CB4E8"></ellipse>
+</g>
+<polyline class="path" points="22,16 46,25 66,35 82,45 92,52" fill="none" stroke="#1F5EEA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" pathLength="100" stroke-dasharray="100"></polyline>
+<g fill="#1F5EEA">
+<circle class="p0" cx="22" cy="16" r="3.6"></circle>
+<circle class="p1" cx="46" cy="25" r="3.1"></circle>
+<circle class="p2" cx="66" cy="35" r="2.7"></circle>
+<circle class="p3" cx="82" cy="45" r="2.3"></circle>
+</g>
+<g class="goal"><circle cx="92" cy="52" r="4.6" fill="#FF3B30"></circle><circle cx="92" cy="52" r="1.8" fill="#fff"></circle></g>
+</svg>

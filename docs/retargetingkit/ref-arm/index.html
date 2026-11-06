@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Arm retargeter API · RetargetingKit docs · OpenRoboKit</title>
+  <meta name="description" content="Real-time human-to-robot motion retargeting, built on robokit." />
+  <link rel="canonical" href="https://openrobokit.com/docs/retargetingkit/ref-arm/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">RetargetingKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="">
+        <span class="nm">RoboKit</span>
+      </a><a href="/docs/retargetingkit/" class="is-active">
+        <span class="nm">RetargetingKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a><a href="/docs/graspkit/" class="">
+        <span class="nm">GraspKit</span>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/retargetingkit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/retargetingkit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/retargetingkit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/retargetingkit/hand-optimization/" data-id="hand-optimization" class="">Hand Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/neural-hand/" data-id="neural-hand" class="">Neural Hand Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/arm-retargeting/" data-id="arm-retargeting" class="">Arm Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/humanoid-retargeting/" data-id="humanoid-retargeting" class="">Humanoid Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/full-body/" data-id="full-body" class="">Full-Body Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/teleoperation/" data-id="teleoperation" class="">Teleoperation</a></div><div class="side__list"><a href="/docs/retargetingkit/ref-assets/" data-id="ref-assets" class="">Assets</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/retargetingkit/pipeline/" data-id="pipeline" class="">Pipeline</a></div><div class="side__list"><a href="/docs/retargetingkit/frames/" data-id="frames" class="">Canonical frames</a></div><div class="side__list"><a href="/docs/retargetingkit/protocols/" data-id="protocols" class="">Interfaces</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list">
+      <div class="side__sub is-folded" data-fold="Reference·Sources">
+        <span>Sources</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/retargetingkit/quest3/" data-id="quest3" class="">Quest 3</a><a href="/docs/retargetingkit/vision-pro/" data-id="vision-pro" class="">Apple Vision Pro</a><a href="/docs/retargetingkit/pico/" data-id="pico" class="">PICO</a><a href="/docs/retargetingkit/manus/" data-id="manus" class="">Manus</a><a href="/docs/retargetingkit/axis-studio/" data-id="axis-studio" class="">Axis Studio</a><a href="/docs/retargetingkit/realsense/" data-id="realsense" class="">RealSense</a><a href="/docs/retargetingkit/zed/" data-id="zed" class="">ZED</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Targets">
+        <span>Targets</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/retargetingkit/xarm/" data-id="xarm" class="">xArm6 and xArm7</a><a href="/docs/retargetingkit/xhand/" data-id="xhand" class="">XHand</a><a href="/docs/retargetingkit/sharpa-hand/" data-id="sharpa-hand" class="">Sharpa Wave</a><a href="/docs/retargetingkit/ability-hand/" data-id="ability-hand" class="">Ability Hand</a><a href="/docs/retargetingkit/inspire/" data-id="inspire" class="">Inspire Hand</a><a href="/docs/retargetingkit/g1/" data-id="g1" class="">G1 and SONIC</a><a href="/docs/retargetingkit/rby1/" data-id="rby1" class="">RBY1-A</a><a href="/docs/retargetingkit/dexmate/" data-id="dexmate" class="">Dexmate Vega-1</a></div>
+      <div class="side__sub" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/retargetingkit/ref-frames/" data-id="ref-frames" class="">Frames</a><a href="/docs/retargetingkit/ref-sources/" data-id="ref-sources" class="">Sources</a><a href="/docs/retargetingkit/ref-hand/" data-id="ref-hand" class="">Hand retargeters</a><a href="/docs/retargetingkit/ref-arm/" data-id="ref-arm" class="is-active">Arm retargeter</a><a href="/docs/retargetingkit/ref-humanoid/" data-id="ref-humanoid" class="">Humanoid retargeter</a><a href="/docs/retargetingkit/ref-targets/" data-id="ref-targets" class="">Commands and targets</a><a href="/docs/retargetingkit/ref-target-configs/" data-id="ref-target-configs" class="">Target configs</a><a href="/docs/retargetingkit/ref-teleop/" data-id="ref-teleop" class="">Teleop configs</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/retargetingkit/development/" data-id="development" class="">Development</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">retargetingkit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>Reference</span><span class="slash">/</span><span>API</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Arm retargeter API</h1>
+        <div class="doc-body" id="doc-body"><p>The arm retargeter maps world-frame wrist poses in an <code>ArmFrame</code> to arm joint positions. See <a class="inline" href="/docs/retargetingkit/arm-retargeting/">Arm retargeting</a> for usage.</p><div class="api"><section class="api-sym">
+    <div class="api-card" id="retargeterconfig">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/retargeting/retargeter.py#L35">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">retargetingkit.retargeting.retargeter.</span><span class="api-card__name">RetargeterConfig</span></div>
+    <div class="api-sig__bases">Bases: <span>ABC, Generic[FrameT, CommandT]</span></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Retargeter blueprint; configs live next to their solver and feed <code>retargetingkit.configs.teleop</code> rig presets.</p></div><div class="api-label" id="retargeterconfig-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="retargeterconfig-build">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/retargeting/retargeter.py#L38">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RetargeterConfig.</span><span class="api-card__name">build</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Retargeter[FrameT, CommandT]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Construct and warm up the retargeter.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Retargeter[FrameT, CommandT]</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="armretargeterconfig">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/retargeting/arm/online.py#L19">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">retargetingkit.retargeting.arm.online.</span><span class="api-card__name">ArmRetargeterConfig</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">urdf</span><span class="pp">: </span><span class="pt">Path</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">ee_link</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">home_qpos</span><span class="pp">: </span><span class="pt">tuple[float, ...]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">side</span><span class="pp">: </span><span class="pt">Side</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">translation_scale</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">1.5</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">ee_gain</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">1.0</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div><div class="api-sig__bases">Bases: <span>RetargeterConfig[ArmFrame, QPosCommand]</span></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>One human wrist mapped onto one robot arm.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; ArmRetargeterConfig(Path("arm.urdf"), "link_eef", (0.0,), "right").translation_scale
+1.5</pre><pre data-code-full hidden>from retargetingkit.retargeting.arm.online import ArmRetargeterConfig
+from pathlib import Path
+
+ArmRetargeterConfig(Path("arm.urdf"), "link_eef", (0.0,), "right").translation_scale</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">urdf</span><span class="api-type">Path</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">ee_link</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">home_qpos</span><span class="api-type">tuple[float, ...]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">side</span><span class="api-type">Side</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">translation_scale</span><span class="api-type">float</span><span class="api-def">= 1.5</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">ee_gain</span><span class="api-type">float</span><span class="api-def">= 1.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="armretargeterconfig-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="armretargeterconfig-urdf">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/retargeting/arm/online.py#L27">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ArmRetargeterConfig.</span><span class="api-card__name">urdf</span><span class="pp">: </span><span class="pt">Path</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="armretargeterconfig-ee_link">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/retargeting/arm/online.py#L28">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ArmRetargeterConfig.</span><span class="api-card__name">ee_link</span><span class="pp">: </span><span class="pt">str</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="armretargeterconfig-home_qpos">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/retargeting/arm/online.py#L29">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ArmRetargeterConfig.</span><span class="api-card__name">home_qpos</span><span class="pp">: </span><span class="pt">tuple[float, ...]</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="armretargeterconfig-side">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/retargeting/arm/online.py#L30">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ArmRetargeterConfig.</span><span class="api-card__name">side</span><span class="pp">: </span><span class="pt">Side</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="armretargeterconfig-translation_scale">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/retargeting/arm/online.py#L31">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ArmRetargeterConfig.</span><span class="api-card__name">translation_scale</span><span class="pp">: </span><span class="pt">float = 1.5</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="armretargeterconfig-ee_gain">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/retargeting/arm/online.py#L32">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ArmRetargeterConfig.</span><span class="api-card__name">ee_gain</span><span class="pp">: </span><span class="pt">float = 1.0</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="armretargeterconfig-build">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/retargeting/arm/online.py#L34">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ArmRetargeterConfig.</span><span class="api-card__name">build</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">ArmRetargeter</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Build the online arm retargeter.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; ArmRetargeterConfig(Path("arm.urdf"), "link_eef", (0.0,), "right").build("cpu")  # doctest: +SKIP</pre><pre data-code-full hidden>from retargetingkit.retargeting.arm.online import ArmRetargeterConfig
+from pathlib import Path
+
+ArmRetargeterConfig(Path("arm.urdf"), "link_eef", (0.0,), "right").build("cpu")  # doctest: +SKIP</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">ArmRetargeter</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="armretargeter">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/retargeting/arm/online.py#L42">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">retargetingkit.retargeting.arm.online.</span><span class="api-card__name">ArmRetargeter</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">config</span><span class="pp">: </span><span class="pt">ArmRetargeterConfig</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div><div class="api-sig__bases">Bases: <span>Retargeter[ArmFrame, QPosCommand]</span></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>One human wrist to one robot arm; the first wrist sample is the calibration origin and maps to the home pose.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; ArmRetargeter(config, "cpu")  # doctest: +SKIP</pre><pre data-code-full hidden>from retargetingkit.retargeting.arm.online import ArmRetargeter
+
+ArmRetargeter(config, "cpu")  # doctest: +SKIP</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">config</span><span class="api-type">ArmRetargeterConfig</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="armretargeter-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="armretargeter-side">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/retargeting/arm/online.py#L49">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ArmRetargeter.</span><span class="api-card__name">side</span><span class="pp">: </span><span class="pt">Side</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="armretargeter-wrist_to_ee_pose">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/retargeting/arm/online.py#L76">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ArmRetargeter.</span><span class="api-card__name">wrist_to_ee_pose</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">initial_ee_pose</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">initial_wrist</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">wrist</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">translation_scale</span><span class="pp">: </span><span class="pt">float</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">np.ndarray</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Replay the wrist delta since calibration from the home EE pose, scaling translation to robot reach.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; ee = np.array([1, 2, 3, 1, 0, 0, 0], dtype=np.float32)
+&gt;&gt;&gt; identity = np.array([0, 0, 0, 1, 0, 0, 0], dtype=np.float32)
+&gt;&gt;&gt; ArmRetargeter.wrist_to_ee_pose(ee, identity, identity, 1.5)
+array([1., 2., 3., 1., 0., 0., 0.], dtype=float32)</pre><pre data-code-full hidden>import numpy as np
+from retargetingkit.retargeting.arm.online import ArmRetargeter
+
+ee = np.array([1, 2, 3, 1, 0, 0, 0], dtype=np.float32)
+identity = np.array([0, 0, 0, 1, 0, 0, 0], dtype=np.float32)
+ArmRetargeter.wrist_to_ee_pose(ee, identity, identity, 1.5)</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">initial_ee_pose</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">initial_wrist</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">wrist</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">translation_scale</span><span class="api-type">float</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">np.ndarray</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="armretargeter-smooth_pose7">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/retargeting/arm/online.py#L96">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ArmRetargeter.</span><span class="api-card__name">smooth_pose7</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">previous</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">current</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">gain</span><span class="pp">: </span><span class="pt">float</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">np.ndarray</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>EMA-blend two pose7s while keeping quaternions in one hemisphere.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; previous = np.array([0, 0, 0, 1, 0, 0, 0], dtype=np.float32)
+&gt;&gt;&gt; current = np.array([1, 0, 0, 1, 0, 0, 0], dtype=np.float32)
+&gt;&gt;&gt; ArmRetargeter.smooth_pose7(previous, current, 0.5)
+array([0.5, 0. , 0. , 1. , 0. , 0. , 0. ], dtype=float32)</pre><pre data-code-full hidden>import numpy as np
+from retargetingkit.retargeting.arm.online import ArmRetargeter
+
+previous = np.array([0, 0, 0, 1, 0, 0, 0], dtype=np.float32)
+current = np.array([1, 0, 0, 1, 0, 0, 0], dtype=np.float32)
+ArmRetargeter.smooth_pose7(previous, current, 0.5)</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">previous</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">current</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">gain</span><span class="api-type">float</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">np.ndarray</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="armretargeter-solve">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/retargeting/arm/online.py#L110">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ArmRetargeter.</span><span class="api-card__name">solve</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">frame</span><span class="pp">: </span><span class="pt">ArmFrame</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">QPosCommand</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">frame</span><span class="api-type">ArmFrame</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">QPosCommand</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/retargetingkit/ref-hand/"><span class="lbl">← Previous</span><span class="nm">Hand retargeters</span></a><a class="next" href="/docs/retargetingkit/ref-humanoid/"><span class="lbl">Next →</span><span class="nm">Humanoid retargeter</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#retargeterconfig">RetargeterConfig</a><a href="#armretargeterconfig">ArmRetargeterConfig</a><a href="#armretargeter">ArmRetargeter</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "retargetingkit", "id": "ref-arm", "toc": [{"text": "RetargeterConfig", "href": "#retargeterconfig", "members": [{"text": "build()", "href": "#retargeterconfig-build"}]}, {"text": "ArmRetargeterConfig", "href": "#armretargeterconfig", "members": [{"text": "urdf", "href": "#armretargeterconfig-urdf"}, {"text": "ee_link", "href": "#armretargeterconfig-ee_link"}, {"text": "home_qpos", "href": "#armretargeterconfig-home_qpos"}, {"text": "side", "href": "#armretargeterconfig-side"}, {"text": "translation_scale", "href": "#armretargeterconfig-translation_scale"}, {"text": "ee_gain", "href": "#armretargeterconfig-ee_gain"}, {"text": "build()", "href": "#armretargeterconfig-build"}]}, {"text": "ArmRetargeter", "href": "#armretargeter", "members": [{"text": "side", "href": "#armretargeter-side"}, {"text": "wrist_to_ee_pose()", "href": "#armretargeter-wrist_to_ee_pose"}, {"text": "smooth_pose7()", "href": "#armretargeter-smooth_pose7"}, {"text": "solve()", "href": "#armretargeter-solve"}]}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

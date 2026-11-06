@@ -1,0 +1,1371 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Geometry · RoboKit docs · OpenRoboKit</title>
+  <meta name="description" content="GPU-native, differentiable robotics tooling: IK, trajectory optimization, retargeting, grasping, calibration." />
+  <link rel="canonical" href="https://openrobokit.com/docs/robokit/api-geometry/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">RoboKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="is-active">
+        <span class="nm">RoboKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="">
+        <span class="nm">GraspKit</span>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/robokit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/robokit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/robokit/rl/" data-id="rl" class="">RL</a></div><div class="side__list"><a href="/docs/robokit/sim-mpc/" data-id="sim-mpc" class="">Sim MPC</a></div><div class="side__list"><a href="/docs/robokit/ik/" data-id="ik" class="">IK</a></div><div class="side__list"><a href="/docs/robokit/motion-planning/" data-id="motion-planning" class="">Motion Planning</a></div><div class="side__list"><a href="/docs/robokit/humanoid-retargeting/" data-id="humanoid-retargeting" class="">Humanoid Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand-retargeting/" data-id="hand-retargeting" class="">Hand Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand_eye_calibration/" data-id="hand_eye_calibration" class="">Hand-Eye Calibration</a></div><div class="side__list"><a href="/docs/robokit/ref-assets/" data-id="ref-assets" class="">Built-in Robots &amp; Datasets</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/robot/" data-id="robot" class="">Robot</a></div><div class="side__list"><a href="/docs/robokit/geom/" data-id="geom" class="">Geometry</a></div><div class="side__list"><a href="/docs/robokit/optimization/" data-id="optimization" class="">Optimization</a></div><div class="side__list"><a href="/docs/robokit/conventions/" data-id="conventions" class="">Conventions</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list">
+      <div class="side__sub is-folded" data-fold="Reference·Optimizers">
+        <span>Optimizers</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/opt-gd/" data-id="opt-gd" class="">GDOptimizer</a><a href="/docs/robokit/opt-lm/" data-id="opt-lm" class="">LMOptimizer</a><a href="/docs/robokit/opt-lbfgs/" data-id="opt-lbfgs" class="">LBFGSOptimizer</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Terms">
+        <span>Terms</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/term-frame/" data-id="term-frame" class="">Frame Task</a><a href="/docs/robokit/term-position/" data-id="term-position" class="">Position Task</a><a href="/docs/robokit/term-rotation/" data-id="term-rotation" class="">Rotation Tasks</a><a href="/docs/robokit/term-frame-vector/" data-id="term-frame-vector" class="">Frame Vector Task</a><a href="/docs/robokit/term-com-position/" data-id="term-com-position" class="">CoM Position Task</a><a href="/docs/robokit/term-position-limit/" data-id="term-position-limit" class="">Position Limit</a><a href="/docs/robokit/term-velocity-limit/" data-id="term-velocity-limit" class="">Velocity Limit Task</a><a href="/docs/robokit/term-configuration/" data-id="term-configuration" class="">Configuration Task</a><a href="/docs/robokit/term-smoothness/" data-id="term-smoothness" class="">Smoothness Task</a><a href="/docs/robokit/term-self-collision/" data-id="term-self-collision" class="">Self Collision Task</a><a href="/docs/robokit/term-scene-collision/" data-id="term-scene-collision" class="">Scene Collision Task</a><a href="/docs/robokit/term-scene-distance/" data-id="term-scene-distance" class="">Scene Distance Task</a><a href="/docs/robokit/term-interaction-mesh/" data-id="term-interaction-mesh" class="">Interaction Mesh Task</a><a href="/docs/robokit/term-mask-alignment/" data-id="term-mask-alignment" class="">Mask Alignment Task</a><a href="/docs/robokit/term-manipulability/" data-id="term-manipulability" class="">Manipulability Task</a><a href="/docs/robokit/term-force-closure/" data-id="term-force-closure" class="">Force Closure Task</a></div>
+      <div class="side__sub" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/api-robot/" data-id="api-robot" class="">Robot</a><a href="/docs/robokit/api-geometry/" data-id="api-geometry" class="is-active">Geometry</a><a href="/docs/robokit/api-optimization/" data-id="api-optimization" class="">Optimization</a><a href="/docs/robokit/api-terms/" data-id="api-terms" class="">Terms</a><a href="/docs/robokit/api-ik/" data-id="api-ik" class="">Inverse Kinematics</a><a href="/docs/robokit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/robokit/api-sim-mpc/" data-id="api-sim-mpc" class="">Sim MPC</a><a href="/docs/robokit/api-humanoid-retargeting/" data-id="api-humanoid-retargeting" class="">Humanoid Retargeting</a><a href="/docs/robokit/api-hand-retargeting/" data-id="api-hand-retargeting" class="">Hand Retargeting</a><a href="/docs/robokit/api-hand_eye_calibration/" data-id="api-hand_eye_calibration" class="">Hand-Eye Calibration</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">robokit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>Reference</span><span class="slash">/</span><span>API</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Geometry</h1>
+        <div class="doc-body" id="doc-body"><div class="api"><section class="api-sym">
+    <div class="api-card" id="basegeom">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L60">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">robokit.geom.</span><span class="api-card__name">BaseGeom</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">count</span><span class="pp">: </span><span class="pt">int</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_offsets</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">poses</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scales</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">capacity</span><span class="pp">: </span><span class="pt">Optional[int]</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Base geom.</p><h3>Lifecycle</h3><p>geom = BoxGeom(...)  # store raw inputs (CPU) scene.add(geom)      # calls geom.build(device): allocate capacity-padded GPU arrays geom.update(...)     # fixed buffers update in place; resource swaps advance graph_revision</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">count</span><span class="api-type">int</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_offsets</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">poses</span><span class="api-type">Optional[wp.array]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scales</span><span class="api-type">Optional[wp.array]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">capacity</span><span class="api-type">Optional[int]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="basegeom-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="basegeom-params_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L71">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BaseGeom.</span><span class="api-card__name">params_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="basegeom-mesh_ids_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L72">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BaseGeom.</span><span class="api-card__name">mesh_ids_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="basegeom-volume_ids_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L73">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BaseGeom.</span><span class="api-card__name">volume_ids_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="basegeom-aabb_min_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L74">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BaseGeom.</span><span class="api-card__name">aabb_min_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="basegeom-aabb_max_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L75">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BaseGeom.</span><span class="api-card__name">aabb_max_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="basegeom-paddings_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L76">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BaseGeom.</span><span class="api-card__name">paddings_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="basegeom-device_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L99">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BaseGeom.</span><span class="api-card__name">device_wp</span><span class="pp">: </span><span class="pt">Optional[wp_device_type]</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="basegeom-graph_revision">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L104">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BaseGeom.</span><span class="api-card__name">graph_revision</span><span class="pp">: </span><span class="pt">int</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Revision of GPU resources referenced by captured graphs.</p></div></div>
+    </div><div class="api-row api-row--plain" id="basegeom-refine_band">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L113">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BaseGeom.</span><span class="api-card__name">refine_band</span><span class="pp">: </span><span class="pt">float</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="basegeom-launch_params">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L117">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BaseGeom.</span><span class="api-card__name">launch_params</span><span class="pp">: </span><span class="pt">Tuple</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="basegeom-query_sdf">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L151">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BaseGeom.</span><span class="api-card__name">query_sdf</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">points</span><span class="pp">: </span><span class="pt">wp.array</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_offsets</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_indices</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">query_mask</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">distance_only</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_signed_dists</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_normals</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_closest_points</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">record_tape</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">True</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_normal_jacobians</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_observed</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Union[wp.array, Tuple[wp.array, wp.array, wp.array]]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Query this geom alone (same semantics as <code>WarpScene.query_sdf</code>); call <code>build</code> first.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">points</span><span class="api-type">wp.array</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_offsets</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_indices</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">query_mask</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">distance_only</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_signed_dists</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_normals</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_closest_points</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">record_tape</span><span class="api-type">bool</span><span class="api-def">= True</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_normal_jacobians</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_observed</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Union[wp.array, Tuple[wp.array, wp.array, wp.array]]</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="basegeom-build">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L308">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BaseGeom.</span><span class="api-card__name">build</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">Device</span><span class="pp"> = </span><span class="pd">'cpu'</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">BaseGeom</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Allocate the GPU arrays; called by <code>WarpScene.add</code>, or directly for scene-less <code>query_sdf</code>.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">Device</span><span class="api-def">= 'cpu'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">BaseGeom</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="warpscene">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/scene.py#L20">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">robokit.geom.</span><span class="api-card__name">WarpScene</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">num_scenes</span><span class="pp">: </span><span class="pt">int</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">Device</span><span class="pp"> = </span><span class="pd">'cpu'</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Heterogeneous batched scene SDF query.</p><h3>Example</h3><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; import numpy as np
+&gt;&gt;&gt; import torch
+&gt;&gt;&gt; import warp as wp
+&gt;&gt;&gt; from robokit.geom.geoms import SphereGeom
+&gt;&gt;&gt; wp.init()
+&gt;&gt;&gt; scene = WarpScene(num_scenes=1, device="cpu").add(
+...     SphereGeom(np.array([1.0]), np.array([0, 1], dtype=np.int32))
+... )
+&gt;&gt;&gt; signed_dists, _, _ = scene.query_sdf_torch(
+...     torch.tensor([[2.0, 0.0, 0.0], [0.5, 0.0, 0.0]]),
+...     torch.tensor([0, 2]),
+... )
+&gt;&gt;&gt; bool(torch.allclose(signed_dists, torch.tensor([1.0, -0.5])))
+True
+&gt;&gt;&gt; normal_jacobians = wp.empty(1, dtype=wp.mat33, device="cpu")
+&gt;&gt;&gt; _ = scene.query_sdf(
+...     wp.array([[2.0, 0.0, 0.0]], dtype=wp.vec3, device="cpu"),
+...     scene_indices=wp.array([0], dtype=wp.int32, device="cpu"),
+...     out_normal_jacobians=normal_jacobians,
+... )
+&gt;&gt;&gt; np.allclose(normal_jacobians.numpy()[0], np.diag([0.0, 0.5, 0.5]))
+True
+&gt;&gt;&gt; observed = wp.empty(1, dtype=wp.bool, device="cpu")
+&gt;&gt;&gt; _ = scene.query_sdf(wp.array([[2.0, 0.0, 0.0]], dtype=wp.vec3, device="cpu"),
+...     scene_indices=wp.array([0], dtype=wp.int32, device="cpu"), out_observed=observed)
+&gt;&gt;&gt; bool(observed.numpy()[0])  # analytical geometry is fully known
+True</pre><pre data-code-full hidden>from robokit.geom.scene import WarpScene
+
+import numpy as np
+import torch
+import warp as wp
+from robokit.geom.geoms import SphereGeom
+wp.init()
+scene = WarpScene(num_scenes=1, device="cpu").add(
+    SphereGeom(np.array([1.0]), np.array([0, 1], dtype=np.int32))
+)
+signed_dists, _, _ = scene.query_sdf_torch(
+    torch.tensor([[2.0, 0.0, 0.0], [0.5, 0.0, 0.0]]),
+    torch.tensor([0, 2]),
+)
+bool(torch.allclose(signed_dists, torch.tensor([1.0, -0.5])))
+normal_jacobians = wp.empty(1, dtype=wp.mat33, device="cpu")
+_ = scene.query_sdf(
+    wp.array([[2.0, 0.0, 0.0]], dtype=wp.vec3, device="cpu"),
+    scene_indices=wp.array([0], dtype=wp.int32, device="cpu"),
+    out_normal_jacobians=normal_jacobians,
+)
+np.allclose(normal_jacobians.numpy()[0], np.diag([0.0, 0.5, 0.5]))
+observed = wp.empty(1, dtype=wp.bool, device="cpu")
+_ = scene.query_sdf(wp.array([[2.0, 0.0, 0.0]], dtype=wp.vec3, device="cpu"),
+    scene_indices=wp.array([0], dtype=wp.int32, device="cpu"), out_observed=observed)
+bool(observed.numpy()[0])  # analytical geometry is fully known</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">num_scenes</span><span class="api-type">int</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">Device</span><span class="api-def">= 'cpu'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="warpscene-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="warpscene-device">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/scene.py#L68">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">WarpScene.</span><span class="api-card__name">device</span><span class="pp">: </span><span class="pt">wp_device_type</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="warpscene-geoms">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/scene.py#L72">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">WarpScene.</span><span class="api-card__name">geoms</span><span class="pp">: </span><span class="pt">Tuple[BaseGeom, ...]</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="warpscene-num_scenes">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/scene.py#L76">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">WarpScene.</span><span class="api-card__name">num_scenes</span><span class="pp">: </span><span class="pt">int</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="warpscene-num_elements">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/scene.py#L80">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">WarpScene.</span><span class="api-card__name">num_elements</span><span class="pp">: </span><span class="pt">int</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Total element count across all attached geoms (a MeshGeom of N meshes counts N).</p></div></div>
+    </div><div class="api-row api-row--plain" id="warpscene-graph_revision">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/scene.py#L85">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">WarpScene.</span><span class="api-card__name">graph_revision</span><span class="pp">: </span><span class="pt">int</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Monotonic revision of resources referenced by captured graphs.</p></div></div>
+    </div><div class="api-row api-row--plain" id="warpscene-add">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/scene.py#L89">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">WarpScene.</span><span class="api-card__name">add</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">geom</span><span class="pp">: </span><span class="pt">BaseGeom</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">WarpScene</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Attach a geom: allocates its GPU arrays on this scene's device; update in place via <code>geom.update(...)</code>.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">geom</span><span class="api-type">BaseGeom</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">WarpScene</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="warpscene-query_sdf">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/scene.py#L132">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">WarpScene.</span><span class="api-card__name">query_sdf</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">points</span><span class="pp">: </span><span class="pt">wp.array</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_offsets</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_indices</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">query_mask</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">distance_only</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_signed_dists</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_normals</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_closest_points</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">record_tape</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">True</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_normal_jacobians</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_observed</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Union[wp.array, Tuple[wp.array, wp.array, wp.array]]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Query the scene SDF (min over all attached geoms) at <code>points</code>.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">points</span><span class="api-type">wp.array</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Query points, any shape (flattened to n internally).</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_offsets</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>CSR boundaries into the flat points, int32, length num_scenes+1. Pass exactly one of <code>scene_offsets</code> / <code>scene_indices</code>.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_indices</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Scene id of each point, int32, one per point. Skips the derivation launch, so hot loops pass a pre-built map here.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">query_mask</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional per-point gate, int32, length n. Points with mask 0 skip every geom kernel.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">distance_only</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"><p>Skip the normal/closest computation (~2x faster) and return only signed distances.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_signed_dists</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional preallocated output; required shape n. Hot loops and CUDA-graph capture pass all <code>out_*</code> so no allocation happens per call.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_normals</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional preallocated output, shape n.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_closest_points</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional preallocated output, shape n.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">record_tape</span><span class="api-type">bool</span><span class="api-def">= True</span></div>
+      <div class="api-row__doc"><p>Record the launches on an active <code>wp.Tape</code>; False keeps the query off the gradient.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_normal_jacobians</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional preallocated <code>wp.mat33</code> output, one per point. Entry (i, j) is the derivative of normal component i with respect to point coordinate j. Mesh face normals have zero derivatives; voxel and primitive normals use analytical derivatives of the active query branch. Derivatives at cell, face, or closest-object switches are discontinuous.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_observed</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional device bool array, one per point. True when every sensor map in the scene has observed the queried voxel; outside a sensor map or masked out is False. Meshes and analytical geometry leave this status unchanged. Unknown status never skips distance checks.</p></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Union[wp.array, Tuple[wp.array, wp.array, wp.array]]</span></div><div class="api-row__doc"><p>Flat <code>(n,)</code> views: <code>signed_dists</code> if <code>distance_only</code>, else <code>(signed_dists, normals, closest_points)</code>. Points in an empty scene get <code>MAX_DIST</code> distance and zero normals.</p></div></div></div>
+    </div><div class="api-row api-row--plain" id="warpscene-query_sdf_torch">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/scene.py#L258">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">WarpScene.</span><span class="api-card__name">query_sdf_torch</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">query_points</span><span class="pp">: </span><span class="pt">torch.Tensor</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_offsets</span><span class="pp">: </span><span class="pt">torch.Tensor</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">poses</span><span class="pp">: </span><span class="pt">Optional[Dict[BaseGeom, torch.Tensor]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scales</span><span class="pp">: </span><span class="pt">Optional[Dict[BaseGeom, torch.Tensor]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Tuple[torch.Tensor, torch.Tensor, torch.Tensor]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Differentiable scene SDF query (per-point min over all attached geoms).</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">query_points</span><span class="api-type">torch.Tensor</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Query points, shape (n, 3), differentiable.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_offsets</span><span class="api-type">torch.Tensor</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>CSR boundaries into the points, length num_scenes+1.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">poses</span><span class="api-type">Optional[Dict[BaseGeom, torch.Tensor]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional per-geom pose overrides, (count, 4, 4) tensors keyed by attached geom. Overridden geoms are queried on these poses and receive gradients; other geoms use their stored (non-differentiable) transforms.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scales</span><span class="api-type">Optional[Dict[BaseGeom, torch.Tensor]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional per-geom scale overrides, (count,) tensors keyed by attached geom. Same semantics as <code>poses</code>.</p></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Tuple[torch.Tensor, torch.Tensor, torch.Tensor]</span></div><div class="api-row__doc"><p><code>(signed_dists, normals, closest_points)</code> torch tensors, shapes (n,), (n, 3), (n, 3). Gradients flow to <code>query_points</code> and to the <code>poses</code>/<code>scales</code> tensors of whichever geom is closest at each point.</p></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="boxgeom">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L372">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">robokit.geom.</span><span class="api-card__name">BoxGeom</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">half_extents</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_offsets</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">poses</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scales</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">capacity</span><span class="pp">: </span><span class="pt">Optional[int]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div><div class="api-sig__bases">Bases: <span>BaseGeom</span></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>N boxes: <code>half_extents (N, 3)</code>, posed/rotated via <code>poses</code>.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">half_extents</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_offsets</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">poses</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scales</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">capacity</span><span class="api-type">Optional[int]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="boxgeom-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="boxgeom-params_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L71">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BoxGeom.</span><span class="api-card__name">params_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="boxgeom-mesh_ids_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L72">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BoxGeom.</span><span class="api-card__name">mesh_ids_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="boxgeom-volume_ids_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L73">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BoxGeom.</span><span class="api-card__name">volume_ids_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="boxgeom-aabb_min_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L74">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BoxGeom.</span><span class="api-card__name">aabb_min_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="boxgeom-aabb_max_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L75">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BoxGeom.</span><span class="api-card__name">aabb_max_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="boxgeom-paddings_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L76">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BoxGeom.</span><span class="api-card__name">paddings_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="boxgeom-device_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L99">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BoxGeom.</span><span class="api-card__name">device_wp</span><span class="pp">: </span><span class="pt">Optional[wp_device_type]</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="boxgeom-graph_revision">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L104">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BoxGeom.</span><span class="api-card__name">graph_revision</span><span class="pp">: </span><span class="pt">int</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Revision of GPU resources referenced by captured graphs.</p></div></div>
+    </div><div class="api-row api-row--plain" id="boxgeom-refine_band">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L113">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BoxGeom.</span><span class="api-card__name">refine_band</span><span class="pp">: </span><span class="pt">float</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="boxgeom-launch_params">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L117">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BoxGeom.</span><span class="api-card__name">launch_params</span><span class="pp">: </span><span class="pt">Tuple</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="boxgeom-query_sdf">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L151">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BoxGeom.</span><span class="api-card__name">query_sdf</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">points</span><span class="pp">: </span><span class="pt">wp.array</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_offsets</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_indices</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">query_mask</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">distance_only</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_signed_dists</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_normals</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_closest_points</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">record_tape</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">True</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_normal_jacobians</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_observed</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Union[wp.array, Tuple[wp.array, wp.array, wp.array]]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Query this geom alone (same semantics as <code>WarpScene.query_sdf</code>); call <code>build</code> first.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">points</span><span class="api-type">wp.array</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_offsets</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_indices</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">query_mask</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">distance_only</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_signed_dists</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_normals</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_closest_points</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">record_tape</span><span class="api-type">bool</span><span class="api-def">= True</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_normal_jacobians</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_observed</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Union[wp.array, Tuple[wp.array, wp.array, wp.array]]</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="boxgeom-build">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L308">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BoxGeom.</span><span class="api-card__name">build</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">Device</span><span class="pp"> = </span><span class="pd">'cpu'</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">BaseGeom</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Allocate the GPU arrays; called by <code>WarpScene.add</code>, or directly for scene-less <code>query_sdf</code>.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">Device</span><span class="api-def">= 'cpu'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">BaseGeom</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="boxgeom-update">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L389">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">BoxGeom.</span><span class="api-card__name">update</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">half_extents</span><span class="pp">: </span><span class="pt">Optional[np.ndarray]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_offsets</span><span class="pp">: </span><span class="pt">Optional[np.ndarray]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">poses</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scales</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">None</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">half_extents</span><span class="api-type">Optional[np.ndarray]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_offsets</span><span class="api-type">Optional[np.ndarray]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">poses</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scales</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">None</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="spheregeom">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L404">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">robokit.geom.</span><span class="api-card__name">SphereGeom</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">radii</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_offsets</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">poses</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scales</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">capacity</span><span class="pp">: </span><span class="pt">Optional[int]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div><div class="api-sig__bases">Bases: <span>BaseGeom</span></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>N spheres: <code>radii (N,)</code>, centered via <code>poses</code>.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">radii</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_offsets</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">poses</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scales</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">capacity</span><span class="api-type">Optional[int]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="spheregeom-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="spheregeom-params_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L71">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SphereGeom.</span><span class="api-card__name">params_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="spheregeom-mesh_ids_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L72">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SphereGeom.</span><span class="api-card__name">mesh_ids_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="spheregeom-volume_ids_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L73">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SphereGeom.</span><span class="api-card__name">volume_ids_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="spheregeom-aabb_min_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L74">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SphereGeom.</span><span class="api-card__name">aabb_min_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="spheregeom-aabb_max_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L75">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SphereGeom.</span><span class="api-card__name">aabb_max_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="spheregeom-paddings_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L76">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SphereGeom.</span><span class="api-card__name">paddings_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="spheregeom-device_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L99">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SphereGeom.</span><span class="api-card__name">device_wp</span><span class="pp">: </span><span class="pt">Optional[wp_device_type]</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="spheregeom-graph_revision">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L104">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SphereGeom.</span><span class="api-card__name">graph_revision</span><span class="pp">: </span><span class="pt">int</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Revision of GPU resources referenced by captured graphs.</p></div></div>
+    </div><div class="api-row api-row--plain" id="spheregeom-refine_band">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L113">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SphereGeom.</span><span class="api-card__name">refine_band</span><span class="pp">: </span><span class="pt">float</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="spheregeom-launch_params">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L117">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SphereGeom.</span><span class="api-card__name">launch_params</span><span class="pp">: </span><span class="pt">Tuple</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="spheregeom-query_sdf">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L151">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SphereGeom.</span><span class="api-card__name">query_sdf</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">points</span><span class="pp">: </span><span class="pt">wp.array</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_offsets</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_indices</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">query_mask</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">distance_only</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_signed_dists</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_normals</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_closest_points</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">record_tape</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">True</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_normal_jacobians</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_observed</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Union[wp.array, Tuple[wp.array, wp.array, wp.array]]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Query this geom alone (same semantics as <code>WarpScene.query_sdf</code>); call <code>build</code> first.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">points</span><span class="api-type">wp.array</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_offsets</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_indices</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">query_mask</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">distance_only</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_signed_dists</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_normals</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_closest_points</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">record_tape</span><span class="api-type">bool</span><span class="api-def">= True</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_normal_jacobians</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_observed</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Union[wp.array, Tuple[wp.array, wp.array, wp.array]]</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="spheregeom-build">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L308">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SphereGeom.</span><span class="api-card__name">build</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">Device</span><span class="pp"> = </span><span class="pd">'cpu'</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">BaseGeom</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Allocate the GPU arrays; called by <code>WarpScene.add</code>, or directly for scene-less <code>query_sdf</code>.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">Device</span><span class="api-def">= 'cpu'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">BaseGeom</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="spheregeom-update">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L421">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SphereGeom.</span><span class="api-card__name">update</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">radii</span><span class="pp">: </span><span class="pt">Optional[np.ndarray]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_offsets</span><span class="pp">: </span><span class="pt">Optional[np.ndarray]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">poses</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scales</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">None</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">radii</span><span class="api-type">Optional[np.ndarray]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_offsets</span><span class="api-type">Optional[np.ndarray]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">poses</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scales</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">None</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="planegeom">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L432">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">robokit.geom.</span><span class="api-card__name">PlaneGeom</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">scene_offsets</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">poses</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scales</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">capacity</span><span class="pp">: </span><span class="pt">Optional[int]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div><div class="api-sig__bases">Bases: <span>BaseGeom</span></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>N halfspaces (local <code>z=0</code> planes, sdf = local z): count = <code>scene_offsets[-1]</code>, orientation via <code>poses</code>.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_offsets</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">poses</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scales</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">capacity</span><span class="api-type">Optional[int]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="planegeom-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="planegeom-params_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L71">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">PlaneGeom.</span><span class="api-card__name">params_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="planegeom-mesh_ids_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L72">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">PlaneGeom.</span><span class="api-card__name">mesh_ids_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="planegeom-volume_ids_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L73">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">PlaneGeom.</span><span class="api-card__name">volume_ids_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="planegeom-aabb_min_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L74">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">PlaneGeom.</span><span class="api-card__name">aabb_min_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="planegeom-aabb_max_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L75">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">PlaneGeom.</span><span class="api-card__name">aabb_max_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="planegeom-paddings_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L76">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">PlaneGeom.</span><span class="api-card__name">paddings_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="planegeom-device_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L99">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">PlaneGeom.</span><span class="api-card__name">device_wp</span><span class="pp">: </span><span class="pt">Optional[wp_device_type]</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="planegeom-graph_revision">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L104">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">PlaneGeom.</span><span class="api-card__name">graph_revision</span><span class="pp">: </span><span class="pt">int</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Revision of GPU resources referenced by captured graphs.</p></div></div>
+    </div><div class="api-row api-row--plain" id="planegeom-refine_band">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L113">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">PlaneGeom.</span><span class="api-card__name">refine_band</span><span class="pp">: </span><span class="pt">float</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="planegeom-launch_params">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L117">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">PlaneGeom.</span><span class="api-card__name">launch_params</span><span class="pp">: </span><span class="pt">Tuple</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="planegeom-query_sdf">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L151">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">PlaneGeom.</span><span class="api-card__name">query_sdf</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">points</span><span class="pp">: </span><span class="pt">wp.array</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_offsets</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_indices</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">query_mask</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">distance_only</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_signed_dists</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_normals</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_closest_points</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">record_tape</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">True</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_normal_jacobians</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_observed</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Union[wp.array, Tuple[wp.array, wp.array, wp.array]]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Query this geom alone (same semantics as <code>WarpScene.query_sdf</code>); call <code>build</code> first.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">points</span><span class="api-type">wp.array</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_offsets</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_indices</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">query_mask</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">distance_only</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_signed_dists</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_normals</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_closest_points</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">record_tape</span><span class="api-type">bool</span><span class="api-def">= True</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_normal_jacobians</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_observed</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Union[wp.array, Tuple[wp.array, wp.array, wp.array]]</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="planegeom-build">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L308">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">PlaneGeom.</span><span class="api-card__name">build</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">Device</span><span class="pp"> = </span><span class="pd">'cpu'</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">BaseGeom</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Allocate the GPU arrays; called by <code>WarpScene.add</code>, or directly for scene-less <code>query_sdf</code>.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">Device</span><span class="api-def">= 'cpu'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">BaseGeom</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="planegeom-update">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L448">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">PlaneGeom.</span><span class="api-card__name">update</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">scene_offsets</span><span class="pp">: </span><span class="pt">Optional[np.ndarray]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">poses</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scales</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">None</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_offsets</span><span class="api-type">Optional[np.ndarray]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">poses</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scales</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">None</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="capsulegeom">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L458">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">robokit.geom.</span><span class="api-card__name">CapsuleGeom</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">radii</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">half_heights</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_offsets</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">poses</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scales</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">capacity</span><span class="pp">: </span><span class="pt">Optional[int]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div><div class="api-sig__bases">Bases: <span>BaseGeom</span></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>N capsules: <code>radii (N,)</code> + <code>half_heights (N,)</code>, axis along local z via <code>poses</code>.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">radii</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">half_heights</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_offsets</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">poses</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scales</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">capacity</span><span class="api-type">Optional[int]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="capsulegeom-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="capsulegeom-params_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L71">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">CapsuleGeom.</span><span class="api-card__name">params_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="capsulegeom-mesh_ids_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L72">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">CapsuleGeom.</span><span class="api-card__name">mesh_ids_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="capsulegeom-volume_ids_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L73">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">CapsuleGeom.</span><span class="api-card__name">volume_ids_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="capsulegeom-aabb_min_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L74">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">CapsuleGeom.</span><span class="api-card__name">aabb_min_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="capsulegeom-aabb_max_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L75">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">CapsuleGeom.</span><span class="api-card__name">aabb_max_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="capsulegeom-paddings_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L76">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">CapsuleGeom.</span><span class="api-card__name">paddings_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="capsulegeom-device_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L99">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">CapsuleGeom.</span><span class="api-card__name">device_wp</span><span class="pp">: </span><span class="pt">Optional[wp_device_type]</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="capsulegeom-graph_revision">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L104">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">CapsuleGeom.</span><span class="api-card__name">graph_revision</span><span class="pp">: </span><span class="pt">int</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Revision of GPU resources referenced by captured graphs.</p></div></div>
+    </div><div class="api-row api-row--plain" id="capsulegeom-refine_band">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L113">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">CapsuleGeom.</span><span class="api-card__name">refine_band</span><span class="pp">: </span><span class="pt">float</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="capsulegeom-launch_params">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L117">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">CapsuleGeom.</span><span class="api-card__name">launch_params</span><span class="pp">: </span><span class="pt">Tuple</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="capsulegeom-query_sdf">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L151">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">CapsuleGeom.</span><span class="api-card__name">query_sdf</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">points</span><span class="pp">: </span><span class="pt">wp.array</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_offsets</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_indices</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">query_mask</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">distance_only</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_signed_dists</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_normals</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_closest_points</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">record_tape</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">True</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_normal_jacobians</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_observed</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Union[wp.array, Tuple[wp.array, wp.array, wp.array]]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Query this geom alone (same semantics as <code>WarpScene.query_sdf</code>); call <code>build</code> first.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">points</span><span class="api-type">wp.array</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_offsets</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_indices</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">query_mask</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">distance_only</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_signed_dists</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_normals</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_closest_points</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">record_tape</span><span class="api-type">bool</span><span class="api-def">= True</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_normal_jacobians</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_observed</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Union[wp.array, Tuple[wp.array, wp.array, wp.array]]</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="capsulegeom-build">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L308">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">CapsuleGeom.</span><span class="api-card__name">build</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">Device</span><span class="pp"> = </span><span class="pd">'cpu'</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">BaseGeom</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Allocate the GPU arrays; called by <code>WarpScene.add</code>, or directly for scene-less <code>query_sdf</code>.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">Device</span><span class="api-def">= 'cpu'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">BaseGeom</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="capsulegeom-update">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L479">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">CapsuleGeom.</span><span class="api-card__name">update</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">radii</span><span class="pp">: </span><span class="pt">Optional[np.ndarray]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">half_heights</span><span class="pp">: </span><span class="pt">Optional[np.ndarray]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_offsets</span><span class="pp">: </span><span class="pt">Optional[np.ndarray]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">poses</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scales</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">None</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">radii</span><span class="api-type">Optional[np.ndarray]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">half_heights</span><span class="api-type">Optional[np.ndarray]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_offsets</span><span class="api-type">Optional[np.ndarray]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">poses</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scales</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">None</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="meshgeom">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L502">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">robokit.geom.</span><span class="api-card__name">MeshGeom</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">meshes</span><span class="pp">: </span><span class="pt">MeshList</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_offsets</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">poses</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scales</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">enable_sdf</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">sdf_voxel_size</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.01</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">sdf_padding</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.1</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">refine_band_voxels</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">REFINE_BAND_VOXELS</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">capacity</span><span class="pp">: </span><span class="pt">Optional[int]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div><div class="api-sig__bases">Bases: <span>BaseGeom</span></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>N triangle meshes; <code>enable_sdf</code> bakes a disk-cached per-mesh SDF for far queries instead of the exact mesh.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">meshes</span><span class="api-type">MeshList</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_offsets</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">poses</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scales</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">enable_sdf</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">sdf_voxel_size</span><span class="api-type">float</span><span class="api-def">= 0.01</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">sdf_padding</span><span class="api-type">float</span><span class="api-def">= 0.1</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">refine_band_voxels</span><span class="api-type">float</span><span class="api-def">= REFINE_BAND_VOXELS</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">capacity</span><span class="api-type">Optional[int]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="meshgeom-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="meshgeom-params_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L71">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MeshGeom.</span><span class="api-card__name">params_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="meshgeom-mesh_ids_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L72">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MeshGeom.</span><span class="api-card__name">mesh_ids_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="meshgeom-volume_ids_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L73">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MeshGeom.</span><span class="api-card__name">volume_ids_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="meshgeom-aabb_min_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L74">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MeshGeom.</span><span class="api-card__name">aabb_min_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="meshgeom-aabb_max_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L75">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MeshGeom.</span><span class="api-card__name">aabb_max_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="meshgeom-paddings_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L76">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MeshGeom.</span><span class="api-card__name">paddings_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="meshgeom-device_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L99">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MeshGeom.</span><span class="api-card__name">device_wp</span><span class="pp">: </span><span class="pt">Optional[wp_device_type]</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="meshgeom-graph_revision">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L104">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MeshGeom.</span><span class="api-card__name">graph_revision</span><span class="pp">: </span><span class="pt">int</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Revision of GPU resources referenced by captured graphs.</p></div></div>
+    </div><div class="api-row api-row--plain" id="meshgeom-query_sdf">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L151">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MeshGeom.</span><span class="api-card__name">query_sdf</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">points</span><span class="pp">: </span><span class="pt">wp.array</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_offsets</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_indices</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">query_mask</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">distance_only</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_signed_dists</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_normals</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_closest_points</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">record_tape</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">True</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_normal_jacobians</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_observed</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Union[wp.array, Tuple[wp.array, wp.array, wp.array]]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Query this geom alone (same semantics as <code>WarpScene.query_sdf</code>); call <code>build</code> first.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">points</span><span class="api-type">wp.array</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_offsets</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_indices</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">query_mask</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">distance_only</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_signed_dists</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_normals</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_closest_points</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">record_tape</span><span class="api-type">bool</span><span class="api-def">= True</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_normal_jacobians</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_observed</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Union[wp.array, Tuple[wp.array, wp.array, wp.array]]</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="meshgeom-launch_params">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L529">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MeshGeom.</span><span class="api-card__name">launch_params</span><span class="pp">: </span><span class="pt">Tuple</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="meshgeom-refine_band">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L542">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MeshGeom.</span><span class="api-card__name">refine_band</span><span class="pp">: </span><span class="pt">float</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="meshgeom-build">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L571">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MeshGeom.</span><span class="api-card__name">build</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">Device</span><span class="pp"> = </span><span class="pd">'cpu'</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">MeshGeom</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">Device</span><span class="api-def">= 'cpu'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">MeshGeom</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="meshgeom-update">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L582">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">MeshGeom.</span><span class="api-card__name">update</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">meshes</span><span class="pp">: </span><span class="pt">Optional[MeshList]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_offsets</span><span class="pp">: </span><span class="pt">Optional[np.ndarray]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">poses</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scales</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">None</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p><code>meshes</code> swaps the mesh ids + AABBs (and rebakes the SDF tier if enabled).</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">meshes</span><span class="api-type">Optional[MeshList]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_offsets</span><span class="api-type">Optional[np.ndarray]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">poses</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scales</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">None</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="volumegeom">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L604">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">robokit.geom.</span><span class="api-card__name">VolumeGeom</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">sdf_volumes</span><span class="pp">: </span><span class="pt">List[SdfVolume]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_offsets</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">poses</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scales</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">capacity</span><span class="pp">: </span><span class="pt">Optional[int]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div><div class="api-sig__bases">Bases: <span>BaseGeom</span></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>N pre-baked <code>SdfVolume</code> grids (NanoVDB trilinear sample; conservative extrapolation outside the AABB).</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">sdf_volumes</span><span class="api-type">List[SdfVolume]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_offsets</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">poses</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scales</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">capacity</span><span class="api-type">Optional[int]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="volumegeom-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="volumegeom-params_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L71">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">VolumeGeom.</span><span class="api-card__name">params_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="volumegeom-mesh_ids_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L72">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">VolumeGeom.</span><span class="api-card__name">mesh_ids_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="volumegeom-volume_ids_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L73">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">VolumeGeom.</span><span class="api-card__name">volume_ids_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="volumegeom-aabb_min_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L74">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">VolumeGeom.</span><span class="api-card__name">aabb_min_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="volumegeom-aabb_max_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L75">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">VolumeGeom.</span><span class="api-card__name">aabb_max_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="volumegeom-paddings_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L76">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">VolumeGeom.</span><span class="api-card__name">paddings_wp</span><span class="pp">: </span><span class="pt">Optional[wp.array] = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="volumegeom-device_wp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L99">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">VolumeGeom.</span><span class="api-card__name">device_wp</span><span class="pp">: </span><span class="pt">Optional[wp_device_type]</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="volumegeom-graph_revision">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L104">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">VolumeGeom.</span><span class="api-card__name">graph_revision</span><span class="pp">: </span><span class="pt">int</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Revision of GPU resources referenced by captured graphs.</p></div></div>
+    </div><div class="api-row api-row--plain" id="volumegeom-refine_band">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L113">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">VolumeGeom.</span><span class="api-card__name">refine_band</span><span class="pp">: </span><span class="pt">float</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="volumegeom-query_sdf">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><span class="api-from">inherited from BaseGeom</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L151">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">VolumeGeom.</span><span class="api-card__name">query_sdf</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">points</span><span class="pp">: </span><span class="pt">wp.array</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_offsets</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_indices</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">query_mask</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">distance_only</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_signed_dists</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_normals</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_closest_points</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">record_tape</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">True</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_normal_jacobians</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out_observed</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Union[wp.array, Tuple[wp.array, wp.array, wp.array]]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Query this geom alone (same semantics as <code>WarpScene.query_sdf</code>); call <code>build</code> first.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">points</span><span class="api-type">wp.array</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_offsets</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_indices</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">query_mask</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">distance_only</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_signed_dists</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_normals</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_closest_points</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">record_tape</span><span class="api-type">bool</span><span class="api-def">= True</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_normal_jacobians</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out_observed</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Union[wp.array, Tuple[wp.array, wp.array, wp.array]]</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="volumegeom-launch_params">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L623">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">VolumeGeom.</span><span class="api-card__name">launch_params</span><span class="pp">: </span><span class="pt">Tuple</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="volumegeom-build">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L647">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">VolumeGeom.</span><span class="api-card__name">build</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">Device</span><span class="pp"> = </span><span class="pd">'cpu'</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">VolumeGeom</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">Device</span><span class="api-def">= 'cpu'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">VolumeGeom</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="volumegeom-update">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/geom/geoms.py#L657">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">VolumeGeom.</span><span class="api-card__name">update</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">sdf_volumes</span><span class="pp">: </span><span class="pt">Optional[List[SdfVolume]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_offsets</span><span class="pp">: </span><span class="pt">Optional[np.ndarray]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">poses</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scales</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">None</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p><code>sdf_volumes</code> swaps ids/AABBs/paddings.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">sdf_volumes</span><span class="api-type">Optional[List[SdfVolume]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_offsets</span><span class="api-type">Optional[np.ndarray]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">poses</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scales</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">None</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/robokit/api-robot/"><span class="lbl">← Previous</span><span class="nm">Robot</span></a><a class="next" href="/docs/robokit/api-optimization/"><span class="lbl">Next →</span><span class="nm">Optimization</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#basegeom">BaseGeom</a><a href="#warpscene">WarpScene</a><a href="#boxgeom">BoxGeom</a><a href="#spheregeom">SphereGeom</a><a href="#planegeom">PlaneGeom</a><a href="#capsulegeom">CapsuleGeom</a><a href="#meshgeom">MeshGeom</a><a href="#volumegeom">VolumeGeom</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "robokit", "id": "api-geometry", "toc": [{"text": "BaseGeom", "href": "#basegeom", "members": [{"text": "params_wp", "href": "#basegeom-params_wp"}, {"text": "mesh_ids_wp", "href": "#basegeom-mesh_ids_wp"}, {"text": "volume_ids_wp", "href": "#basegeom-volume_ids_wp"}, {"text": "aabb_min_wp", "href": "#basegeom-aabb_min_wp"}, {"text": "aabb_max_wp", "href": "#basegeom-aabb_max_wp"}, {"text": "paddings_wp", "href": "#basegeom-paddings_wp"}, {"text": "device_wp", "href": "#basegeom-device_wp"}, {"text": "graph_revision", "href": "#basegeom-graph_revision"}, {"text": "refine_band", "href": "#basegeom-refine_band"}, {"text": "launch_params", "href": "#basegeom-launch_params"}, {"text": "query_sdf()", "href": "#basegeom-query_sdf"}, {"text": "build()", "href": "#basegeom-build"}]}, {"text": "WarpScene", "href": "#warpscene", "members": [{"text": "device", "href": "#warpscene-device"}, {"text": "geoms", "href": "#warpscene-geoms"}, {"text": "num_scenes", "href": "#warpscene-num_scenes"}, {"text": "num_elements", "href": "#warpscene-num_elements"}, {"text": "graph_revision", "href": "#warpscene-graph_revision"}, {"text": "add()", "href": "#warpscene-add"}, {"text": "query_sdf()", "href": "#warpscene-query_sdf"}, {"text": "query_sdf_torch()", "href": "#warpscene-query_sdf_torch"}]}, {"text": "BoxGeom", "href": "#boxgeom", "members": [{"text": "params_wp", "href": "#boxgeom-params_wp"}, {"text": "mesh_ids_wp", "href": "#boxgeom-mesh_ids_wp"}, {"text": "volume_ids_wp", "href": "#boxgeom-volume_ids_wp"}, {"text": "aabb_min_wp", "href": "#boxgeom-aabb_min_wp"}, {"text": "aabb_max_wp", "href": "#boxgeom-aabb_max_wp"}, {"text": "paddings_wp", "href": "#boxgeom-paddings_wp"}, {"text": "device_wp", "href": "#boxgeom-device_wp"}, {"text": "graph_revision", "href": "#boxgeom-graph_revision"}, {"text": "refine_band", "href": "#boxgeom-refine_band"}, {"text": "launch_params", "href": "#boxgeom-launch_params"}, {"text": "query_sdf()", "href": "#boxgeom-query_sdf"}, {"text": "build()", "href": "#boxgeom-build"}, {"text": "update()", "href": "#boxgeom-update"}]}, {"text": "SphereGeom", "href": "#spheregeom", "members": [{"text": "params_wp", "href": "#spheregeom-params_wp"}, {"text": "mesh_ids_wp", "href": "#spheregeom-mesh_ids_wp"}, {"text": "volume_ids_wp", "href": "#spheregeom-volume_ids_wp"}, {"text": "aabb_min_wp", "href": "#spheregeom-aabb_min_wp"}, {"text": "aabb_max_wp", "href": "#spheregeom-aabb_max_wp"}, {"text": "paddings_wp", "href": "#spheregeom-paddings_wp"}, {"text": "device_wp", "href": "#spheregeom-device_wp"}, {"text": "graph_revision", "href": "#spheregeom-graph_revision"}, {"text": "refine_band", "href": "#spheregeom-refine_band"}, {"text": "launch_params", "href": "#spheregeom-launch_params"}, {"text": "query_sdf()", "href": "#spheregeom-query_sdf"}, {"text": "build()", "href": "#spheregeom-build"}, {"text": "update()", "href": "#spheregeom-update"}]}, {"text": "PlaneGeom", "href": "#planegeom", "members": [{"text": "params_wp", "href": "#planegeom-params_wp"}, {"text": "mesh_ids_wp", "href": "#planegeom-mesh_ids_wp"}, {"text": "volume_ids_wp", "href": "#planegeom-volume_ids_wp"}, {"text": "aabb_min_wp", "href": "#planegeom-aabb_min_wp"}, {"text": "aabb_max_wp", "href": "#planegeom-aabb_max_wp"}, {"text": "paddings_wp", "href": "#planegeom-paddings_wp"}, {"text": "device_wp", "href": "#planegeom-device_wp"}, {"text": "graph_revision", "href": "#planegeom-graph_revision"}, {"text": "refine_band", "href": "#planegeom-refine_band"}, {"text": "launch_params", "href": "#planegeom-launch_params"}, {"text": "query_sdf()", "href": "#planegeom-query_sdf"}, {"text": "build()", "href": "#planegeom-build"}, {"text": "update()", "href": "#planegeom-update"}]}, {"text": "CapsuleGeom", "href": "#capsulegeom", "members": [{"text": "params_wp", "href": "#capsulegeom-params_wp"}, {"text": "mesh_ids_wp", "href": "#capsulegeom-mesh_ids_wp"}, {"text": "volume_ids_wp", "href": "#capsulegeom-volume_ids_wp"}, {"text": "aabb_min_wp", "href": "#capsulegeom-aabb_min_wp"}, {"text": "aabb_max_wp", "href": "#capsulegeom-aabb_max_wp"}, {"text": "paddings_wp", "href": "#capsulegeom-paddings_wp"}, {"text": "device_wp", "href": "#capsulegeom-device_wp"}, {"text": "graph_revision", "href": "#capsulegeom-graph_revision"}, {"text": "refine_band", "href": "#capsulegeom-refine_band"}, {"text": "launch_params", "href": "#capsulegeom-launch_params"}, {"text": "query_sdf()", "href": "#capsulegeom-query_sdf"}, {"text": "build()", "href": "#capsulegeom-build"}, {"text": "update()", "href": "#capsulegeom-update"}]}, {"text": "MeshGeom", "href": "#meshgeom", "members": [{"text": "params_wp", "href": "#meshgeom-params_wp"}, {"text": "mesh_ids_wp", "href": "#meshgeom-mesh_ids_wp"}, {"text": "volume_ids_wp", "href": "#meshgeom-volume_ids_wp"}, {"text": "aabb_min_wp", "href": "#meshgeom-aabb_min_wp"}, {"text": "aabb_max_wp", "href": "#meshgeom-aabb_max_wp"}, {"text": "paddings_wp", "href": "#meshgeom-paddings_wp"}, {"text": "device_wp", "href": "#meshgeom-device_wp"}, {"text": "graph_revision", "href": "#meshgeom-graph_revision"}, {"text": "query_sdf()", "href": "#meshgeom-query_sdf"}, {"text": "launch_params", "href": "#meshgeom-launch_params"}, {"text": "refine_band", "href": "#meshgeom-refine_band"}, {"text": "build()", "href": "#meshgeom-build"}, {"text": "update()", "href": "#meshgeom-update"}]}, {"text": "VolumeGeom", "href": "#volumegeom", "members": [{"text": "params_wp", "href": "#volumegeom-params_wp"}, {"text": "mesh_ids_wp", "href": "#volumegeom-mesh_ids_wp"}, {"text": "volume_ids_wp", "href": "#volumegeom-volume_ids_wp"}, {"text": "aabb_min_wp", "href": "#volumegeom-aabb_min_wp"}, {"text": "aabb_max_wp", "href": "#volumegeom-aabb_max_wp"}, {"text": "paddings_wp", "href": "#volumegeom-paddings_wp"}, {"text": "device_wp", "href": "#volumegeom-device_wp"}, {"text": "graph_revision", "href": "#volumegeom-graph_revision"}, {"text": "refine_band", "href": "#volumegeom-refine_band"}, {"text": "query_sdf()", "href": "#volumegeom-query_sdf"}, {"text": "launch_params", "href": "#volumegeom-launch_params"}, {"text": "build()", "href": "#volumegeom-build"}, {"text": "update()", "href": "#volumegeom-update"}]}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

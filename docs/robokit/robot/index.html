@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Robot · RoboKit docs · OpenRoboKit</title>
+  <meta name="description" content="GPU-native, differentiable robotics tooling: IK, trajectory optimization, retargeting, grasping, calibration." />
+  <link rel="canonical" href="https://openrobokit.com/docs/robokit/robot/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">RoboKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="is-active">
+        <span class="nm">RoboKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="">
+        <span class="nm">GraspKit</span>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/robokit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/robokit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/robokit/rl/" data-id="rl" class="">RL</a></div><div class="side__list"><a href="/docs/robokit/sim-mpc/" data-id="sim-mpc" class="">Sim MPC</a></div><div class="side__list"><a href="/docs/robokit/ik/" data-id="ik" class="">IK</a></div><div class="side__list"><a href="/docs/robokit/motion-planning/" data-id="motion-planning" class="">Motion Planning</a></div><div class="side__list"><a href="/docs/robokit/humanoid-retargeting/" data-id="humanoid-retargeting" class="">Humanoid Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand-retargeting/" data-id="hand-retargeting" class="">Hand Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand_eye_calibration/" data-id="hand_eye_calibration" class="">Hand-Eye Calibration</a></div><div class="side__list"><a href="/docs/robokit/ref-assets/" data-id="ref-assets" class="">Built-in Robots &amp; Datasets</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/robot/" data-id="robot" class="is-active">Robot</a></div><div class="side__list"><a href="/docs/robokit/geom/" data-id="geom" class="">Geometry</a></div><div class="side__list"><a href="/docs/robokit/optimization/" data-id="optimization" class="">Optimization</a></div><div class="side__list"><a href="/docs/robokit/conventions/" data-id="conventions" class="">Conventions</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list">
+      <div class="side__sub is-folded" data-fold="Reference·Optimizers">
+        <span>Optimizers</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/opt-gd/" data-id="opt-gd" class="">GDOptimizer</a><a href="/docs/robokit/opt-lm/" data-id="opt-lm" class="">LMOptimizer</a><a href="/docs/robokit/opt-lbfgs/" data-id="opt-lbfgs" class="">LBFGSOptimizer</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Terms">
+        <span>Terms</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/term-frame/" data-id="term-frame" class="">Frame Task</a><a href="/docs/robokit/term-position/" data-id="term-position" class="">Position Task</a><a href="/docs/robokit/term-rotation/" data-id="term-rotation" class="">Rotation Tasks</a><a href="/docs/robokit/term-frame-vector/" data-id="term-frame-vector" class="">Frame Vector Task</a><a href="/docs/robokit/term-com-position/" data-id="term-com-position" class="">CoM Position Task</a><a href="/docs/robokit/term-position-limit/" data-id="term-position-limit" class="">Position Limit</a><a href="/docs/robokit/term-velocity-limit/" data-id="term-velocity-limit" class="">Velocity Limit Task</a><a href="/docs/robokit/term-configuration/" data-id="term-configuration" class="">Configuration Task</a><a href="/docs/robokit/term-smoothness/" data-id="term-smoothness" class="">Smoothness Task</a><a href="/docs/robokit/term-self-collision/" data-id="term-self-collision" class="">Self Collision Task</a><a href="/docs/robokit/term-scene-collision/" data-id="term-scene-collision" class="">Scene Collision Task</a><a href="/docs/robokit/term-scene-distance/" data-id="term-scene-distance" class="">Scene Distance Task</a><a href="/docs/robokit/term-interaction-mesh/" data-id="term-interaction-mesh" class="">Interaction Mesh Task</a><a href="/docs/robokit/term-mask-alignment/" data-id="term-mask-alignment" class="">Mask Alignment Task</a><a href="/docs/robokit/term-manipulability/" data-id="term-manipulability" class="">Manipulability Task</a><a href="/docs/robokit/term-force-closure/" data-id="term-force-closure" class="">Force Closure Task</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/api-robot/" data-id="api-robot" class="">Robot</a><a href="/docs/robokit/api-geometry/" data-id="api-geometry" class="">Geometry</a><a href="/docs/robokit/api-optimization/" data-id="api-optimization" class="">Optimization</a><a href="/docs/robokit/api-terms/" data-id="api-terms" class="">Terms</a><a href="/docs/robokit/api-ik/" data-id="api-ik" class="">Inverse Kinematics</a><a href="/docs/robokit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/robokit/api-sim-mpc/" data-id="api-sim-mpc" class="">Sim MPC</a><a href="/docs/robokit/api-humanoid-retargeting/" data-id="api-humanoid-retargeting" class="">Humanoid Retargeting</a><a href="/docs/robokit/api-hand-retargeting/" data-id="api-hand-retargeting" class="">Hand Retargeting</a><a href="/docs/robokit/api-hand_eye_calibration/" data-id="api-hand_eye_calibration" class="">Hand-Eye Calibration</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">robokit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>Concepts</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Robot</h1>
+        <div class="doc-body" id="doc-body"><p><code>robokit.robo</code> computes differentiable kinematics. It splits the work among three classes:</p><table class="doc-table" style="--cols:3"><thead><tr><th>Type</th><th>Role</th><th>Holds</th></tr></thead><tbody><tr><td><code>Robot</code></td><td>Compute</td><td>Kinematics methods; stateless</td></tr><tr><td><code>RobotSpec</code></td><td>Model data</td><td>Structure, geometry, inertia; fixed after load</td></tr><tr><td>└─ <code>RobotSpecTensors</code></td><td>Device model data</td><td><code>RobotSpec</code> on a device</td></tr><tr><td><code>RobotState</code></td><td>Values</td><td>Batched joint and base values, and results</td></tr></tbody></table><p>Use <code>Robot</code>, <code>robot.spec</code> and <code>RobotState</code>. <code>RobotSpecTensors</code> is internal.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>from robot_descriptions.loaders.yourdfpy import load_robot_description
+from robokit.robo import Robot
+
+# load a robot from a URDF file
+robot = Robot.load(load_robot_description("panda_description"))
+# access its actuated joint names
+joint_names = robot.spec.actuated_joint_names
+
+# create a state to store values
+state = robot.state()
+# compute forward kinematics for the current state
+state = robot.forward_kinematics(state)
+# access the world transforms of all links
+T_world_link = state.T_world_link</pre><pre data-code-full hidden>from robot_descriptions.loaders.yourdfpy import load_robot_description
+from robokit.robo import Robot
+
+# load a robot from a URDF file
+robot = Robot.load(load_robot_description("panda_description"))
+# access its actuated joint names
+joint_names = robot.spec.actuated_joint_names
+
+# create a state to store values
+state = robot.state()
+# compute forward kinematics for the current state
+state = robot.forward_kinematics(state)
+# access the world transforms of all links
+T_world_link = state.T_world_link
+assert state.q.shape[-1] == len(joint_names)</pre></div><h3 id="state">State</h3><p>A <code>RobotState</code> holds one configuration, a batch of them, or a batch of trajectories:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>state = robot.state(q)  # [num_dofs] or [batch, num_dofs]
+trajectory_state = robot.state(q_trajectory)  # [batch, num_frames, num_dofs]
+floating_base_state = robot.state(q, T_world_base=base)  # joint values plus a floating base</pre><pre data-code-full hidden>import numpy as np
+import warp as wp
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+from robokit.robo import Robot
+
+device = "cpu"
+robot = Robot.load(load_robot_description("panda_description"))
+q_init = np.mean(robot.spec.actuated_joint_limits, axis=1).astype(np.float32)[None]
+from robokit.utils.warp_utils import wp_vec7
+
+q = q_init
+q_trajectory = np.repeat(q_init[:, None], 3, axis=1)
+base = wp.array([[0, 0, 0, 1, 0, 0, 0]], dtype=wp_vec7, device=device)
+state = robot.state(q)  # [num_dofs] or [batch, num_dofs]
+trajectory_state = robot.state(q_trajectory)  # [batch, num_frames, num_dofs]
+floating_base_state = robot.state(q, T_world_base=base)  # joint values plus a floating base
+assert trajectory_state.q.shape == (1, 3, robot.spec.num_actuated_joints)</pre></div><p><code>q</code> follows <code>robot.spec.actuated_joint_names</code> and excludes mimic joints.</p><h3 id="computation">Computation</h3><p><code>Robot</code> methods write results into the passed state and return it:</p><table class="doc-table" style="--cols:2"><thead><tr><th>Method</th><th>Writes</th></tr></thead><tbody><tr><td><code>forward_kinematics(state)</code></td><td><code>T_world_joint</code>, <code>T_world_link</code></td></tr><tr><td><code>compute_motion_subspace(state)</code></td><td><code>S_world</code></td></tr><tr><td>└─ <code>state.get_link_jacobian(link_idx, frame)</code></td><td>body or spatial Jacobian</td></tr><tr><td><code>compute_center_of_mass(state)</code></td><td><code>com_world</code></td></tr><tr><td><code>transform_collision_spheres(state)</code></td><td>sphere and bounding-sphere world centers</td></tr><tr><td><code>transform_collision_capsules(state)</code></td><td>link capsule world endpoints</td></tr></tbody></table><p>Methods that need link transforms run forward kinematics first when the state lacks them. A fixed-base Jacobian has shape <code>[..., 6, num_dofs]</code>. A floating-base Jacobian adds six base columns in front.</p><h3 id="torch">Torch</h3><p>The Torch interface takes plain tensors instead of a <code>RobotState</code> and supports gradients:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre># q: torch.Tensor [..., num_dofs]
+T_world_link = robot.forward_kinematics_via_matrix_torch(q)  # torch.Tensor [..., num_links, 4, 4]
+
+# points_local: torch.Tensor [num_points, 3]
+points_world = robot.transform_link_points_torch(T_world_link, points_local, link_indices)</pre><pre data-code-full hidden>import numpy as np
+import warp as wp
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+from robokit.robo import Robot
+
+device = "cpu"
+robot = Robot.load(load_robot_description("panda_description"))
+q_init = np.mean(robot.spec.actuated_joint_limits, axis=1).astype(np.float32)[None]
+import torch
+
+q = torch.from_numpy(q_init)
+points_local = torch.zeros((1, 3))
+link_indices = torch.tensor([robot.spec.link_names.index("panda_hand")])
+# q: torch.Tensor [..., num_dofs]
+T_world_link = robot.forward_kinematics_via_matrix_torch(q)  # torch.Tensor [..., num_links, 4, 4]
+
+# points_local: torch.Tensor [num_points, 3]
+points_world = robot.transform_link_points_torch(T_world_link, points_local, link_indices)
+assert points_world.shape == (1, 1, 3)</pre></div></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/robokit/ref-assets/"><span class="lbl">← Previous</span><span class="nm">Built-in Robots &amp; Datasets</span></a><a class="next" href="/docs/robokit/geom/"><span class="lbl">Next →</span><span class="nm">Geometry</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#state">State</a><a href="#computation">Computation</a><a href="#torch">Torch</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "robokit", "id": "robot", "toc": [{"text": "State", "href": "#state"}, {"text": "Computation", "href": "#computation"}, {"text": "Torch", "href": "#torch"}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

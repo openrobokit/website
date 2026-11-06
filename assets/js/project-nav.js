@@ -15,7 +15,8 @@
   const kitName = window.RK_NAMES[kitKey];
   const chapters = {
     robokit: [
-      { id: 'bento', label: 'Tasks', name: 'One library, broad coverage', icon: icons.tasks },
+      { id: 'mpc', label: 'Simulation', name: 'Optimization/Learning with Simulation', icon: icons.tasks },
+      { id: 'bento', label: 'Tasks', name: 'Optimization with Analytic Objectives', icon: icons.tasks },
       { id: 'benchmarks', label: 'Speed', name: 'Faster on every task', icon: icons.speed },
       { id: 'scale', label: 'Scale', name: 'Thousands of solves in parallel', icon: icons.scale },
       { id: 'method', label: 'Method', name: 'Composable under the hood', icon: icons.method },

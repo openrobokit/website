@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-labelledby="title desc">
+  <title id="title">Pointcloud to grasp pose</title>
+  <desc id="desc">Pointcloud input flows through a green neural policy network to a five-finger dexterous hand grasp pose output.</desc>
+  <rect width="400" height="400" fill="#FFFFFF"/>
+  <!-- JetBrains Mono subset; license: /assets/fonts/JetBrainsMono-OFL.txt -->
+  <style>
+    @font-face { font-family: 'JetBrains Mono'; font-weight: 500; src: url(data:font/ttf;base64,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) format('truetype'); }
+    text { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 14px; text-anchor: middle; fill: #2c4a3b; }
+    .caption { fill: #527461; font-size: 13px; }
+  </style>
+  <g fill="#3f6e59">
+    <circle cx="32" cy="166" r="3"/><circle cx="41" cy="147" r="3"/>
+    <circle cx="54" cy="139" r="3"/><circle cx="64" cy="154" r="3"/>
+    <circle cx="46" cy="174" r="3.5"/><circle cx="60" cy="179" r="3"/>
+    <circle cx="72" cy="168" r="2.5"/><circle cx="30" cy="191" r="2.5"/>
+    <circle cx="44" cy="207" r="3"/><circle cx="59" cy="198" r="3"/>
+    <circle cx="71" cy="214" r="2.5"/><circle cx="54" cy="224" r="2.5"/>
+  </g>
+  <path d="M77 180H91M309 180H324" fill="none" stroke="#B8CCBC" stroke-width="2"/>
+<svg x="94" y="108" width="212" height="143" viewBox="196 27 200 135" aria-hidden="true">
+<style>
+@keyframes nA{0%,100%{fill:#D6E3D6}14%{fill:#6F9B7D}36%{fill:#D6E3D6}}
+@keyframes nB{0%,100%{fill:#fff}14%{fill:#AAC5AE}36%{fill:#fff}}
+@keyframes edge{0%,100%{stroke:#B8CCBC}14%{stroke:#3F6E59}40%{stroke:#B8CCBC}}
+.e{animation:edge 2.8s ease-in-out infinite}
+.e1{animation-delay:.18s}.e2{animation-delay:.54s}.e3{animation-delay:.9s}
+.na{animation:nA 2.8s ease-in-out infinite}
+.nb{animation:nB 2.8s ease-in-out infinite}
+.d1{animation-delay:.36s}.d2{animation-delay:.72s}.d3{animation-delay:1.08s}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<g class="e e1" stroke="#B8CCBC" stroke-width="2.4">
+<line x1="226" y1="68.9" x2="254.6" y2="43.5"></line><line x1="226" y1="68.9" x2="254.6" y2="94.6"></line><line x1="226" y1="68.9" x2="254.6" y2="145.8"></line><line x1="226" y1="120.4" x2="254.6" y2="43.5"></line><line x1="226" y1="120.4" x2="254.6" y2="94.6"></line><line x1="226" y1="120.4" x2="254.6" y2="145.8"></line>
+</g>
+<g class="e e2" stroke="#B8CCBC" stroke-width="2.4">
+<line x1="281.7" y1="43.5" x2="310.2" y2="43.5"></line><line x1="281.7" y1="43.5" x2="310.2" y2="94.6"></line><line x1="281.7" y1="43.5" x2="310.2" y2="145.8"></line><line x1="281.7" y1="94.6" x2="310.2" y2="43.5"></line><line x1="281.7" y1="94.6" x2="310.2" y2="94.6"></line><line x1="281.7" y1="94.6" x2="310.2" y2="145.8"></line><line x1="281.7" y1="145.8" x2="310.2" y2="43.5"></line><line x1="281.7" y1="145.8" x2="310.2" y2="94.6"></line><line x1="281.7" y1="145.8" x2="310.2" y2="145.8"></line>
+</g>
+<g class="e e3" stroke="#B8CCBC" stroke-width="2.4">
+<line x1="337.3" y1="43.5" x2="365.8" y2="68.9"></line><line x1="337.3" y1="94.6" x2="365.8" y2="68.9"></line><line x1="337.3" y1="145.8" x2="365.8" y2="68.9"></line><line x1="337.3" y1="43.5" x2="365.8" y2="120.4"></line><line x1="337.3" y1="94.6" x2="365.8" y2="120.4"></line><line x1="337.3" y1="145.8" x2="365.8" y2="120.4"></line>
+</g>
+<g stroke="#3F6E59" stroke-width="3.4">
+<circle class="na" cx="212.5" cy="68.9" r="13.5" fill="#D6E3D6"></circle>
+<circle class="na" cx="212.5" cy="120.4" r="13.5" fill="#D6E3D6"></circle>
+<circle class="nb d1" cx="268.1" cy="43.5" r="13.5" fill="#fff"></circle>
+<circle class="nb d1" cx="268.1" cy="94.6" r="13.5" fill="#fff"></circle>
+<circle class="nb d1" cx="268.1" cy="145.8" r="13.5" fill="#fff"></circle>
+<circle class="nb d2" cx="323.8" cy="43.5" r="13.5" fill="#fff"></circle>
+<circle class="nb d2" cx="323.8" cy="94.6" r="13.5" fill="#fff"></circle>
+<circle class="nb d2" cx="323.8" cy="145.8" r="13.5" fill="#fff"></circle>
+<circle class="na d3" cx="379.4" cy="68.9" r="13.5" fill="#D6E3D6"></circle>
+<circle class="na d3" cx="379.4" cy="120.4" r="13.5" fill="#D6E3D6"></circle>
+</g>
+</svg>
+
+  <g transform="translate(330 139) scale(.64)" stroke="#3f6e59" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 93V106H35V93" fill="#d6e3d6"/>
+    <path d="M7 58H42L45 80 37 95H9L0 77Z" fill="#f7faf5"/>
+    <path d="M7 60 3 44 2 27 6 17M19 58 17 38 18 17 22 8M31 58 32 39 33 20 37 13M42 63 47 49 49 34 53 28M4 78-7 68-15 55-12 45" fill="none"/>
+    <circle cx="23" cy="77" r="4" fill="#6f9b7d" stroke="none"/>
+  </g>
+  <text x="54" y="282">POINTCLOUD</text>
+  <text class="caption" x="54" y="302">INPUT</text>
+  <text x="200" y="282">POLICY</text>
+  <text x="344" y="282">GRASP POSE</text>
+  <text class="caption" x="344" y="302">OUTPUT</text>
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="101 3 198 156">
+<style>
+@keyframes lvl1{0%,100%{fill:#E4EBFD}14%{fill:#9DBAF7}32%{fill:#E4EBFD}}
+@keyframes lvl2{0%,100%{fill:#B6C9F9}40%{fill:#5B8AF2}58%{fill:#B6C9F9}}
+@keyframes lvl3{0%,100%{fill:#7E9FF4}66%{fill:#1F5EEA}84%{fill:#7E9FF4}}
+.l1{animation:lvl1 3.6s ease-in-out infinite}
+.l2{animation:lvl2 3.6s ease-in-out infinite}
+.l3{animation:lvl3 3.6s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<path class="l1" d="M200 49.2 296 102 200 154.8 104 102Z" stroke="#1F5EEA" stroke-width="2.5" stroke-linejoin="round" fill="#E4EBFD"></path>
+<g stroke="#1F5EEA" stroke-width="1.4"><line x1="216" y1="58" x2="120" y2="110.8"></line><line x1="184" y1="58" x2="280" y2="110.8"></line><line x1="232" y1="66.8" x2="136" y2="119.6"></line><line x1="168" y1="66.8" x2="264" y2="119.6"></line><line x1="248" y1="75.6" x2="152" y2="128.4"></line><line x1="152" y1="75.6" x2="248" y2="128.4"></line><line x1="264" y1="84.4" x2="168" y2="137.2"></line><line x1="136" y1="84.4" x2="232" y2="137.2"></line><line x1="280" y1="93.2" x2="184" y2="146"></line><line x1="120" y1="93.2" x2="216" y2="146"></line></g>
+<path class="l2" d="M200 27.5 270 66 200 104.5 130 66Z" stroke="#1F5EEA" stroke-width="2.5" stroke-linejoin="round" fill="#B6C9F9"></path>
+<g stroke="#1F5EEA" stroke-width="1.4"><line x1="217.5" y1="37.1" x2="147.5" y2="75.6"></line><line x1="182.5" y1="37.1" x2="252.5" y2="75.6"></line><line x1="235" y1="46.8" x2="165" y2="85.2"></line><line x1="165" y1="46.8" x2="235" y2="85.2"></line><line x1="252.5" y1="56.4" x2="182.5" y2="94.9"></line><line x1="147.5" y1="56.4" x2="217.5" y2="94.9"></line></g>
+<path class="l3" d="M200 5.8 244 30 200 54.2 156 30Z" stroke="#1F5EEA" stroke-width="2.5" stroke-linejoin="round" fill="#7E9FF4"></path>
+<g stroke="#1F5EEA" stroke-width="1.4"><line x1="222" y1="17.9" x2="178" y2="42.1"></line><line x1="178" y1="17.9" x2="222" y2="42.1"></line></g>
+<g stroke="#1F5EEA" stroke-width="2"><line x1="156" y1="30" x2="104" y2="102"></line><line x1="200" y1="54.2" x2="200" y2="154.8"></line><line x1="244" y1="30" x2="296" y2="102"></line></g>
+</svg>

@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Grasp Optimization (grasp_optim) · GraspKit docs · OpenRoboKit</title>
+  <meta name="description" content="Manipulation across robot embodiments, including grippers and dexterous hands." />
+  <link rel="canonical" href="https://openrobokit.com/docs/graspkit/grasp-optim/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">GraspKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="">
+        <span class="nm">RoboKit</span>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="is-active">
+        <span class="nm">GraspKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/graspkit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/graspkit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim/" data-id="grasp-optim" class="is-active">Grasp Optimization</a></div><div class="side__list"><a href="/docs/graspkit/training/" data-id="training" class="">Policy Training</a></div><div class="side__list"><a href="/docs/graspkit/pipeline/" data-id="pipeline" class="">Pipeline</a></div><div class="side__list"><a href="/docs/graspkit/sim-deploy/" data-id="sim-deploy" class="">Sim Deployment</a></div><div class="side__list"><a href="/docs/graspkit/real-deploy/" data-id="real-deploy" class="">Real Deployment</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/concepts-overview/" data-id="concepts-overview" class="">Core Overview</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim-backends/" data-id="grasp-optim-backends" class="">Grasp Optimization Backends</a></div><div class="side__list"><a href="/docs/graspkit/concepts-sim/" data-id="concepts-sim" class="">Simulation</a></div><div class="side__list"><a href="/docs/graspkit/concepts-policies/" data-id="concepts-policies" class="">Models and Policies</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/ref-robot-hands/" data-id="ref-robot-hands" class="">Robot and Hand Catalog</a></div><div class="side__list"><a href="/docs/graspkit/ref-config-system/" data-id="ref-config-system" class="">Config System</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Data">
+        <span>Data</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/ref-data-format/" data-id="ref-data-format" class="">Data Format Specification</a><a href="/docs/graspkit/ref-assets/" data-id="ref-assets" class="">graspkit assets</a><a href="/docs/graspkit/ref-scene-descriptions/" data-id="ref-scene-descriptions" class="">Dex1B Scene Descriptions</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/api-grasp-optim/" data-id="api-grasp-optim" class="">Grasp Optimization</a><a href="/docs/graspkit/api-scene/" data-id="api-scene" class="">Scene</a><a href="/docs/graspkit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/graspkit/api-policy/" data-id="api-policy" class="">Policy</a><a href="/docs/graspkit/api-training/" data-id="api-training" class="">Training</a><a href="/docs/graspkit/api-envs/" data-id="api-envs" class="">Environments</a><a href="/docs/graspkit/api-data/" data-id="api-data" class="">Data</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">graspkit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>User Guide</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Grasp Optimization (grasp_optim)</h1>
+        <div class="doc-body" id="doc-body"><table class="doc-table" style="--cols:2"><thead><tr><th><img src="/assets/docs/graspkit/assets/guide/sharpa_optim.webp" alt="A floating Sharpa hand optimizing a grasp on a cube"></th><th><img src="/assets/docs/graspkit/assets/guide/xarm7_sharpa_optim.webp" alt="An xArm7 + Sharpa optimizing arm and hand joints together"></th></tr></thead><tbody><tr><td>A floating hand optimizing a grasp.</td><td>An arm and hand optimized together on a fixed base.</td></tr></tbody></table><p><code>graspkit.stages.grasp_optim</code> synthesizes grasps on a floating or fixed base. It optimizes them on the GPU (Warp) with a gradient-descent or Levenberg-Marquardt backend, then plans grasp trajectories and keeps only the grasps that pass simulation validation.</p><p>This tutorial covers the main grasp optimization workflows. The logic lives in <code>[src/graspkit/stages/grasp_optim](../../src/graspkit/stages/grasp_optim/)</code>; runnable CLIs for optimization, validation, and visualization are in <code>[scripts/stages/grasp_optim](../../scripts/stages/grasp_optim/)</code>.</p><h3 id="how-grasp-optimization-works">How Grasp Optimization Works</h3><ol><li>Sample initial hand poses around the target object.</li><li>Run the grasp optimizer (<code>warp_gd</code> or <code>warp_lm</code> backend) to get 3-frame grasps (pre-grasp, grasp, post-grasp), with a floating or fixed base.</li><li>If filters are enabled (hand-axis cone, contact-avoid, penetration), mark the grasps that fail them. Filters run first inside the traj builder.</li><li>The traj builder motion-plans the 3 frames into grasp trajectories.</li><li>Simulation validation keeps the grasps that pass filters, planning and sim.</li></ol><div class="mermaid">flowchart TD
+    INPUT[Input&lt;br/&gt;&lt;br/&gt;Scene description&lt;br/&gt;Robot config]
+
+    subgraph OPTIM[Grasp optimization]
+        direction TB
+        SAMPLE[1. Sampler &lt;br/&gt;→ initial hand poses]
+        OPT["2. GraspOptimizer (warp_gd / warp_lm)&lt;br/&gt;→ 3-frame grasps"]
+        FILTER["3. Filters (optional)"]
+        PLAN["4. TrajBuilder&lt;br/&gt;→ grasp traj"]
+        SIM["5. Simulation validation"]
+        SAMPLE --&gt; OPT --&gt; FILTER --&gt; PLAN --&gt; SIM
+    end
+
+    OUTPUT[Return grasps]
+
+    INPUT --&gt; SAMPLE
+    SIM --&gt; OUTPUT</div><h3 id="quick-start">Quick Start</h3><p>Prerequisites: <code>uv sync --extra maniskill --extra spconv</code>, a CUDA GPU. Assets (scenes, object meshes, robot URDFs) download automatically on first use.</p><p>Run grasp optimization for a registered experiment config (here xHand on the dex1b v0.5 tabletop mini set) with <code>scripts/launch.py</code>.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">shell</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>uv run scripts/launch.py xhand_right_dex1b_v0_5_mini_tabletop \
+    --steps optimize_grasps \
+    --grasp_optim.max_scenes 32 \
+    --grasp_output_dir data/optim_data/xhand_grasps/quickstart</pre></div><p><code>--grasp_optim.max_scenes 32</code> keeps it to about two minutes on one GPU; drop it to run all 5500 scenes.</p><p>The sections below build the same stage step by step in Python.</p><h4>Sampling initial poses</h4><p><img src="/assets/docs/graspkit/assets/guide/sharpa_init.webp" alt="Initial Sharpa hand poses sampled around a mustard bottle"></p><p>Init samples drawn with the palm-down cone below: red is the hand axis (<code>palm_forward</code>), gray is the target (world -z). Both start at the wrist; the label is their angle, always within the 60 deg cone.</p><p><code>optimize()</code> starts from the optimizer's sampler; call it directly to inspect the initial poses:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>from dataclasses import replace
+
+import torch
+
+from graspkit.configs.robot.xhand import xhand_right
+from graspkit.gallery.grasp_optim import gallery_scene
+from graspkit.stages.grasp_optim import GraspOptimConfig, SceneGeom, WarpGraspOptimizer
+
+scene = gallery_scene("ycb/mustard_bottle")  # SceneDescription: the bottle on a table whose top is z=0
+device = torch.device("cuda:0")
+
+# Customize the approach
+config = GraspOptimConfig(
+    distance_lower=0.05,  # wrist 5-15 cm from the closest object point
+    distance_upper=0.15,
+    hand_axis="palm_forward",  # hand_coord_spec axis to constrain
+    hand_axis_target=(0.0, 0.0, -1.0),  # toward world -z
+    filter_hand_axis_max_angle_deg=60.0,  # cone half-angle
+)
+optimizer = WarpGraspOptimizer(config, xhand_right, device)
+init_qpos = optimizer.sampler.sample(SceneGeom([scene], device=device), num_samples_per_scene=8)</pre></div><h4>Grasp optimization</h4><p><code>optimize()</code> samples init poses with the same sampler, then minimizes the grasp energy on the GPU. Reusing <code>scene</code> and the palm-down <code>config</code> from above:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>config = replace(config, optimizer_backend="warp_gd")  # or "warp_lm" (Levenberg-Marquardt)
+optimizer = WarpGraspOptimizer(config, xhand_right, device)
+grasp_qpos = optimizer.optimize([scene], num_samples_per_scene=8)  # (1, 8, 18)</pre></div><h4>Filtering grasps</h4><p>Grasp filters live in <code>GraspTrajBuilderConfig</code> and run first inside <code>GraspTrajBuilder.build()</code>. They only mark grasps, they don't drop them. Call <code>filter_grasps</code> to run them alone, without motion planning:</p><p><img src="/assets/docs/graspkit/assets/guide/grasp_filters.png" alt="A passing and a failing xHand grasp for each filter: contact-avoid, penetration, hand axis"></p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>from graspkit.configs.experiment_config import GraspTrajBuilderConfig
+from graspkit.datasets.graspkit_data import GraspKitData
+from graspkit.stages.grasp_traj_build import GraspTrajBuilder
+
+traj_builder = GraspTrajBuilder(
+    GraspTrajBuilderConfig(
+        floating_base_robot_config=xhand_right,
+        contact_avoid_filter=True,  # contact links closer to the object than their paired avoid links
+        pen_filter=True,  # hand spheres overlap the object by at most pen_filter_threshold
+        pen_filter_threshold=0.005,
+        hand_axis="palm_forward",  # palm normal within 60 deg of world -z (top-down grasps)
+        hand_axis_target=(0.0, 0.0, -1.0),
+        filter_hand_axis_max_angle_deg=60.0,
+    ),
+    device,
+)
+batch = GraspKitData(scene_ids=[scene.scene_id], scene_descriptions=[scene], grasp_qpos=grasp_qpos)
+success, metrics = traj_builder.filter_grasps(batch, torch.ones(grasp_qpos.shape[:2], dtype=torch.bool, device=device))
+kept = grasp_qpos[success]  # (n_kept, dofs)</pre></div><h4>Building grasp trajectories</h4><p><code>build()</code> runs the filters above, then motion-plans a pre-grasp -&gt; grasp -&gt; lift trajectory for every grasp. Rejected grasps are still planned; drop them with <code>filter_success</code>:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>traj_builder = GraspTrajBuilder(
+    GraspTrajBuilderConfig(floating_base_robot_config=xhand_right, contact_avoid_filter=True), device
+)
+batch = GraspKitData(scene_ids=[scene.scene_id], scene_descriptions=[scene], grasp_qpos=grasp_qpos)
+batch, filter_success = traj_builder.build(batch)</pre></div><h4>Simulation validation</h4><p>The sim evaluator rolls out each planned trajectory in ManiSkill, pokes the object with external forces, and reports which grasps still lift it:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>from graspkit.configs.env_config import MsEnvConfig
+from graspkit.configs.experiment_config import EnvConfig
+from graspkit.envs import build_env
+
+evaluator = build_env(
+    EnvConfig(
+        ms_env_config=MsEnvConfig(robot_uid="xhand_right_floating_base"),
+        load_scenes=True,
+        control_freq=50,
+        object_mass=1.0,
+        target_lift_dist=0.08,
+        num_envs=8, 
+        num_perturbations=4, 
+        perturbation_magnitude=5.0, 
+        perturbation_step_range=(-25, -5), 
+    ),
+    xhand_right,
+    device,
+)
+eval_success = evaluator.evaluate(batch)["success"].to(device)  # (1, 8) bool
+kept = grasp_qpos[filter_success &amp; eval_success]  # (n_kept, dofs)
+evaluator.close()</pre></div><h3 id="outputs">Outputs</h3><p>One <code>{scene_id}.h5</code> per scene with <code>grasp_qpos</code>, <code>pre_grasp_qpos</code>, <code>post_grasp_qpos</code> of shape <code>(N, D)</code>: <code>D</code> = hand joints (fixed base) or xyz + euler rxyz + hand joints (floating). <code>.optim_complete</code> marks the stage done. See <a class="inline" href="/docs/graspkit/ref-data-format/">data_format.md</a>.</p><h3 id="code-map">Code Map</h3><table class="doc-table" style="--cols:2"><thead><tr><th>Code</th><th>Role</th></tr></thead><tbody><tr><td><code>src/graspkit/stages/grasp_optim/sampler.py</code></td><td>Init pose sampler</td></tr><tr><td><code>src/graspkit/stages/grasp_optim/warp_optimizer.py</code></td><td><code>WarpGraspOptimizer</code></td></tr><tr><td><code>src/graspkit/stages/grasp_filters.py</code></td><td>Grasp filters (<code>Ori</code>, <code>Pen</code>, <code>ContactAvoid</code>)</td></tr><tr><td><code>src/graspkit/stages/grasp_traj_build/builder.py</code></td><td><code>GraspTrajBuilder</code>: filters + motion planning</td></tr><tr><td><code>src/graspkit/envs/</code></td><td><code>build_env</code> sim evaluator</td></tr><tr><td><code>scripts/launch.py</code></td><td>Runs an experiment config end to end</td></tr></tbody></table></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/graspkit/install/"><span class="lbl">← Previous</span><span class="nm">Installation</span></a><a class="next" href="/docs/graspkit/training/"><span class="lbl">Next →</span><span class="nm">Policy Training</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#how-grasp-optimization-works">How Grasp Optimization Works</a><a href="#quick-start">Quick Start</a><a href="#outputs">Outputs</a><a href="#code-map">Code Map</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "graspkit", "id": "grasp-optim", "toc": [{"text": "How Grasp Optimization Works", "href": "#how-grasp-optimization-works"}, {"text": "Quick Start", "href": "#quick-start"}, {"text": "Outputs", "href": "#outputs"}, {"text": "Code Map", "href": "#code-map"}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

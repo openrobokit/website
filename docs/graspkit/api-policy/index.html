@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Policy · GraspKit docs · OpenRoboKit</title>
+  <meta name="description" content="Manipulation across robot embodiments, including grippers and dexterous hands." />
+  <link rel="canonical" href="https://openrobokit.com/docs/graspkit/api-policy/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">GraspKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="">
+        <span class="nm">RoboKit</span>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="is-active">
+        <span class="nm">GraspKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/graspkit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/graspkit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim/" data-id="grasp-optim" class="">Grasp Optimization</a></div><div class="side__list"><a href="/docs/graspkit/training/" data-id="training" class="">Policy Training</a></div><div class="side__list"><a href="/docs/graspkit/pipeline/" data-id="pipeline" class="">Pipeline</a></div><div class="side__list"><a href="/docs/graspkit/sim-deploy/" data-id="sim-deploy" class="">Sim Deployment</a></div><div class="side__list"><a href="/docs/graspkit/real-deploy/" data-id="real-deploy" class="">Real Deployment</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/concepts-overview/" data-id="concepts-overview" class="">Core Overview</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim-backends/" data-id="grasp-optim-backends" class="">Grasp Optimization Backends</a></div><div class="side__list"><a href="/docs/graspkit/concepts-sim/" data-id="concepts-sim" class="">Simulation</a></div><div class="side__list"><a href="/docs/graspkit/concepts-policies/" data-id="concepts-policies" class="">Models and Policies</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/ref-robot-hands/" data-id="ref-robot-hands" class="">Robot and Hand Catalog</a></div><div class="side__list"><a href="/docs/graspkit/ref-config-system/" data-id="ref-config-system" class="">Config System</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Data">
+        <span>Data</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/ref-data-format/" data-id="ref-data-format" class="">Data Format Specification</a><a href="/docs/graspkit/ref-assets/" data-id="ref-assets" class="">graspkit assets</a><a href="/docs/graspkit/ref-scene-descriptions/" data-id="ref-scene-descriptions" class="">Dex1B Scene Descriptions</a></div>
+      <div class="side__sub" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/api-grasp-optim/" data-id="api-grasp-optim" class="">Grasp Optimization</a><a href="/docs/graspkit/api-scene/" data-id="api-scene" class="">Scene</a><a href="/docs/graspkit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/graspkit/api-policy/" data-id="api-policy" class="is-active">Policy</a><a href="/docs/graspkit/api-training/" data-id="api-training" class="">Training</a><a href="/docs/graspkit/api-envs/" data-id="api-envs" class="">Environments</a><a href="/docs/graspkit/api-data/" data-id="api-data" class="">Data</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">graspkit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>Reference</span><span class="slash">/</span><span>API</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Policy</h1>
+        <div class="doc-body" id="doc-body"><p>Create a policy with <code>build_grasp_policy(cfg, robot_config, device)</code>.</p><div class="api"><section class="api-sym">
+    <div class="api-card" id="grasppolicy">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/models/grasp_policy.py#L25">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">graspkit.models.grasp_policy.</span><span class="api-card__name">GraspPolicy</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">cfg</span><span class="pp">: </span><span class="pt">GraspPolicyConfig</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">action_dim</span><span class="pp">: </span><span class="pt">int</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">robot_config</span><span class="pp">: </span><span class="pt">RobotConfig</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div><div class="api-sig__bases">Bases: <span>nn.Module</span></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Predicts pre-grasp, grasp and post-grasp configurations from an observation; see <code>build_grasp_policy</code>.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">cfg</span><span class="api-type">GraspPolicyConfig</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">action_dim</span><span class="api-type">int</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">robot_config</span><span class="api-type">RobotConfig</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="grasppolicy-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="grasppolicy-robot_helper">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/models/grasp_policy.py#L66">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicy.</span><span class="api-card__name">robot_helper</span><span class="pp">: </span><span class="pt">GraspRobot | None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="grasppolicy-generator">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/models/grasp_policy.py#L154">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicy.</span><span class="api-card__name">generator</span><span class="pp">: </span><span class="pt">CVAE | FlowMatching</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="grasppolicy-forward">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/models/grasp_policy.py#L176">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicy.</span><span class="api-card__name">forward</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">obs</span><span class="pp">: </span><span class="pt">dict</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">actions</span><span class="pp">: </span><span class="pt">Float[torch.Tensor, 'b n t d']</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">dict[str, torch.Tensor]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">obs</span><span class="api-type">dict</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">actions</span><span class="api-type">Float[torch.Tensor, 'b n t d']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">dict[str, torch.Tensor]</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicy-preprocess">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/models/grasp_policy.py#L390">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicy.</span><span class="api-card__name">preprocess</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">initial</span><span class="pp">: </span><span class="pt">dict</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">current</span><span class="pp">: </span><span class="pt">dict</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">calibrated</span><span class="pp">: </span><span class="pt">bool</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">dict[str, torch.Tensor]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>One scene's input from <code>env.observe()</code> slices plus "qpos" (1, 1, D); calibrated views skip the initial.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">initial</span><span class="api-type">dict</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">current</span><span class="api-type">dict</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">calibrated</span><span class="api-type">bool</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">dict[str, torch.Tensor]</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicy-get_action">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/models/grasp_policy.py#L411">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicy.</span><span class="api-card__name">get_action</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">obs</span><span class="pp">: </span><span class="pt">dict</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">num_samples_per_scene</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">1</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">noise</span><span class="pp">: </span><span class="pt">torch.Tensor | None</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Float[torch.Tensor, 'b n t d']</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Sample actions; guided sampling accepts raw noise shaped (batch * samples, latent_dim).</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">obs</span><span class="api-type">dict</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">num_samples_per_scene</span><span class="api-type">int</span><span class="api-def">= 1</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">noise</span><span class="api-type">torch.Tensor | None</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Float[torch.Tensor, 'b n t d']</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicy-select">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/models/grasp_policy.py#L556">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicy.</span><span class="api-card__name">select</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">obs</span><span class="pp">: </span><span class="pt">dict</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">actions</span><span class="pp">: </span><span class="pt">Float[torch.Tensor, 'b n t d']</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">torch.Tensor</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Each scene's best proposal index by the grasp evaluator, on the features <code>get_action</code> left in <code>obs</code>.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">obs</span><span class="api-type">dict</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">actions</span><span class="api-type">Float[torch.Tensor, 'b n t d']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">torch.Tensor</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="grasppolicyconfig">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L5">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">graspkit.configs.grasp_policy_config.</span><span class="api-card__name">GraspPolicyConfig</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">num_queries</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">3</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">convert_rxyz_to_rot6d</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">analytic_euler</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">coupled_floating_base</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">rot_begin_idx</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">3</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">enable_kinematic_loss</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">vision_encoder</span><span class="pp">: </span><span class="pt">Literal['pointnet', 'pointnet_state', 'spconv', 'rgb', 'rgb_resnet', 'rgb_resnet_views']</span><span class="pp"> = </span><span class="pd">'spconv'</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">vision_encoder_feature_dim</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">512</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">vision_encoder_normalization</span><span class="pp">: </span><span class="pt">Literal['layernorm', 'groupnorm'] | None</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">vision_encoder_global_feature</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">True</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">center_pointcloud</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">pointcloud_scale</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">1.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">train_yaw_augmentation</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">canonical_yaw</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">enable_objectness_prediction</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">True</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">num_points</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">2048</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">object_points_only</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">True</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">generative_model</span><span class="pp">: </span><span class="pt">Literal['cvae', 'flow', 'flow_transformer']</span><span class="pp"> = </span><span class="pd">'cvae'</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">cvae_latent_dim</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">256</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">cvae_hidden_dim</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">256</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">cvae_learned_prior</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">normalize_cvae_actions</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">reconstruction_loss</span><span class="pp">: </span><span class="pt">Literal['native', 'phase_std_mse']</span><span class="pp"> = </span><span class="pd">'native'</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">qpos_weight</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">1.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">rot_weight</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">1.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">tl_weight</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">1.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">kinematic_weight</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">100.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">kl_weight</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.01</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">objectness_weight</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.02</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">graspness_weight</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.02</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">enable_penetration_loss</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">penetration_weight</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.1</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">penetration_threshold</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.005</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">penetration_every</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">1</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">penetration_warmup_iters</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">prior_fingertip_weight</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">use_mean</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">True</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">cvae_temperature</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">1.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">grasp_evaluator_guidance_steps</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">grasp_evaluator_guidance_radius</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">2.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">grasp_evaluator_local_features</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">grasp_evaluator_anchor_state</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">grasp_evaluator_hand_joint_features</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">grasp_evaluator_mask_constant_features</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">True</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Grasp policy architecture, losses and sampling.</p><p>Reusable presets live in <code>graspkit/configs/grasp_policy.py</code>.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">num_queries</span><span class="api-type">int</span><span class="api-def">= 3</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">convert_rxyz_to_rot6d</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">analytic_euler</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">coupled_floating_base</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">rot_begin_idx</span><span class="api-type">int</span><span class="api-def">= 3</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">enable_kinematic_loss</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">vision_encoder</span><span class="api-type">Literal['pointnet', 'pointnet_state', 'spconv', 'rgb', 'rgb_resnet', 'rgb_resnet_views']</span><span class="api-def">= 'spconv'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">vision_encoder_feature_dim</span><span class="api-type">int</span><span class="api-def">= 512</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">vision_encoder_normalization</span><span class="api-type">Literal['layernorm', 'groupnorm'] | None</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">vision_encoder_global_feature</span><span class="api-type">bool</span><span class="api-def">= True</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">center_pointcloud</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">pointcloud_scale</span><span class="api-type">float</span><span class="api-def">= 1.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">train_yaw_augmentation</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">canonical_yaw</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">enable_objectness_prediction</span><span class="api-type">bool</span><span class="api-def">= True</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">num_points</span><span class="api-type">int</span><span class="api-def">= 2048</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">object_points_only</span><span class="api-type">bool</span><span class="api-def">= True</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">generative_model</span><span class="api-type">Literal['cvae', 'flow', 'flow_transformer']</span><span class="api-def">= 'cvae'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">cvae_latent_dim</span><span class="api-type">int</span><span class="api-def">= 256</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">cvae_hidden_dim</span><span class="api-type">int</span><span class="api-def">= 256</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">cvae_learned_prior</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">normalize_cvae_actions</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">reconstruction_loss</span><span class="api-type">Literal['native', 'phase_std_mse']</span><span class="api-def">= 'native'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">qpos_weight</span><span class="api-type">float</span><span class="api-def">= 1.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">rot_weight</span><span class="api-type">float</span><span class="api-def">= 1.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">tl_weight</span><span class="api-type">float</span><span class="api-def">= 1.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">kinematic_weight</span><span class="api-type">float</span><span class="api-def">= 100.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">kl_weight</span><span class="api-type">float</span><span class="api-def">= 0.01</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">objectness_weight</span><span class="api-type">float</span><span class="api-def">= 0.02</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">graspness_weight</span><span class="api-type">float</span><span class="api-def">= 0.02</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">enable_penetration_loss</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">penetration_weight</span><span class="api-type">float</span><span class="api-def">= 0.1</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">penetration_threshold</span><span class="api-type">float</span><span class="api-def">= 0.005</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">penetration_every</span><span class="api-type">int</span><span class="api-def">= 1</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">penetration_warmup_iters</span><span class="api-type">int</span><span class="api-def">= 0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">prior_fingertip_weight</span><span class="api-type">float</span><span class="api-def">= 0.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">use_mean</span><span class="api-type">bool</span><span class="api-def">= True</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">cvae_temperature</span><span class="api-type">float</span><span class="api-def">= 1.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">grasp_evaluator_guidance_steps</span><span class="api-type">int</span><span class="api-def">= 0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">grasp_evaluator_guidance_radius</span><span class="api-type">float</span><span class="api-def">= 2.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">grasp_evaluator_local_features</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">grasp_evaluator_anchor_state</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">grasp_evaluator_hand_joint_features</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">grasp_evaluator_mask_constant_features</span><span class="api-type">bool</span><span class="api-def">= True</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="grasppolicyconfig-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="grasppolicyconfig-num_queries">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L13">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">num_queries</span><span class="pp">: </span><span class="pt">int = 3</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Configurations decoded per trajectory; the trainer and evaluator assume three: pre-grasp, grasp and post-grasp.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-convert_rxyz_to_rot6d">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L16">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">convert_rxyz_to_rot6d</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Floating base: predict a continuous 6D rotation instead of Euler <code>rxyz</code>, converted back on output.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-analytic_euler">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L18">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">analytic_euler</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Use exact, non-iterative Euler conversion after decoding rotations.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-coupled_floating_base">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L20">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">coupled_floating_base</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Share wrist rotation across all three poses and wrist translation during closing.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-rot_begin_idx">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L22">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">rot_begin_idx</span><span class="pp">: </span><span class="pt">int = 3</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Start index of the floating-base rotation in each action.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-enable_kinematic_loss">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L24">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">enable_kinematic_loss</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Add the MSE between predicted and target link positions from forward kinematics.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-vision_encoder">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L28">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">vision_encoder</span><span class="pp">: </span><span class="pt">Literal['pointnet', 'pointnet_state', 'spconv', 'rgb', 'rgb_resnet', 'rgb_resnet_views'] = 'spconv'</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Observation backbone.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-vision_encoder_feature_dim">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L30">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">vision_encoder_feature_dim</span><span class="pp">: </span><span class="pt">int = 512</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Condition feature size passed to the generator.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-vision_encoder_normalization">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L32">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">vision_encoder_normalization</span><span class="pp">: </span><span class="pt">Literal['layernorm', 'groupnorm'] | None = None</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Normalization for the SpConv encoder.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-vision_encoder_global_feature">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L34">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">vision_encoder_global_feature</span><span class="pp">: </span><span class="pt">bool = True</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Return one scene feature; False keeps per-point features for local grasp-point conditioning.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-center_pointcloud">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L36">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">center_pointcloud</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Predict floating-base translations relative to the observed point-cloud centroid.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-pointcloud_scale">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L38">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">pointcloud_scale</span><span class="pp">: </span><span class="pt">float = 1.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Fixed coordinate scale applied only to vision-encoder inputs.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-train_yaw_augmentation">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L40">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">train_yaw_augmentation</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Rotate training observations and target poses together around the vertical axis.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-canonical_yaw">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L42">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">canonical_yaw</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Use a deterministic observed-point-cloud yaw frame for training and inference.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-enable_objectness_prediction">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L44">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">enable_objectness_prediction</span><span class="pp">: </span><span class="pt">bool = True</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>With local features, train a target-segmentation head and mask graspness at inference.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-num_points">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L46">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">num_points</span><span class="pp">: </span><span class="pt">int = 2048</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Points <code>GraspPolicy.preprocess</code> samples from an observed point cloud.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-object_points_only">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L48">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">object_points_only</span><span class="pp">: </span><span class="pt">bool = True</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p><code>GraspPolicy.preprocess</code> keeps only the target's points, initial and current frames together (hands occlude).</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-generative_model">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L52">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">generative_model</span><span class="pp">: </span><span class="pt">Literal['cvae', 'flow', 'flow_transformer'] = 'cvae'</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p><code>cvae</code> (<code>models/cvae.py</code>) or flow matching (<code>models/flow_matching.py</code>).</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-cvae_latent_dim">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L54">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">cvae_latent_dim</span><span class="pp">: </span><span class="pt">int = 256</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Latent dimension of the CVAE.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-cvae_hidden_dim">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L56">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">cvae_hidden_dim</span><span class="pp">: </span><span class="pt">int = 256</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Width of the generator networks and optional CVAE learned prior.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-cvae_learned_prior">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L58">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">cvae_learned_prior</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Jointly learn a diagonal-Gaussian latent prior conditioned on the observation.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-normalize_cvae_actions">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L60">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">normalize_cvae_actions</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Encode standardized actions and decode physical actions using saved mean/std buffers.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-reconstruction_loss">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L62">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">reconstruction_loss</span><span class="pp">: </span><span class="pt">Literal['native', 'phase_std_mse'] = 'native'</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Native reconstruction loss or MSE scaled by each phase's training action standard deviation.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-qpos_weight">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L66">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">qpos_weight</span><span class="pp">: </span><span class="pt">float = 1.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Joint-position reconstruction weight: L1 for CVAE, MSE for flow.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-rot_weight">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L68">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">rot_weight</span><span class="pp">: </span><span class="pt">float = 1.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Floating-base rotation L1 weight.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-tl_weight">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L70">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">tl_weight</span><span class="pp">: </span><span class="pt">float = 1.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Floating-base translation L1 weight.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-kinematic_weight">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L72">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">kinematic_weight</span><span class="pp">: </span><span class="pt">float = 100.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Weight of the kinematic loss.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-kl_weight">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L74">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">kl_weight</span><span class="pp">: </span><span class="pt">float = 0.01</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Weight of the KL term to the unit Gaussian.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-objectness_weight">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L76">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">objectness_weight</span><span class="pp">: </span><span class="pt">float = 0.02</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Weight of the local-feature objectness BCE.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-graspness_weight">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L78">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">graspness_weight</span><span class="pp">: </span><span class="pt">float = 0.02</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Weight of the local-feature per-point graspness KL.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-enable_penetration_loss">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L80">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">enable_penetration_loss</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>if True, penalize hand collision-sphere penetration into the target object (needs scene geom at train time)</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-penetration_weight">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L82">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">penetration_weight</span><span class="pp">: </span><span class="pt">float = 0.1</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>the weight of the penetration loss</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-penetration_threshold">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L84">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">penetration_threshold</span><span class="pp">: </span><span class="pt">float = 0.005</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>only penetration deeper than this (meters) is penalized (avoids punishing legitimate contact)</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-penetration_every">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L86">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">penetration_every</span><span class="pp">: </span><span class="pt">int = 1</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>compute the (expensive) penetration loss every N steps to amortize per-batch scene-geometry build</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-penetration_warmup_iters">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L88">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">penetration_warmup_iters</span><span class="pp">: </span><span class="pt">int = 0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>delay the penetration loss until this iteration so the policy learns to grasp first (replaces fine-tuning)</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-prior_fingertip_weight">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L90">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">prior_fingertip_weight</span><span class="pp">: </span><span class="pt">float = 0.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Attract prior-sampled fingertip collision spheres to the target surface during training.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-use_mean">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L93">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">use_mean</span><span class="pp">: </span><span class="pt">bool = True</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Decode the prior mean for CVAE or integrate from zero noise for flow.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-cvae_temperature">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L95">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">cvae_temperature</span><span class="pp">: </span><span class="pt">float = 1.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Scale of the sampled generator noise; ignored when use_mean is True.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-grasp_evaluator_guidance_steps">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L97">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">grasp_evaluator_guidance_steps</span><span class="pp">: </span><span class="pt">int = 0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Latent refinement steps using a trained grasp evaluator; zero disables guidance.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-grasp_evaluator_guidance_radius">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L99">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">grasp_evaluator_guidance_radius</span><span class="pp">: </span><span class="pt">float = 2.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Maximum L2 displacement from each initial latent draw.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-grasp_evaluator_local_features">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L101">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">grasp_evaluator_local_features</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Let the grasp evaluator attend to frozen local visual tokens; the actor stays unchanged.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-grasp_evaluator_anchor_state">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L103">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">grasp_evaluator_anchor_state</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Condition the local success critic on the current fixed-base robot configuration.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-grasp_evaluator_hand_joint_features">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L105">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">grasp_evaluator_hand_joint_features</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Encode hand joints instead of all actuated joints in the grasp evaluator.</p></div></div>
+    </div><div class="api-row api-row--plain" id="grasppolicyconfig-grasp_evaluator_mask_constant_features">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/configs/grasp_policy_config.py#L107">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspPolicyConfig.</span><span class="api-card__name">grasp_evaluator_mask_constant_features</span><span class="pp">: </span><span class="pt">bool = True</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Zero constant replay features after scorer normalization.</p></div></div>
+    </div></div></div>
+  </section></div></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/graspkit/api-motion-plan/"><span class="lbl">← Previous</span><span class="nm">Motion Planning</span></a><a class="next" href="/docs/graspkit/api-training/"><span class="lbl">Next →</span><span class="nm">Training</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#grasppolicy">GraspPolicy</a><a href="#grasppolicyconfig">GraspPolicyConfig</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "graspkit", "id": "api-policy", "toc": [{"text": "GraspPolicy", "href": "#grasppolicy", "members": [{"text": "robot_helper", "href": "#grasppolicy-robot_helper"}, {"text": "generator", "href": "#grasppolicy-generator"}, {"text": "forward()", "href": "#grasppolicy-forward"}, {"text": "preprocess()", "href": "#grasppolicy-preprocess"}, {"text": "get_action()", "href": "#grasppolicy-get_action"}, {"text": "select()", "href": "#grasppolicy-select"}]}, {"text": "GraspPolicyConfig", "href": "#grasppolicyconfig", "members": [{"text": "num_queries", "href": "#grasppolicyconfig-num_queries"}, {"text": "convert_rxyz_to_rot6d", "href": "#grasppolicyconfig-convert_rxyz_to_rot6d"}, {"text": "analytic_euler", "href": "#grasppolicyconfig-analytic_euler"}, {"text": "coupled_floating_base", "href": "#grasppolicyconfig-coupled_floating_base"}, {"text": "rot_begin_idx", "href": "#grasppolicyconfig-rot_begin_idx"}, {"text": "enable_kinematic_loss", "href": "#grasppolicyconfig-enable_kinematic_loss"}, {"text": "vision_encoder", "href": "#grasppolicyconfig-vision_encoder"}, {"text": "vision_encoder_feature_dim", "href": "#grasppolicyconfig-vision_encoder_feature_dim"}, {"text": "vision_encoder_normalization", "href": "#grasppolicyconfig-vision_encoder_normalization"}, {"text": "vision_encoder_global_feature", "href": "#grasppolicyconfig-vision_encoder_global_feature"}, {"text": "center_pointcloud", "href": "#grasppolicyconfig-center_pointcloud"}, {"text": "pointcloud_scale", "href": "#grasppolicyconfig-pointcloud_scale"}, {"text": "train_yaw_augmentation", "href": "#grasppolicyconfig-train_yaw_augmentation"}, {"text": "canonical_yaw", "href": "#grasppolicyconfig-canonical_yaw"}, {"text": "enable_objectness_prediction", "href": "#grasppolicyconfig-enable_objectness_prediction"}, {"text": "num_points", "href": "#grasppolicyconfig-num_points"}, {"text": "object_points_only", "href": "#grasppolicyconfig-object_points_only"}, {"text": "generative_model", "href": "#grasppolicyconfig-generative_model"}, {"text": "cvae_latent_dim", "href": "#grasppolicyconfig-cvae_latent_dim"}, {"text": "cvae_hidden_dim", "href": "#grasppolicyconfig-cvae_hidden_dim"}, {"text": "cvae_learned_prior", "href": "#grasppolicyconfig-cvae_learned_prior"}, {"text": "normalize_cvae_actions", "href": "#grasppolicyconfig-normalize_cvae_actions"}, {"text": "reconstruction_loss", "href": "#grasppolicyconfig-reconstruction_loss"}, {"text": "qpos_weight", "href": "#grasppolicyconfig-qpos_weight"}, {"text": "rot_weight", "href": "#grasppolicyconfig-rot_weight"}, {"text": "tl_weight", "href": "#grasppolicyconfig-tl_weight"}, {"text": "kinematic_weight", "href": "#grasppolicyconfig-kinematic_weight"}, {"text": "kl_weight", "href": "#grasppolicyconfig-kl_weight"}, {"text": "objectness_weight", "href": "#grasppolicyconfig-objectness_weight"}, {"text": "graspness_weight", "href": "#grasppolicyconfig-graspness_weight"}, {"text": "enable_penetration_loss", "href": "#grasppolicyconfig-enable_penetration_loss"}, {"text": "penetration_weight", "href": "#grasppolicyconfig-penetration_weight"}, {"text": "penetration_threshold", "href": "#grasppolicyconfig-penetration_threshold"}, {"text": "penetration_every", "href": "#grasppolicyconfig-penetration_every"}, {"text": "penetration_warmup_iters", "href": "#grasppolicyconfig-penetration_warmup_iters"}, {"text": "prior_fingertip_weight", "href": "#grasppolicyconfig-prior_fingertip_weight"}, {"text": "use_mean", "href": "#grasppolicyconfig-use_mean"}, {"text": "cvae_temperature", "href": "#grasppolicyconfig-cvae_temperature"}, {"text": "grasp_evaluator_guidance_steps", "href": "#grasppolicyconfig-grasp_evaluator_guidance_steps"}, {"text": "grasp_evaluator_guidance_radius", "href": "#grasppolicyconfig-grasp_evaluator_guidance_radius"}, {"text": "grasp_evaluator_local_features", "href": "#grasppolicyconfig-grasp_evaluator_local_features"}, {"text": "grasp_evaluator_anchor_state", "href": "#grasppolicyconfig-grasp_evaluator_anchor_state"}, {"text": "grasp_evaluator_hand_joint_features", "href": "#grasppolicyconfig-grasp_evaluator_hand_joint_features"}, {"text": "grasp_evaluator_mask_constant_features", "href": "#grasppolicyconfig-grasp_evaluator_mask_constant_features"}]}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hand-Eye Calibration · RoboKit docs · OpenRoboKit</title>
+  <meta name="description" content="GPU-native, differentiable robotics tooling: IK, trajectory optimization, retargeting, grasping, calibration." />
+  <link rel="canonical" href="https://openrobokit.com/docs/robokit/api-hand_eye_calibration/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">RoboKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="is-active">
+        <span class="nm">RoboKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="">
+        <span class="nm">GraspKit</span>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/robokit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/robokit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/robokit/rl/" data-id="rl" class="">RL</a></div><div class="side__list"><a href="/docs/robokit/sim-mpc/" data-id="sim-mpc" class="">Sim MPC</a></div><div class="side__list"><a href="/docs/robokit/ik/" data-id="ik" class="">IK</a></div><div class="side__list"><a href="/docs/robokit/motion-planning/" data-id="motion-planning" class="">Motion Planning</a></div><div class="side__list"><a href="/docs/robokit/humanoid-retargeting/" data-id="humanoid-retargeting" class="">Humanoid Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand-retargeting/" data-id="hand-retargeting" class="">Hand Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand_eye_calibration/" data-id="hand_eye_calibration" class="">Hand-Eye Calibration</a></div><div class="side__list"><a href="/docs/robokit/ref-assets/" data-id="ref-assets" class="">Built-in Robots &amp; Datasets</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/robot/" data-id="robot" class="">Robot</a></div><div class="side__list"><a href="/docs/robokit/geom/" data-id="geom" class="">Geometry</a></div><div class="side__list"><a href="/docs/robokit/optimization/" data-id="optimization" class="">Optimization</a></div><div class="side__list"><a href="/docs/robokit/conventions/" data-id="conventions" class="">Conventions</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list">
+      <div class="side__sub is-folded" data-fold="Reference·Optimizers">
+        <span>Optimizers</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/opt-gd/" data-id="opt-gd" class="">GDOptimizer</a><a href="/docs/robokit/opt-lm/" data-id="opt-lm" class="">LMOptimizer</a><a href="/docs/robokit/opt-lbfgs/" data-id="opt-lbfgs" class="">LBFGSOptimizer</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Terms">
+        <span>Terms</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/term-frame/" data-id="term-frame" class="">Frame Task</a><a href="/docs/robokit/term-position/" data-id="term-position" class="">Position Task</a><a href="/docs/robokit/term-rotation/" data-id="term-rotation" class="">Rotation Tasks</a><a href="/docs/robokit/term-frame-vector/" data-id="term-frame-vector" class="">Frame Vector Task</a><a href="/docs/robokit/term-com-position/" data-id="term-com-position" class="">CoM Position Task</a><a href="/docs/robokit/term-position-limit/" data-id="term-position-limit" class="">Position Limit</a><a href="/docs/robokit/term-velocity-limit/" data-id="term-velocity-limit" class="">Velocity Limit Task</a><a href="/docs/robokit/term-configuration/" data-id="term-configuration" class="">Configuration Task</a><a href="/docs/robokit/term-smoothness/" data-id="term-smoothness" class="">Smoothness Task</a><a href="/docs/robokit/term-self-collision/" data-id="term-self-collision" class="">Self Collision Task</a><a href="/docs/robokit/term-scene-collision/" data-id="term-scene-collision" class="">Scene Collision Task</a><a href="/docs/robokit/term-scene-distance/" data-id="term-scene-distance" class="">Scene Distance Task</a><a href="/docs/robokit/term-interaction-mesh/" data-id="term-interaction-mesh" class="">Interaction Mesh Task</a><a href="/docs/robokit/term-mask-alignment/" data-id="term-mask-alignment" class="">Mask Alignment Task</a><a href="/docs/robokit/term-manipulability/" data-id="term-manipulability" class="">Manipulability Task</a><a href="/docs/robokit/term-force-closure/" data-id="term-force-closure" class="">Force Closure Task</a></div>
+      <div class="side__sub" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/api-robot/" data-id="api-robot" class="">Robot</a><a href="/docs/robokit/api-geometry/" data-id="api-geometry" class="">Geometry</a><a href="/docs/robokit/api-optimization/" data-id="api-optimization" class="">Optimization</a><a href="/docs/robokit/api-terms/" data-id="api-terms" class="">Terms</a><a href="/docs/robokit/api-ik/" data-id="api-ik" class="">Inverse Kinematics</a><a href="/docs/robokit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/robokit/api-sim-mpc/" data-id="api-sim-mpc" class="">Sim MPC</a><a href="/docs/robokit/api-humanoid-retargeting/" data-id="api-humanoid-retargeting" class="">Humanoid Retargeting</a><a href="/docs/robokit/api-hand-retargeting/" data-id="api-hand-retargeting" class="">Hand Retargeting</a><a href="/docs/robokit/api-hand_eye_calibration/" data-id="api-hand_eye_calibration" class="is-active">Hand-Eye Calibration</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">robokit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>Reference</span><span class="slash">/</span><span>API</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Hand-Eye Calibration</h1>
+        <div class="doc-body" id="doc-body"><div class="api"><section class="api-sym">
+    <div class="api-card" id="handeyecalibrator">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/calibrator.py#L206">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">robokit.helpers.hand_eye_calibration.</span><span class="api-card__name">HandEyeCalibrator</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">config</span><span class="pp">: </span><span class="pt">HandEyeCalibratorConfig</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">robot</span><span class="pp">: </span><span class="pt">Robot</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">camera_intrinsic</span><span class="pp">: </span><span class="pt">Float[torch.Tensor, '*obs 3 3']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">height</span><span class="pp">: </span><span class="pt">int</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">width</span><span class="pp">: </span><span class="pt">int</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">render_link_names</span><span class="pp">: </span><span class="pt">Optional[List[str]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">target_link_names</span><span class="pp">: </span><span class="pt">Optional[Union[List[str], List[List[str]]]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Solve the camera extrinsic from robot silhouette masks and/or depth maps.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">config</span><span class="api-type">HandEyeCalibratorConfig</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">robot</span><span class="api-type">Robot</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">camera_intrinsic</span><span class="api-type">Float[torch.Tensor, '*obs 3 3']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">height</span><span class="api-type">int</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">width</span><span class="api-type">int</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">render_link_names</span><span class="api-type">Optional[List[str]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">target_link_names</span><span class="api-type">Optional[Union[List[str], List[List[str]]]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="handeyecalibrator-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="handeyecalibrator-last_q">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/calibrator.py#L229">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandEyeCalibrator.</span><span class="api-card__name">last_q</span><span class="pp">: </span><span class="pt">Optional[torch.Tensor]</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="handeyecalibrator-solve">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/calibrator.py#L466">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandEyeCalibrator.</span><span class="api-card__name">solve</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">initial_extrinsic</span><span class="pp">: </span><span class="pt">Float[torch.Tensor, '4 4']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">target_masks</span><span class="pp">: </span><span class="pt">Optional[Float[torch.Tensor, 'n_obs height width']]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">target_depths</span><span class="pp">: </span><span class="pt">Optional[Float[torch.Tensor, 'n_obs height width']]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">observation_weights</span><span class="pp">: </span><span class="pt">Optional[Float[torch.Tensor, n_obs]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">q</span><span class="pp">: </span><span class="pt">Optional[Float[torch.Tensor, '*batch num_dofs']]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">T_mount_base</span><span class="pp">: </span><span class="pt">Optional[Float[torch.Tensor, 'n_obs 4 4']]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">keypoint_links</span><span class="pp">: </span><span class="pt">Optional[List[str]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">target_keypoints</span><span class="pp">: </span><span class="pt">Optional[torch.Tensor]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">keypoint_weights</span><span class="pp">: </span><span class="pt">Optional[torch.Tensor]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Float[torch.Tensor, '4 4']</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Solve camera extrinsics from <code>initial_extrinsic</code>.</p><h4>Lifecycle</h4><ol><li>Build the solver for new observations, or reuse stored data.</li><li>Reset variables and sample camera or joint candidates.</li><li>Optionally initialize q from keypoints, then run native population LM.</li><li>Retain the best result and restart if mask mismatch remains high.</li></ol><p>Data:</p><ul><li>Any target supplied: replace data and rebuild the solver.</li><li>No targets supplied: reuse stored data.</li></ul></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">initial_extrinsic</span><span class="api-type">Float[torch.Tensor, '4 4']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Initial OpenCV <code>T_camera_base</code> or mounted-camera <code>T_camera_mount</code>, <code>[4,4]</code>.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">target_masks</span><span class="api-type">Optional[Float[torch.Tensor, 'n_obs height width']]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Robot silhouette masks <code>[N, H, W]</code> in <code>[0, 1]</code>.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">target_depths</span><span class="api-type">Optional[Float[torch.Tensor, 'n_obs height width']]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Robot-only depth maps <code>[N, H, W]</code> in meters, 0 = invalid.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">observation_weights</span><span class="api-type">Optional[Float[torch.Tensor, n_obs]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional nonnegative objective weights <code>[N]</code>.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">q</span><span class="api-type">Optional[Float[torch.Tensor, '*batch num_dofs']]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Known <code>[N,num_dofs]</code>, or one initial <code>[num_dofs]</code> shared across views with <code>optimize_q</code>; None uses midpoints.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">T_mount_base</span><span class="api-type">Optional[Float[torch.Tensor, 'n_obs 4 4']]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Per-sample mount pose <code>[N, 4, 4]</code> (mounted camera).</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">keypoint_links</span><span class="api-type">Optional[List[str]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional link-frame origins to project, with optimize_q.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">target_keypoints</span><span class="api-type">Optional[torch.Tensor]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Their observed pixels <code>[N,P,2]</code>. NaNs mark missing points.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">keypoint_weights</span><span class="api-type">Optional[torch.Tensor]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional nonnegative confidence weights <code>[N,P]</code>.</p></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Float[torch.Tensor, '4 4']</span></div><div class="api-row__doc"><p>Optimized extrinsic <code>[4,4]</code> on the input device; <code>last_q</code> stores fitted q and <code>last_var</code> includes model offsets.</p></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="handeyecalibratorconfig">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L52">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">robokit.helpers.hand_eye_calibration.</span><span class="api-card__name">HandEyeCalibratorConfig</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">levels</span><span class="pp">: </span><span class="pt">Sequence[PyramidLevel]</span><span class="pp"> = </span><span class="pd">_default_levels()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">terms</span><span class="pp">: </span><span class="pt">Sequence[ResidualTask]</span><span class="pp"> = </span><span class="pd">(lambda: [MaskAlignmentNormalEqTask()])()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">solver</span><span class="pp">: </span><span class="pt">PopulationSolverConfig</span><span class="pp"> = </span><span class="pd">_default_solver()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">candidate_noise_t</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.35</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">candidate_noise_r</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.7</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">restart_mismatch</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.5</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">max_restarts</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">4</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">seed</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">optimize_q</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">optimize_camera</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">True</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">candidate_noise_q</span><span class="pp">: </span><span class="pt">Optional[float]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">keypoint_weight</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.03</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">keypoint_sigma</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">8.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">keypoint_huber_delta</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">12.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">keypoint_warmup_iters</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">24</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">candidate_metric</span><span class="pp">: </span><span class="pt">Literal['objective', 'iou']</span><span class="pp"> = </span><span class="pd">'objective'</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Eager fitting with pyramid levels, cost terms and candidate sampling.</p><h3>Example</h3><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; config = HandEyeCalibratorConfig(optimize_q=True, optimize_camera=False)
+&gt;&gt;&gt; config.optimize_q, config.optimize_camera, config.candidate_noise_q
+(True, False, None)</pre><pre data-code-full hidden>from robokit.helpers.hand_eye_calibration.config import HandEyeCalibratorConfig
+
+config = HandEyeCalibratorConfig(optimize_q=True, optimize_camera=False)
+config.optimize_q, config.optimize_camera, config.candidate_noise_q</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">levels</span><span class="api-type">Sequence[PyramidLevel]</span><span class="api-def">= _default_levels()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">terms</span><span class="api-type">Sequence[ResidualTask]</span><span class="api-def">= (lambda: [MaskAlignmentNormalEqTask()])()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">solver</span><span class="api-type">PopulationSolverConfig</span><span class="api-def">= _default_solver()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">candidate_noise_t</span><span class="api-type">float</span><span class="api-def">= 0.35</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">candidate_noise_r</span><span class="api-type">float</span><span class="api-def">= 0.7</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">restart_mismatch</span><span class="api-type">float</span><span class="api-def">= 0.5</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">max_restarts</span><span class="api-type">int</span><span class="api-def">= 4</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">seed</span><span class="api-type">int</span><span class="api-def">= 0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">optimize_q</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">optimize_camera</span><span class="api-type">bool</span><span class="api-def">= True</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">candidate_noise_q</span><span class="api-type">Optional[float]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">keypoint_weight</span><span class="api-type">float</span><span class="api-def">= 0.03</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">keypoint_sigma</span><span class="api-type">float</span><span class="api-def">= 8.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">keypoint_huber_delta</span><span class="api-type">float</span><span class="api-def">= 12.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">keypoint_warmup_iters</span><span class="api-type">int</span><span class="api-def">= 24</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">candidate_metric</span><span class="api-type">Literal['objective', 'iou']</span><span class="api-def">= 'objective'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="handeyecalibratorconfig-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="handeyecalibratorconfig-levels">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L63">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandEyeCalibratorConfig.</span><span class="api-card__name">levels</span><span class="pp">: </span><span class="pt">Sequence[PyramidLevel] = field(default_factory=_default_levels)</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Coarse-to-fine levels, one per solver segment.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handeyecalibratorconfig-terms">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L65">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandEyeCalibratorConfig.</span><span class="api-card__name">terms</span><span class="pp">: </span><span class="pt">Sequence[ResidualTask] = field(default_factory=lambda: [MaskAlignmentNormalEqTask()])</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Cost terms; each walks <code>levels</code> itself. <code>MaskAlignmentOffsetTask</code> also calibrates the kinematic model.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handeyecalibratorconfig-solver">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L67">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandEyeCalibratorConfig.</span><span class="api-card__name">solver</span><span class="pp">: </span><span class="pt">PopulationSolverConfig = field(default_factory=_default_solver)</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>One segment per level; native final ranking returns the best candidate.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handeyecalibratorconfig-candidate_noise_t">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L69">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandEyeCalibratorConfig.</span><span class="api-card__name">candidate_noise_t</span><span class="pp">: </span><span class="pt">float = 0.35</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Largest translation (m) of the initial candidates from the initial guess; each draws 0.5-1x of it.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handeyecalibratorconfig-candidate_noise_r">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L71">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandEyeCalibratorConfig.</span><span class="api-card__name">candidate_noise_r</span><span class="pp">: </span><span class="pt">float = 0.7</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Largest rotation (rad) of the initial candidates from the initial guess; each draws 0.5-1x of it.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handeyecalibratorconfig-restart_mismatch">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L73">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandEyeCalibratorConfig.</span><span class="api-card__name">restart_mismatch</span><span class="pp">: </span><span class="pt">float = 0.5</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Re-solve with fresh candidates while the final mask mismatch (2 * cost / target mask area) exceeds this.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handeyecalibratorconfig-max_restarts">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L75">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandEyeCalibratorConfig.</span><span class="api-card__name">max_restarts</span><span class="pp">: </span><span class="pt">int = 4</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Re-solves allowed after the first; 0 turns restarts off.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handeyecalibratorconfig-seed">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L77">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandEyeCalibratorConfig.</span><span class="api-card__name">seed</span><span class="pp">: </span><span class="pt">int = 0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Seed of the candidate noise.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handeyecalibratorconfig-optimize_q">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L79">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandEyeCalibratorConfig.</span><span class="api-card__name">optimize_q</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Fit one unknown q vector shared across views; <code>solve(q=...)</code> takes an initial <code>[num_dofs]</code> guess.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handeyecalibratorconfig-optimize_camera">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L81">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandEyeCalibratorConfig.</span><span class="api-card__name">optimize_camera</span><span class="pp">: </span><span class="pt">bool = True</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Optimize the camera extrinsic; False keeps the supplied extrinsic fixed.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handeyecalibratorconfig-candidate_noise_q">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L83">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandEyeCalibratorConfig.</span><span class="api-card__name">candidate_noise_q</span><span class="pp">: </span><span class="pt">Optional[float] = None</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Joint sampling radius in radians/meters; None samples the full finite joint limits. Candidate 0 keeps initial q.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handeyecalibratorconfig-keypoint_weight">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L85">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandEyeCalibratorConfig.</span><span class="api-card__name">keypoint_weight</span><span class="pp">: </span><span class="pt">float = 0.03</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Relative weight of optional 2D link-origin observations.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handeyecalibratorconfig-keypoint_sigma">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L87">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandEyeCalibratorConfig.</span><span class="api-card__name">keypoint_sigma</span><span class="pp">: </span><span class="pt">float = 8.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Keypoint residual scale in input-image pixels.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handeyecalibratorconfig-keypoint_huber_delta">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L89">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandEyeCalibratorConfig.</span><span class="api-card__name">keypoint_huber_delta</span><span class="pp">: </span><span class="pt">float = 12.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Robust-loss transition in input-image pixels.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handeyecalibratorconfig-keypoint_warmup_iters">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L91">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandEyeCalibratorConfig.</span><span class="api-card__name">keypoint_warmup_iters</span><span class="pp">: </span><span class="pt">int = 24</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Keypoint-only initialization steps; half the broad samples remain unmodified.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handeyecalibratorconfig-candidate_metric">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L93">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandEyeCalibratorConfig.</span><span class="api-card__name">candidate_metric</span><span class="pp">: </span><span class="pt">Literal['objective', 'iou'] = 'objective'</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Select by cost or soft IoU; IoU mode uses union-normalized coarse fitting.</p></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="qpostrajectorycalibrator">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/qpos_trajectory_calibrator.py#L247">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">robokit.helpers.hand_eye_calibration.</span><span class="api-card__name">QposTrajectoryCalibrator</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">config</span><span class="pp">: </span><span class="pt">QposTrajectoryCalibratorConfig</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">robot</span><span class="pp">: </span><span class="pt">Robot</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">camera_intrinsic</span><span class="pp">: </span><span class="pt">torch.Tensor</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">height</span><span class="pp">: </span><span class="pt">int</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">width</span><span class="pp">: </span><span class="pt">int</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">render_link_names</span><span class="pp">: </span><span class="pt">Optional[List[str]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Fit unknown q[T,J], optionally refining static cameras[V,4,4] shared over time; temporal penalties apply only to q.</p><p>Example (CUDA, robot meshes and observations required):</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; from robokit.helpers.hand_eye_calibration import presets
+&gt;&gt;&gt; config = presets.rgb_qpos_trajectory
+&gt;&gt;&gt; config.optimize_camera
+False
+&gt;&gt;&gt; # helper = QposTrajectoryCalibrator(config, robot, K, H, W)
+&gt;&gt;&gt; # cameras = helper.solve(cameras, masks, timestamps)
+&gt;&gt;&gt; # helper.last_q.shape  # (timestamps, joints)</pre><pre data-code-full hidden>from robokit.helpers.hand_eye_calibration import presets
+config = presets.rgb_qpos_trajectory
+config.optimize_camera
+# helper = QposTrajectoryCalibrator(config, robot, K, H, W)
+# cameras = helper.solve(cameras, masks, timestamps)
+# helper.last_q.shape  # (timestamps, joints)</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">config</span><span class="api-type">QposTrajectoryCalibratorConfig</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">robot</span><span class="api-type">Robot</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">camera_intrinsic</span><span class="api-type">torch.Tensor</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">height</span><span class="api-type">int</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">width</span><span class="api-type">int</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">render_link_names</span><span class="api-type">Optional[List[str]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="qpostrajectorycalibrator-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="qpostrajectorycalibrator-solve">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/qpos_trajectory_calibrator.py#L599">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">QposTrajectoryCalibrator.</span><span class="api-card__name">solve</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">initial_extrinsics</span><span class="pp">: </span><span class="pt">torch.Tensor</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">target_masks</span><span class="pp">: </span><span class="pt">torch.Tensor</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">timestamps</span><span class="pp">: </span><span class="pt">torch.Tensor</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">observation_weights</span><span class="pp">: </span><span class="pt">Optional[torch.Tensor]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">q</span><span class="pp">: </span><span class="pt">Optional[torch.Tensor]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">keypoint_links</span><span class="pp">: </span><span class="pt">Optional[List[str]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">target_keypoints</span><span class="pp">: </span><span class="pt">Optional[torch.Tensor]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">keypoint_weights</span><span class="pp">: </span><span class="pt">Optional[torch.Tensor]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">torch.Tensor</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Fit synchronized silhouettes and optional keypoints to a joint trajectory; an empty mask with positive weight constrains absence.</p><h4>Lifecycle</h4><ol><li>Validate calibration, timestamps and observations; normalize mask costs by area.</li><li>Initialize a coherent trajectory, or use supplied q without frame sampling.</li><li>Fit the coupled image, temporal and optional camera system.</li><li>Resolve shared joint offsets against source frames and retain joints and cameras.</li></ol><h4>Outputs</h4><p>last_frame_q: Independent frame fits, or the supplied q. last_initial_q: Coherent path before coupled refinement, or the supplied q. last_q: Final joint result <code>[T,J]</code> on the input device.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">initial_extrinsics</span><span class="api-type">torch.Tensor</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Static calibrated cameras <code>[V,4,4]</code>.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">target_masks</span><span class="api-type">torch.Tensor</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Silhouettes <code>[T,V,H,W]</code> in <code>[0,1]</code>.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">timestamps</span><span class="api-type">torch.Tensor</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Finite, strictly increasing source times <code>[T]</code>.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">observation_weights</span><span class="api-type">Optional[torch.Tensor]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Nonnegative mask weights <code>[T,V]</code>; zero marks a missing view.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">q</span><span class="api-type">Optional[torch.Tensor]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional joint trajectory <code>[T,J]</code>; skips frame sampling.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">keypoint_links</span><span class="api-type">Optional[List[str]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Link-frame origins <code>[P]</code> observed by the keypoints.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">target_keypoints</span><span class="api-type">Optional[torch.Tensor]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Image coordinates <code>[T,V,P,2]</code>; NaNs mark missing points.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">keypoint_weights</span><span class="api-type">Optional[torch.Tensor]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional confidence weights <code>[T,V,P]</code>; zero excludes a point.</p></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">torch.Tensor</span></div><div class="api-row__doc"><p>Cameras <code>[V,4,4]</code> on the input device; fixed unless camera refinement is enabled.</p></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="qpostrajectorycalibratorconfig">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L112">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">robokit.helpers.hand_eye_calibration.</span><span class="api-card__name">QposTrajectoryCalibratorConfig</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">frame</span><span class="pp">: </span><span class="pt">HandEyeCalibratorConfig</span><span class="pp"> = </span><span class="pd">(lambda: HandEyeCalibratorConfig(optimize_q=True, optimize_camera=False))()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">initialization_frames</span><span class="pp">: </span><span class="pt">Optional[int]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">initialization_paths</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">1</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">initialization_repairs</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">initialization_seconds</span><span class="pp">: </span><span class="pt">Optional[float]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">levels</span><span class="pp">: </span><span class="pt">Sequence[PyramidLevel]</span><span class="pp"> = </span><span class="pd">(lambda: [PyramidLevel(4, 1.0, 5), PyramidLevel(1, 0.0, 5)])()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">solver</span><span class="pp">: </span><span class="pt">PopulationSolverConfig</span><span class="pp"> = </span><span class="pd">(lambda: PopulationSolverConfig(stages=[Stage(20, 1, LMOptimizerConfig(lm_lambda=0.001, rho_min=0.001, early_stopping_interval=2)), Stage(20)]))()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">path_weight</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.08</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">velocity_weight</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.015</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">acceleration_weight</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.02</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">optimize_camera</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">camera_prior_weight</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">camera_prior_t</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.03</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">camera_prior_r</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.06</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Eager frame fitting followed by coupled mask and temporal refinement.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; config = QposTrajectoryCalibratorConfig(velocity_weight=0.01)
+&gt;&gt;&gt; config.optimize_camera, config.velocity_weight
+(False, 0.01)</pre><pre data-code-full hidden>from robokit.helpers.hand_eye_calibration.config import QposTrajectoryCalibratorConfig
+
+config = QposTrajectoryCalibratorConfig(velocity_weight=0.01)
+config.optimize_camera, config.velocity_weight</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">frame</span><span class="api-type">HandEyeCalibratorConfig</span><span class="api-def">= (lambda: HandEyeCalibratorConfig(optimize_q=True, optimize_camera=False))()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">initialization_frames</span><span class="api-type">Optional[int]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">initialization_paths</span><span class="api-type">int</span><span class="api-def">= 1</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">initialization_repairs</span><span class="api-type">int</span><span class="api-def">= 0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">initialization_seconds</span><span class="api-type">Optional[float]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">levels</span><span class="api-type">Sequence[PyramidLevel]</span><span class="api-def">= (lambda: [PyramidLevel(4, 1.0, 5), PyramidLevel(1, 0.0, 5)])()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">solver</span><span class="api-type">PopulationSolverConfig</span><span class="api-def">= (lambda: PopulationSolverConfig(stages=[Stage(20, 1, LMOptimizerConfig(lm_lambda=0.001, rho_min=0.001, early_stopping_interval=2)), Stage(20)]))()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">path_weight</span><span class="api-type">float</span><span class="api-def">= 0.08</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">velocity_weight</span><span class="api-type">float</span><span class="api-def">= 0.015</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">acceleration_weight</span><span class="api-type">float</span><span class="api-def">= 0.02</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">optimize_camera</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">camera_prior_weight</span><span class="api-type">float</span><span class="api-def">= 0.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">camera_prior_t</span><span class="api-type">float</span><span class="api-def">= 0.03</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">camera_prior_r</span><span class="api-type">float</span><span class="api-def">= 0.06</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="qpostrajectorycalibratorconfig-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="qpostrajectorycalibratorconfig-frame">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L122">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">QposTrajectoryCalibratorConfig.</span><span class="api-card__name">frame</span><span class="pp">: </span><span class="pt">HandEyeCalibratorConfig = field(default_factory=lambda: HandEyeCalibratorConfig(optimize_q=True, optimize_camera=False))</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Unknown-qpos frame initialization; cameras stay fixed during initialization.</p></div></div>
+    </div><div class="api-row api-row--plain" id="qpostrajectorycalibratorconfig-initialization_frames">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L126">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">QposTrajectoryCalibratorConfig.</span><span class="api-card__name">initialization_frames</span><span class="pp">: </span><span class="pt">Optional[int] = None</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Limit broad frame searches to this many visible frames; interpolate before fitting every frame. None searches all.</p></div></div>
+    </div><div class="api-row api-row--plain" id="qpostrajectorycalibratorconfig-initialization_paths">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L128">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">QposTrajectoryCalibratorConfig.</span><span class="api-card__name">initialization_paths</span><span class="pp">: </span><span class="pt">int = 1</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Alternative initial pose branches to rank against every source mask before refinement.</p></div></div>
+    </div><div class="api-row api-row--plain" id="qpostrajectorycalibratorconfig-initialization_repairs">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L130">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">QposTrajectoryCalibratorConfig.</span><span class="api-card__name">initialization_repairs</span><span class="pp">: </span><span class="pt">int = 0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Additional frame searches at the worst fitted source times; 0 disables repair.</p></div></div>
+    </div><div class="api-row api-row--plain" id="qpostrajectorycalibratorconfig-initialization_seconds">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L132">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">QposTrajectoryCalibratorConfig.</span><span class="api-card__name">initialization_seconds</span><span class="pp">: </span><span class="pt">Optional[float] = None</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Stop starting repairs after this initialization time; the initial searches and ranking still complete.</p></div></div>
+    </div><div class="api-row api-row--plain" id="qpostrajectorycalibratorconfig-levels">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L134">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">QposTrajectoryCalibratorConfig.</span><span class="api-card__name">levels</span><span class="pp">: </span><span class="pt">Sequence[PyramidLevel] = field(default_factory=lambda: [PyramidLevel(4, 1.0, 5), PyramidLevel(1, 0.0, 5)])</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="qpostrajectorycalibratorconfig-solver">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L135">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">QposTrajectoryCalibratorConfig.</span><span class="api-card__name">solver</span><span class="pp">: </span><span class="pt">PopulationSolverConfig = field(default_factory=lambda: PopulationSolverConfig(stages=[Stage(20, 1, LMOptimizerConfig(lm_lambda=0.001, rho_min=0.001, early_stopping_interval=2)), Stage(20)]))</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="qpostrajectorycalibratorconfig-path_weight">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L140">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">QposTrajectoryCalibratorConfig.</span><span class="api-card__name">path_weight</span><span class="pp">: </span><span class="pt">float = 0.08</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="qpostrajectorycalibratorconfig-velocity_weight">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L141">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">QposTrajectoryCalibratorConfig.</span><span class="api-card__name">velocity_weight</span><span class="pp">: </span><span class="pt">float = 0.015</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="qpostrajectorycalibratorconfig-acceleration_weight">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L142">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">QposTrajectoryCalibratorConfig.</span><span class="api-card__name">acceleration_weight</span><span class="pp">: </span><span class="pt">float = 0.02</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="qpostrajectorycalibratorconfig-optimize_camera">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L143">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">QposTrajectoryCalibratorConfig.</span><span class="api-card__name">optimize_camera</span><span class="pp">: </span><span class="pt">bool = False</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Refine one static extrinsic per view, shared across all frames.</p></div></div>
+    </div><div class="api-row api-row--plain" id="qpostrajectorycalibratorconfig-camera_prior_weight">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L145">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">QposTrajectoryCalibratorConfig.</span><span class="api-card__name">camera_prior_weight</span><span class="pp">: </span><span class="pt">float = 0.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Prior cost relative to the supplied calibration; 0 disables it.</p></div></div>
+    </div><div class="api-row api-row--plain" id="qpostrajectorycalibratorconfig-camera_prior_t">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L147">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">QposTrajectoryCalibratorConfig.</span><span class="api-card__name">camera_prior_t</span><span class="pp">: </span><span class="pt">float = 0.03</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="qpostrajectorycalibratorconfig-camera_prior_r">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_eye_calibration/config.py#L148">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">QposTrajectoryCalibratorConfig.</span><span class="api-card__name">camera_prior_r</span><span class="pp">: </span><span class="pt">float = 0.06</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Translation (m) and rotation (rad) scales of shared camera corrections.</p></div></div>
+    </div></div></div>
+  </section></div></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/robokit/api-hand-retargeting/"><span class="lbl">← Previous</span><span class="nm">Hand Retargeting</span></a><a class="next" href="/docs/robokit/dev/"><span class="lbl">Next →</span><span class="nm">Development Guide</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#handeyecalibrator">HandEyeCalibrator</a><a href="#handeyecalibratorconfig">HandEyeCalibratorConfig</a><a href="#qpostrajectorycalibrator">QposTrajectoryCalibrator</a><a href="#qpostrajectorycalibratorconfig">QposTrajectoryCalibratorConfig</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "robokit", "id": "api-hand_eye_calibration", "toc": [{"text": "HandEyeCalibrator", "href": "#handeyecalibrator", "members": [{"text": "last_q", "href": "#handeyecalibrator-last_q"}, {"text": "solve()", "href": "#handeyecalibrator-solve"}]}, {"text": "HandEyeCalibratorConfig", "href": "#handeyecalibratorconfig", "members": [{"text": "levels", "href": "#handeyecalibratorconfig-levels"}, {"text": "terms", "href": "#handeyecalibratorconfig-terms"}, {"text": "solver", "href": "#handeyecalibratorconfig-solver"}, {"text": "candidate_noise_t", "href": "#handeyecalibratorconfig-candidate_noise_t"}, {"text": "candidate_noise_r", "href": "#handeyecalibratorconfig-candidate_noise_r"}, {"text": "restart_mismatch", "href": "#handeyecalibratorconfig-restart_mismatch"}, {"text": "max_restarts", "href": "#handeyecalibratorconfig-max_restarts"}, {"text": "seed", "href": "#handeyecalibratorconfig-seed"}, {"text": "optimize_q", "href": "#handeyecalibratorconfig-optimize_q"}, {"text": "optimize_camera", "href": "#handeyecalibratorconfig-optimize_camera"}, {"text": "candidate_noise_q", "href": "#handeyecalibratorconfig-candidate_noise_q"}, {"text": "keypoint_weight", "href": "#handeyecalibratorconfig-keypoint_weight"}, {"text": "keypoint_sigma", "href": "#handeyecalibratorconfig-keypoint_sigma"}, {"text": "keypoint_huber_delta", "href": "#handeyecalibratorconfig-keypoint_huber_delta"}, {"text": "keypoint_warmup_iters", "href": "#handeyecalibratorconfig-keypoint_warmup_iters"}, {"text": "candidate_metric", "href": "#handeyecalibratorconfig-candidate_metric"}]}, {"text": "QposTrajectoryCalibrator", "href": "#qpostrajectorycalibrator", "members": [{"text": "solve()", "href": "#qpostrajectorycalibrator-solve"}]}, {"text": "QposTrajectoryCalibratorConfig", "href": "#qpostrajectorycalibratorconfig", "members": [{"text": "frame", "href": "#qpostrajectorycalibratorconfig-frame"}, {"text": "initialization_frames", "href": "#qpostrajectorycalibratorconfig-initialization_frames"}, {"text": "initialization_paths", "href": "#qpostrajectorycalibratorconfig-initialization_paths"}, {"text": "initialization_repairs", "href": "#qpostrajectorycalibratorconfig-initialization_repairs"}, {"text": "initialization_seconds", "href": "#qpostrajectorycalibratorconfig-initialization_seconds"}, {"text": "levels", "href": "#qpostrajectorycalibratorconfig-levels"}, {"text": "solver", "href": "#qpostrajectorycalibratorconfig-solver"}, {"text": "path_weight", "href": "#qpostrajectorycalibratorconfig-path_weight"}, {"text": "velocity_weight", "href": "#qpostrajectorycalibratorconfig-velocity_weight"}, {"text": "acceleration_weight", "href": "#qpostrajectorycalibratorconfig-acceleration_weight"}, {"text": "optimize_camera", "href": "#qpostrajectorycalibratorconfig-optimize_camera"}, {"text": "camera_prior_weight", "href": "#qpostrajectorycalibratorconfig-camera_prior_weight"}, {"text": "camera_prior_t", "href": "#qpostrajectorycalibratorconfig-camera_prior_t"}, {"text": "camera_prior_r", "href": "#qpostrajectorycalibratorconfig-camera_prior_r"}]}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

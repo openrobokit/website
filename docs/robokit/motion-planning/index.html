@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Motion Planning · RoboKit docs · OpenRoboKit</title>
+  <meta name="description" content="GPU-native, differentiable robotics tooling: IK, trajectory optimization, retargeting, grasping, calibration." />
+  <link rel="canonical" href="https://openrobokit.com/docs/robokit/motion-planning/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">RoboKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="is-active">
+        <span class="nm">RoboKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="">
+        <span class="nm">GraspKit</span>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/robokit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/robokit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/robokit/rl/" data-id="rl" class="">RL</a></div><div class="side__list"><a href="/docs/robokit/sim-mpc/" data-id="sim-mpc" class="">Sim MPC</a></div><div class="side__list"><a href="/docs/robokit/ik/" data-id="ik" class="">IK</a></div><div class="side__list"><a href="/docs/robokit/motion-planning/" data-id="motion-planning" class="is-active">Motion Planning</a></div><div class="side__list"><a href="/docs/robokit/humanoid-retargeting/" data-id="humanoid-retargeting" class="">Humanoid Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand-retargeting/" data-id="hand-retargeting" class="">Hand Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand_eye_calibration/" data-id="hand_eye_calibration" class="">Hand-Eye Calibration</a></div><div class="side__list"><a href="/docs/robokit/ref-assets/" data-id="ref-assets" class="">Built-in Robots &amp; Datasets</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/robot/" data-id="robot" class="">Robot</a></div><div class="side__list"><a href="/docs/robokit/geom/" data-id="geom" class="">Geometry</a></div><div class="side__list"><a href="/docs/robokit/optimization/" data-id="optimization" class="">Optimization</a></div><div class="side__list"><a href="/docs/robokit/conventions/" data-id="conventions" class="">Conventions</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list">
+      <div class="side__sub is-folded" data-fold="Reference·Optimizers">
+        <span>Optimizers</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/opt-gd/" data-id="opt-gd" class="">GDOptimizer</a><a href="/docs/robokit/opt-lm/" data-id="opt-lm" class="">LMOptimizer</a><a href="/docs/robokit/opt-lbfgs/" data-id="opt-lbfgs" class="">LBFGSOptimizer</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Terms">
+        <span>Terms</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/term-frame/" data-id="term-frame" class="">Frame Task</a><a href="/docs/robokit/term-position/" data-id="term-position" class="">Position Task</a><a href="/docs/robokit/term-rotation/" data-id="term-rotation" class="">Rotation Tasks</a><a href="/docs/robokit/term-frame-vector/" data-id="term-frame-vector" class="">Frame Vector Task</a><a href="/docs/robokit/term-com-position/" data-id="term-com-position" class="">CoM Position Task</a><a href="/docs/robokit/term-position-limit/" data-id="term-position-limit" class="">Position Limit</a><a href="/docs/robokit/term-velocity-limit/" data-id="term-velocity-limit" class="">Velocity Limit Task</a><a href="/docs/robokit/term-configuration/" data-id="term-configuration" class="">Configuration Task</a><a href="/docs/robokit/term-smoothness/" data-id="term-smoothness" class="">Smoothness Task</a><a href="/docs/robokit/term-self-collision/" data-id="term-self-collision" class="">Self Collision Task</a><a href="/docs/robokit/term-scene-collision/" data-id="term-scene-collision" class="">Scene Collision Task</a><a href="/docs/robokit/term-scene-distance/" data-id="term-scene-distance" class="">Scene Distance Task</a><a href="/docs/robokit/term-interaction-mesh/" data-id="term-interaction-mesh" class="">Interaction Mesh Task</a><a href="/docs/robokit/term-mask-alignment/" data-id="term-mask-alignment" class="">Mask Alignment Task</a><a href="/docs/robokit/term-manipulability/" data-id="term-manipulability" class="">Manipulability Task</a><a href="/docs/robokit/term-force-closure/" data-id="term-force-closure" class="">Force Closure Task</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/api-robot/" data-id="api-robot" class="">Robot</a><a href="/docs/robokit/api-geometry/" data-id="api-geometry" class="">Geometry</a><a href="/docs/robokit/api-optimization/" data-id="api-optimization" class="">Optimization</a><a href="/docs/robokit/api-terms/" data-id="api-terms" class="">Terms</a><a href="/docs/robokit/api-ik/" data-id="api-ik" class="">Inverse Kinematics</a><a href="/docs/robokit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/robokit/api-sim-mpc/" data-id="api-sim-mpc" class="">Sim MPC</a><a href="/docs/robokit/api-humanoid-retargeting/" data-id="api-humanoid-retargeting" class="">Humanoid Retargeting</a><a href="/docs/robokit/api-hand-retargeting/" data-id="api-hand-retargeting" class="">Hand Retargeting</a><a href="/docs/robokit/api-hand_eye_calibration/" data-id="api-hand_eye_calibration" class="">Hand-Eye Calibration</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">robokit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>User Guide</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Motion Planning</h1>
+        <div class="doc-body" id="doc-body"><table class="doc-table" style="--cols:2"><thead><tr><th><img src="/assets/docs/robokit/assets/gallery/motion_plan.webp" alt="Planning around a shelf"></th><th><img src="/assets/docs/robokit/assets/gallery/motion_plan_humanoid.webp" alt="A G1 humanoid squatting and reaching around a raised box"></th></tr></thead><tbody><tr><td>Planning around a shelf.</td><td>A humanoid reaching around a box while balancing.</td></tr></tbody></table><p><code>robokit.helpers.motion_plan</code> plans a collision-free joint trajectory from a start state to a goal pose or joint state. Offline planning solves one motion. Batch planning solves several at once. Online planning updates a trajectory while the robot moves.</p><p>The snippets assume <code>robot</code>, <code>scene</code>, <code>device</code>, and <code>start_q</code> are defined. Runnable examples and visualizations are in <a class="inline" href="https://github.com/openrobokit/robokit/tree/main/src/robokit/examples/motion_plan/"><code>src/robokit/examples/motion_plan</code></a>.</p><h3 id="how-planning-works">How Planning Works</h3><p><code>MotionPlanner</code> runs four steps:</p><ol><li>For a pose goal, <code>IK</code> finds goal joint states. A joint goal skips IK.</li><li>The planner samples initial trajectories from the start to those goals.</li><li><code>GradientTrajectoryOptimizer</code> or <code>MppiTrajectoryOptimizer</code> refines them for the goal, collisions, joint limits, and smoothness.</li><li><code>solve_online()</code> returns the trajectory. <code>solve_offline()</code> first retimes it, if the last stage sets <code>retime</code>.</li></ol><p>The trajectory candidate count must be divisible by the IK goal count.</p><div class="mermaid">flowchart TD
+    MP[MotionPlanner]
+    IK[IKSolver]
+    SAMPLE[Sample initial trajectories]
+    OPT[GradientTrajectoryOptimizer&lt;br/&gt;or&lt;br/&gt;MppiTrajectoryOptimizer]
+    ONLINE[Return trajectory]
+    OFFLINE[Optional retime]
+    RESULT[Return trajectory]
+
+    MP --&gt;|goal pose| IK
+    IK --&gt; SAMPLE
+    MP --&gt;|goal joint state| SAMPLE
+    SAMPLE --&gt; OPT
+    OPT --&gt;|solve_online| ONLINE
+    OPT --&gt;|solve_offline| OFFLINE
+    OFFLINE --&gt; RESULT</div><h3 id="basic-example">Basic Example</h3><p>Plan to a hand pose past a box, then sample the plan at 50 Hz:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>import numpy as np
+import warp as wp
+from robokit.assets.robots.arms import franka_panda
+from robokit.geom import BoxGeom, WarpScene
+from robokit.helpers.motion_plan import MotionPlanner, presets
+from robokit.robo import Robot
+
+device = "cuda:0" if wp.is_cuda_available() else "cpu"
+robot = Robot.load(
+    franka_panda.URDF_PATH, load_collision_spheres=True, collision_spheres_path=franka_panda.COLLISION_SPHERE_PATH
+)
+
+# A box with half extents (0.04, 0.25, 0.2) m standing in front of the arm.
+T_world_box = np.eye(4, dtype=np.float32)[None]
+T_world_box[0, :3, 3] = (0.45, 0.0, 0.2)
+box = BoxGeom(
+    np.array([[0.04, 0.25, 0.2]], np.float32),
+    np.array([0, 1], np.int32),
+    poses=wp.array(T_world_box, dtype=wp.mat44, device=device),
+)
+scene = WarpScene(1, device).add(box)
+planner = MotionPlanner(presets.offline_pose_lbfgs, robot, "panda_hand", scene=scene, device=device)
+
+start_q = robot.spec.midrange_q.astype(np.float32)
+T_world_goal = np.array([0.45, 0.35, 0.25, 0.0, 1.0, 0.0, 0.0], np.float32)  # x, y, z, qw, qx, qy, qz
+result = planner.solve_offline_numpy([start_q, {"panda_hand": T_world_goal}])
+
+q_traj = result.q_traj[0]  # planned joint trajectory, (frames, dofs)
+motion_time = result.motion_time[0]  # seconds, at the robot's velocity, acceleration and jerk limits
+q_control = result.interpolate(0.02)[0]  # one joint sample every 0.02 s, (samples, dofs)</pre><pre data-code-full hidden>import numpy as np
+import warp as wp
+from robokit.assets.robots.arms import franka_panda
+from robokit.geom import BoxGeom, WarpScene
+from robokit.helpers.motion_plan import MotionPlanner, presets
+from robokit.robo import Robot
+
+device = "cuda:0" if wp.is_cuda_available() else "cpu"
+robot = Robot.load(
+    franka_panda.URDF_PATH, load_collision_spheres=True, collision_spheres_path=franka_panda.COLLISION_SPHERE_PATH
+)
+
+# A box with half extents (0.04, 0.25, 0.2) m standing in front of the arm.
+T_world_box = np.eye(4, dtype=np.float32)[None]
+T_world_box[0, :3, 3] = (0.45, 0.0, 0.2)
+box = BoxGeom(
+    np.array([[0.04, 0.25, 0.2]], np.float32),
+    np.array([0, 1], np.int32),
+    poses=wp.array(T_world_box, dtype=wp.mat44, device=device),
+)
+scene = WarpScene(1, device).add(box)
+planner = MotionPlanner(presets.offline_pose_lbfgs, robot, "panda_hand", scene=scene, device=device)
+
+start_q = robot.spec.midrange_q.astype(np.float32)
+T_world_goal = np.array([0.45, 0.35, 0.25, 0.0, 1.0, 0.0, 0.0], np.float32)  # x, y, z, qw, qx, qy, qz
+result = planner.solve_offline_numpy([start_q, {"panda_hand": T_world_goal}])
+
+q_traj = result.q_traj[0]  # planned joint trajectory, (frames, dofs)
+motion_time = result.motion_time[0]  # seconds, at the robot's velocity, acceleration and jerk limits
+q_control = result.interpolate(0.02)[0]  # one joint sample every 0.02 s, (samples, dofs)
+assert np.isfinite(q_control).all() and motion_time &gt; 0</pre></div><p>The scene layout and batch size are fixed once the planner allocates its buffers. Move obstacles with <code>box.update(...)</code>; build a new planner only when the layout or batch size changes.</p><h3 id="offline-planning">Offline Planning</h3><p><code>solve_offline_numpy()</code> and <code>solve_offline_torch()</code> take a list of waypoints. The first is the start; the last is the goal. Each waypoint is a joint array <code>q</code> or a dict <code>{link_name: T_world_target}</code> of 7D poses or 4x4 matrices. Inputs may have a leading batch dimension; see <a class="inline" href="#batch-planning">Batch Planning</a>.</p><h4>Joint Goals</h4><p>A joint goal skips goal IK. Use a joint preset:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>planner = MotionPlanner(presets.offline_joint_lbfgs, robot, "panda_hand", device=device)
+result = planner.solve_offline_numpy([start_q, target_q])</pre><pre data-code-full hidden>import numpy as np
+import warp as wp
+from robokit.assets.robots.arms import franka_panda
+from robokit.helpers.motion_plan import MotionPlanner, presets
+from robokit.robo import Robot
+
+device = "cuda:0" if wp.is_cuda_available() else "cpu"
+robot = Robot.load(
+    franka_panda.URDF_PATH, load_collision_spheres=True, collision_spheres_path=franka_panda.COLLISION_SPHERE_PATH
+)
+start_q = robot.spec.midrange_q.astype(np.float32)
+target_q = start_q.copy()
+target_q[0] += 0.5
+planner = MotionPlanner(presets.offline_joint_lbfgs, robot, "panda_hand", device=device)
+result = planner.solve_offline_numpy([start_q, target_q])
+assert np.isfinite(result.q_traj).all()</pre></div><h4>Waypoints</h4><p>Waypoints between start and goal can be joint arrays or poses:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>T_world_mid = np.array([0.5, 0.0, 0.5, 0.0, 1.0, 0.0, 0.0], np.float32)
+result = planner.solve_offline_numpy([start_q, {"panda_hand": T_world_mid}, target_q])
+q_mid = result.q_traj[:, result.waypoint_indices[1]]</pre><pre data-code-full hidden>import numpy as np
+import warp as wp
+from robokit.assets.robots.arms import franka_panda
+from robokit.helpers.motion_plan import MotionPlanner, presets
+from robokit.robo import Robot
+
+device = "cuda:0" if wp.is_cuda_available() else "cpu"
+robot = Robot.load(
+    franka_panda.URDF_PATH, load_collision_spheres=True, collision_spheres_path=franka_panda.COLLISION_SPHERE_PATH
+)
+start_q = robot.spec.midrange_q.astype(np.float32)
+target_q = start_q.copy()
+target_q[0] += 0.5
+planner = MotionPlanner(presets.offline_joint_lbfgs, robot, "panda_hand", device=device)
+T_world_mid = np.array([0.5, 0.0, 0.5, 0.0, 1.0, 0.0, 0.0], np.float32)
+result = planner.solve_offline_numpy([start_q, {"panda_hand": T_world_mid}, target_q])
+q_mid = result.q_traj[:, result.waypoint_indices[1]]
+assert np.isfinite(result.q_traj).all()</pre></div><p>The planner then:</p><ol><li>Solves IK for each pose waypoint, seeded from its neighbors.</li><li>Optimizes one trajectory with every waypoint locked on a frame; the robot passes through without stopping.</li><li>Gives each segment frames by the time it needs (<code>resplit_waypoints=False</code> splits them evenly).</li><li>Retimes the whole trajectory.</li></ol><p><code>waypoint_indices</code> gives each waypoint's frame. Pose waypoints name the planner's target links; <code>planner.ik</code> solves their IK alone. <a class="inline" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/examples/motion_plan/10_waypoints.py"><code>10_waypoints.py</code></a> compares one global optimization with per-segment ones, and <a class="inline" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/examples/motion_plan/12_interpolated_waypoints.py"><code>12_interpolated_waypoints.py</code></a> shows resplitting.</p><p>Three options take one entry per segment, waypoint <code>i</code> to <code>i + 1</code>:</p><ul><li><code>segment_check_collision=False</code> ignores the scene there, e.g. for the final grasp approach of <code>[start_q, pre_grasp_q, grasp_q]</code> with <code>(True, False)</code>.</li><li><code>segment_fixed_duration</code> fixes a segment's time in seconds; <code>None</code> segments are retimed. The durations must fit in <code>num_timesteps</code>.</li><li><code>segment_locked=True</code> keeps a segment on the straight line between its waypoints, e.g. a 1.5 s hold while a gripper closes: <code>segment_fixed_duration=(None, 1.5)</code>, <code>segment_locked=(False, True)</code>.</li></ul><p>To plan for some joints only, such as one arm of a bimanual robot, call <code>set_active_joint_mask</code> before the first solve.</p><h4>Speed and Control Rate</h4><p>Offline plans are retimed to the fastest motion within the robot's velocity limits and the planner's <code>acceleration_limit</code> and <code>jerk_limit</code>. <code>RetimeConfig.speed_scale</code> runs slower: <code>0.5</code> takes twice as long. <code>result.interpolate(dt, speed_scale)</code> samples the plan every <code>dt</code> seconds and keeps each waypoint as a sample. Its <code>speed_scale</code> slows the plan further without replanning. <a class="inline" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/examples/motion_plan/11_interpolated_speed.py"><code>11_interpolated_speed.py</code></a> sets both with Viser sliders.</p><h3 id="batch-planning">Batch Planning</h3><p>Batch planning solves several start-goal pairs in one call. Starts and goals get a leading batch dimension. <code>scene_indices[i]</code> picks the collision scene for query <code>i</code>; queries and scenes need not match in number.</p><p>Here four queries use two scenes:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">text</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>query:          0  1  2  3
+scene_indices:  0  0  1  1</pre></div><p>The call is the same:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre># start_q_batch: shape (4, dofs)
+# T_world_target_batch: shape (4, 7)
+scene_indices = np.array([0, 0, 1, 1], dtype=np.int32)
+
+# Here scene is a WarpScene containing scene 0 and scene 1.
+planner = MotionPlanner(presets.offline_pose_lm, robot, "panda_hand", scene=scene, device=device)
+result = planner.solve_offline_numpy([start_q_batch, {"panda_hand": T_world_target_batch}], scene_indices=scene_indices)
+
+q_traj_batch = result.q_traj</pre><pre data-code-full hidden>import numpy as np
+import warp as wp
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+from robokit.robo import Robot
+
+device = "cuda:0" if wp.is_cuda_available() else "cpu"
+from robokit.assets.robots.arms import franka_panda
+
+robot = Robot.load(
+    franka_panda.URDF_PATH, load_collision_spheres=True, collision_spheres_path=franka_panda.COLLISION_SPHERE_PATH
+)
+start_q = robot.spec.midrange_q.astype(np.float32)
+from robokit.geom import BoxGeom, WarpScene
+from robokit.helpers.motion_plan import MotionPlanner, presets
+from robokit.utils.warp_utils import wp_vec7
+
+# A box away from the arm's starting configuration.
+T_world_box = np.eye(4, dtype=np.float32)[None]
+T_world_box[:, :3, 3] = [2, 0, 0]
+scene = WarpScene(1, device).add(
+    BoxGeom(
+        np.array([[0.1, 0.1, 0.1]], dtype=np.float32),
+        np.array([0, 1], dtype=np.int32),
+        poses=wp.array(T_world_box, dtype=wp.mat44, device=device),
+    )
+)
+start_q_batch = np.tile(start_q, (4, 1))
+T_world_target_batch = np.tile([0.60, 0.0, 0.40, 0, 1, 0, 0], (4, 1)).astype(np.float32)
+scene = WarpScene(2, device).add(
+    BoxGeom(
+        np.full((2, 3), 0.1, dtype=np.float32),
+        np.array([0, 1, 2], dtype=np.int32),
+        poses=wp.array(np.repeat(T_world_box, 2, axis=0), dtype=wp.mat44, device=device),
+    )
+)
+# start_q_batch: shape (4, dofs)
+# T_world_target_batch: shape (4, 7)
+scene_indices = np.array([0, 0, 1, 1], dtype=np.int32)
+
+# Here scene is a WarpScene containing scene 0 and scene 1.
+planner = MotionPlanner(presets.offline_pose_lm, robot, "panda_hand", scene=scene, device=device)
+result = planner.solve_offline_numpy([start_q_batch, {"panda_hand": T_world_target_batch}], scene_indices=scene_indices)
+
+q_traj_batch = result.q_traj
+assert q_traj_batch.shape[0] == 4
+assert np.isfinite(q_traj_batch).all()</pre></div><p>For a shared scene, use a one-scene <code>WarpScene</code> and fill <code>scene_indices</code> with zeros. A scene can mix boxes, meshes, and other geometry.</p><h3 id="online-planning">Online Planning</h3><p>Online planning runs in a control loop. Each step plans from the current state and moves the robot to the next trajectory frame. Goals and obstacle poses may change before any solve.</p><p>MPPI keeps its trajectory between solves. Solve goal IK when the pose target changes and pass the result as <code>target_q</code>.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>planner = MotionPlanner(presets.online_pose_mppi, robot, "panda_hand", scene=scene, device=device)
+
+current = robot.state(q=wp.array(start_q[None], dtype=wp.float32, device=device))
+T_world_target_wp = wp.array(
+    [[0.60, 0.0, 0.40, 0.0, 1.0, 0.0, 0.0]],
+    dtype=wp_vec7,
+    device=device,
+)
+target_q_wp = wp.clone(
+    planner.ik.solve(T_world_target_wp.reshape((1, 1)), init_state=current, rest_state=current).q[:1]
+)
+
+online_state = None
+for _ in range(20):
+    trajectory, online_state = planner.solve_online(
+        current,
+        T_world_target=T_world_target_wp,
+        target_q=target_q_wp,
+        online_state=online_state,
+    )
+    wp.copy(current.q, trajectory.q[:, 1])
+    current.invalidate()</pre><pre data-code-full hidden>import numpy as np
+import warp as wp
+from robot_descriptions.loaders.yourdfpy import load_robot_description
+from robokit.robo import Robot
+
+device = "cuda:0" if wp.is_cuda_available() else "cpu"
+from robokit.assets.robots.arms import franka_panda
+
+robot = Robot.load(
+    franka_panda.URDF_PATH, load_collision_spheres=True, collision_spheres_path=franka_panda.COLLISION_SPHERE_PATH
+)
+start_q = robot.spec.midrange_q.astype(np.float32)
+from robokit.geom import BoxGeom, WarpScene
+from robokit.helpers.motion_plan import MotionPlanner, presets
+from robokit.utils.warp_utils import wp_vec7
+
+# A box away from the arm's starting configuration.
+T_world_box = np.eye(4, dtype=np.float32)[None]
+T_world_box[:, :3, 3] = [2, 0, 0]
+scene = WarpScene(1, device).add(
+    BoxGeom(
+        np.array([[0.1, 0.1, 0.1]], dtype=np.float32),
+        np.array([0, 1], dtype=np.int32),
+        poses=wp.array(T_world_box, dtype=wp.mat44, device=device),
+    )
+)
+planner = MotionPlanner(presets.online_pose_mppi, robot, "panda_hand", scene=scene, device=device)
+
+current = robot.state(q=wp.array(start_q[None], dtype=wp.float32, device=device))
+T_world_target_wp = wp.array(
+    [[0.60, 0.0, 0.40, 0.0, 1.0, 0.0, 0.0]],
+    dtype=wp_vec7,
+    device=device,
+)
+target_q_wp = wp.clone(
+    planner.ik.solve(T_world_target_wp.reshape((1, 1)), init_state=current, rest_state=current).q[:1]
+)
+
+online_state = None
+for _ in range(20):
+    trajectory, online_state = planner.solve_online(
+        current,
+        T_world_target=T_world_target_wp,
+        target_q=target_q_wp,
+        online_state=online_state,
+    )
+    wp.copy(current.q, trajectory.q[:, 1])
+    current.invalidate()
+assert np.isfinite(current.q.numpy()).all()</pre></div><p>For L-BFGS, use <code>presets.online_pose_lbfgs</code>. It solves pose IK itself, so <code>target_q</code> is optional.</p><p>To move obstacles, call <code>geom.update(...)</code> before the next solve. In tight loops, allocate input Warp arrays once, outside the loop.</p><h3 id="customization">Customization</h3><h4>Objectives</h4><p>Each optimizer stage holds a list of tasks with their weights, margins and limits. Edit a copy of a preset:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>from copy import deepcopy
+from robokit.helpers.motion_plan import presets
+
+stage = deepcopy(presets.offline_pose_lm.stages[0])
+stage.task("collision").weight = 1000.0
+stage.task("collision").margin = 0.03
+stage.task("position_limit").dense_task.weight = 200.0</pre></div><p>For a new objective, list only the tasks you want. Arguments set to a <code>MotionPlanContext</code> member, such as <code>ctx.TARGET</code> or <code>ctx.START_Q</code>, are filled in for each query:</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>from robokit.helpers.motion_plan import GradientTrajectoryOptimizerConfig, MotionPlanContext as ctx
+from robokit.terms.dense.frame_task import FrameTask
+from robokit.terms.sparse.trajectory_smoothness_task import TrajectorySmoothnessTask
+from robokit.terms.trajectory_task import TrajectoryTask
+
+target = FrameTask(
+    frame_index=ctx.TARGET_LINKS, T_world_target=ctx.TARGET, position_weight=400.0, orientation_weight=200.0
+)
+stage = GradientTrajectoryOptimizerConfig(
+    terms=[
+        TrajectoryTask(target, frame_indices=[-1], name="target"),
+        TrajectorySmoothnessTask(weight=5.0),
+    ]
+)</pre></div><p>Goal IK has its own task list, <code>config.goal_ik.terms</code>.</p><h4>Point clouds and depth</h4><p><code>SdfVolume.from_mesh</code>, <code>from_points</code>, and <code>from_depth</code> build collision grids. Points mark occupied cells. Depth also marks free space, given the camera <code>intrinsics</code> and <code>T_world_camera</code> (OpenCV axes: right, down, forward), so later depth can clear old points. Unknown space is free; pass <code>unknown_is_occupied=True</code> to block it.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>workspace_min = np.array([-0.2, -0.2, 0.2])
+workspace_max = np.array([0.2, 0.2, 1.0])
+volume = SdfVolume.from_points(points, workspace_min, workspace_max)
+scene = WarpScene(1, "cuda:0").add(VolumeGeom([volume], np.array([0, 1], dtype=np.int32)))
+volume.update(depth=depth, intrinsics=intrinsics, T_world_camera=T_world_camera)</pre><pre data-code-full hidden>import numpy as np
+import warp as wp
+from robokit.geom import SdfVolume, VolumeGeom, WarpScene
+
+wp.init()
+points = wp.array([[0.0, 0.0, 0.6]], dtype=wp.vec3, device="cuda:0")
+depth = wp.full((48, 64), 0.6, dtype=wp.float32, device="cuda:0")
+intrinsics = wp.mat33(100, 0, 32, 0, 100, 24, 0, 0, 1)
+T_world_camera = wp.mat44(np.eye(4))
+workspace_min = np.array([-0.2, -0.2, 0.2])
+workspace_max = np.array([0.2, 0.2, 1.0])
+volume = SdfVolume.from_points(points, workspace_min, workspace_max)
+scene = WarpScene(1, "cuda:0").add(VolumeGeom([volume], np.array([0, 1], dtype=np.int32)))
+volume.update(depth=depth, intrinsics=intrinsics, T_world_camera=T_world_camera)</pre></div><p>Pass <code>scene</code> to the planner and call <code>volume.update</code> as observations arrive; <code>reset=True</code> forgets old ones. Bounds, device and resolution are fixed; to change them, create a new volume and call <code>VolumeGeom.update</code>. Bounds crop observations; they are not walls. Pass device Warp arrays to avoid uploads. Points alone cannot mark free space, so add calibrated depth when you can.</p><h4>Humanoids</h4><p><code>presets.humanoid_offline_lbfgs</code>, <code>humanoid_online_lbfgs</code> and <code>humanoid_online_mppi</code> plan both hands of a floating-base humanoid with its feet planted. Their <code>feet_position</code>, <code>feet_rotation</code>, <code>balance</code> and <code>posture</code> terms are stubs. Fill them in once the standing pose is known, through <code>config.goal_ik.task(name)</code> and <code>config.stages[0].task(name)</code>; examples 08 and 09 show how. Floating-base results also include <code>T_world_base_traj</code>.</p></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/robokit/ik/"><span class="lbl">← Previous</span><span class="nm">IK</span></a><a class="next" href="/docs/robokit/humanoid-retargeting/"><span class="lbl">Next →</span><span class="nm">Humanoid Retargeting</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#how-planning-works">How Planning Works</a><a href="#basic-example">Basic Example</a><a href="#offline-planning">Offline Planning</a><a href="#batch-planning">Batch Planning</a><a href="#online-planning">Online Planning</a><a href="#customization">Customization</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "robokit", "id": "motion-planning", "toc": [{"text": "How Planning Works", "href": "#how-planning-works"}, {"text": "Basic Example", "href": "#basic-example"}, {"text": "Offline Planning", "href": "#offline-planning"}, {"text": "Batch Planning", "href": "#batch-planning"}, {"text": "Online Planning", "href": "#online-planning"}, {"text": "Customization", "href": "#customization"}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

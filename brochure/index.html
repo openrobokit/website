@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RoboKit One-Pager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --page-bg:#f6f7fb; --ink:#15171f; --card:#fff; --card-line:#e6e8ef;
+    --muted:#6b7080; --muted-2:#8b90a0; --blue:#2f6bff; --blue-soft:#eaf1ff;
+    --orange:#f97316; --purple:#7b5cf0;
+    --shadow:0 1px 2px rgba(20,23,38,.05),0 10px 24px rgba(20,23,38,.05);
+    --shadow-hero:0 1px 2px rgba(20,23,38,.05),0 14px 30px rgba(20,23,38,.07);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;height:100%;}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    background:#e9ebf1;
+    min-height:100vh;
+    display:flex;align-items:center;justify-content:center;
+  }
+  /* Letterbox-scale the fixed 1920x1080 canvas to fit the viewport on screen. */
+  .stage{
+    width:1920px;height:1080px;flex:none;
+    transform:scale(var(--scale,1));
+    transform-origin:center center;
+  }
+  .page{
+    width:1920px;height:1080px;background:var(--page-bg);overflow:hidden;
+    display:flex;flex-direction:column;padding:48px 60px 40px;gap:22px;color:var(--ink);
+  }
+  .grotesk{font-family:'Space Grotesk',sans-serif;}
+  .card{background:var(--card);border:1px solid var(--card-line);border-radius:16px;box-shadow:var(--shadow);}
+  .navpill{display:flex;align-items:center;gap:8px;border:1px solid #e3e6ee;background:#fff;padding:9px 15px;border-radius:999px;font-size:14px;font-weight:500;color:#2a2e3a;}
+  .dot{width:8px;height:8px;border-radius:50%;}
+  .chip{font-size:14px;font-weight:500;color:#2a4a8c;background:#eef3ff;border:1px solid #d9e4ff;padding:7px 13px;border-radius:8px;}
+  .stat-num{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:26px;}
+  .stat-lbl{font-size:13px;color:#6b7080;}
+  .vrule{width:1px;background:#ebedf3;}
+  .panel-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;}
+  /* full / partial / none coverage dots */
+  .cov-full{display:inline-block;width:15px;height:15px;border-radius:50%;background:var(--blue);}
+  .cov-yes{display:inline-block;width:15px;height:15px;border-radius:50%;background:#3a4150;}
+  .cov-part{display:inline-block;width:15px;height:15px;border-radius:50%;border:2px solid #aeb5c6;}
+  .cov-none{display:inline-block;width:12px;height:2px;border-radius:2px;background:#d2d6e0;}
+  table.cov{width:100%;border-collapse:collapse;table-layout:fixed;flex:1;}
+  table.cov td.row{font-size:13.5px;color:#2a2e3a;padding:9px 6px 9px 0;border-top:1px solid #f0f1f6;}
+  table.cov td.c{text-align:center;border-top:1px solid #f0f1f6;}
+  table.cov td.rk{text-align:center;background:#eaf1ff;border-top:1px solid #dbe6ff;}
+  /* compact coverage matrix: tasks = rows, methods = columns */
+  table.cov th.ch{font-size:11.5px;font-weight:600;line-height:1.15;color:#5c6373;padding:0 3px 9px;text-align:center;vertical-align:bottom;}
+  table.cov th.rkh{color:#2f6bff;font-weight:700;background:#eaf1ff;border-radius:8px 8px 0 0;}
+  table.cov td.m{font-size:13.5px;color:#2a2e3a;text-align:left;padding:9px 8px 9px 2px;border-top:1px solid #f0f1f6;white-space:nowrap;}
+  table.cov td.cc{text-align:center;padding:9px 2px;border-top:1px solid #f0f1f6;}
+  .demo-tile{flex:1;border-radius:12px;border:1px solid #e1e4ec;background:repeating-linear-gradient(135deg,#eef0f5 0 9px,#e7eaf1 9px 18px);display:flex;align-items:flex-end;padding:9px;}
+  .demo-lbl{font-size:10.5px;font-weight:600;letter-spacing:.03em;color:#8b90a0;text-transform:uppercase;}
+  /* per-task speed bars (right column) */
+  .pbar-wrap{display:flex;flex-direction:column;flex:1;}
+  .pbar-line{flex:1;display:flex;align-items:center;gap:16px;border-top:1px solid #eef0f4;}
+  .pbar-line:first-child{border-top:none;}
+  .pbar-task{flex:0 0 108px;font-size:13.5px;font-weight:400;color:#2a2e3a;line-height:1.2;}
+  .pbar-bars{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:5px;}
+  .pbar-bar{height:9px;border-radius:5px;min-width:6px;}
+  .pbar-bar.rk{background:linear-gradient(90deg,#2f6bff,#5a86ff);}
+  .pbar-bar.base{background:#dfe3ec;}
+  .pbar-figure{flex:0 0 118px;display:flex;flex-direction:column;align-items:flex-end;text-align:right;}
+  .pbar-mult{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;color:#2f6bff;line-height:1;}
+  .pbar-cap{font-size:11px;color:#9aa0ae;margin-top:4px;line-height:1.2;}
+  .pbar-dot{display:inline-block;width:8px;height:8px;border-radius:50%;}
+  .pbar-foot{font-size:11px;color:#9094a2;margin-top:8px;}
+
+  @media print{
+    @page{size:1920px 1080px;margin:0;}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact;box-shadow:none !important;}
+    html,body{background:#fff;}
+    body{display:block;}
+    .stage{transform:none;}
+  }
+</style>
+</head>
+<body>
+<div class="stage">
+  <!-- ===================== ROBOKIT ONE-PAGER ===================== -->
+  <div class="page">
+
+    <!-- HEADER -->
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+      <div style="display:flex;align-items:center;gap:18px;">
+        <div style="display:flex;align-items:center;gap:16px;">
+          <span class="grotesk" style="font-weight:700;font-size:42px;letter-spacing:-.015em;line-height:1;">RoboKit</span>
+          <span style="width:1px;height:27px;background:#dadde6;"></span>
+          <span style="font-size:24px;font-weight:400;color:#5c6373;line-height:1;white-space:nowrap;">A performant, general-purpose robotics toolkit</span>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <a href="https://drive.google.com/drive/folders/15q3l_WOflEuo0sd62Nw1j45scBo3x5aa?usp=sharing" class="navpill" style="text-decoration:none;" target="_blank" rel="noopener"><span class="dot" style="background:#f97316;"></span>Demo video</a>
+        <a href="mailto:j7ye@ucsd.edu" class="navpill" style="text-decoration:none;"><span class="dot" style="background:#7b5cf0;"></span>Contact</a>
+      </div>
+    </div>
+
+    <!-- HERO BAND -->
+    <div style="display:flex;gap:24px;height:362px;">
+      <div style="width:912px;border-radius:18px;overflow:hidden;background:#fff;border:1px solid #e6e8ef;box-shadow:var(--shadow-hero);position:relative;">
+        <img src="/assets/images/robokit/brochure/teaser.webp" alt="RoboKit teaser" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;"/>
+        <span style="position:absolute;left:16px;bottom:14px;font-size:12px;font-weight:600;letter-spacing:.04em;color:#5c6373;background:rgba(255,255,255,.86);backdrop-filter:blur(4px);padding:6px 12px;border-radius:999px;border:1px solid #e6e8ef;">Diverse skills visualized: grasping / motion planning / retargeting / calibration</span>
+      </div>
+      <div style="flex:1;border-radius:18px;overflow:hidden;background:#fff;border:1px solid #e6e8ef;box-shadow:var(--shadow-hero);position:relative;">
+        <img src="/assets/images/robokit/brochure/retargeting.webp" alt="RoboKit real-robot dexterous and whole-body manipulation" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;"/>
+        <span style="position:absolute;left:16px;bottom:14px;font-size:12px;font-weight:600;letter-spacing:.04em;color:#5c6373;background:rgba(255,255,255,.86);backdrop-filter:blur(4px);padding:6px 12px;border-radius:999px;border:1px solid #e6e8ef;">Dexterous Hand / Whole-body Retargeting</span>
+      </div>
+    </div>
+
+    <!-- RELEASE SIGNALS RIBBON -->
+    <div class="card" style="display:flex;overflow:hidden;">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 8px;gap:3px;">
+        <span class="stat-num" style="font-size:22px;white-space:nowrap;">URDF + MJCF</span>
+        <span class="stat-lbl">any robot description</span>
+      </div>
+      <div class="vrule"></div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 8px;gap:3px;">
+        <span class="stat-num" style="color:#2f6bff;white-space:nowrap;">&lt;1 ms</span>
+        <span class="stat-lbl">batched IK latency</span>
+      </div>
+      <div class="vrule"></div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 8px;gap:3px;">
+        <span class="stat-num" style="font-size:22px;white-space:nowrap;">GPU-batched</span>
+        <span class="stat-lbl">thousands in parallel</span>
+      </div>
+      <div class="vrule"></div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 8px;gap:3px;">
+        <span class="stat-num">single</span>
+        <span class="stat-lbl">command to install</span>
+      </div>
+      <div class="vrule"></div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 8px;gap:3px;">
+        <span class="stat-num" style="color:#7b5cf0;">&#10003;</span>
+        <span class="stat-lbl">examples ready</span>
+      </div>
+    </div>
+
+    <!-- LOWER 3-COLUMN ZONE -->
+    <div style="flex:1;display:grid;grid-template-columns:498px 1fr 506px;gap:18px;min-height:0;">
+
+      <!-- STACK DIAGRAM -->
+      <div class="card" style="padding:18px 20px;display:flex;flex-direction:column;">
+        <div class="grotesk" style="font-weight:600;font-size:16px;margin-bottom:12px;">Where RoboKit lives</div>
+        <div style="display:flex;flex-direction:column;gap:12px;flex:1;justify-content:center;">
+          <div style="display:flex;gap:12px;">
+            <div style="flex:1;display:flex;gap:8px;">
+              <div style="flex:1;border:1.5px dashed #cdd3e0;border-radius:10px;padding:9px 13px;display:flex;flex-direction:column;justify-content:center;gap:3px;background:#fbfbfd;">
+                <span style="font-size:16px;font-weight:600;color:#8b90a0;line-height:1.15;">Agent model</span>
+                <span style="font-size:13.5px;color:#aab0be;line-height:1.15;">Gemini Robotics</span>
+              </div>
+              <div style="flex:1;border:1.5px dashed #cdd3e0;border-radius:10px;padding:9px 13px;display:flex;flex-direction:column;justify-content:center;gap:3px;background:#fbfbfd;">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">
+                  <span style="font-size:16px;font-weight:600;color:#8b90a0;line-height:1.15;">Policy</span>
+                  <span style="font-size:9.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#f97316;background:#fff1e6;border:1px solid #ffd9bf;padding:2px 6px;border-radius:5px;white-space:nowrap;">changes fast</span>
+                </div>
+                <span style="font-size:13.5px;color:#aab0be;line-height:1.15;">LeRobot</span>
+              </div>
+            </div>
+            <div style="width:30px;flex:none;"></div>
+          </div>
+          <div style="display:flex;gap:12px;flex:none;height:180px;">
+            <div style="flex:1;display:flex;flex-direction:column;gap:8px;">
+              <div style="flex:1;background:linear-gradient(135deg,#2f6bff,#5a86ff);border-radius:10px;padding:0 16px;display:flex;flex-direction:column;justify-content:center;gap:5px;">
+                <span style="font-size:15px;font-weight:700;color:#fff;">Robot Skills</span>
+                <span style="font-size:13px;font-weight:500;color:#dbe7ff;line-height:1.35;">IK, motion planning, retargeting, grasping, calibration</span>
+              </div>
+              <div style="flex:1;background:#eaf1ff;border:1px solid #cfddff;border-radius:10px;padding:0 16px;display:flex;align-items:center;font-size:15px;font-weight:600;color:#1c3050;">Hardware + Safety</div>
+            </div>
+            <div style="width:30px;flex:none;display:flex;flex-direction:column;align-items:center;">
+              <div style="flex:1;width:100%;border:2px solid #2f6bff;border-left:none;border-radius:0 10px 10px 0;display:flex;align-items:center;justify-content:center;">
+                <span class="grotesk" style="writing-mode:vertical-rl;font-weight:700;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:#2f6bff;">RoboKit</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:14px;padding-top:14px;border-top:1px solid #eef0f4;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
+            <span style="width:6px;height:6px;border-radius:50%;background:#2f6bff;"></span>
+            <span style="font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#2f6bff;">Our goal</span>
+          </div>
+          <div style="font-size:16.5px;color:#2a2e3a;line-height:1.45;"><span style="font-weight:600;">The go-to library for robot skills</span>, a low-level foundation for agentic robotics systems.</div>
+        </div>
+      </div>
+
+      <!-- COMPARISON TABLE -->
+      <div class="card" style="padding:18px 20px;display:flex;flex-direction:column;min-width:0;">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px;">
+          <span class="grotesk" style="font-weight:600;font-size:16px;">Capability coverage</span>
+          <span style="font-size:11.5px;color:#8b90a0;"><span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:#3a4150;vertical-align:-1px;"></span> supported &nbsp; <span style="display:inline-block;width:10px;height:2px;background:#d2d6e0;vertical-align:3px;"></span> not supported</span>
+        </div>
+        <table class="cov">
+          <colgroup>
+            <col style="width:31%;">
+            <col style="width:11.5%;"><col style="width:11.5%;"><col style="width:11.5%;"><col style="width:11.5%;"><col style="width:11.5%;"><col style="width:11.5%;">
+          </colgroup>
+          <thead>
+            <tr>
+              <th></th>
+              <th class="ch">pink&nbsp;/<br>mink</th>
+              <th class="ch">Dex-<br>Retargeting</th>
+              <th class="ch">GMR</th>
+              <th class="ch">PyRoki</th>
+              <th class="ch">cuRobo</th>
+              <th class="ch rkh grotesk">RoboKit<br>(Ours)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="m">Inverse Kinematics</td>
+              <td class="cc"><span class="cov-yes"></span></td>
+              <td class="cc"><span class="cov-yes"></span></td>
+              <td class="cc"><span class="cov-yes"></span></td>
+              <td class="cc"><span class="cov-yes"></span></td>
+              <td class="cc"><span class="cov-yes"></span></td>
+              <td class="rk"><span class="cov-full"></span></td>
+            </tr>
+            <tr>
+              <td class="m">Motion Planning</td>
+              <td class="cc"><span class="cov-none"></span></td>
+              <td class="cc"><span class="cov-none"></span></td>
+              <td class="cc"><span class="cov-none"></span></td>
+              <td class="cc"><span class="cov-yes"></span></td>
+              <td class="cc"><span class="cov-yes"></span></td>
+              <td class="rk"><span class="cov-full"></span></td>
+            </tr>
+            <tr>
+              <td class="m">Hand Retargeting</td>
+              <td class="cc"><span class="cov-none"></span></td>
+              <td class="cc"><span class="cov-yes"></span></td>
+              <td class="cc"><span class="cov-none"></span></td>
+              <td class="cc"><span class="cov-none"></span></td>
+              <td class="cc"><span class="cov-none"></span></td>
+              <td class="rk"><span class="cov-full"></span></td>
+            </tr>
+            <tr>
+              <td class="m">Humanoid Retargeting</td>
+              <td class="cc"><span class="cov-none"></span></td>
+              <td class="cc"><span class="cov-none"></span></td>
+              <td class="cc"><span class="cov-yes"></span></td>
+              <td class="cc"><span class="cov-yes"></span></td>
+              <td class="cc"><span class="cov-none"></span></td>
+              <td class="rk"><span class="cov-full"></span></td>
+            </tr>
+            <tr>
+              <td class="m">Grasp Synthesis</td>
+              <td class="cc"><span class="cov-none"></span></td>
+              <td class="cc"><span class="cov-none"></span></td>
+              <td class="cc"><span class="cov-none"></span></td>
+              <td class="cc"><span class="cov-none"></span></td>
+              <td class="cc"><span class="cov-none"></span></td>
+              <td class="rk"><span class="cov-full"></span></td>
+            </tr>
+            <tr>
+              <td class="m">Rendering-based Calibration</td>
+              <td class="cc"><span class="cov-none"></span></td>
+              <td class="cc"><span class="cov-none"></span></td>
+              <td class="cc"><span class="cov-none"></span></td>
+              <td class="cc"><span class="cov-none"></span></td>
+              <td class="cc"><span class="cov-none"></span></td>
+              <td class="rk" style="border-radius:0 0 8px 8px;"><span class="cov-full"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- PER-TASK SPEED BARS -->
+      <div class="card" style="padding:18px 20px;display:flex;flex-direction:column;min-width:0;">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px;">
+          <span class="grotesk" style="font-weight:600;font-size:16px;">Speed across tasks</span>
+          <span style="font-size:11px;color:#8b90a0;"><span class="pbar-dot" style="background:#2f6bff;"></span> RoboKit &nbsp; <span class="pbar-dot" style="background:#d3d7e2;"></span> baseline</span>
+        </div>
+        <div class="pbar-wrap">
+          <div class="pbar-line">
+            <div class="pbar-task">Inverse<br>Kinematics</div>
+            <div class="pbar-bars"><div class="pbar-bar rk" style="width:8.3%;"></div><div class="pbar-bar base" style="width:100%;"></div></div>
+            <div class="pbar-figure"><span class="pbar-mult">12&times;</span><span class="pbar-cap">faster than PyRoKi</span></div>
+          </div>
+          <div class="pbar-line">
+            <div class="pbar-task">Motion<br>Planning</div>
+            <div class="pbar-bars"><div class="pbar-bar rk" style="width:29%;"></div><div class="pbar-bar base" style="width:100%;"></div></div>
+            <div class="pbar-figure"><span class="pbar-mult">3.5&times;</span><span class="pbar-cap">faster than cuRobo</span></div>
+          </div>
+          <div class="pbar-line">
+            <div class="pbar-task">Hand<br>Retargeting</div>
+            <div class="pbar-bars"><div class="pbar-bar rk" style="width:3.8%;"></div><div class="pbar-bar base" style="width:100%;"></div></div>
+            <div class="pbar-figure"><span class="pbar-mult">27&times;</span><span class="pbar-cap">faster than PyRoKi</span></div>
+          </div>
+          <div class="pbar-line">
+            <div class="pbar-task">Humanoid<br>Retargeting</div>
+            <div class="pbar-bars"><div class="pbar-bar rk" style="width:25%;"></div><div class="pbar-bar base" style="width:100%;"></div></div>
+            <div class="pbar-figure"><span class="pbar-mult">4&times;</span><span class="pbar-cap">faster than GMR</span></div>
+          </div>
+          <div class="pbar-line">
+            <div class="pbar-task">Grasp<br>Synthesis</div>
+            <div class="pbar-bars"><div class="pbar-bar rk" style="width:1.7%;"></div><div class="pbar-bar base" style="width:100%;"></div></div>
+            <div class="pbar-figure"><span class="pbar-mult">60&times;</span><span class="pbar-cap">faster than Dex1B</span></div>
+          </div>
+          <div class="pbar-line">
+            <div class="pbar-task">Rendering<br>Calibration</div>
+            <div class="pbar-bars"><div class="pbar-bar rk" style="width:0.44%;"></div><div class="pbar-bar base" style="width:100%;"></div></div>
+            <div class="pbar-figure"><span class="pbar-mult">230&times;</span><span class="pbar-cap">faster than EasyHEC</span></div>
+          </div>
+        </div>
+        <div class="pbar-foot">Check the paper for benchmark details.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // Scale the fixed 1920x1080 canvas to fit the viewport (letterbox), for on-screen viewing.
+  // Print CSS resets the transform so the PDF exports at native size, one landscape page.
+  function fit(){
+    var s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    document.documentElement.style.setProperty('--scale', s);
+  }
+  window.addEventListener('resize', fit);
+  fit();
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 96">
+<style>
+@keyframes sSmall{0%{opacity:0}12%,42%{opacity:1}56%,100%{opacity:0}}
+@keyframes sElite{0%{opacity:0}12%,78%{opacity:1}92%,100%{opacity:0}}
+@keyframes orbit{to{stroke-dashoffset:-18}}
+.ring{animation:orbit 2.2s linear infinite}
+.small{animation:sSmall 2.8s ease-in-out infinite}
+.elite{animation:sElite 2.8s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<ellipse class="ring" cx="90" cy="48" rx="74" ry="35" fill="none" stroke="#C7D5F8" stroke-width="1.5" stroke-dasharray="5 4"></ellipse>
+<g class="small" fill="#B6C9F9">
+<circle cx="38" cy="42" r="2.2"></circle><circle cx="50" cy="30" r="2.2"></circle><circle cx="48" cy="58" r="2.2"></circle><circle cx="64" cy="22" r="2.2"></circle><circle cx="66" cy="68" r="2.2"></circle><circle cx="78" cy="38" r="2.2"></circle><circle cx="74" cy="54" r="2.2"></circle><circle cx="96" cy="26" r="2.2"></circle><circle cx="102" cy="64" r="2.2"></circle><circle cx="112" cy="40" r="2.2"></circle><circle cx="118" cy="56" r="2.2"></circle><circle cx="132" cy="30" r="2.2"></circle><circle cx="136" cy="62" r="2.2"></circle><circle cx="148" cy="46" r="2.2"></circle><circle cx="58" cy="44" r="2.2"></circle><circle cx="124" cy="46" r="2.2"></circle>
+</g>
+<g class="elite" fill="#3D7BF0"><circle cx="60" cy="36" r="4"></circle><circle cx="118" cy="34" r="4.2"></circle><circle cx="80" cy="60" r="3.8"></circle><circle cx="126" cy="58" r="4"></circle></g>
+<circle cx="90" cy="46" r="6.5" fill="#1F5EEA"></circle>
+</svg>

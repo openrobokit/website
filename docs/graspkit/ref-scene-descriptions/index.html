@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dex1B Scene Descriptions · GraspKit docs · OpenRoboKit</title>
+  <meta name="description" content="Manipulation across robot embodiments, including grippers and dexterous hands." />
+  <link rel="canonical" href="https://openrobokit.com/docs/graspkit/ref-scene-descriptions/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">GraspKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="">
+        <span class="nm">RoboKit</span>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="is-active">
+        <span class="nm">GraspKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/graspkit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/graspkit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim/" data-id="grasp-optim" class="">Grasp Optimization</a></div><div class="side__list"><a href="/docs/graspkit/training/" data-id="training" class="">Policy Training</a></div><div class="side__list"><a href="/docs/graspkit/pipeline/" data-id="pipeline" class="">Pipeline</a></div><div class="side__list"><a href="/docs/graspkit/sim-deploy/" data-id="sim-deploy" class="">Sim Deployment</a></div><div class="side__list"><a href="/docs/graspkit/real-deploy/" data-id="real-deploy" class="">Real Deployment</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/concepts-overview/" data-id="concepts-overview" class="">Core Overview</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim-backends/" data-id="grasp-optim-backends" class="">Grasp Optimization Backends</a></div><div class="side__list"><a href="/docs/graspkit/concepts-sim/" data-id="concepts-sim" class="">Simulation</a></div><div class="side__list"><a href="/docs/graspkit/concepts-policies/" data-id="concepts-policies" class="">Models and Policies</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/ref-robot-hands/" data-id="ref-robot-hands" class="">Robot and Hand Catalog</a></div><div class="side__list"><a href="/docs/graspkit/ref-config-system/" data-id="ref-config-system" class="">Config System</a></div>
+      <div class="side__sub" data-fold="Reference·Data">
+        <span>Data</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/ref-data-format/" data-id="ref-data-format" class="">Data Format Specification</a><a href="/docs/graspkit/ref-assets/" data-id="ref-assets" class="">graspkit assets</a><a href="/docs/graspkit/ref-scene-descriptions/" data-id="ref-scene-descriptions" class="is-active">Dex1B Scene Descriptions</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/api-grasp-optim/" data-id="api-grasp-optim" class="">Grasp Optimization</a><a href="/docs/graspkit/api-scene/" data-id="api-scene" class="">Scene</a><a href="/docs/graspkit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/graspkit/api-policy/" data-id="api-policy" class="">Policy</a><a href="/docs/graspkit/api-training/" data-id="api-training" class="">Training</a><a href="/docs/graspkit/api-envs/" data-id="api-envs" class="">Environments</a><a href="/docs/graspkit/api-data/" data-id="api-data" class="">Data</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">graspkit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>Reference</span><span class="slash">/</span><span>Data</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Dex1B Scene Descriptions</h1>
+        <div class="doc-body" id="doc-body"><p>Dex1B scene descriptions under <code>scene_description/dex1b/&lt;version&gt;/</code>, hosted on HuggingFace (<code>openrobokit/graspkit</code>) and generated by the scripts in <code>scripts/stages/scene_desc/</code>.</p><h3 id="v0-5">v0.5</h3><ul><li><strong><code>tabletop</code></strong> (normal): table <code>(0.5, 0.5, 0.2)</code>, object region (xy ±0.2), and ±5cm table-height jitter (<code>enable_table_pose_randomization</code> with table xy fixed); height-balanced across 4 bins.</li><li><strong><code>wbc_tabletop</code></strong> (whole-body control): thick table <code>(0.35, 0.35, 0.2)</code> with a per-scene pose pulled close to the robot (<code>table_x_range=(0.35, 0.5)</code>: near edge ~0.175 clears the G1 torso front ~0.143) and uniform table-top height <code>[0.3, 1.1]</code>. Same height rebalancing as normal (mini/small balanced across 4 bins; dev off, since the tiny YCB set can't fill every bin).</li><li><strong><code>dexmate_tabletop</code></strong> (mini only, Vega + Sharpa): <code>tabletop</code> with table <code>(0.6, 0.6, 0.2)</code>, object region xy ±0.25, and ±15cm table-height jitter.</li></ul><p>All families read the same canonicals. <strong>Train</strong> is dexgraspnet (in-distribution); <strong>test</strong> mixes in dexdiffuser (egad, kit, contactdb, ycb) as a held-out object family, with per-source counts pinned via <code>merge_scene_description.py</code>'s <code>subsample</code>.</p><table class="doc-table" style="--cols:4"><thead><tr><th>Tier</th><th>train</th><th>test</th><th>Sources</th></tr></thead><tbody><tr><td><strong>dev</strong></td><td>100</td><td>30</td><td>YCB only (train &amp; test)</td></tr><tr><td><strong>mini</strong></td><td>5k</td><td>500</td><td>train dexgraspnet 684×5; test 300 dexgraspnet test-split + 200 dexdiffuser</td></tr><tr><td><strong>small</strong></td><td>50k</td><td>2k</td><td>train dexgraspnet 4302×5; test dexgraspnet test-split + dexdiffuser</td></tr></tbody></table><p>Families have identical counts/sources (same canonicals, different table). Scales: dexgraspnet <code>[0.06, 0.08, 0.1, 0.12, 0.15]</code>, dexdiffuser <code>1.0</code>. Pipeline: <code>meshes → canonical drop → tabletop randomization</code>, merged with <code>merge_scene_description.py</code>.</p><ul><li><strong>Canonical drop:</strong> each (object, scale) is dropped by physics onto a <code>(0.3, 0.3, 0.1)</code> table in 3 orientations (<code>none</code>, <code>x90</code>, <code>y90</code>). Kept if xy within ±0.15m, height ≥ 0.02m, volume ≤ 0.003m³, xy area ≤ 0.025m².</li><li><strong>Tabletop randomization:</strong> xy translation and z rotation per canonical scene, plus the family's table pose. Height bins: 0.02–0.05, 0.05–0.09, 0.09–0.15, 0.15–0.25m. At most 10 scenes per object (mini), 6 (small), 5 (dev).</li><li><strong>Meshes:</strong> <code>collision.glb</code> keeps the CoACD convex parts; <code>visual.glb</code> is a separate simplified mesh. Importing <code>graspkit.assets.objects.dex_diffuser_v2</code> fetches the dexdiffuser meshes.</li></ul></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/graspkit/ref-assets/"><span class="lbl">← Previous</span><span class="nm">graspkit assets</span></a><a class="next" href="/docs/graspkit/api-grasp-optim/"><span class="lbl">Next →</span><span class="nm">Grasp Optimization</span></a></div>
+      </article>
+      <aside class="rail" id="rail"></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "graspkit", "id": "ref-scene-descriptions", "toc": [{"text": "v0.5", "href": "#v0-5"}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

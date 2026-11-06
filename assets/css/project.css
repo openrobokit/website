@@ -217,6 +217,12 @@ h1 .kit { color: var(--pop, var(--accent)); }
   font-size: clamp(17px, 1.4vw, 23px); line-height: 1.2; letter-spacing: 0.005em;
   margin: 0; color: #15171F; text-wrap: balance;
 }
+/* how a task is solved, as the README tags it: RL or MPC */
+.bento__row .card-tag {
+  display: inline-block; vertical-align: 0.2em; margin-left: 6px; padding: 2px 6px 1px;
+  border: 1px solid rgba(21,23,31,.18); border-radius: 4px;
+  font-size: 0.5em; font-weight: 500; letter-spacing: 0.08em; color: #56647A;
+}
 
 /* ---------- scalable optimization ---------- */
 .scale__head { margin: 0 0 clamp(18px, 2.6vh, 30px); }
@@ -420,7 +426,7 @@ pre.api__body { min-height: 0; margin: 0; white-space: pre; color: #15171F; }
   padding: clamp(16px, 2vw, 28px) clamp(20px, 2.5vw, 36px) clamp(18px, 2.2vw, 30px);
   box-shadow: 0 16px 40px rgba(21,23,31,0.04), inset 0 0 0 1px #DEDEDA;
 }
-.bench__row { padding: clamp(15px, 1.7vw, 21px) 0; display: flex; align-items: center; gap: clamp(16px, 2vw, 34px); }
+.bench__row { padding: clamp(7px, 0.8vw, 10px) 0; display: flex; align-items: center; gap: clamp(16px, 2vw, 34px); }
 .bench__row + .bench__row { border-top: 1px solid #EDEDEB; }
 .bench__group {
   display: flex; align-items: baseline; gap: 8px; padding: clamp(16px, 1.9vw, 24px) 0 10px; border-bottom: 1px solid #EDEDEB;
@@ -511,7 +517,7 @@ pre.api__body { min-height: 0; margin: 0; white-space: pre; color: #15171F; }
   font-size: clamp(21px, 1.95vw, 30px); line-height: 1; letter-spacing: -0.02em;
   color: var(--accent); font-variant-numeric: tabular-nums;
 }
-.bench__fig .vs { font-size: clamp(11px, 0.82vw, 12.5px); line-height: 1.3; color: #6B7080; margin-top: 5px; }
+.bench__fig .vs { font-size: clamp(11px, 0.82vw, 12.5px); line-height: 1.3; color: #6B7080; margin-top: 2px; }
 .bench__note {
   font-size: clamp(12px, 0.9vw, 13.5px); line-height: 1.5; color: #6B7080;
   margin: clamp(15px, 2vh, 22px) 0 0; max-width: 640px; text-wrap: pretty;
@@ -767,6 +773,12 @@ ul.bullets li::before { content: "›"; position: absolute; left: 0; top: 8px; c
 .bento__frame { position: relative; width: 100%; }
 .bento__row .card-media { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
 .bento__row .card-video { z-index: 1; }
+/* These clips fill their frames, so the label gets its own strip below; the
+   floor shadow fades out rather than stopping at the frame's edge. */
+#mpc .bento__frame {
+  margin-bottom: clamp(34px, 3.6vw, 54px);
+  -webkit-mask-image: linear-gradient(#000 86%, transparent); mask-image: linear-gradient(#000 86%, transparent);
+}
 /* A card that rolls through a family stacks its clips and crossfades between
    them. The outgoing clip stays opaque underneath for the length of the fade,
    so the poster behind the stack never shows through the middle of it. */
@@ -877,6 +889,7 @@ body.project--legacy .layers__head-row { border-bottom-color: rgba(24,43,73,0.12
      robot hand is still a robot hand */
   /* two justified cards side by side put a room at 160px across */
   .bento__row { flex-direction: column; gap: clamp(10px, 1vw, 14px); }
+  .bento__row article { flex: none; }
 }
 @media (max-width: 640px) {
   .reel__grid { grid-template-columns: minmax(0, 1fr); }

@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hand Retargeting · RoboKit docs · OpenRoboKit</title>
+  <meta name="description" content="GPU-native, differentiable robotics tooling: IK, trajectory optimization, retargeting, grasping, calibration." />
+  <link rel="canonical" href="https://openrobokit.com/docs/robokit/api-hand-retargeting/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">RoboKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="is-active">
+        <span class="nm">RoboKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="">
+        <span class="nm">GraspKit</span>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/robokit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/robokit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/robokit/rl/" data-id="rl" class="">RL</a></div><div class="side__list"><a href="/docs/robokit/sim-mpc/" data-id="sim-mpc" class="">Sim MPC</a></div><div class="side__list"><a href="/docs/robokit/ik/" data-id="ik" class="">IK</a></div><div class="side__list"><a href="/docs/robokit/motion-planning/" data-id="motion-planning" class="">Motion Planning</a></div><div class="side__list"><a href="/docs/robokit/humanoid-retargeting/" data-id="humanoid-retargeting" class="">Humanoid Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand-retargeting/" data-id="hand-retargeting" class="">Hand Retargeting</a></div><div class="side__list"><a href="/docs/robokit/hand_eye_calibration/" data-id="hand_eye_calibration" class="">Hand-Eye Calibration</a></div><div class="side__list"><a href="/docs/robokit/ref-assets/" data-id="ref-assets" class="">Built-in Robots &amp; Datasets</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/robot/" data-id="robot" class="">Robot</a></div><div class="side__list"><a href="/docs/robokit/geom/" data-id="geom" class="">Geometry</a></div><div class="side__list"><a href="/docs/robokit/optimization/" data-id="optimization" class="">Optimization</a></div><div class="side__list"><a href="/docs/robokit/conventions/" data-id="conventions" class="">Conventions</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list">
+      <div class="side__sub is-folded" data-fold="Reference·Optimizers">
+        <span>Optimizers</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/opt-gd/" data-id="opt-gd" class="">GDOptimizer</a><a href="/docs/robokit/opt-lm/" data-id="opt-lm" class="">LMOptimizer</a><a href="/docs/robokit/opt-lbfgs/" data-id="opt-lbfgs" class="">LBFGSOptimizer</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Terms">
+        <span>Terms</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/term-frame/" data-id="term-frame" class="">Frame Task</a><a href="/docs/robokit/term-position/" data-id="term-position" class="">Position Task</a><a href="/docs/robokit/term-rotation/" data-id="term-rotation" class="">Rotation Tasks</a><a href="/docs/robokit/term-frame-vector/" data-id="term-frame-vector" class="">Frame Vector Task</a><a href="/docs/robokit/term-com-position/" data-id="term-com-position" class="">CoM Position Task</a><a href="/docs/robokit/term-position-limit/" data-id="term-position-limit" class="">Position Limit</a><a href="/docs/robokit/term-velocity-limit/" data-id="term-velocity-limit" class="">Velocity Limit Task</a><a href="/docs/robokit/term-configuration/" data-id="term-configuration" class="">Configuration Task</a><a href="/docs/robokit/term-smoothness/" data-id="term-smoothness" class="">Smoothness Task</a><a href="/docs/robokit/term-self-collision/" data-id="term-self-collision" class="">Self Collision Task</a><a href="/docs/robokit/term-scene-collision/" data-id="term-scene-collision" class="">Scene Collision Task</a><a href="/docs/robokit/term-scene-distance/" data-id="term-scene-distance" class="">Scene Distance Task</a><a href="/docs/robokit/term-interaction-mesh/" data-id="term-interaction-mesh" class="">Interaction Mesh Task</a><a href="/docs/robokit/term-mask-alignment/" data-id="term-mask-alignment" class="">Mask Alignment Task</a><a href="/docs/robokit/term-manipulability/" data-id="term-manipulability" class="">Manipulability Task</a><a href="/docs/robokit/term-force-closure/" data-id="term-force-closure" class="">Force Closure Task</a></div>
+      <div class="side__sub" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/robokit/api-robot/" data-id="api-robot" class="">Robot</a><a href="/docs/robokit/api-geometry/" data-id="api-geometry" class="">Geometry</a><a href="/docs/robokit/api-optimization/" data-id="api-optimization" class="">Optimization</a><a href="/docs/robokit/api-terms/" data-id="api-terms" class="">Terms</a><a href="/docs/robokit/api-ik/" data-id="api-ik" class="">Inverse Kinematics</a><a href="/docs/robokit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/robokit/api-sim-mpc/" data-id="api-sim-mpc" class="">Sim MPC</a><a href="/docs/robokit/api-humanoid-retargeting/" data-id="api-humanoid-retargeting" class="">Humanoid Retargeting</a><a href="/docs/robokit/api-hand-retargeting/" data-id="api-hand-retargeting" class="is-active">Hand Retargeting</a><a href="/docs/robokit/api-hand_eye_calibration/" data-id="api-hand_eye_calibration" class="">Hand-Eye Calibration</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/robokit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">robokit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>Reference</span><span class="slash">/</span><span>API</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Hand Retargeting</h1>
+        <div class="doc-body" id="doc-body"><div class="api"><section class="api-sym">
+    <div class="api-card" id="handretargeteronline">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/online.py#L32">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">robokit.helpers.hand_retargeting.</span><span class="api-card__name">HandRetargeterOnline</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">config</span><span class="pp">: </span><span class="pt">HandRetargeterOnlineConfig</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">robot</span><span class="pp">: </span><span class="pt">Robot</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">spec</span><span class="pp">: </span><span class="pt">HandSpec</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">Optional[wp_device_type]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Retarget point streams; <code>reference_origin="wrist"</code> centers floating hands internally, but I/O stays world-frame.</p><p>Temporal cost:</p><ul><li>First frame after warmup/reset: none.</li><li>Later frames: smooth against the previous solution, independently of the initial guess.</li></ul><h3>Example</h3><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; from robokit.robo.robot_spec import RobotSpec
+&gt;&gt;&gt; from robokit.utils.ee_coord_utils import MANOPTH_HAND_COORD_SPEC as coords
+&gt;&gt;&gt; from robokit.opt.population_solver import PopulationSolverConfig, Stage
+&gt;&gt;&gt; from robokit.opt.lm_optimizer import LMOptimizerConfig
+&gt;&gt;&gt; from robokit.utils.warp_utils import wp_vec7
+&gt;&gt;&gt; urdf = '''&lt;robot name="finger"&gt;&lt;link name="palm"/&gt;&lt;link name="tip"/&gt;
+... &lt;joint name="finger" type="revolute"&gt;&lt;parent link="palm"/&gt;&lt;child link="tip"/&gt;
+... &lt;origin xyz="0 0.03 0"/&gt;&lt;axis xyz="0 0 1"/&gt;
+... &lt;limit lower="0" upper="1" effort="1" velocity="1"/&gt;&lt;/joint&gt;&lt;/robot&gt;'''
+&gt;&gt;&gt; robot = Robot(RobotSpec.parse(urdf, load_meshes=False, mesh_dir=None))
+&gt;&gt;&gt; spec = HandSpec(True, ("tip", "wrist"), {"tip": "tip", "wrist": "palm"},
+...                 (("tip",),), "wrist", ("tip",), coords)
+&gt;&gt;&gt; config = HandRetargeterOnlineConfig(reference_origin="wrist",
+...     solver=PopulationSolverConfig(stages=[Stage(2, optimizer=LMOptimizerConfig())],
+...         cuda_graph_mode="none"))
+&gt;&gt;&gt; config.task("positions").weight = {"tip": 24.0, "wrist": 0.1}
+&gt;&gt;&gt; solver = HandRetargeterOnline(config, robot, spec, device="cpu")
+&gt;&gt;&gt; solver.warmup(1)
+&gt;&gt;&gt; points = np.array([[[1, 2.03, 3], [1, 2, 3]]], dtype=np.float32)
+&gt;&gt;&gt; packed = solver.solve_numpy(points)
+&gt;&gt;&gt; packed.shape
+(1, 8)
+&gt;&gt;&gt; output = wp.empty((1, 8), dtype=wp.float32, device="cpu")
+&gt;&gt;&gt; solver.solve(wp.from_numpy(points, dtype=wp.float32, device="cpu"), out=output) is output
+True
+&gt;&gt;&gt; state = robot.state(q=wp.from_numpy(packed[:, 7:].copy(), dtype=wp.float32, device="cpu"),
+...     T_world_base=wp.from_numpy(packed[:, :7].copy(), dtype=wp_vec7, device="cpu"))
+&gt;&gt;&gt; all(np.isfinite(cost.numpy()).all() for cost in solver.compute_costs(state).values())
+True
+&gt;&gt;&gt; solver.reset()</pre><pre data-code-full hidden>import numpy as np
+import warp as wp
+from robokit.helpers.hand_retargeting.online import HandRetargeterOnline
+from robokit.helpers.hand_retargeting.config import HandRetargeterOnlineConfig, HandSpec
+from robokit.robo import Robot
+
+from robokit.robo.robot_spec import RobotSpec
+from robokit.utils.ee_coord_utils import MANOPTH_HAND_COORD_SPEC as coords
+from robokit.opt.population_solver import PopulationSolverConfig, Stage
+from robokit.opt.lm_optimizer import LMOptimizerConfig
+from robokit.utils.warp_utils import wp_vec7
+urdf = '''&lt;robot name="finger"&gt;&lt;link name="palm"/&gt;&lt;link name="tip"/&gt;
+&lt;joint name="finger" type="revolute"&gt;&lt;parent link="palm"/&gt;&lt;child link="tip"/&gt;
+&lt;origin xyz="0 0.03 0"/&gt;&lt;axis xyz="0 0 1"/&gt;
+&lt;limit lower="0" upper="1" effort="1" velocity="1"/&gt;&lt;/joint&gt;&lt;/robot&gt;'''
+robot = Robot(RobotSpec.parse(urdf, load_meshes=False, mesh_dir=None))
+spec = HandSpec(True, ("tip", "wrist"), {"tip": "tip", "wrist": "palm"},
+                (("tip",),), "wrist", ("tip",), coords)
+config = HandRetargeterOnlineConfig(reference_origin="wrist",
+    solver=PopulationSolverConfig(stages=[Stage(2, optimizer=LMOptimizerConfig())],
+        cuda_graph_mode="none"))
+config.task("positions").weight = {"tip": 24.0, "wrist": 0.1}
+solver = HandRetargeterOnline(config, robot, spec, device="cpu")
+solver.warmup(1)
+points = np.array([[[1, 2.03, 3], [1, 2, 3]]], dtype=np.float32)
+packed = solver.solve_numpy(points)
+packed.shape
+output = wp.empty((1, 8), dtype=wp.float32, device="cpu")
+solver.solve(wp.from_numpy(points, dtype=wp.float32, device="cpu"), out=output) is output
+state = robot.state(q=wp.from_numpy(packed[:, 7:].copy(), dtype=wp.float32, device="cpu"),
+    T_world_base=wp.from_numpy(packed[:, :7].copy(), dtype=wp_vec7, device="cpu"))
+all(np.isfinite(cost.numpy()).all() for cost in solver.compute_costs(state).values())
+solver.reset()</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">config</span><span class="api-type">HandRetargeterOnlineConfig</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Online solver, objective, filtering, and sampling settings.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">robot</span><span class="api-type">Robot</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Loaded robot model; self-collision skip pairs come from its spec (<code>Robot.load(self_collision_ignore_path=...)</code>).</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">spec</span><span class="api-type">HandSpec</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Ordered semantic point topology.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">Optional[wp_device_type]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Warp device. The first CUDA device is used when available.</p></div>
+    </div><div class="api-label" id="handretargeteronline-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="handretargeteronline-warmup">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/online.py#L126">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOnline.</span><span class="api-card__name">warmup</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">batch_size</span><span class="pp">: </span><span class="pt">int</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">None</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Build all batch-shaped terms, buffers, and solver state.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">batch_size</span><span class="api-type">int</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Number of independent streams advanced by each solve.</p></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">None</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeteronline-solve">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/online.py#L265">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOnline.</span><span class="api-card__name">solve</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">target_points</span><span class="pp">: </span><span class="pt">wp.array</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">init_state</span><span class="pp">: </span><span class="pt">Optional[RobotState]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">wp.array</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Retarget one batched frame.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">target_points</span><span class="api-type">wp.array</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Point targets with shape <code>(batch, targets, 3)</code> in <code>spec.target_names</code> order.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">init_state</span><span class="api-type">Optional[RobotState]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional state overriding the streaming warm start.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional packed output buffer with shape <code>(batch, 7 + dofs)</code>.</p></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">wp.array</span></div><div class="api-row__doc"><p>Packed base transform and joint positions; a helper-owned buffer is reused when <code>out</code> is omitted.</p></div></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeteronline-solve_numpy">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/online.py#L380">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOnline.</span><span class="api-card__name">solve_numpy</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">target_points</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">init_state</span><span class="pp">: </span><span class="pt">Optional[RobotState]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">np.ndarray</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>NumPy wrapper for <code>solve()</code>.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">target_points</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">init_state</span><span class="api-type">Optional[RobotState]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">np.ndarray</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeteronline-reset">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/online.py#L392">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOnline.</span><span class="api-card__name">reset</span><span class="pp">()</span><span class="pp"> -> </span><span class="pt">None</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Clear all streaming history and disable smoothness until a previous frame exists.</p></div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">None</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeteronline-compute_costs">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/online.py#L415">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOnline.</span><span class="api-card__name">compute_costs</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">state</span><span class="pp">: </span><span class="pt">RobotState</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">Dict[str, wp.array]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Evaluate the current targets for a caller-provided robot state.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">state</span><span class="api-type">RobotState</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Robot state matching the warmed batch and device.</p></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Dict[str, wp.array]</span></div><div class="api-row__doc"><p>Per-term costs keyed by task cost name.</p></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="handretargeteronlineconfig">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/config.py#L255">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">robokit.helpers.hand_retargeting.</span><span class="api-card__name">HandRetargeterOnlineConfig</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">terms</span><span class="pp">: </span><span class="pt">List[ResidualTask]</span><span class="pp"> = </span><span class="pd">_default_online_terms()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">pinch_correspondences</span><span class="pp">: </span><span class="pt">Tuple[_Correspondence, ...]</span><span class="pp"> = </span><span class="pd">()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">target_scale</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">1.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">target_ema_alpha</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">1.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">output_ema_alpha</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">1.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">sampler</span><span class="pp">: </span><span class="pt">RobertsSamplerConfig</span><span class="pp"> = </span><span class="pd">(lambda: RobertsSamplerConfig(keep_first=True))()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">base_init_sample_range</span><span class="pp">: </span><span class="pt">Tuple[float, float, float]</span><span class="pp"> = </span><span class="pd">(0.1, 0.1, 0.0)</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">solver</span><span class="pp">: </span><span class="pt">PopulationSolverConfig</span><span class="pp"> = </span><span class="pd">_online_solver()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">pinch_threshold</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.03</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">pinch_release_threshold</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.05</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">reference_origin</span><span class="pp">: </span><span class="pt">Literal['world', 'wrist']</span><span class="pp"> = </span><span class="pd">'world'</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Frame-level hand-retargeting configuration.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">terms</span><span class="api-type">List[ResidualTask]</span><span class="api-def">= _default_online_terms()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">pinch_correspondences</span><span class="api-type">Tuple[_Correspondence, ...]</span><span class="api-def">= ()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">target_scale</span><span class="api-type">float</span><span class="api-def">= 1.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">target_ema_alpha</span><span class="api-type">float</span><span class="api-def">= 1.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">output_ema_alpha</span><span class="api-type">float</span><span class="api-def">= 1.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">sampler</span><span class="api-type">RobertsSamplerConfig</span><span class="api-def">= (lambda: RobertsSamplerConfig(keep_first=True))()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">base_init_sample_range</span><span class="api-type">Tuple[float, float, float]</span><span class="api-def">= (0.1, 0.1, 0.0)</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">solver</span><span class="api-type">PopulationSolverConfig</span><span class="api-def">= _online_solver()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">pinch_threshold</span><span class="api-type">float</span><span class="api-def">= 0.03</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">pinch_release_threshold</span><span class="api-type">float</span><span class="api-def">= 0.05</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">reference_origin</span><span class="api-type">Literal['world', 'wrist']</span><span class="api-def">= 'world'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="handretargeteronlineconfig-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="handretargeteronlineconfig-terms">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/config.py#L259">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOnlineConfig.</span><span class="api-card__name">terms</span><span class="pp">: </span><span class="pt">List[ResidualTask] = field(default_factory=_default_online_terms)</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Task templates built at warmup; <code>HandContext</code> lists their inputs.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeteronlineconfig-pinch_correspondences">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/config.py#L261">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOnlineConfig.</span><span class="api-card__name">pinch_correspondences</span><span class="pp">: </span><span class="pt">Tuple[_Correspondence, ...] = ()</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Vector rows whose target shrinks to near zero while their two targets pinch.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeteronlineconfig-target_scale">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/config.py#L263">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOnlineConfig.</span><span class="api-card__name">target_scale</span><span class="pp">: </span><span class="pt">float = 1.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Scale from human to robot hand size applied to vector targets; pinched rows keep their own length.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeteronlineconfig-target_ema_alpha">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/config.py#L265">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOnlineConfig.</span><span class="api-card__name">target_ema_alpha</span><span class="pp">: </span><span class="pt">float = 1.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>EMA weight of the newest vector and direction targets, in (0, 1]; 1 disables smoothing.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeteronlineconfig-output_ema_alpha">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/config.py#L267">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOnlineConfig.</span><span class="api-card__name">output_ema_alpha</span><span class="pp">: </span><span class="pt">float = 1.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>EMA weight of the newest output joints, in (0, 1]; 1 disables smoothing.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeteronlineconfig-sampler">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/config.py#L269">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOnlineConfig.</span><span class="api-card__name">sampler</span><span class="pp">: </span><span class="pt">RobertsSamplerConfig = field(default_factory=lambda: RobertsSamplerConfig(keep_first=True))</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Joint noise around the previous solution; <code>scale</code> is a fraction of each joint's range.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeteronlineconfig-base_init_sample_range">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/config.py#L271">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOnlineConfig.</span><span class="api-card__name">base_init_sample_range</span><span class="pp">: </span><span class="pt">Tuple[float, float, float] = (0.1, 0.1, 0.0)</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Per-axis base translation noise (m) around the previous solution of a floating hand.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeteronlineconfig-solver">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/config.py#L273">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOnlineConfig.</span><span class="api-card__name">solver</span><span class="pp">: </span><span class="pt">PopulationSolverConfig = field(default_factory=_online_solver)</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Candidate schedule and LM settings of each frame's solve.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeteronlineconfig-pinch_threshold">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/config.py#L275">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOnlineConfig.</span><span class="api-card__name">pinch_threshold</span><span class="pp">: </span><span class="pt">float = 0.03</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Target distance (m) below which a pinch pair latches.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeteronlineconfig-pinch_release_threshold">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/config.py#L277">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOnlineConfig.</span><span class="api-card__name">pinch_release_threshold</span><span class="pp">: </span><span class="pt">float = 0.05</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Target distance (m) above which a latched pinch pair releases.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeteronlineconfig-reference_origin">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/config.py#L279">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOnlineConfig.</span><span class="api-card__name">reference_origin</span><span class="pp">: </span><span class="pt">Literal['world', 'wrist'] = 'world'</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Solve floating hands relative to the target wrist position ("wrist") or in world; I/O frames are unchanged.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeteronlineconfig-add">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/config.py#L282">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOnlineConfig.</span><span class="api-card__name">add</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">term</span><span class="pp">: </span><span class="pt">ResidualTask</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">name</span><span class="pp">: </span><span class="pt">Optional[str]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">HandRetargeterOnlineConfig</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Append a task, optionally assigning its input role.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; from robokit.terms.dense.configuration_task import ConfigurationTask
+&gt;&gt;&gt; config = HandRetargeterOnlineConfig(terms=[]).add(ConfigurationTask(weight=0.1), name="rest")
+&gt;&gt;&gt; config.task("rest").weight
+0.1</pre><pre data-code-full hidden>from robokit.helpers.hand_retargeting.config import HandRetargeterOnlineConfig
+
+from robokit.terms.dense.configuration_task import ConfigurationTask
+config = HandRetargeterOnlineConfig(terms=[]).add(ConfigurationTask(weight=0.1), name="rest")
+config.task("rest").weight</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">term</span><span class="api-type">ResidualTask</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">name</span><span class="api-type">Optional[str]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">HandRetargeterOnlineConfig</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeteronlineconfig-task">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/config.py#L297">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOnlineConfig.</span><span class="api-card__name">task</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">name</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">ResidualTask</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Return a named task; raise KeyError when absent.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; from robokit.terms.dense.configuration_task import ConfigurationTask
+&gt;&gt;&gt; config = HandRetargeterOnlineConfig(terms=[]).add(ConfigurationTask(weight=0.2), name="rest")
+&gt;&gt;&gt; config.task("rest").weight
+0.2</pre><pre data-code-full hidden>from robokit.helpers.hand_retargeting.config import HandRetargeterOnlineConfig
+
+from robokit.terms.dense.configuration_task import ConfigurationTask
+config = HandRetargeterOnlineConfig(terms=[]).add(ConfigurationTask(weight=0.2), name="rest")
+config.task("rest").weight</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">name</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">ResidualTask</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="handretargeteroffline">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/offline.py#L31">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">robokit.helpers.hand_retargeting.</span><span class="api-card__name">HandRetargeterOffline</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">config</span><span class="pp">: </span><span class="pt">HandRetargeterOfflineConfig</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">robot</span><span class="pp">: </span><span class="pt">Robot</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">spec</span><span class="pp">: </span><span class="pt">HandSpec</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene</span><span class="pp">: </span><span class="pt">Optional[WarpScene]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">device</span><span class="pp">: </span><span class="pt">Optional[wp_device_type]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_indices</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Retarget trajectory batches in <code>HandSpec.target_names</code> order by solving <code>config.terms</code> over <code>HandContext</code> inputs.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">config</span><span class="api-type">HandRetargeterOfflineConfig</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Trajectory, contact, and solver settings.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">robot</span><span class="api-type">Robot</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Loaded robot model.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">spec</span><span class="api-type">HandSpec</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Ordered semantic point topology.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene</span><span class="api-type">Optional[WarpScene]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional caller-owned collision scene.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device</span><span class="api-type">Optional[wp_device_type]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Warp device. The first CUDA device is used when available.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_indices</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional static <code>(batch,)</code> or per-frame <code>(batch, frames)</code> scene mapping.</p></div>
+    </div><div class="api-label" id="handretargeteroffline-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="handretargeteroffline-warmup">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/offline.py#L132">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOffline.</span><span class="api-card__name">warmup</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">batch_size</span><span class="pp">: </span><span class="pt">int</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">num_frames</span><span class="pp">: </span><span class="pt">int</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">None</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Build buffers and the config's tasks, and capture the solver for one trajectory shape.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">batch_size</span><span class="api-type">int</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Number of independent trajectories.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">num_frames</span><span class="api-type">int</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Frames in each fixed-shape trajectory.</p></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">None</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeteroffline-set_valid_lengths">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/offline.py#L231">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOffline.</span><span class="api-card__name">set_valid_lengths</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">lengths</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">None</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Mask padded frames and temporal edges in every task.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">lengths</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">None</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeteroffline-set_target_scales">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/offline.py#L243">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOffline.</span><span class="api-card__name">set_target_scales</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">scales</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">None</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Set one positive pairwise target scale per warmed trajectory without rebuilding the solver.</p><h4>Example</h4><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; from robokit.helpers.full_body_retargeting import FullBodyRetargeter
+&gt;&gt;&gt; from robokit.helpers.hand_retargeting.presets.inspire import offline, spec
+&gt;&gt;&gt; solver = HandRetargeterOffline(offline, FullBodyRetargeter().hand_robot("right"), spec)
+&gt;&gt;&gt; solver.warmup(2, 3)
+&gt;&gt;&gt; solver.set_target_scales(np.array([0.9, 1.2]))</pre><pre data-code-full hidden>import numpy as np
+from robokit.helpers.hand_retargeting.offline import HandRetargeterOffline
+
+from robokit.helpers.full_body_retargeting import FullBodyRetargeter
+from robokit.helpers.hand_retargeting.presets.inspire import offline, spec
+solver = HandRetargeterOffline(offline, FullBodyRetargeter().hand_robot("right"), spec)
+solver.warmup(2, 3)
+solver.set_target_scales(np.array([0.9, 1.2]))</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scales</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">None</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeteroffline-solve">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/offline.py#L261">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOffline.</span><span class="api-card__name">solve</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">target_points</span><span class="pp">: </span><span class="pt">wp.array</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">root_quat_wxyz</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">init_state</span><span class="pp">: </span><span class="pt">Optional[RobotState]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">wp.array</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Retarget one Warp trajectory batch.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">target_points</span><span class="api-type">wp.array</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Float points shaped (batch, frames, targets, 3) in spec.target_names order.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">root_quat_wxyz</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional root rotations shaped (batch, frames, 4).</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">init_state</span><span class="api-type">Optional[RobotState]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional joint and base warm start.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional packed output shaped (batch, frames, 7 + dofs).</p></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">wp.array</span></div><div class="api-row__doc"><p>Packed base transforms and joint positions.</p></div></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeteroffline-solve_numpy">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/offline.py#L285">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOffline.</span><span class="api-card__name">solve_numpy</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">target_points</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">root_quat_wxyz</span><span class="pp">: </span><span class="pt">Optional[np.ndarray]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">init_state</span><span class="pp">: </span><span class="pt">Optional[RobotState]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">np.ndarray</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>NumPy wrapper for <code>solve()</code>.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">target_points</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">root_quat_wxyz</span><span class="api-type">Optional[np.ndarray]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">init_state</span><span class="api-type">Optional[RobotState]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">np.ndarray</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeteroffline-solve_with_contact">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/offline.py#L316">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOffline.</span><span class="api-card__name">solve_with_contact</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">target_points</span><span class="pp">: </span><span class="pt">wp.array</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">contact_points</span><span class="pp">: </span><span class="pt">wp.array</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">contact_mask</span><span class="pp">: </span><span class="pt">wp.array</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">init_state</span><span class="pp">: </span><span class="pt">Optional[RobotState]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">local_contact_points</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">out</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">surface_contact_mask</span><span class="pp">: </span><span class="pt">Optional[wp.array]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">wp.array</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Retarget with world-frame contacts; an <code>init_state</code> anchors the solution and its motion to that trajectory.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">target_points</span><span class="api-type">wp.array</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Named points shaped (batch, frames, targets, 3).</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">contact_points</span><span class="api-type">wp.array</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>World contacts shaped (batch, frames, contacts, 3).</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">contact_mask</span><span class="api-type">wp.array</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"><p>Active contacts shaped (batch, frames, contacts).</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">init_state</span><span class="api-type">Optional[RobotState]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional state that anchors the solution around that trajectory.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">local_contact_points</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional contacts in each link frame.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">out</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional caller-owned packed output.</p></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">surface_contact_mask</span><span class="api-type">Optional[wp.array]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"><p>Optional mask for sphere-surface contacts; uses <code>contact_mask</code> when omitted.</p></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">wp.array</span></div><div class="api-row__doc"><p>Packed base transforms and joint positions.</p></div></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeteroffline-solve_with_contact_numpy">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/offline.py#L448">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOffline.</span><span class="api-card__name">solve_with_contact_numpy</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">target_points</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">contact_points</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">contact_mask</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">init_state</span><span class="pp">: </span><span class="pt">Optional[RobotState]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">local_contact_points</span><span class="pp">: </span><span class="pt">Optional[np.ndarray]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">surface_contact_mask</span><span class="pp">: </span><span class="pt">Optional[np.ndarray]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">np.ndarray</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>NumPy wrapper for <code>solve_with_contact()</code>.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">target_points</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">contact_points</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">contact_mask</span><span class="api-type">np.ndarray</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">init_state</span><span class="api-type">Optional[RobotState]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">local_contact_points</span><span class="api-type">Optional[np.ndarray]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">surface_contact_mask</span><span class="api-type">Optional[np.ndarray]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">np.ndarray</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="handretargeterofflineconfig">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/config.py#L311">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">robokit.helpers.hand_retargeting.</span><span class="api-card__name">HandRetargeterOfflineConfig</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">terms</span><span class="pp">: </span><span class="pt">List[ResidualTask]</span><span class="pp"> = </span><span class="pd">_default_offline_terms()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">target_scale</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">1.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">optimize_base</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">True</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">active_joint_names</span><span class="pp">: </span><span class="pt">Optional[Tuple[str, ...]]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">locked_prefix_frames</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">solver</span><span class="pp">: </span><span class="pt">LMOptimizerConfig</span><span class="pp"> = </span><span class="pd">_offline_solver()</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>One whole-trajectory problem; <code>contact_config</code> and <code>refine_config</code> derive the contact ones from tracking.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">terms</span><span class="api-type">List[ResidualTask]</span><span class="api-def">= _default_offline_terms()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">target_scale</span><span class="api-type">float</span><span class="api-def">= 1.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">optimize_base</span><span class="api-type">bool</span><span class="api-def">= True</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">active_joint_names</span><span class="api-type">Optional[Tuple[str, ...]]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">locked_prefix_frames</span><span class="api-type">int</span><span class="api-def">= 0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">solver</span><span class="api-type">LMOptimizerConfig</span><span class="api-def">= _offline_solver()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="handretargeterofflineconfig-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="handretargeterofflineconfig-terms">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/config.py#L315">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOfflineConfig.</span><span class="api-card__name">terms</span><span class="pp">: </span><span class="pt">List[ResidualTask] = field(default_factory=_default_offline_terms)</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Task templates of the tracking solve; <code>HandContext</code> lists their inputs.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeterofflineconfig-target_scale">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/config.py#L317">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOfflineConfig.</span><span class="api-card__name">target_scale</span><span class="pp">: </span><span class="pt">float = 1.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Scale from human to robot hand size of each trajectory's pairwise targets until <code>set_target_scales</code>.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeterofflineconfig-optimize_base">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/config.py#L319">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOfflineConfig.</span><span class="api-card__name">optimize_base</span><span class="pp">: </span><span class="pt">bool = True</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Optimize a floating hand's base trajectory; False keeps the initial one.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeterofflineconfig-active_joint_names">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/config.py#L321">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOfflineConfig.</span><span class="api-card__name">active_joint_names</span><span class="pp">: </span><span class="pt">Optional[Tuple[str, ...]] = None</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Joints the solve moves; None moves every joint.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeterofflineconfig-locked_prefix_frames">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/config.py#L323">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOfflineConfig.</span><span class="api-card__name">locked_prefix_frames</span><span class="pp">: </span><span class="pt">int = 0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Leading frames whose joints keep their initial values; base activity follows <code>optimize_base</code>.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeterofflineconfig-solver">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/config.py#L325">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOfflineConfig.</span><span class="api-card__name">solver</span><span class="pp">: </span><span class="pt">LMOptimizerConfig = field(default_factory=_offline_solver)</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>LM settings of the whole-trajectory solve.</p></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeterofflineconfig-add">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/config.py#L328">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOfflineConfig.</span><span class="api-card__name">add</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">term</span><span class="pp">: </span><span class="pt">ResidualTask</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">name</span><span class="pp">: </span><span class="pt">Optional[str]</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">HandRetargeterOfflineConfig</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Append a task, optionally assigning its input role.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; from robokit.terms.dense.configuration_task import ConfigurationTask
+&gt;&gt;&gt; config = HandRetargeterOfflineConfig(terms=[]).add(ConfigurationTask(weight=0.1), name="rest")
+&gt;&gt;&gt; config.task("rest").weight
+0.1</pre><pre data-code-full hidden>from robokit.helpers.hand_retargeting.config import HandRetargeterOfflineConfig
+
+from robokit.terms.dense.configuration_task import ConfigurationTask
+config = HandRetargeterOfflineConfig(terms=[]).add(ConfigurationTask(weight=0.1), name="rest")
+config.task("rest").weight</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">term</span><span class="api-type">ResidualTask</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">name</span><span class="api-type">Optional[str]</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">HandRetargeterOfflineConfig</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="handretargeterofflineconfig-task">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/robokit/blob/main/src/robokit/helpers/hand_retargeting/config.py#L343">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">HandRetargeterOfflineConfig.</span><span class="api-card__name">task</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">name</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">ResidualTask</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Return a named task; raise KeyError when absent.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; from robokit.terms.dense.configuration_task import ConfigurationTask
+&gt;&gt;&gt; config = HandRetargeterOfflineConfig(terms=[]).add(ConfigurationTask(weight=0.2), name="rest")
+&gt;&gt;&gt; config.task("rest").weight
+0.2</pre><pre data-code-full hidden>from robokit.helpers.hand_retargeting.config import HandRetargeterOfflineConfig
+
+from robokit.terms.dense.configuration_task import ConfigurationTask
+config = HandRetargeterOfflineConfig(terms=[]).add(ConfigurationTask(weight=0.2), name="rest")
+config.task("rest").weight</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">name</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">ResidualTask</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/robokit/api-humanoid-retargeting/"><span class="lbl">← Previous</span><span class="nm">Humanoid Retargeting</span></a><a class="next" href="/docs/robokit/api-hand_eye_calibration/"><span class="lbl">Next →</span><span class="nm">Hand-Eye Calibration</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#handretargeteronline">HandRetargeterOnline</a><a href="#handretargeteronlineconfig">HandRetargeterOnlineConfig</a><a href="#handretargeteroffline">HandRetargeterOffline</a><a href="#handretargeterofflineconfig">HandRetargeterOfflineConfig</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "robokit", "id": "api-hand-retargeting", "toc": [{"text": "HandRetargeterOnline", "href": "#handretargeteronline", "members": [{"text": "warmup()", "href": "#handretargeteronline-warmup"}, {"text": "solve()", "href": "#handretargeteronline-solve"}, {"text": "solve_numpy()", "href": "#handretargeteronline-solve_numpy"}, {"text": "reset()", "href": "#handretargeteronline-reset"}, {"text": "compute_costs()", "href": "#handretargeteronline-compute_costs"}]}, {"text": "HandRetargeterOnlineConfig", "href": "#handretargeteronlineconfig", "members": [{"text": "terms", "href": "#handretargeteronlineconfig-terms"}, {"text": "pinch_correspondences", "href": "#handretargeteronlineconfig-pinch_correspondences"}, {"text": "target_scale", "href": "#handretargeteronlineconfig-target_scale"}, {"text": "target_ema_alpha", "href": "#handretargeteronlineconfig-target_ema_alpha"}, {"text": "output_ema_alpha", "href": "#handretargeteronlineconfig-output_ema_alpha"}, {"text": "sampler", "href": "#handretargeteronlineconfig-sampler"}, {"text": "base_init_sample_range", "href": "#handretargeteronlineconfig-base_init_sample_range"}, {"text": "solver", "href": "#handretargeteronlineconfig-solver"}, {"text": "pinch_threshold", "href": "#handretargeteronlineconfig-pinch_threshold"}, {"text": "pinch_release_threshold", "href": "#handretargeteronlineconfig-pinch_release_threshold"}, {"text": "reference_origin", "href": "#handretargeteronlineconfig-reference_origin"}, {"text": "add()", "href": "#handretargeteronlineconfig-add"}, {"text": "task()", "href": "#handretargeteronlineconfig-task"}]}, {"text": "HandRetargeterOffline", "href": "#handretargeteroffline", "members": [{"text": "warmup()", "href": "#handretargeteroffline-warmup"}, {"text": "set_valid_lengths()", "href": "#handretargeteroffline-set_valid_lengths"}, {"text": "set_target_scales()", "href": "#handretargeteroffline-set_target_scales"}, {"text": "solve()", "href": "#handretargeteroffline-solve"}, {"text": "solve_numpy()", "href": "#handretargeteroffline-solve_numpy"}, {"text": "solve_with_contact()", "href": "#handretargeteroffline-solve_with_contact"}, {"text": "solve_with_contact_numpy()", "href": "#handretargeteroffline-solve_with_contact_numpy"}]}, {"text": "HandRetargeterOfflineConfig", "href": "#handretargeterofflineconfig", "members": [{"text": "terms", "href": "#handretargeterofflineconfig-terms"}, {"text": "target_scale", "href": "#handretargeterofflineconfig-target_scale"}, {"text": "optimize_base", "href": "#handretargeterofflineconfig-optimize_base"}, {"text": "active_joint_names", "href": "#handretargeterofflineconfig-active_joint_names"}, {"text": "locked_prefix_frames", "href": "#handretargeterofflineconfig-locked_prefix_frames"}, {"text": "solver", "href": "#handretargeterofflineconfig-solver"}, {"text": "add()", "href": "#handretargeterofflineconfig-add"}, {"text": "task()", "href": "#handretargeterofflineconfig-task"}]}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

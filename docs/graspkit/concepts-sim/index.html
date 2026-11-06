@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Simulation · GraspKit docs · OpenRoboKit</title>
+  <meta name="description" content="Manipulation across robot embodiments, including grippers and dexterous hands." />
+  <link rel="canonical" href="https://openrobokit.com/docs/graspkit/concepts-sim/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">GraspKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="">
+        <span class="nm">RoboKit</span>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="is-active">
+        <span class="nm">GraspKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/graspkit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/graspkit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim/" data-id="grasp-optim" class="">Grasp Optimization</a></div><div class="side__list"><a href="/docs/graspkit/training/" data-id="training" class="">Policy Training</a></div><div class="side__list"><a href="/docs/graspkit/pipeline/" data-id="pipeline" class="">Pipeline</a></div><div class="side__list"><a href="/docs/graspkit/sim-deploy/" data-id="sim-deploy" class="">Sim Deployment</a></div><div class="side__list"><a href="/docs/graspkit/real-deploy/" data-id="real-deploy" class="">Real Deployment</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/concepts-overview/" data-id="concepts-overview" class="">Core Overview</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim-backends/" data-id="grasp-optim-backends" class="">Grasp Optimization Backends</a></div><div class="side__list"><a href="/docs/graspkit/concepts-sim/" data-id="concepts-sim" class="is-active">Simulation</a></div><div class="side__list"><a href="/docs/graspkit/concepts-policies/" data-id="concepts-policies" class="">Models and Policies</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/ref-robot-hands/" data-id="ref-robot-hands" class="">Robot and Hand Catalog</a></div><div class="side__list"><a href="/docs/graspkit/ref-config-system/" data-id="ref-config-system" class="">Config System</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Data">
+        <span>Data</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/ref-data-format/" data-id="ref-data-format" class="">Data Format Specification</a><a href="/docs/graspkit/ref-assets/" data-id="ref-assets" class="">graspkit assets</a><a href="/docs/graspkit/ref-scene-descriptions/" data-id="ref-scene-descriptions" class="">Dex1B Scene Descriptions</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/api-grasp-optim/" data-id="api-grasp-optim" class="">Grasp Optimization</a><a href="/docs/graspkit/api-scene/" data-id="api-scene" class="">Scene</a><a href="/docs/graspkit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/graspkit/api-policy/" data-id="api-policy" class="">Policy</a><a href="/docs/graspkit/api-training/" data-id="api-training" class="">Training</a><a href="/docs/graspkit/api-envs/" data-id="api-envs" class="">Environments</a><a href="/docs/graspkit/api-data/" data-id="api-data" class="">Data</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">graspkit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>Concepts</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Simulation</h1>
+        <div class="doc-body" id="doc-body"><p>GraspKit uses two physics backends behind one interface: ManiSkill (GPU, batched, full rollouts) and MuJoCo (CPU, grasp-pose scoring). A third path, the renderer, uses the ManiSkill scene without stepping physics at all.</p><h3 id="one-interface">One interface</h3><p><code>BaseEnv</code> fixes the contract: <code>reset</code>, <code>get_qpos</code>, <code>step_qpos</code>, <code>get_info</code>, <code>get_rgb</code>, <code>get_pointcloud</code>, <code>evaluate</code>, <code>close</code>, with <code>evaluate</code> returning per-grasp success and, when asked, <code>Rollout</code> records (<code>qpos</code>, <code>obj_pose</code>, <code>scene_id</code>, <code>success</code>, <code>grasp_index</code>).</p><p><code>build_env</code> picks the implementation: <code>MjEnv</code> when <code>EnvConfig.mj_env_config</code> is set, otherwise <code>MsEnv</code>; <code>RealEnv</code> is imported lazily so the sim path never needs the hardware extras. <code>MjEnv</code> implements only <code>evaluate</code> — it scores grasps offline and raises on the interactive methods. <code>RealEnv</code> is the mirror image: it drives hardware but has no ground truth, so <code>evaluate</code> raises.</p><h3 id="maniskill">ManiSkill</h3><p>The env is registered as <code>DexGrasp</code>. A scene description becomes actors grouped by mesh and scale, built in sorted order because PhysX contact outcomes depend on insertion order, with mass forced to <code>object_mass</code> and a merged <code>target</code> actor per scene. A table is added unless <code>floating_object</code> is set, which also disables gravity on the object. Success is "strictly grasped and lifted past <code>target_lift_dist</code>", or grasp-only for a floating object; grasping itself means at least two contact links pushing with more than half a newton.</p><p>Floating hands can be driven two ways:</p><ul><li><strong>Virtual joints</strong> — the agent's first six joints are PD-driven by the <code>floating_base</code> controller. This is the default for <code>*_floating_base</code> agent uids.</li><li><strong>Static base</strong> — when the ManiSkill agent is hand-only but the pipeline robot is floating, the six base DOFs are stripped from the qpos and applied as per-environment root poses instead. The base is pinned at the final grasp pose, which tests the grasp without an approach sweep or base PD shake.</li></ul><p>Joint order differs between ManiSkill's observation order (<code>robot.active_joints</code>) and its action order (<code>controller.joints</code>); <code>reindex_utils</code> converts in both directions, and picking the wrong one silently scrambles a bimanual robot.</p><p>Agent uids follow the robot config name, with <code>_floating_base</code> appended for floating hands. The env lists the 21 supported uids.</p><h3 id="mujoco">MuJoCo</h3><p><code>MjDexGraspEnv</code> builds a model with MjSpec: the hand's MJCF, a table box that collides with the object but never the hand, and the object as convex pieces added in a fixed order because MuJoCo sums geom inertia in that order. Gravity is disabled; a downward wrench stands in for it. Density is rescaled so the object weighs <code>obj_mass</code>.</p><p>Two protocols:</p><ul><li><strong><code>fc</code></strong> — force closure in free space: pregrasp, grasp, squeeze, then hold against six axis-aligned forces scaled by <code>fc_force_scale</code>; failure is translation past <code>trans_thre</code> or rotation past <code>angle_thre</code>.</li><li><strong><code>tabletop</code></strong> — grip, apply the wrench, lift 20 cm (mocap root for floating hands, damped least-squares arm IK for fixed-base rigs), then require slip below <code>lift_slip_thre</code>, rotation below <code>angle_thre</code>, and live contact after the lift.</li></ul><p>Both bail out immediately when the initial pose is already penetrating past <code>max_pene</code>. Beyond success, the evaluator reports hand-object and self penetration, contact count, contact distance and consistency. A <code>HandSpec</code> adapts a hand: its MJCF path, whether it is mocap-driven, finger prefixes, the bodies that count as contact and fingertips, and — for fixed-base rigs — which body to lift and which joints the IK may move.</p><p>MuJoCo is CPU-only and not thread-safe, so <code>MjEnv</code> runs a spawned pool of up to 48 workers, one evaluator each. Spawn, not fork: forking a CUDA-initialized parent deadlocks.</p><h3 id="the-renderer">The renderer</h3><p><code>mani_skill/renderer.py</code> (<code>build_renderer</code>) makes its own <code>DexGrasp</code> env with <code>num_envs</code> environments and a point-cloud observation mode, then never steps physics: it writes qpos and object poses, flushes the GPU kinematics, and reads observations. Batching is over (scene, view) pairs. Segmentation ids select what survives (<code>extract_segments</code> wins over <code>remove_segments</code>), and points are cropped either in the camera frame or in the world frame offset by each scene's table position. <code>MsEnv.get_pointcloud</code> replicates that crop exactly, so deployment clouds match the training distribution.</p><h3 id="choosing-a-backend">Choosing a backend</h3><table class="doc-table" style="--cols:3"><thead><tr><th></th><th>ManiSkill</th><th>MuJoCo</th></tr></thead><tbody><tr><td>Hardware</td><td>GPU, batched</td><td>CPU, process pool</td></tr><tr><td>Scores</td><td>Full approach → grasp → lift rollouts, with perturbation forces</td><td>A grasp pose: force closure or a lift</td></tr><tr><td>Gives</td><td>Success, observations, RGB and point clouds</td><td>Success plus penetration and contact metrics</td></tr><tr><td>Robots</td><td>The 21 agents with ManiSkill uids</td><td>Any hand with an MJCF <code>HandSpec</code></td></tr></tbody></table><p>Hands with no ManiSkill agent (menagerie Shadow, the <code>_mj</code> xArm+XHand and Vega+Sharpa rigs) can only be validated in MuJoCo, which is why several experiments use it as their in-loop grasp filter.</p></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/graspkit/grasp-optim-backends/"><span class="lbl">← Previous</span><span class="nm">Grasp Optimization Backends</span></a><a class="next" href="/docs/graspkit/concepts-policies/"><span class="lbl">Next →</span><span class="nm">Models and Policies</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#one-interface">One interface</a><a href="#maniskill">ManiSkill</a><a href="#mujoco">MuJoCo</a><a href="#the-renderer">The renderer</a><a href="#choosing-a-backend">Choosing a backend</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "graspkit", "id": "concepts-sim", "toc": [{"text": "One interface", "href": "#one-interface"}, {"text": "ManiSkill", "href": "#maniskill"}, {"text": "MuJoCo", "href": "#mujoco"}, {"text": "The renderer", "href": "#the-renderer"}, {"text": "Choosing a backend", "href": "#choosing-a-backend"}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

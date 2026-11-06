@@ -3,23 +3,105 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>RoboSkills · OpenRoboKit</title>
-  <link rel="canonical" href="https://openrobokit.com/roboskills/" />
+  <title>OpenRoboKit</title>
   <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Pixelify+Sans:wght@700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Pixelify+Sans:wght@700&display=swap" />
   <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
-  <link rel="stylesheet" href="/assets/css/project.css?v=20261030-title" />
-  <link rel="stylesheet" href="/assets/css/project-nav.css?v=20261014-dock3" />
+  <link rel="stylesheet" href="/assets/css/home.css?v=20261106-roboskills3" />
 </head>
 <body>
-  <main id="page"></main>
+<div class="page" data-nav-mount>
+  <img class="hero-media hero-media--teaser" src="/assets/images/landing/teaser.webp?v=7d060936be" alt="" />
+  <video class="hero-media hero-media--video hero-media--teaser" poster="/assets/images/landing/teaser.webp?v=7d060936be" autoplay muted loop playsinline data-fallback>
+    <source src="/assets/videos/landing/teaser.mp4?v=f7ffcb9ce9" type="video/mp4" />
+  </video>
+  <div class="kit-tabs" role="group" aria-label="Kit previews and project links">
+    <div data-kit="robokit" data-current="true">
+      <a class="name" href="/robokit/">Robo<span class="kit">Kit</span></a>
+      <button type="button" aria-pressed="true" aria-label="Preview RoboKit" title="Preview RoboKit">
+        <span class="bar" aria-hidden="true"><i></i></span>
+      </button>
+    </div>
+    <div data-kit="retargetingkit" data-current="false">
+      <a class="name" href="/retargetingkit/">Retargeting<span class="kit">Kit</span></a>
+      <button type="button" aria-pressed="false" aria-label="Preview RetargetingKit" title="Preview RetargetingKit">
+        <span class="bar" aria-hidden="true"><i></i></span>
+      </button>
+    </div>
+    <div data-kit="graspkit" data-current="false">
+      <a class="name" href="/graspkit/">Grasp<span class="kit">Kit</span></a>
+      <button type="button" aria-pressed="false" aria-label="Preview GraspKit" title="Preview GraspKit">
+        <span class="bar" aria-hidden="true"><i></i></span>
+      </button>
+    </div>
+    <div data-kit="roboskills" data-current="false">
+      <a class="name" href="/roboskills/">Robo<span class="kit">Skills</span></a>
+      <button type="button" aria-pressed="false" aria-label="Preview RoboSkills" title="Preview RoboSkills">
+        <span class="bar" aria-hidden="true"><i></i></span>
+      </button>
+    </div>
+  </div>
 
-  <script>window.RK_PROJECT = 'roboskills';</script>
-  <script src="/data/projects.js?v=20261030-slim"></script>
-  <script src="/data/showcase.js?v=20261030-slim"></script>
-  <script src="/assets/js/site.js?v=20261030-github"></script>
-  <script src="/assets/js/project.js?v=20261030-slim"></script>
-  <script src="/assets/js/project-nav.js?v=20261026-agent-mixed"></script>
+  <main>
+    <div class="pitch">
+      <span class="chip">Open source libraries</span>
+      <h1>OpenRobo<span class="kit">Kit</span> <img class="heart" width="18" height="16" src="/assets/brand/pixel-heart.svg" alt="&#10084;" /></h1>
+      <p class="sub">Performant robotics tooling</p>
+      <div class="ctas">
+        <a href="/robokit/" class="cta" data-kit-cta><span class="label">Explore RoboKit</span></a>
+        <button class="install copy--swap" type="button" data-copy="uv add robokit" title="Click to copy">
+          <span class="p">$</span><span class="t">uv add robokit</span><span class="o">&#10003; copied</span>
+        </button>
+      </div>
+      <div class="overview" role="group" aria-label="What you can build with OpenRoboKit">
+        <button type="button" class="demo" data-overview-kit="robokit" aria-pressed="true" aria-label="Preview RoboKit: Optimization Library">
+          <span class="demo-bar" aria-hidden="true"><i></i></span>
+          <span class="demo-media">
+            <img src="/assets/images/landing/robokit.webp?v=7d060936be" alt="" />
+            <video autoplay muted loop playsinline poster="/assets/images/landing/robokit.webp?v=7d060936be" data-fallback aria-hidden="true">
+              <source src="/assets/videos/landing/robokit.mp4?v=7d060936be" type="video/mp4" />
+            </video>
+          </span>
+          <span class="demo-caption"><span class="demo-kit">Robo<span class="kit">Kit</span></span><span class="demo-label"><span class="brief">Optimization</span><span class="full">Optimization Library</span></span></span>
+        </button>
+        <button type="button" class="demo" data-overview-kit="retargetingkit" aria-pressed="false" aria-label="Preview RetargetingKit: Motion Transferring">
+          <span class="demo-bar" aria-hidden="true"><i></i></span>
+          <span class="demo-media">
+            <img src="/assets/images/landing/retargetingkit.webp?v=7d060936be" alt="" />
+            <video autoplay muted loop playsinline poster="/assets/images/landing/retargetingkit.webp?v=7d060936be" data-fallback aria-hidden="true">
+              <source src="/assets/videos/landing/retargetingkit.mp4?v=7d060936be" type="video/mp4" />
+            </video>
+          </span>
+          <span class="demo-caption"><span class="demo-kit">Retargeting<span class="kit">Kit</span></span><span class="demo-label"><span class="brief">Motion transfer</span><span class="full">Motion Transferring</span></span></span>
+        </button>
+        <button type="button" class="demo" data-overview-kit="graspkit" aria-pressed="false" aria-label="Preview GraspKit: Manipulation Skills">
+          <span class="demo-bar" aria-hidden="true"><i></i></span>
+          <span class="demo-media">
+            <img src="/assets/images/landing/graspkit.webp?v=20261017-restored-blue" alt="" />
+            <video autoplay muted loop playsinline poster="/assets/images/landing/graspkit.webp?v=20261017-restored-blue" data-fallback aria-hidden="true">
+              <source src="/assets/videos/landing/graspkit.mp4?v=20261017-restored-blue" type="video/mp4" />
+            </video>
+          </span>
+          <span class="demo-caption"><span class="demo-kit">Grasp<span class="kit">Kit</span></span><span class="demo-label"><span class="brief">Manipulation</span><span class="full">Manipulation Skills</span></span></span>
+        </button>
+        <button type="button" class="demo" data-overview-kit="roboskills" aria-pressed="false" aria-label="Preview RoboSkills: Agentic Robotics">
+          <span class="demo-bar" aria-hidden="true"><i></i></span>
+          <span class="demo-media">
+            <img src="/assets/images/landing/roboskills.webp?v=f7ffcb9ce9" alt="" />
+            <video autoplay muted loop playsinline poster="/assets/images/landing/roboskills.webp?v=f7ffcb9ce9" data-fallback aria-hidden="true">
+              <source src="/assets/videos/landing/roboskills.mp4?v=f7ffcb9ce9" type="video/mp4" />
+            </video>
+          </span>
+          <span class="demo-caption"><span class="demo-kit">Robo<span class="kit">Skills</span></span><span class="demo-label"><span class="brief">Agent skills</span><span class="full">Agentic Robotics</span></span></span>
+        </button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="/data/projects.js?v=20261106-public"></script>
+<script src="/assets/js/site.js?v=20261106-roboskills"></script>
+<script src="/assets/js/home.js?v=20261106-roboskills"></script>
 </body>
 </html>

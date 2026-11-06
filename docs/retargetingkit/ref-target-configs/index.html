@@ -1,0 +1,734 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Target configs · RetargetingKit docs · OpenRoboKit</title>
+  <meta name="description" content="Real-time human-to-robot motion retargeting, built on robokit." />
+  <link rel="canonical" href="https://openrobokit.com/docs/retargetingkit/ref-target-configs/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">RetargetingKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="">
+        <span class="nm">RoboKit</span>
+      </a><a href="/docs/retargetingkit/" class="is-active">
+        <span class="nm">RetargetingKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a><a href="/docs/graspkit/" class="">
+        <span class="nm">GraspKit</span>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/retargetingkit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/retargetingkit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/retargetingkit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/retargetingkit/hand-optimization/" data-id="hand-optimization" class="">Hand Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/neural-hand/" data-id="neural-hand" class="">Neural Hand Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/arm-retargeting/" data-id="arm-retargeting" class="">Arm Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/humanoid-retargeting/" data-id="humanoid-retargeting" class="">Humanoid Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/full-body/" data-id="full-body" class="">Full-Body Retargeting</a></div><div class="side__list"><a href="/docs/retargetingkit/teleoperation/" data-id="teleoperation" class="">Teleoperation</a></div><div class="side__list"><a href="/docs/retargetingkit/ref-assets/" data-id="ref-assets" class="">Assets</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/retargetingkit/pipeline/" data-id="pipeline" class="">Pipeline</a></div><div class="side__list"><a href="/docs/retargetingkit/frames/" data-id="frames" class="">Canonical frames</a></div><div class="side__list"><a href="/docs/retargetingkit/protocols/" data-id="protocols" class="">Interfaces</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list">
+      <div class="side__sub is-folded" data-fold="Reference·Sources">
+        <span>Sources</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/retargetingkit/quest3/" data-id="quest3" class="">Quest 3</a><a href="/docs/retargetingkit/vision-pro/" data-id="vision-pro" class="">Apple Vision Pro</a><a href="/docs/retargetingkit/pico/" data-id="pico" class="">PICO</a><a href="/docs/retargetingkit/manus/" data-id="manus" class="">Manus</a><a href="/docs/retargetingkit/axis-studio/" data-id="axis-studio" class="">Axis Studio</a><a href="/docs/retargetingkit/realsense/" data-id="realsense" class="">RealSense</a><a href="/docs/retargetingkit/zed/" data-id="zed" class="">ZED</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Targets">
+        <span>Targets</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/retargetingkit/xarm/" data-id="xarm" class="">xArm6 and xArm7</a><a href="/docs/retargetingkit/xhand/" data-id="xhand" class="">XHand</a><a href="/docs/retargetingkit/sharpa-hand/" data-id="sharpa-hand" class="">Sharpa Wave</a><a href="/docs/retargetingkit/ability-hand/" data-id="ability-hand" class="">Ability Hand</a><a href="/docs/retargetingkit/inspire/" data-id="inspire" class="">Inspire Hand</a><a href="/docs/retargetingkit/g1/" data-id="g1" class="">G1 and SONIC</a><a href="/docs/retargetingkit/rby1/" data-id="rby1" class="">RBY1-A</a><a href="/docs/retargetingkit/dexmate/" data-id="dexmate" class="">Dexmate Vega-1</a></div>
+      <div class="side__sub" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/retargetingkit/ref-frames/" data-id="ref-frames" class="">Frames</a><a href="/docs/retargetingkit/ref-sources/" data-id="ref-sources" class="">Sources</a><a href="/docs/retargetingkit/ref-hand/" data-id="ref-hand" class="">Hand retargeters</a><a href="/docs/retargetingkit/ref-arm/" data-id="ref-arm" class="">Arm retargeter</a><a href="/docs/retargetingkit/ref-humanoid/" data-id="ref-humanoid" class="">Humanoid retargeter</a><a href="/docs/retargetingkit/ref-targets/" data-id="ref-targets" class="">Commands and targets</a><a href="/docs/retargetingkit/ref-target-configs/" data-id="ref-target-configs" class="is-active">Target configs</a><a href="/docs/retargetingkit/ref-teleop/" data-id="ref-teleop" class="">Teleop configs</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/retargetingkit/development/" data-id="development" class="">Development</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">retargetingkit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>Reference</span><span class="slash">/</span><span>API</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Target configs</h1>
+        <div class="doc-body" id="doc-body"><p>Each config builds one robot or viewer target. See the <a class="inline" href="/docs/retargetingkit/xarm/">Targets</a> pages for hardware setup.</p><div class="api"><section class="api-sym">
+    <div class="api-card" id="xarm6config">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/arms/xarm6.py#L26">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">retargetingkit.targets.arms.xarm6.</span><span class="api-card__name">XArm6Config</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">ip</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">mode</span><span class="pp">: </span><span class="pt">XArmMode</span><span class="pp"> = </span><span class="pd">XArmMode.VELOCITY</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">dt</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">1.0 / 250</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">ee_link</span><span class="pp">: </span><span class="pt">str</span><span class="pp"> = </span><span class="pd">XARM6_EE_LINK</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">kp</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pp"> = </span><span class="pd">(lambda: np.array([10.0, 10.0, 5.0, 5.0, 5.0, 5.0]))()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">kd</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pp"> = </span><span class="pd">(lambda: np.array([0.5, 0.5, 0.25, 0.25, 0.25, 0.25]))()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">max_velocity</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pp"> = </span><span class="pd">(lambda: np.array([0.8, 0.8, 0.8, 1.0, 1.0, 3.0]))()</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div><div class="api-sig__bases">Bases: <span>TargetConfig</span></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>xArm6 controller configuration.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">ip</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">mode</span><span class="api-type">XArmMode</span><span class="api-def">= XArmMode.VELOCITY</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">dt</span><span class="api-type">float</span><span class="api-def">= 1.0 / 250</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">ee_link</span><span class="api-type">str</span><span class="api-def">= XARM6_EE_LINK</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">kp</span><span class="api-type">np.ndarray</span><span class="api-def">= (lambda: np.array([10.0, 10.0, 5.0, 5.0, 5.0, 5.0]))()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">kd</span><span class="api-type">np.ndarray</span><span class="api-def">= (lambda: np.array([0.5, 0.5, 0.25, 0.25, 0.25, 0.25]))()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">max_velocity</span><span class="api-type">np.ndarray</span><span class="api-def">= (lambda: np.array([0.8, 0.8, 0.8, 1.0, 1.0, 3.0]))()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="xarm6config-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="xarm6config-ip">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/arms/xarm6.py#L30">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">XArm6Config.</span><span class="api-card__name">ip</span><span class="pp">: </span><span class="pt">str</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>IP address of the xArm controller.</p></div></div>
+    </div><div class="api-row api-row--plain" id="xarm6config-mode">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/arms/xarm6.py#L32">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">XArm6Config.</span><span class="api-card__name">mode</span><span class="pp">: </span><span class="pt">XArmMode = XArmMode.VELOCITY</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Control mode.</p></div></div>
+    </div><div class="api-row api-row--plain" id="xarm6config-dt">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/arms/xarm6.py#L34">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">XArm6Config.</span><span class="api-card__name">dt</span><span class="pp">: </span><span class="pt">float = 1.0 / 250</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Servo loop timestep in seconds.</p></div></div>
+    </div><div class="api-row api-row--plain" id="xarm6config-ee_link">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/arms/xarm6.py#L36">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">XArm6Config.</span><span class="api-card__name">ee_link</span><span class="pp">: </span><span class="pt">str = XARM6_EE_LINK</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>End effector link name for IK.</p></div></div>
+    </div><div class="api-row api-row--plain" id="xarm6config-kp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/arms/xarm6.py#L38">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">XArm6Config.</span><span class="api-card__name">kp</span><span class="pp">: </span><span class="pt">np.ndarray = field(default_factory=lambda: np.array([10.0, 10.0, 5.0, 5.0, 5.0, 5.0]))</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Proportional gains for velocity mode.</p></div></div>
+    </div><div class="api-row api-row--plain" id="xarm6config-kd">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/arms/xarm6.py#L40">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">XArm6Config.</span><span class="api-card__name">kd</span><span class="pp">: </span><span class="pt">np.ndarray = field(default_factory=lambda: np.array([0.5, 0.5, 0.25, 0.25, 0.25, 0.25]))</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Derivative gains for velocity mode.</p></div></div>
+    </div><div class="api-row api-row--plain" id="xarm6config-max_velocity">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/arms/xarm6.py#L42">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">XArm6Config.</span><span class="api-card__name">max_velocity</span><span class="pp">: </span><span class="pt">np.ndarray = field(default_factory=lambda: np.array([0.8, 0.8, 0.8, 1.0, 1.0, 3.0]))</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Maximum joint velocities (rad/s), used by both SERVO and VELOCITY modes.</p></div></div>
+    </div><div class="api-row api-row--plain" id="xarm6config-build">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/arms/xarm6.py#L45">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">XArm6Config.</span><span class="api-card__name">build</span><span class="pp">()</span><span class="pp"> -> </span><span class="pt">XArm6</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">XArm6</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="xarm7config">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/arms/xarm7.py#L38">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">retargetingkit.targets.arms.xarm7.</span><span class="api-card__name">XArm7Config</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">ip</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">mode</span><span class="pp">: </span><span class="pt">XArmMode</span><span class="pp"> = </span><span class="pd">XArmMode.VELOCITY</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">dt</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">1.0 / 250</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">ee_link</span><span class="pp">: </span><span class="pt">str</span><span class="pp"> = </span><span class="pd">XARM7_EE_LINK</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">kp</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pp"> = </span><span class="pd">(lambda: np.array([10.0, 10.0, 5.0, 5.0, 5.0, 5.0, 5.0]))()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">kd</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pp"> = </span><span class="pd">(lambda: np.array([0.5, 0.5, 0.25, 0.25, 0.25, 0.25, 0.25]))()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">max_velocity</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pp"> = </span><span class="pd">(lambda: np.array([0.8, 0.8, 0.8, 0.8, 1.0, 1.0, 3.0]))()</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div><div class="api-sig__bases">Bases: <span>TargetConfig</span></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>xArm7 controller configuration.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">ip</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">mode</span><span class="api-type">XArmMode</span><span class="api-def">= XArmMode.VELOCITY</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">dt</span><span class="api-type">float</span><span class="api-def">= 1.0 / 250</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">ee_link</span><span class="api-type">str</span><span class="api-def">= XARM7_EE_LINK</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">kp</span><span class="api-type">np.ndarray</span><span class="api-def">= (lambda: np.array([10.0, 10.0, 5.0, 5.0, 5.0, 5.0, 5.0]))()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">kd</span><span class="api-type">np.ndarray</span><span class="api-def">= (lambda: np.array([0.5, 0.5, 0.25, 0.25, 0.25, 0.25, 0.25]))()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">max_velocity</span><span class="api-type">np.ndarray</span><span class="api-def">= (lambda: np.array([0.8, 0.8, 0.8, 0.8, 1.0, 1.0, 3.0]))()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="xarm7config-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="xarm7config-ip">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/arms/xarm7.py#L42">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">XArm7Config.</span><span class="api-card__name">ip</span><span class="pp">: </span><span class="pt">str</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>IP address of the xArm controller.</p></div></div>
+    </div><div class="api-row api-row--plain" id="xarm7config-mode">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/arms/xarm7.py#L44">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">XArm7Config.</span><span class="api-card__name">mode</span><span class="pp">: </span><span class="pt">XArmMode = XArmMode.VELOCITY</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Control mode.</p></div></div>
+    </div><div class="api-row api-row--plain" id="xarm7config-dt">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/arms/xarm7.py#L46">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">XArm7Config.</span><span class="api-card__name">dt</span><span class="pp">: </span><span class="pt">float = 1.0 / 250</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Servo loop timestep in seconds.</p></div></div>
+    </div><div class="api-row api-row--plain" id="xarm7config-ee_link">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/arms/xarm7.py#L48">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">XArm7Config.</span><span class="api-card__name">ee_link</span><span class="pp">: </span><span class="pt">str = XARM7_EE_LINK</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>End effector link name for IK.</p></div></div>
+    </div><div class="api-row api-row--plain" id="xarm7config-kp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/arms/xarm7.py#L50">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">XArm7Config.</span><span class="api-card__name">kp</span><span class="pp">: </span><span class="pt">np.ndarray = field(default_factory=lambda: np.array([10.0, 10.0, 5.0, 5.0, 5.0, 5.0, 5.0]))</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Proportional gains for velocity mode.</p></div></div>
+    </div><div class="api-row api-row--plain" id="xarm7config-kd">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/arms/xarm7.py#L52">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">XArm7Config.</span><span class="api-card__name">kd</span><span class="pp">: </span><span class="pt">np.ndarray = field(default_factory=lambda: np.array([0.5, 0.5, 0.25, 0.25, 0.25, 0.25, 0.25]))</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Derivative gains for velocity mode.</p></div></div>
+    </div><div class="api-row api-row--plain" id="xarm7config-max_velocity">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/arms/xarm7.py#L54">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">XArm7Config.</span><span class="api-card__name">max_velocity</span><span class="pp">: </span><span class="pt">np.ndarray = field(default_factory=lambda: np.array([0.8, 0.8, 0.8, 0.8, 1.0, 1.0, 3.0]))</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Maximum joint velocities (rad/s), used by both SERVO and VELOCITY modes.</p></div></div>
+    </div><div class="api-row api-row--plain" id="xarm7config-build">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/arms/xarm7.py#L57">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">XArm7Config.</span><span class="api-card__name">build</span><span class="pp">()</span><span class="pp"> -> </span><span class="pt">XArm7</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">XArm7</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="xhandconfig">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/hands/xhand.py#L77">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">retargetingkit.targets.hands.xhand.</span><span class="api-card__name">XHandConfig</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">serial_port</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">protocol</span><span class="pp">: </span><span class="pt">str</span><span class="pp"> = </span><span class="pd">'RS485'</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">baud_rate</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">3000000</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">dt</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">1.0 / 83</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">kp</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">90.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">ki</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">kd</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">tor_max</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">80.0</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div><div class="api-sig__bases">Bases: <span>TargetConfig</span></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>XHand controller configuration.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">serial_port</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">protocol</span><span class="api-type">str</span><span class="api-def">= 'RS485'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">baud_rate</span><span class="api-type">int</span><span class="api-def">= 3000000</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">dt</span><span class="api-type">float</span><span class="api-def">= 1.0 / 83</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">kp</span><span class="api-type">float</span><span class="api-def">= 90.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">ki</span><span class="api-type">float</span><span class="api-def">= 0.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">kd</span><span class="api-type">float</span><span class="api-def">= 0.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">tor_max</span><span class="api-type">float</span><span class="api-def">= 80.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="xhandconfig-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="xhandconfig-serial_port">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/hands/xhand.py#L81">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">XHandConfig.</span><span class="api-card__name">serial_port</span><span class="pp">: </span><span class="pt">str</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Serial port for RS485 communication.</p></div></div>
+    </div><div class="api-row api-row--plain" id="xhandconfig-protocol">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/hands/xhand.py#L84">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">XHandConfig.</span><span class="api-card__name">protocol</span><span class="pp">: </span><span class="pt">str = 'RS485'</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Communication protocol ('RS485' or 'EtherCAT').</p></div></div>
+    </div><div class="api-row api-row--plain" id="xhandconfig-baud_rate">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/hands/xhand.py#L87">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">XHandConfig.</span><span class="api-card__name">baud_rate</span><span class="pp">: </span><span class="pt">int = 3000000</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Baud rate for RS485 serial.</p></div></div>
+    </div><div class="api-row api-row--plain" id="xhandconfig-dt">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/hands/xhand.py#L90">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">XHandConfig.</span><span class="api-card__name">dt</span><span class="pp">: </span><span class="pt">float = 1.0 / 83</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Servo loop timestep (matches 83 Hz firmware rate).</p></div></div>
+    </div><div class="api-row api-row--plain" id="xhandconfig-kp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/hands/xhand.py#L93">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">XHandConfig.</span><span class="api-card__name">kp</span><span class="pp">: </span><span class="pt">float = 90.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Default position-loop proportional gain.</p></div></div>
+    </div><div class="api-row api-row--plain" id="xhandconfig-ki">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/hands/xhand.py#L96">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">XHandConfig.</span><span class="api-card__name">ki</span><span class="pp">: </span><span class="pt">float = 0.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Default position-loop integral gain.</p></div></div>
+    </div><div class="api-row api-row--plain" id="xhandconfig-kd">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/hands/xhand.py#L99">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">XHandConfig.</span><span class="api-card__name">kd</span><span class="pp">: </span><span class="pt">float = 0.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Default position-loop derivative gain.</p></div></div>
+    </div><div class="api-row api-row--plain" id="xhandconfig-tor_max">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/hands/xhand.py#L102">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">XHandConfig.</span><span class="api-card__name">tor_max</span><span class="pp">: </span><span class="pt">float = 80.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Default maximum torque.</p></div></div>
+    </div><div class="api-row api-row--plain" id="xhandconfig-build">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/hands/xhand.py#L105">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">XHandConfig.</span><span class="api-card__name">build</span><span class="pp">()</span><span class="pp"> -> </span><span class="pt">XHand</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">XHand</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="sharpahandconfig">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/hands/sharpa_hand.py#L274">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">retargetingkit.targets.hands.sharpa_hand.</span><span class="api-card__name">SharpaHandConfig</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">speed_coeff</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.3</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">current_coeff</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">0.3</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">device_sn</span><span class="pp">: </span><span class="pt">str | None</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div><div class="api-sig__bases">Bases: <span>TargetConfig</span></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Sharpa Wave connection settings.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">speed_coeff</span><span class="api-type">float</span><span class="api-def">= 0.3</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">current_coeff</span><span class="api-type">float</span><span class="api-def">= 0.3</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">device_sn</span><span class="api-type">str | None</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="sharpahandconfig-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="sharpahandconfig-speed_coeff">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/hands/sharpa_hand.py#L278">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SharpaHandConfig.</span><span class="api-card__name">speed_coeff</span><span class="pp">: </span><span class="pt">float = 0.3</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Joint speed coefficient (0-1).</p></div></div>
+    </div><div class="api-row api-row--plain" id="sharpahandconfig-current_coeff">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/hands/sharpa_hand.py#L280">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SharpaHandConfig.</span><span class="api-card__name">current_coeff</span><span class="pp">: </span><span class="pt">float = 0.3</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Joint current coefficient (0-1).</p></div></div>
+    </div><div class="api-row api-row--plain" id="sharpahandconfig-device_sn">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/hands/sharpa_hand.py#L282">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SharpaHandConfig.</span><span class="api-card__name">device_sn</span><span class="pp">: </span><span class="pt">str | None = None</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Serial number; the first discovered hand is used when unset.</p></div></div>
+    </div><div class="api-row api-row--plain" id="sharpahandconfig-build">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/hands/sharpa_hand.py#L285">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SharpaHandConfig.</span><span class="api-card__name">build</span><span class="pp">()</span><span class="pp"> -> </span><span class="pt">SharpaHand</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">SharpaHand</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="abilityhandconfig">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/hands/ability_hand.py#L29">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">retargetingkit.targets.hands.ability_hand.</span><span class="api-card__name">AbilityHandConfig</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">port</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">dt</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">1.0 / 160</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">mode</span><span class="pp">: </span><span class="pt">ControlMode</span><span class="pp"> = </span><span class="pd">ControlMode.POS_RAMP</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">ramp_deg_per_s</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">60.0</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div><div class="api-sig__bases">Bases: <span>TargetConfig</span></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Ability Hand controller configuration.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">port</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">dt</span><span class="api-type">float</span><span class="api-def">= 1.0 / 160</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">mode</span><span class="api-type">ControlMode</span><span class="api-def">= ControlMode.POS_RAMP</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">ramp_deg_per_s</span><span class="api-type">float</span><span class="api-def">= 60.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="abilityhandconfig-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="abilityhandconfig-port">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/hands/ability_hand.py#L33">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">AbilityHandConfig.</span><span class="api-card__name">port</span><span class="pp">: </span><span class="pt">str</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Serial port path (e.g. /dev/serial/by-id/...).</p></div></div>
+    </div><div class="api-row api-row--plain" id="abilityhandconfig-dt">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/hands/ability_hand.py#L35">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">AbilityHandConfig.</span><span class="api-card__name">dt</span><span class="pp">: </span><span class="pt">float = 1.0 / 160</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Servo loop timestep in seconds.</p></div></div>
+    </div><div class="api-row api-row--plain" id="abilityhandconfig-mode">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/hands/ability_hand.py#L37">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">AbilityHandConfig.</span><span class="api-card__name">mode</span><span class="pp">: </span><span class="pt">ControlMode = ControlMode.POS_RAMP</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Control mode.</p></div></div>
+    </div><div class="api-row api-row--plain" id="abilityhandconfig-ramp_deg_per_s">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/hands/ability_hand.py#L39">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">AbilityHandConfig.</span><span class="api-card__name">ramp_deg_per_s</span><span class="pp">: </span><span class="pt">float = 60.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Position ramp rate to avoid firmware current-limiting stalls.</p></div></div>
+    </div><div class="api-row api-row--plain" id="abilityhandconfig-build">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/hands/ability_hand.py#L42">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">AbilityHandConfig.</span><span class="api-card__name">build</span><span class="pp">()</span><span class="pp"> -> </span><span class="pt">AbilityHand</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">AbilityHand</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="inspirehandconfig">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/hands/inspire.py#L61">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">retargetingkit.targets.hands.inspire.</span><span class="api-card__name">InspireHandConfig</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">serial_port</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">hand_id</span><span class="pp">: </span><span class="pt">int</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">baudrate</span><span class="pp">: </span><span class="pt">int</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div><div class="api-sig__bases">Bases: <span>TargetConfig</span></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Inspire Hand serial settings.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; InspireHandConfig("/dev/ttyUSB0", 1, 115200).serial_port
+'/dev/ttyUSB0'</pre><pre data-code-full hidden>from retargetingkit.targets.hands.inspire import InspireHandConfig
+
+InspireHandConfig("/dev/ttyUSB0", 1, 115200).serial_port</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">serial_port</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">hand_id</span><span class="api-type">int</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">baudrate</span><span class="api-type">int</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="inspirehandconfig-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="inspirehandconfig-serial_port">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/hands/inspire.py#L69">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">InspireHandConfig.</span><span class="api-card__name">serial_port</span><span class="pp">: </span><span class="pt">str</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="inspirehandconfig-hand_id">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/hands/inspire.py#L70">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">InspireHandConfig.</span><span class="api-card__name">hand_id</span><span class="pp">: </span><span class="pt">int</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="inspirehandconfig-baudrate">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/hands/inspire.py#L71">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">InspireHandConfig.</span><span class="api-card__name">baudrate</span><span class="pp">: </span><span class="pt">int</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="inspirehandconfig-build">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/hands/inspire.py#L73">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">InspireHandConfig.</span><span class="api-card__name">build</span><span class="pp">()</span><span class="pp"> -> </span><span class="pt">InspireHand</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Connect and return an Inspire Hand target.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; InspireHandConfig("/dev/ttyUSB0", 1, 115200).build()  # doctest: +SKIP</pre><pre data-code-full hidden>from retargetingkit.targets.hands.inspire import InspireHandConfig
+
+InspireHandConfig("/dev/ttyUSB0", 1, 115200).build()  # doctest: +SKIP</pre></div></div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">InspireHand</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="sonictargetconfig">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/humanoids/sonic.py#L317">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">retargetingkit.targets.humanoids.sonic.</span><span class="api-card__name">SonicTargetConfig</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">host</span><span class="pp">: </span><span class="pt">str</span><span class="pp"> = </span><span class="pd">'*'</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">port</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">5556</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">lookahead</span><span class="pp">: </span><span class="pt">int</span><span class="pp"> = </span><span class="pd">50</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div><div class="api-sig__bases">Bases: <span>TargetConfig</span></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>SONIC v1 publisher settings.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; SonicTargetConfig().port
+5556</pre><pre data-code-full hidden>from retargetingkit.targets.humanoids.sonic import SonicTargetConfig
+
+SonicTargetConfig().port</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">host</span><span class="api-type">str</span><span class="api-def">= '*'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">port</span><span class="api-type">int</span><span class="api-def">= 5556</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">lookahead</span><span class="api-type">int</span><span class="api-def">= 50</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="sonictargetconfig-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="sonictargetconfig-host">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/humanoids/sonic.py#L325">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SonicTargetConfig.</span><span class="api-card__name">host</span><span class="pp">: </span><span class="pt">str = '*'</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="sonictargetconfig-port">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/humanoids/sonic.py#L326">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SonicTargetConfig.</span><span class="api-card__name">port</span><span class="pp">: </span><span class="pt">int = 5556</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="sonictargetconfig-lookahead">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/humanoids/sonic.py#L327">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SonicTargetConfig.</span><span class="api-card__name">lookahead</span><span class="pp">: </span><span class="pt">int = 50</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="sonictargetconfig-build">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/humanoids/sonic.py#L329">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">SonicTargetConfig.</span><span class="api-card__name">build</span><span class="pp">()</span><span class="pp"> -> </span><span class="pt">SonicTarget</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Bind and return a SONIC target.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; SonicTargetConfig(port=15556).build()  # doctest: +SKIP</pre><pre data-code-full hidden>from retargetingkit.targets.humanoids.sonic import SonicTargetConfig
+
+SonicTargetConfig(port=15556).build()  # doctest: +SKIP</pre></div></div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">SonicTarget</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="rby1aconfig">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/humanoids/rby1.py#L36">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">retargetingkit.targets.humanoids.rby1.</span><span class="api-card__name">RBY1AConfig</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">ip</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">mode</span><span class="pp">: </span><span class="pt">RBY1AMode</span><span class="pp"> = </span><span class="pd">RBY1AMode.VELOCITY</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">dt</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">1.0 / 100</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">ee_link</span><span class="pp">: </span><span class="pt">str</span><span class="pp"> = </span><span class="pd">'link_right_arm_6'</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">cutoff_frequency</span><span class="pp">: </span><span class="pt">float</span><span class="pp"> = </span><span class="pd">5.0</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">kp</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pp"> = </span><span class="pd">(lambda: np.array([10.0, 10.0, 5.0, 5.0, 5.0, 5.0, 5.0]))()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">kd</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pp"> = </span><span class="pd">(lambda: np.array([0.5, 0.5, 0.25, 0.25, 0.25, 0.25, 0.25]))()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">max_velocity</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pp"> = </span><span class="pd">(lambda: np.array([0.8, 0.8, 0.8, 0.8, 1.0, 1.0, 3.0]))()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">home_qpos</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pp"> = </span><span class="pd">(lambda: np.array([0, 0, 0, -np.pi / 2, -np.pi / 2, 0, 0]))()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">head_max_velocity</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pp"> = </span><span class="pd">(lambda: np.array([1.0, 1.0]))()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">head_home_qpos</span><span class="pp">: </span><span class="pt">np.ndarray</span><span class="pp"> = </span><span class="pd">(lambda: np.zeros(NUM_HEAD_JOINTS))()</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div><div class="api-sig__bases">Bases: <span>TargetConfig</span></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>RBY1-A right-arm controller configuration.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">ip</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">mode</span><span class="api-type">RBY1AMode</span><span class="api-def">= RBY1AMode.VELOCITY</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">dt</span><span class="api-type">float</span><span class="api-def">= 1.0 / 100</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">ee_link</span><span class="api-type">str</span><span class="api-def">= 'link_right_arm_6'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">cutoff_frequency</span><span class="api-type">float</span><span class="api-def">= 5.0</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">kp</span><span class="api-type">np.ndarray</span><span class="api-def">= (lambda: np.array([10.0, 10.0, 5.0, 5.0, 5.0, 5.0, 5.0]))()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">kd</span><span class="api-type">np.ndarray</span><span class="api-def">= (lambda: np.array([0.5, 0.5, 0.25, 0.25, 0.25, 0.25, 0.25]))()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">max_velocity</span><span class="api-type">np.ndarray</span><span class="api-def">= (lambda: np.array([0.8, 0.8, 0.8, 0.8, 1.0, 1.0, 3.0]))()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">home_qpos</span><span class="api-type">np.ndarray</span><span class="api-def">= (lambda: np.array([0, 0, 0, -np.pi / 2, -np.pi / 2, 0, 0]))()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">head_max_velocity</span><span class="api-type">np.ndarray</span><span class="api-def">= (lambda: np.array([1.0, 1.0]))()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">head_home_qpos</span><span class="api-type">np.ndarray</span><span class="api-def">= (lambda: np.zeros(NUM_HEAD_JOINTS))()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="rby1aconfig-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="rby1aconfig-ip">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/humanoids/rby1.py#L40">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RBY1AConfig.</span><span class="api-card__name">ip</span><span class="pp">: </span><span class="pt">str</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>IP address with port (e.g. <code>192.168.30.1:50051</code>).</p></div></div>
+    </div><div class="api-row api-row--plain" id="rby1aconfig-mode">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/humanoids/rby1.py#L42">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RBY1AConfig.</span><span class="api-card__name">mode</span><span class="pp">: </span><span class="pt">RBY1AMode = RBY1AMode.VELOCITY</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Control mode.</p></div></div>
+    </div><div class="api-row api-row--plain" id="rby1aconfig-dt">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/humanoids/rby1.py#L44">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RBY1AConfig.</span><span class="api-card__name">dt</span><span class="pp">: </span><span class="pt">float = 1.0 / 100</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Servo loop timestep in seconds.</p></div></div>
+    </div><div class="api-row api-row--plain" id="rby1aconfig-ee_link">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/humanoids/rby1.py#L46">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RBY1AConfig.</span><span class="api-card__name">ee_link</span><span class="pp">: </span><span class="pt">str = 'link_right_arm_6'</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>End effector link name for IK.</p></div></div>
+    </div><div class="api-row api-row--plain" id="rby1aconfig-cutoff_frequency">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/humanoids/rby1.py#L48">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RBY1AConfig.</span><span class="api-card__name">cutoff_frequency</span><span class="pp">: </span><span class="pt">float = 5.0</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>SDK-side position command smoothing frequency (Hz).</p></div></div>
+    </div><div class="api-row api-row--plain" id="rby1aconfig-kp">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/humanoids/rby1.py#L50">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RBY1AConfig.</span><span class="api-card__name">kp</span><span class="pp">: </span><span class="pt">np.ndarray = field(default_factory=lambda: np.array([10.0, 10.0, 5.0, 5.0, 5.0, 5.0, 5.0]))</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Proportional gains for velocity mode.</p></div></div>
+    </div><div class="api-row api-row--plain" id="rby1aconfig-kd">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/humanoids/rby1.py#L52">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RBY1AConfig.</span><span class="api-card__name">kd</span><span class="pp">: </span><span class="pt">np.ndarray = field(default_factory=lambda: np.array([0.5, 0.5, 0.25, 0.25, 0.25, 0.25, 0.25]))</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Derivative gains for velocity mode.</p></div></div>
+    </div><div class="api-row api-row--plain" id="rby1aconfig-max_velocity">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/humanoids/rby1.py#L54">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RBY1AConfig.</span><span class="api-card__name">max_velocity</span><span class="pp">: </span><span class="pt">np.ndarray = field(default_factory=lambda: np.array([0.8, 0.8, 0.8, 0.8, 1.0, 1.0, 3.0]))</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Maximum joint velocities (rad/s), used by both SERVO and VELOCITY modes.</p></div></div>
+    </div><div class="api-row api-row--plain" id="rby1aconfig-home_qpos">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/humanoids/rby1.py#L56">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RBY1AConfig.</span><span class="api-card__name">home_qpos</span><span class="pp">: </span><span class="pt">np.ndarray = field(default_factory=lambda: np.array([0, 0, 0, -np.pi / 2, -np.pi / 2, 0, 0]))</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Target joint positions for the home configuration (rad).</p></div></div>
+    </div><div class="api-row api-row--plain" id="rby1aconfig-head_max_velocity">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/humanoids/rby1.py#L58">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RBY1AConfig.</span><span class="api-card__name">head_max_velocity</span><span class="pp">: </span><span class="pt">np.ndarray = field(default_factory=lambda: np.array([1.0, 1.0]))</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Maximum head joint velocities (rad/s).</p></div></div>
+    </div><div class="api-row api-row--plain" id="rby1aconfig-head_home_qpos">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/humanoids/rby1.py#L60">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RBY1AConfig.</span><span class="api-card__name">head_home_qpos</span><span class="pp">: </span><span class="pt">np.ndarray = field(default_factory=lambda: np.zeros(NUM_HEAD_JOINTS))</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Target head joint positions for the home configuration (rad).</p></div></div>
+    </div><div class="api-row api-row--plain" id="rby1aconfig-build">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/humanoids/rby1.py#L63">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">RBY1AConfig.</span><span class="api-card__name">build</span><span class="pp">()</span><span class="pp"> -> </span><span class="pt">RBY1A</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Connect to the robot and start its servo loop.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; RBY1AConfig("192.168.30.1:50051").build()  # doctest: +SKIP</pre><pre data-code-full hidden>from retargetingkit.targets.humanoids.rby1 import RBY1AConfig
+
+RBY1AConfig("192.168.30.1:50051").build()  # doctest: +SKIP</pre></div></div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">RBY1A</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="dexmateconfig">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/humanoids/dexmate.py#L21">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">retargetingkit.targets.humanoids.dexmate.</span><span class="api-card__name">DexmateConfig</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">auto_shutdown</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">True</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div><div class="api-sig__bases">Bases: <span>TargetConfig</span></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Dexmate Vega-1 whole-body controller configuration.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">auto_shutdown</span><span class="api-type">bool</span><span class="api-def">= True</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="dexmateconfig-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="dexmateconfig-auto_shutdown">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/humanoids/dexmate.py#L25">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">DexmateConfig.</span><span class="api-card__name">auto_shutdown</span><span class="pp">: </span><span class="pt">bool = True</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Register the SDK's atexit shutdown hook. Disable when the caller owns shutdown via <code>close</code>.</p></div></div>
+    </div><div class="api-row api-row--plain" id="dexmateconfig-build">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/humanoids/dexmate.py#L28">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">DexmateConfig.</span><span class="api-card__name">build</span><span class="pp">()</span><span class="pp"> -> </span><span class="pt">Dexmate</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Connect to the robot.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; DexmateConfig().build()  # doctest: +SKIP</pre><pre data-code-full hidden>from retargetingkit.targets.humanoids.dexmate import DexmateConfig
+
+DexmateConfig().build()  # doctest: +SKIP</pre></div></div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Dexmate</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="viserconfig">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/viser.py#L34">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">retargetingkit.targets.viser.</span><span class="api-card__name">ViserConfig</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">urdfs</span><span class="pp">: </span><span class="pt">tuple[Path, ...]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">keypoint_edges</span><span class="pp">: </span><span class="pt">tuple[tuple[int, int], ...]</span><span class="pp"> = </span><span class="pd">()</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div><div class="api-sig__bases">Bases: <span>TargetConfig</span></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>URDFs to display, in the order callers index them.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; ViserConfig((Path("robot.urdf"),)).urdfs[0].name
+'robot.urdf'</pre><pre data-code-full hidden>from pathlib import Path
+from retargetingkit.targets.viser import ViserConfig
+
+ViserConfig((Path("robot.urdf"),)).urdfs[0].name</pre></div></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">urdfs</span><span class="api-type">tuple[Path, ...]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">keypoint_edges</span><span class="api-type">tuple[tuple[int, int], ...]</span><span class="api-def">= ()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="viserconfig-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="viserconfig-urdfs">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/viser.py#L42">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ViserConfig.</span><span class="api-card__name">urdfs</span><span class="pp">: </span><span class="pt">tuple[Path, ...]</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="viserconfig-keypoint_edges">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/viser.py#L43">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ViserConfig.</span><span class="api-card__name">keypoint_edges</span><span class="pp">: </span><span class="pt">tuple[tuple[int, int], ...] = ()</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="viserconfig-build">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/retargetingkit/blob/main/src/retargetingkit/targets/viser.py#L45">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ViserConfig.</span><span class="api-card__name">build</span><span class="pp">()</span><span class="pp"> -> </span><span class="pt">Viser</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Start the Viser server.</p><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">python</span><span class="code-actions"><button type="button" class="code-toggle" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button><button type="button" class="copy copy--swap" data-copy-from="[data-code-full]" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>&gt;&gt;&gt; ViserConfig((Path("robot.urdf"),)).build()  # doctest: +SKIP</pre><pre data-code-full hidden>from pathlib import Path
+from retargetingkit.targets.viser import ViserConfig
+
+ViserConfig((Path("robot.urdf"),)).build()  # doctest: +SKIP</pre></div></div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">Viser</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/retargetingkit/ref-targets/"><span class="lbl">← Previous</span><span class="nm">Commands and targets</span></a><a class="next" href="/docs/retargetingkit/ref-teleop/"><span class="lbl">Next →</span><span class="nm">Teleop configs</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#xarm6config">XArm6Config</a><a href="#xarm7config">XArm7Config</a><a href="#xhandconfig">XHandConfig</a><a href="#sharpahandconfig">SharpaHandConfig</a><a href="#abilityhandconfig">AbilityHandConfig</a><a href="#inspirehandconfig">InspireHandConfig</a><a href="#sonictargetconfig">SonicTargetConfig</a><a href="#rby1aconfig">RBY1AConfig</a><a href="#dexmateconfig">DexmateConfig</a><a href="#viserconfig">ViserConfig</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "retargetingkit", "id": "ref-target-configs", "toc": [{"text": "XArm6Config", "href": "#xarm6config", "members": [{"text": "ip", "href": "#xarm6config-ip"}, {"text": "mode", "href": "#xarm6config-mode"}, {"text": "dt", "href": "#xarm6config-dt"}, {"text": "ee_link", "href": "#xarm6config-ee_link"}, {"text": "kp", "href": "#xarm6config-kp"}, {"text": "kd", "href": "#xarm6config-kd"}, {"text": "max_velocity", "href": "#xarm6config-max_velocity"}, {"text": "build()", "href": "#xarm6config-build"}]}, {"text": "XArm7Config", "href": "#xarm7config", "members": [{"text": "ip", "href": "#xarm7config-ip"}, {"text": "mode", "href": "#xarm7config-mode"}, {"text": "dt", "href": "#xarm7config-dt"}, {"text": "ee_link", "href": "#xarm7config-ee_link"}, {"text": "kp", "href": "#xarm7config-kp"}, {"text": "kd", "href": "#xarm7config-kd"}, {"text": "max_velocity", "href": "#xarm7config-max_velocity"}, {"text": "build()", "href": "#xarm7config-build"}]}, {"text": "XHandConfig", "href": "#xhandconfig", "members": [{"text": "serial_port", "href": "#xhandconfig-serial_port"}, {"text": "protocol", "href": "#xhandconfig-protocol"}, {"text": "baud_rate", "href": "#xhandconfig-baud_rate"}, {"text": "dt", "href": "#xhandconfig-dt"}, {"text": "kp", "href": "#xhandconfig-kp"}, {"text": "ki", "href": "#xhandconfig-ki"}, {"text": "kd", "href": "#xhandconfig-kd"}, {"text": "tor_max", "href": "#xhandconfig-tor_max"}, {"text": "build()", "href": "#xhandconfig-build"}]}, {"text": "SharpaHandConfig", "href": "#sharpahandconfig", "members": [{"text": "speed_coeff", "href": "#sharpahandconfig-speed_coeff"}, {"text": "current_coeff", "href": "#sharpahandconfig-current_coeff"}, {"text": "device_sn", "href": "#sharpahandconfig-device_sn"}, {"text": "build()", "href": "#sharpahandconfig-build"}]}, {"text": "AbilityHandConfig", "href": "#abilityhandconfig", "members": [{"text": "port", "href": "#abilityhandconfig-port"}, {"text": "dt", "href": "#abilityhandconfig-dt"}, {"text": "mode", "href": "#abilityhandconfig-mode"}, {"text": "ramp_deg_per_s", "href": "#abilityhandconfig-ramp_deg_per_s"}, {"text": "build()", "href": "#abilityhandconfig-build"}]}, {"text": "InspireHandConfig", "href": "#inspirehandconfig", "members": [{"text": "serial_port", "href": "#inspirehandconfig-serial_port"}, {"text": "hand_id", "href": "#inspirehandconfig-hand_id"}, {"text": "baudrate", "href": "#inspirehandconfig-baudrate"}, {"text": "build()", "href": "#inspirehandconfig-build"}]}, {"text": "SonicTargetConfig", "href": "#sonictargetconfig", "members": [{"text": "host", "href": "#sonictargetconfig-host"}, {"text": "port", "href": "#sonictargetconfig-port"}, {"text": "lookahead", "href": "#sonictargetconfig-lookahead"}, {"text": "build()", "href": "#sonictargetconfig-build"}]}, {"text": "RBY1AConfig", "href": "#rby1aconfig", "members": [{"text": "ip", "href": "#rby1aconfig-ip"}, {"text": "mode", "href": "#rby1aconfig-mode"}, {"text": "dt", "href": "#rby1aconfig-dt"}, {"text": "ee_link", "href": "#rby1aconfig-ee_link"}, {"text": "cutoff_frequency", "href": "#rby1aconfig-cutoff_frequency"}, {"text": "kp", "href": "#rby1aconfig-kp"}, {"text": "kd", "href": "#rby1aconfig-kd"}, {"text": "max_velocity", "href": "#rby1aconfig-max_velocity"}, {"text": "home_qpos", "href": "#rby1aconfig-home_qpos"}, {"text": "head_max_velocity", "href": "#rby1aconfig-head_max_velocity"}, {"text": "head_home_qpos", "href": "#rby1aconfig-head_home_qpos"}, {"text": "build()", "href": "#rby1aconfig-build"}]}, {"text": "DexmateConfig", "href": "#dexmateconfig", "members": [{"text": "auto_shutdown", "href": "#dexmateconfig-auto_shutdown"}, {"text": "build()", "href": "#dexmateconfig-build"}]}, {"text": "ViserConfig", "href": "#viserconfig", "members": [{"text": "urdfs", "href": "#viserconfig-urdfs"}, {"text": "keypoint_edges", "href": "#viserconfig-keypoint_edges"}, {"text": "build()", "href": "#viserconfig-build"}]}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

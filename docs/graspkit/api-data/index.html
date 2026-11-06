@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Data · GraspKit docs · OpenRoboKit</title>
+  <meta name="description" content="Manipulation across robot embodiments, including grippers and dexterous hands." />
+  <link rel="canonical" href="https://openrobokit.com/docs/graspkit/api-data/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">GraspKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="">
+        <span class="nm">RoboKit</span>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="is-active">
+        <span class="nm">GraspKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/graspkit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/graspkit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim/" data-id="grasp-optim" class="">Grasp Optimization</a></div><div class="side__list"><a href="/docs/graspkit/training/" data-id="training" class="">Policy Training</a></div><div class="side__list"><a href="/docs/graspkit/pipeline/" data-id="pipeline" class="">Pipeline</a></div><div class="side__list"><a href="/docs/graspkit/sim-deploy/" data-id="sim-deploy" class="">Sim Deployment</a></div><div class="side__list"><a href="/docs/graspkit/real-deploy/" data-id="real-deploy" class="">Real Deployment</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/concepts-overview/" data-id="concepts-overview" class="">Core Overview</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim-backends/" data-id="grasp-optim-backends" class="">Grasp Optimization Backends</a></div><div class="side__list"><a href="/docs/graspkit/concepts-sim/" data-id="concepts-sim" class="">Simulation</a></div><div class="side__list"><a href="/docs/graspkit/concepts-policies/" data-id="concepts-policies" class="">Models and Policies</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/ref-robot-hands/" data-id="ref-robot-hands" class="">Robot and Hand Catalog</a></div><div class="side__list"><a href="/docs/graspkit/ref-config-system/" data-id="ref-config-system" class="">Config System</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Data">
+        <span>Data</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/ref-data-format/" data-id="ref-data-format" class="">Data Format Specification</a><a href="/docs/graspkit/ref-assets/" data-id="ref-assets" class="">graspkit assets</a><a href="/docs/graspkit/ref-scene-descriptions/" data-id="ref-scene-descriptions" class="">Dex1B Scene Descriptions</a></div>
+      <div class="side__sub" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/api-grasp-optim/" data-id="api-grasp-optim" class="">Grasp Optimization</a><a href="/docs/graspkit/api-scene/" data-id="api-scene" class="">Scene</a><a href="/docs/graspkit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/graspkit/api-policy/" data-id="api-policy" class="">Policy</a><a href="/docs/graspkit/api-training/" data-id="api-training" class="">Training</a><a href="/docs/graspkit/api-envs/" data-id="api-envs" class="">Environments</a><a href="/docs/graspkit/api-data/" data-id="api-data" class="is-active">Data</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">graspkit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>Reference</span><span class="slash">/</span><span>API</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Data</h1>
+        <div class="doc-body" id="doc-body"><div class="api"><section class="api-sym">
+    <div class="api-card" id="graspkitdata">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/graspkit_data.py#L38">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">graspkit.datasets.graspkit_data.</span><span class="api-card__name">GraspKitData</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">scene_ids</span><span class="pp">: </span><span class="pt">list[str]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_descriptions</span><span class="pp">: </span><span class="pt">list[SceneDescription] | None</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">first_indices</span><span class="pp">: </span><span class="pt">Int[Tensor, Bp1] | None</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">pre_grasp_qpos</span><span class="pp">: </span><span class="pt">Float[Tensor, 'B K dof'] | Float[Tensor, 'N dof'] | None</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">grasp_qpos</span><span class="pp">: </span><span class="pt">Float[Tensor, 'B K dof'] | Float[Tensor, 'N dof'] | None</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">post_grasp_qpos</span><span class="pp">: </span><span class="pt">Float[Tensor, 'B K dof'] | Float[Tensor, 'N dof'] | None</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">full_traj_qpos</span><span class="pp">: </span><span class="pt">Float[Tensor, 'B K T dof'] | Float[Tensor, 'N T dof'] | None</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">pre_traj_penetration</span><span class="pp">: </span><span class="pt">Float[Tensor, 'B K'] | Float[Tensor, N] | None</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">pointcloud</span><span class="pp">: </span><span class="pt">Float[Tensor, 'B T Npts 3'] | None</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">pointcloud_rgb</span><span class="pp">: </span><span class="pt">Float[Tensor, 'B T Npts 3'] | None</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">pointcloud_segmentation</span><span class="pp">: </span><span class="pt">Int[Tensor, 'B T Npts 1'] | None</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">target_actor_segmentation_id</span><span class="pp">: </span><span class="pt">Int[Tensor, B] | None</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">camera_poses</span><span class="pp">: </span><span class="pt">Float[Tensor, 'B T 7'] | None</span><span class="pp"> = </span><span class="pd">None</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>Batched per-stage tensor payload; supports padded and packed layouts.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_ids</span><span class="api-type">list[str]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_descriptions</span><span class="api-type">list[SceneDescription] | None</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">first_indices</span><span class="api-type">Int[Tensor, Bp1] | None</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">pre_grasp_qpos</span><span class="api-type">Float[Tensor, 'B K dof'] | Float[Tensor, 'N dof'] | None</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">grasp_qpos</span><span class="api-type">Float[Tensor, 'B K dof'] | Float[Tensor, 'N dof'] | None</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">post_grasp_qpos</span><span class="api-type">Float[Tensor, 'B K dof'] | Float[Tensor, 'N dof'] | None</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">full_traj_qpos</span><span class="api-type">Float[Tensor, 'B K T dof'] | Float[Tensor, 'N T dof'] | None</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">pre_traj_penetration</span><span class="api-type">Float[Tensor, 'B K'] | Float[Tensor, N] | None</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">pointcloud</span><span class="api-type">Float[Tensor, 'B T Npts 3'] | None</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">pointcloud_rgb</span><span class="api-type">Float[Tensor, 'B T Npts 3'] | None</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">pointcloud_segmentation</span><span class="api-type">Int[Tensor, 'B T Npts 1'] | None</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">target_actor_segmentation_id</span><span class="api-type">Int[Tensor, B] | None</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">camera_poses</span><span class="api-type">Float[Tensor, 'B T 7'] | None</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="graspkitdata-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="graspkitdata-scene_ids">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/graspkit_data.py#L43">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspKitData.</span><span class="api-card__name">scene_ids</span><span class="pp">: </span><span class="pt">list[str]</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="graspkitdata-scene_descriptions">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/graspkit_data.py#L44">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspKitData.</span><span class="api-card__name">scene_descriptions</span><span class="pp">: </span><span class="pt">list[SceneDescription] | None = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="graspkitdata-first_indices">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/graspkit_data.py#L47">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspKitData.</span><span class="api-card__name">first_indices</span><span class="pp">: </span><span class="pt">Int[Tensor, Bp1] | None = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="graspkitdata-pre_grasp_qpos">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/graspkit_data.py#L50">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspKitData.</span><span class="api-card__name">pre_grasp_qpos</span><span class="pp">: </span><span class="pt">Float[Tensor, 'B K dof'] | Float[Tensor, 'N dof'] | None = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="graspkitdata-grasp_qpos">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/graspkit_data.py#L51">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspKitData.</span><span class="api-card__name">grasp_qpos</span><span class="pp">: </span><span class="pt">Float[Tensor, 'B K dof'] | Float[Tensor, 'N dof'] | None = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="graspkitdata-post_grasp_qpos">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/graspkit_data.py#L52">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspKitData.</span><span class="api-card__name">post_grasp_qpos</span><span class="pp">: </span><span class="pt">Float[Tensor, 'B K dof'] | Float[Tensor, 'N dof'] | None = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="graspkitdata-full_traj_qpos">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/graspkit_data.py#L53">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspKitData.</span><span class="api-card__name">full_traj_qpos</span><span class="pp">: </span><span class="pt">Float[Tensor, 'B K T dof'] | Float[Tensor, 'N T dof'] | None = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="graspkitdata-pre_traj_penetration">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/graspkit_data.py#L54">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspKitData.</span><span class="api-card__name">pre_traj_penetration</span><span class="pp">: </span><span class="pt">Float[Tensor, 'B K'] | Float[Tensor, N] | None = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="graspkitdata-pointcloud">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/graspkit_data.py#L57">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspKitData.</span><span class="api-card__name">pointcloud</span><span class="pp">: </span><span class="pt">Float[Tensor, 'B T Npts 3'] | None = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="graspkitdata-pointcloud_rgb">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/graspkit_data.py#L58">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspKitData.</span><span class="api-card__name">pointcloud_rgb</span><span class="pp">: </span><span class="pt">Float[Tensor, 'B T Npts 3'] | None = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="graspkitdata-pointcloud_segmentation">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/graspkit_data.py#L59">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspKitData.</span><span class="api-card__name">pointcloud_segmentation</span><span class="pp">: </span><span class="pt">Int[Tensor, 'B T Npts 1'] | None = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="graspkitdata-target_actor_segmentation_id">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/graspkit_data.py#L60">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspKitData.</span><span class="api-card__name">target_actor_segmentation_id</span><span class="pp">: </span><span class="pt">Int[Tensor, B] | None = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="graspkitdata-camera_poses">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/graspkit_data.py#L61">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspKitData.</span><span class="api-card__name">camera_poses</span><span class="pp">: </span><span class="pt">Float[Tensor, 'B T 7'] | None = None</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="graspkitdata-num_scenes">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/graspkit_data.py#L64">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspKitData.</span><span class="api-card__name">num_scenes</span><span class="pp">: </span><span class="pt">int</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="graspkitdata-is_packed">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/graspkit_data.py#L68">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspKitData.</span><span class="api-card__name">is_packed</span><span class="pp">: </span><span class="pt">bool</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="graspkitdata-is_padded">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/graspkit_data.py#L72">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspKitData.</span><span class="api-card__name">is_padded</span><span class="pp">: </span><span class="pt">bool</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="graspkitdata-num_grasps_per_scene">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">property</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/graspkit_data.py#L76">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspKitData.</span><span class="api-card__name">num_grasps_per_scene</span><span class="pp">: </span><span class="pt">Tensor</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="graspkitdata-to_padded">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/graspkit_data.py#L85">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspKitData.</span><span class="api-card__name">to_padded</span><span class="pp">()</span><span class="pp"> -> </span><span class="pt">GraspKitData</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">GraspKitData</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="graspkitdata-to_packed">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/graspkit_data.py#L101">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspKitData.</span><span class="api-card__name">to_packed</span><span class="pp">()</span><span class="pp"> -> </span><span class="pt">GraspKitData</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">GraspKitData</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="graspkitdata-filter">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/graspkit_data.py#L123">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspKitData.</span><span class="api-card__name">filter</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">mask</span><span class="pp">: </span><span class="pt">Tensor</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">GraspKitData</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Filter packed grasps or scenes by a boolean mask and drop empty scenes.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">mask</span><span class="api-type">Tensor</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">GraspKitData</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="graspkitdata-save">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/graspkit_data.py#L159">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspKitData.</span><span class="api-card__name">save</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">path</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">append</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">False</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">None</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Save scenes to individual H5 files or groups in a merged H5 file.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">path</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">append</span><span class="api-type">bool</span><span class="api-def">= False</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">None</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="graspkitdata-load">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/graspkit_data.py#L225">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">GraspKitData.</span><span class="api-card__name">load</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">path</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_ids</span><span class="pp">: </span><span class="pt">list[str] | None</span><span class="pp"> = </span><span class="pd">None</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">packed</span><span class="pp">: </span><span class="pt">bool</span><span class="pp"> = </span><span class="pd">True</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">GraspKitData</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Load scenes in packed form or padded form with uniform grasp counts.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">path</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_ids</span><span class="api-type">list[str] | None</span><span class="api-def">= None</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">packed</span><span class="api-type">bool</span><span class="api-def">= True</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">GraspKitData</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div><div class="api"><section class="api-sym">
+    <div class="api-card" id="replaydata">
+    <div class="api-card__head"><span class="api-kind">class</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/replay_data.py#L18">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">graspkit.datasets.replay_data.</span><span class="api-card__name">ReplayData</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">qpos</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 'T dof']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">obj_pose</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 'T 7']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">robot_path</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">mesh_dir</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">base_type</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">obj_mesh_path</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">obj_scale</span><span class="pp">: </span><span class="pt">float</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">stage</span><span class="pp">: </span><span class="pt">str</span><span class="pp"> = </span><span class="pd">'sim-valid'</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">label</span><span class="pp">: </span><span class="pt">str</span><span class="pp"> = </span><span class="pd">'success'</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">root_pos</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 3]</span><span class="pp"> = </span><span class="pd">(lambda: np.zeros(3, np.float32))()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">root_quat</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 4]</span><span class="pp"> = </span><span class="pd">(lambda: np.array([1, 0, 0, 0], np.float32))()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">table_size</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 3]</span><span class="pp"> = </span><span class="pd">(lambda: np.zeros(3, np.float32))()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">table_pos</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 3]</span><span class="pp"> = </span><span class="pd">(lambda: np.zeros(3, np.float32))()</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">table_quat</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 4]</span><span class="pp"> = </span><span class="pd">(lambda: np.array([1, 0, 0, 0], np.float32))()</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">)</span><span class="pt"></span></div></div>
+  </div>
+    <div class="api-body"><div class="api-prose"><p>One recorded trajectory for the replay viewer: robot qpos, object pose and the assets to draw them.</p></div><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">qpos</span><span class="api-type">Float[np.ndarray, 'T dof']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">obj_pose</span><span class="api-type">Float[np.ndarray, 'T 7']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">robot_path</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">mesh_dir</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">base_type</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">obj_mesh_path</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">obj_scale</span><span class="api-type">float</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">stage</span><span class="api-type">str</span><span class="api-def">= 'sim-valid'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">label</span><span class="api-type">str</span><span class="api-def">= 'success'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">root_pos</span><span class="api-type">Float[np.ndarray, 3]</span><span class="api-def">= (lambda: np.zeros(3, np.float32))()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">root_quat</span><span class="api-type">Float[np.ndarray, 4]</span><span class="api-def">= (lambda: np.array([1, 0, 0, 0], np.float32))()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">table_size</span><span class="api-type">Float[np.ndarray, 3]</span><span class="api-def">= (lambda: np.zeros(3, np.float32))()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">table_pos</span><span class="api-type">Float[np.ndarray, 3]</span><span class="api-def">= (lambda: np.zeros(3, np.float32))()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">table_quat</span><span class="api-type">Float[np.ndarray, 4]</span><span class="api-def">= (lambda: np.array([1, 0, 0, 0], np.float32))()</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label" id="replaydata-members">Members</div><div class="api-members"><div class="api-row api-row--plain" id="replaydata-qpos">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/replay_data.py#L23">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ReplayData.</span><span class="api-card__name">qpos</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 'T dof']</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>FK variables: floating [xyz, euler_rxyz, joints] or fixed joints.</p></div></div>
+    </div><div class="api-row api-row--plain" id="replaydata-obj_pose">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/replay_data.py#L25">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ReplayData.</span><span class="api-card__name">obj_pose</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 'T 7']</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Object world pose [xyz, quat_wxyz].</p></div></div>
+    </div><div class="api-row api-row--plain" id="replaydata-robot_path">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/replay_data.py#L27">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ReplayData.</span><span class="api-card__name">robot_path</span><span class="pp">: </span><span class="pt">str</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>URDF or MJCF the viewer loads into <code>ViserUrdf</code> / <code>ViserMjcf</code>.</p></div></div>
+    </div><div class="api-row api-row--plain" id="replaydata-mesh_dir">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/replay_data.py#L29">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ReplayData.</span><span class="api-card__name">mesh_dir</span><span class="pp">: </span><span class="pt">str</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>URDF mesh directory; empty if none.</p></div></div>
+    </div><div class="api-row api-row--plain" id="replaydata-base_type">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/replay_data.py#L31">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ReplayData.</span><span class="api-card__name">base_type</span><span class="pp">: </span><span class="pt">str</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p><code>"floating"</code> or <code>"fixed"</code>.</p></div></div>
+    </div><div class="api-row api-row--plain" id="replaydata-obj_mesh_path">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/replay_data.py#L33">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ReplayData.</span><span class="api-card__name">obj_mesh_path</span><span class="pp">: </span><span class="pt">str</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Object collision mesh (loaded via trimesh).</p></div></div>
+    </div><div class="api-row api-row--plain" id="replaydata-obj_scale">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/replay_data.py#L35">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ReplayData.</span><span class="api-card__name">obj_scale</span><span class="pp">: </span><span class="pt">float</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="replaydata-stage">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/replay_data.py#L36">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ReplayData.</span><span class="api-card__name">stage</span><span class="pp">: </span><span class="pt">str = 'sim-valid'</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Viewer partition, e.g. optimize_grasps.py --verbose's "sample (unfiltered)" ... "sim".</p></div></div>
+    </div><div class="api-row api-row--plain" id="replaydata-label">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/replay_data.py#L38">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ReplayData.</span><span class="api-card__name">label</span><span class="pp">: </span><span class="pt">str = 'success'</span></div>
+    
+  </div>
+      <div class="api-body"><div class="api-row__doc"><p>Free filter within a stage, e.g. <code>"success"</code> or <code>"failure"</code>.</p></div></div>
+    </div><div class="api-row api-row--plain" id="replaydata-root_pos">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/replay_data.py#L41">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ReplayData.</span><span class="api-card__name">root_pos</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 3] = field(default_factory=lambda: np.zeros(3, np.float32))</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="replaydata-root_quat">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/replay_data.py#L42">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ReplayData.</span><span class="api-card__name">root_quat</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 4] = field(default_factory=lambda: np.array([1, 0, 0, 0], np.float32))</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="replaydata-table_size">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/replay_data.py#L44">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ReplayData.</span><span class="api-card__name">table_size</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 3] = field(default_factory=lambda: np.zeros(3, np.float32))</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="replaydata-table_pos">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/replay_data.py#L45">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ReplayData.</span><span class="api-card__name">table_pos</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 3] = field(default_factory=lambda: np.zeros(3, np.float32))</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="replaydata-table_quat">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">attribute</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/replay_data.py#L46">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ReplayData.</span><span class="api-card__name">table_quat</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 4] = field(default_factory=lambda: np.array([1, 0, 0, 0], np.float32))</span></div>
+    
+  </div>
+      
+    </div><div class="api-row api-row--plain" id="replaydata-from_traj">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/replay_data.py#L48">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ReplayData.</span><span class="api-card__name">from_traj</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">qpos</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 'T dof']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">obj_pose</span><span class="pp">: </span><span class="pt">Float[np.ndarray, 'T 7']</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">robot_config</span><span class="pp">: </span><span class="pt">RobotConfig</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">scene_desc</span><span class="pp">: </span><span class="pt">SceneDescription</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">stage</span><span class="pp">: </span><span class="pt">str</span><span class="pp"> = </span><span class="pd">'sim-valid'</span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">label</span><span class="pp">: </span><span class="pt">str</span><span class="pp"> = </span><span class="pd">'success'</span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">ReplayData</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">qpos</span><span class="api-type">Float[np.ndarray, 'T dof']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">obj_pose</span><span class="api-type">Float[np.ndarray, 'T 7']</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">robot_config</span><span class="api-type">RobotConfig</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">scene_desc</span><span class="api-type">SceneDescription</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">stage</span><span class="api-type">str</span><span class="api-def">= 'sim-valid'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">label</span><span class="api-type">str</span><span class="api-def">= 'success'</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">ReplayData</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="replaydata-save">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/replay_data.py#L78">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ReplayData.</span><span class="api-card__name">save</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">replays</span><span class="pp">: </span><span class="pt">list[ReplayData]</span><span class="pd"></span><span class="pp">,</span></div><div class="api-sig__line"><span class="pn">path</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">None</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">replays</span><span class="api-type">list[ReplayData]</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">path</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">None</span></div><div class="api-row__doc"></div></div></div>
+    </div><div class="api-row api-row--plain" id="replaydata-load">
+      <div class="api-card">
+    <div class="api-card__head"><span class="api-kind">method</span><a class="api-src" href="https://github.com/openrobokit/graspkit/blob/main/src/graspkit/datasets/replay_data.py#L102">[source]</a></div>
+    <div class="api-card__decl"><span class="mod">ReplayData.</span><span class="api-card__name">load</span><span class="pp">(</span></div>
+    <div class="api-sig__body"><div class="api-sig__line"><span class="pn">path</span><span class="pp">: </span><span class="pt">str</span><span class="pd"></span><span class="pp"></span></div><div class="api-sig__line api-sig__close"><span class="pp">) -> </span><span class="pt">list[ReplayData]</span></div></div>
+  </div>
+      <div class="api-body"><div class="api-label">Parameters</div><div class="api-row">
+      <div class="api-row__head"><span class="api-name">path</span><span class="api-type">str</span><span class="api-req">required</span></div>
+      <div class="api-row__doc"></div>
+    </div><div class="api-label">Returns</div><div class="api-row api-row--plain"><div class="api-row__head"><span class="api-type">list[ReplayData]</span></div><div class="api-row__doc"></div></div></div>
+    </div></div></div>
+  </section></div></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/graspkit/api-envs/"><span class="lbl">← Previous</span><span class="nm">Environments</span></a><a class="next" href="/docs/graspkit/dev/"><span class="lbl">Next →</span><span class="nm">Development Guide</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#graspkitdata">GraspKitData</a><a href="#replaydata">ReplayData</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "graspkit", "id": "api-data", "toc": [{"text": "GraspKitData", "href": "#graspkitdata", "members": [{"text": "scene_ids", "href": "#graspkitdata-scene_ids"}, {"text": "scene_descriptions", "href": "#graspkitdata-scene_descriptions"}, {"text": "first_indices", "href": "#graspkitdata-first_indices"}, {"text": "pre_grasp_qpos", "href": "#graspkitdata-pre_grasp_qpos"}, {"text": "grasp_qpos", "href": "#graspkitdata-grasp_qpos"}, {"text": "post_grasp_qpos", "href": "#graspkitdata-post_grasp_qpos"}, {"text": "full_traj_qpos", "href": "#graspkitdata-full_traj_qpos"}, {"text": "pre_traj_penetration", "href": "#graspkitdata-pre_traj_penetration"}, {"text": "pointcloud", "href": "#graspkitdata-pointcloud"}, {"text": "pointcloud_rgb", "href": "#graspkitdata-pointcloud_rgb"}, {"text": "pointcloud_segmentation", "href": "#graspkitdata-pointcloud_segmentation"}, {"text": "target_actor_segmentation_id", "href": "#graspkitdata-target_actor_segmentation_id"}, {"text": "camera_poses", "href": "#graspkitdata-camera_poses"}, {"text": "num_scenes", "href": "#graspkitdata-num_scenes"}, {"text": "is_packed", "href": "#graspkitdata-is_packed"}, {"text": "is_padded", "href": "#graspkitdata-is_padded"}, {"text": "num_grasps_per_scene", "href": "#graspkitdata-num_grasps_per_scene"}, {"text": "to_padded()", "href": "#graspkitdata-to_padded"}, {"text": "to_packed()", "href": "#graspkitdata-to_packed"}, {"text": "filter()", "href": "#graspkitdata-filter"}, {"text": "save()", "href": "#graspkitdata-save"}, {"text": "load()", "href": "#graspkitdata-load"}]}, {"text": "ReplayData", "href": "#replaydata", "members": [{"text": "qpos", "href": "#replaydata-qpos"}, {"text": "obj_pose", "href": "#replaydata-obj_pose"}, {"text": "robot_path", "href": "#replaydata-robot_path"}, {"text": "mesh_dir", "href": "#replaydata-mesh_dir"}, {"text": "base_type", "href": "#replaydata-base_type"}, {"text": "obj_mesh_path", "href": "#replaydata-obj_mesh_path"}, {"text": "obj_scale", "href": "#replaydata-obj_scale"}, {"text": "stage", "href": "#replaydata-stage"}, {"text": "label", "href": "#replaydata-label"}, {"text": "root_pos", "href": "#replaydata-root_pos"}, {"text": "root_quat", "href": "#replaydata-root_quat"}, {"text": "table_size", "href": "#replaydata-table_size"}, {"text": "table_pos", "href": "#replaydata-table_pos"}, {"text": "table_quat", "href": "#replaydata-table_quat"}, {"text": "from_traj()", "href": "#replaydata-from_traj"}, {"text": "save()", "href": "#replaydata-save"}, {"text": "load()", "href": "#replaydata-load"}]}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

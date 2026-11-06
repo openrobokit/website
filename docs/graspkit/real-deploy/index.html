@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Real Deployment · GraspKit docs · OpenRoboKit</title>
+  <meta name="description" content="Manipulation across robot embodiments, including grippers and dexterous hands." />
+  <link rel="canonical" href="https://openrobokit.com/docs/graspkit/real-deploy/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/gear/robokit-ucsd.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261013-polish1" />
+  <link rel="stylesheet" href="/assets/css/docs.css?v=20261012-runnable-code" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/assets/js/docs-mermaid.js"></script>
+</head>
+<body>
+  <div class="grid">
+    <aside class="side">
+      <button type="button" class="docs-menu" id="docs-menu" aria-expanded="false" aria-controls="docs-nav">Browse documentation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="docs-nav" id="docs-nav">
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#8A8478" stroke-width="1.5" style="width:14px;height:14px;flex:none"><circle cx="7" cy="7" r="4.5"/><path d="m10.4 10.4 3.1 3.1" stroke-linecap="round"/></svg>
+        <input id="search" placeholder="Search..." aria-label="Search documentation" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="kitpick" id="kitpick">
+    <span class="kitpick__label">Project</span>
+    <button class="kitpick__btn" aria-haspopup="listbox">
+      <span class="nm">GraspKit</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="kitpick__menu" role="listbox">
+      <a href="/docs/robokit/" class="">
+        <span class="nm">RoboKit</span>
+      </a><a href="/docs/retargetingkit/" class="">
+        <span class="nm">RetargetingKit</span>
+      </a><a href="/docs/graspkit/" class="is-active">
+        <span class="nm">GraspKit</span><svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div></div>
+      <div id="side-groups"><div class="side__group"><h4>User Guide</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/overview/" data-id="overview" class="">Overview</a></div><div class="side__list"><a href="/docs/graspkit/quickstart/" data-id="quickstart" class="">Quickstart</a></div><div class="side__list"><a href="/docs/graspkit/install/" data-id="install" class="">Installation</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim/" data-id="grasp-optim" class="">Grasp Optimization</a></div><div class="side__list"><a href="/docs/graspkit/training/" data-id="training" class="">Policy Training</a></div><div class="side__list"><a href="/docs/graspkit/pipeline/" data-id="pipeline" class="">Pipeline</a></div><div class="side__list"><a href="/docs/graspkit/sim-deploy/" data-id="sim-deploy" class="">Sim Deployment</a></div><div class="side__list"><a href="/docs/graspkit/real-deploy/" data-id="real-deploy" class="is-active">Real Deployment</a></div></div></div><div class="side__group"><h4>Concepts</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/concepts-overview/" data-id="concepts-overview" class="">Core Overview</a></div><div class="side__list"><a href="/docs/graspkit/grasp-optim-backends/" data-id="grasp-optim-backends" class="">Grasp Optimization Backends</a></div><div class="side__list"><a href="/docs/graspkit/concepts-sim/" data-id="concepts-sim" class="">Simulation</a></div><div class="side__list"><a href="/docs/graspkit/concepts-policies/" data-id="concepts-policies" class="">Models and Policies</a></div></div></div><div class="side__group"><h4>Reference</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/ref-robot-hands/" data-id="ref-robot-hands" class="">Robot and Hand Catalog</a></div><div class="side__list"><a href="/docs/graspkit/ref-config-system/" data-id="ref-config-system" class="">Config System</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·Data">
+        <span>Data</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/ref-data-format/" data-id="ref-data-format" class="">Data Format Specification</a><a href="/docs/graspkit/ref-assets/" data-id="ref-assets" class="">graspkit assets</a><a href="/docs/graspkit/ref-scene-descriptions/" data-id="ref-scene-descriptions" class="">Dex1B Scene Descriptions</a></div>
+      <div class="side__sub is-folded" data-fold="Reference·API">
+        <span>API</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 4 4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="side__subitems"><a href="/docs/graspkit/api-grasp-optim/" data-id="api-grasp-optim" class="">Grasp Optimization</a><a href="/docs/graspkit/api-scene/" data-id="api-scene" class="">Scene</a><a href="/docs/graspkit/api-motion-plan/" data-id="api-motion-plan" class="">Motion Planning</a><a href="/docs/graspkit/api-policy/" data-id="api-policy" class="">Policy</a><a href="/docs/graspkit/api-training/" data-id="api-training" class="">Training</a><a href="/docs/graspkit/api-envs/" data-id="api-envs" class="">Environments</a><a href="/docs/graspkit/api-data/" data-id="api-data" class="">Data</a></div></div></div><div class="side__group"><h4>Development</h4><div class="side__list"><div class="side__list"><a href="/docs/graspkit/dev/" data-id="dev" class="">Development Guide</a></div></div></div></div>
+      <div class="side__foot" id="side-foot">graspkit · v0.1.0 · MIT</div>
+      </div>
+    </aside>
+
+    <div class="card">
+      <article class="doc">
+        <div class="doc__head">
+          <div class="crumb" id="crumb"><span>User Guide</span></div>
+          <button type="button" class="copy-page copy--swap" data-copy-from="#doc-body" title="Copy page" aria-label="Copy page"><span class="t"></span><span class="o"></span></button>
+        </div>
+        <h1 id="doc-h">Real Deployment</h1>
+        <div class="doc-body" id="doc-body"><p>Running a trained policy on hardware: capture a point cloud, predict a grasp, build a trajectory, execute it, release, and park.</p><blockquote><p>These scripts move a real robot. Run them yourself, with the e-stop in reach — never from an automated agent.</p></blockquote><h3 id="prerequisites">Prerequisites</h3><ul><li>The rig's <code>xarm</code> extra, plus <code>sam2</code> for segmentation.</li><li>A checkpoint whose robot matches the rig: deploy asserts that the actuated joint names of the policy's robot and the hardware robot are identical.</li></ul><h3 id="hardware-presets">Hardware presets</h3><p><code>configs/real_env.py</code> holds one <code>RealEnvConfig</code> per rig; <code>--real-env-config-name</code> selects it, and an experiment can name a default through <code>real_env_config_name</code>.</p><table class="doc-table" style="--cols:4"><thead><tr><th>Preset</th><th>Arm</th><th>Hand</th><th>Camera</th></tr></thead><tbody><tr><td><code>xarm7_xhand_right</code></td><td>xArm7</td><td>XHand</td><td>RealSense</td></tr><tr><td><code>xarm6_sharpa_right</code></td><td>xArm6</td><td>Sharpa</td><td>RealSense</td></tr><tr><td><code>xarm7_ability_right</code></td><td>xArm7</td><td>Ability (channel reindex)</td><td>RealSense</td></tr></tbody></table><p>Each preset also carries the planning table (<code>table_size</code>, <code>table_xy</code>, <code>table_z</code>), the point-cloud crop centre (<code>workspace_center</code>), the streaming rate (<code>control_hz</code>) and how many depth frames to median-combine. Experiments need <code>--real-env-config-name</code>, a fixed-base trajectory and <code>camera_frame="robot"</code>.</p><h3 id="run-it">Run it</h3><div class="doc__code" data-copy-scope><div class="bar"><span style="color:var(--fg-dim)">shell</span><span class="code-actions"><button type="button" class="copy copy--swap" data-copy-from="pre" title="Copy"><span class="t"></span><span class="o"></span></button></span></div><pre>uv run --extra sam2 --extra xarm scripts/deploy/deploy.py --env real \
+  --exp-config-name xhand_right_dex1b_v0_5_mini_tabletop_fixed_eval \
+  --ckpt-path &lt;checkpoint&gt; --real-env-config-name xarm7_xhand_right</pre></div><p>Every stage waits for a button in the Viser page:</p><ol><li><strong>Capture</strong> — reset to the init pose, grab RGB (median of <code>depth_frames</code> depth frames).</li><li><strong>Segment</strong> — click the object; SAM 2 turns the clicks into a mask, which becomes the cropped, subsampled point cloud in the robot base frame.</li><li><strong>Check Grasp</strong> — the policy samples <code>--num-samples</code> grasps; the trajectory builder converts and plans them, and the top eight valid candidates are shown. For a floating-base policy the cloud is mean-centred and the centroid added back; <code>--pc-offset</code> nudges it. <code>--post-grasp-hand-close-scale</code> rescales the closing motion.</li><li><strong>Deploy</strong> — the trajectory is streamed phase by phase at the rig's <code>control_hz</code>. The <em>Deploy Until Step</em> slider stops mid-trajectory so you can compare commanded and measured joint positions against the live cloud, then resume.</li><li><strong>Release and park</strong> — the hand opens in place, then a collision-checked plan returns the arm to the init pose against a table raised by 5 cm. There is no reset afterwards.</li></ol><p><code>--loop</code> keeps cycling; without it, a capture with no valid grasp is an error.</p><h3 id="calibration">Calibration</h3><p>The deploy path reads a base-frame camera extrinsic and a camera intrinsic from the shipped calibration files (<code>assets/calib.py</code>, wired into the experiment's <code>renderer.camera_poses_path</code> and <code>camera_intrinsic_path</code>).</p><p>Inspect the result with <code>uv run scripts/tools/visualize_camera_extrinsic.py --experiment-name ...</code> (offline) or <code>uv run --extra xarm scripts/deploy/visualize_calib.py</code> (live).</p><p>The park plan raises the table by 5 cm because the optimizer otherwise rides the collision margin.</p></div>
+        <div class="prevnext" id="prevnext"><a href="/docs/graspkit/sim-deploy/"><span class="lbl">← Previous</span><span class="nm">Sim Deployment</span></a><a class="next" href="/docs/graspkit/concepts-overview/"><span class="lbl">Next →</span><span class="nm">Core Overview</span></a></div>
+      </article>
+      <aside class="rail" id="rail"><div class="rail__head">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4h11M2.5 8h7M2.5 12h9" stroke-linecap="round"/></svg>
+  <span>On this page</span>
+</div><div class="rail__list"><a href="#prerequisites">Prerequisites</a><a href="#hardware-presets">Hardware presets</a><a href="#run-it">Run it</a><a href="#calibration">Calibration</a></div></aside>
+    </div>
+  </div>
+  <script>window.RK_PAGE={"kit": "graspkit", "id": "real-deploy", "toc": [{"text": "Prerequisites", "href": "#prerequisites"}, {"text": "Hardware presets", "href": "#hardware-presets"}, {"text": "Run it", "href": "#run-it"}, {"text": "Calibration", "href": "#calibration"}]}</script>
+  <script src="/assets/js/site.js?v=20261106-roboskills"></script>
+  <script src="/assets/js/docs.js"></script>
+</body>
+</html>

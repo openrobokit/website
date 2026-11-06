@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 104 72">
+<style>
+@keyframes aT{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+@keyframes aL{0%,100%{transform:translate(-3px,3px)}50%{transform:translate(2px,-2px)}}
+@keyframes aR{0%,100%{transform:translate(3px,3px)}50%{transform:translate(-2px,-2px)}}
+@keyframes squeeze{0%,100%{transform:scale(1)}50%{transform:scale(.945)}}
+.body{transform-origin:52px 40px;animation:squeeze 2.6s ease-in-out infinite}
+.t{animation:aT 2.6s ease-in-out infinite}.l{animation:aL 2.6s ease-in-out infinite}.r{animation:aR 2.6s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<defs><marker id="af" viewBox="0 0 8 8" refX="6.5" refY="4" markerWidth="4.6" markerHeight="4.6" orient="auto"><path d="M0.5,0.5 L7.5,4 L0.5,7.5 Z" fill="#1F5EEA"></path></marker></defs>
+<g class="body" stroke="#1F5EEA" stroke-width="2" stroke-linejoin="round">
+<path d="M52,20 L70,30 L52,40 L34,30 Z" fill="#B6C9F9"></path>
+<path d="M34,30 L52,40 L52,60 L34,50 Z" fill="#DCE5FC"></path>
+<path d="M70,30 L52,40 L52,60 L70,50 Z" fill="#fff"></path>
+</g>
+<g stroke="#1F5EEA" stroke-width="2.2" stroke-linecap="round">
+<line class="t" x1="52" y1="3" x2="52" y2="12" marker-end="url(#af)"></line>
+<line class="l" x1="17" y1="64" x2="28" y2="57" marker-end="url(#af)"></line>
+<line class="r" x1="87" y1="64" x2="76" y2="57" marker-end="url(#af)"></line>
+</g>
+</svg>

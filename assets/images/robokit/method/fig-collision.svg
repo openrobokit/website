@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 104 72">
+<style>
+@keyframes colL{0%,100%{transform:translateX(-9px)}50%,60%{transform:translateX(4px)}}
+@keyframes colR{0%,100%{transform:translateX(9px)}50%,60%{transform:translateX(-4px)}}
+@keyframes hitL{0%,44%{stroke:#1F5EEA;fill:#DCE5FC}52%,60%{stroke:#E11D48;fill:#FBDDE2}70%,100%{stroke:#1F5EEA;fill:#DCE5FC}}
+@keyframes hitR{0%,44%{stroke:#1F5EEA}52%,60%{stroke:#E11D48}70%,100%{stroke:#1F5EEA}}
+@keyframes spark{0%,46%{opacity:0;transform:scale(.55)}54%{opacity:1;transform:scale(1)}64%{opacity:.7;transform:scale(1.1)}72%,100%{opacity:0;transform:scale(1.14)}}
+.a{animation:colL 2.8s cubic-bezier(.4,0,.35,1) infinite,hitL 2.8s ease-in-out infinite}
+.b{animation:colR 2.8s cubic-bezier(.4,0,.35,1) infinite,hitR 2.8s ease-in-out infinite}
+.s{transform-origin:52px 42px;animation:spark 2.8s ease-out infinite}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<circle class="a" cx="38" cy="42" r="21" fill="#DCE5FC" stroke="#1F5EEA" stroke-width="2.2"></circle>
+<circle class="b" cx="66" cy="42" r="21" fill="none" stroke="#1F5EEA" stroke-width="2.2"></circle>
+<g class="s" stroke="#E11D48" stroke-width="2.2" stroke-linecap="round">
+<line x1="52" y1="16" x2="52" y2="7"></line><line x1="43" y1="19" x2="37" y2="12"></line><line x1="61" y1="19" x2="67" y2="12"></line>
+</g>
+</svg>
