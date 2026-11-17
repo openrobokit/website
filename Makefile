@@ -2,18 +2,19 @@
 # committed corpus, so CI and a fresh clone both work with no sibling repos.
 PROJECT ?=
 SRC ?=
-PORT ?= 8734
+PORT ?= 8914
 
 # What a browser is allowed to see. Everything else in the checkout -- the
 # scripts, the Makefile, the README -- is how the site is made, not part of it.
 PUBLIC = index.html CNAME .nojekyll assets graspkit retargetingkit robokit roboskills
 
-.PHONY: serve import pages site benchmark-image check-docs check-site test clean
+.PHONY: serve import site benchmark-image check-docs check-site test clean
 
 # The pages use root-relative paths, so the site must be served from this
 # built directory — opening HTML over file:// will not resolve /assets or /data.
 serve: site
-	python3 scripts/serve.py $(PORT) _page
+	@printf '\nSite: http://localhost:$(PORT)/\nDocs: http://localhost:$(PORT)/docs/robokit/overview/\n\n'
+	python3 -u scripts/serve.py $(PORT) _page
 
 # Convert one product repo's Markdown into its own file under data/docs/, then
 # rebuild. Each kit owns one path, so two imports never touch the same file.
@@ -22,15 +23,8 @@ serve: site
 #
 # In CI this runs from the product repo, which then commits the result here.
 import:
-	@test -n "$(PROJECT)" || { echo "PROJECT= is required"; exit 1; }
-	@test -n "$(SRC)" || { echo "SRC= is required"; exit 1; }
-	@test -f "scripts/import_$(PROJECT)_docs.py" -o -n "$(filter robokit graspkit,$(PROJECT))" \
-		|| { echo "no importer for $(PROJECT)"; exit 1; }
-	uv run scripts/$(if $(filter robokit graspkit,$(PROJECT)),import_docs.py --project $(PROJECT),import_$(PROJECT)_docs.py) $(SRC)
+	uv run scripts/import_docs.py $(PROJECT) $(SRC)
 	$(MAKE) site
-
-# Rebuild from the committed corpus.
-pages: site
 
 # Assemble the complete site without writing generated files into source paths.
 # Everything it needs is committed here, so this works on a bare clone.

@@ -29,7 +29,6 @@ if (theme.slash) document.documentElement.style.setProperty('--slash', theme.sla
 if (theme.slashShadow) document.documentElement.style.setProperty('--slash-shadow', theme.slashShadow);
 if (theme.videoFit) document.documentElement.style.setProperty('--hero-vid-tf', theme.videoFit);
 if (theme.portraitPos) document.documentElement.style.setProperty('--hero-portrait-pos', theme.portraitPos);
-if (theme.videoTone) document.documentElement.style.setProperty('--hero-vid-filter', theme.videoTone);
 document.documentElement.style.setProperty('--accent-lite', theme.accentLite || theme.accent);
 document.documentElement.style.setProperty('--band', theme.band);
 document.documentElement.style.setProperty('--tint-soft', theme.tintSoft);
@@ -59,17 +58,6 @@ const skillIcon = (t) => `<span class="band__tile-icon${t.logo ? ' band__tile-ic
 // nothing moves when the video finally arrives.
 const clip = (o) =>
   `<video class="${o.follower ? 'stage__follower' : 'lz'}" data-src="${o.src}" poster="${o.poster}" muted loop playsinline preload="none" ${o.controls ? `controls aria-label="${esc(o.label || 'Robot task video')}"` : 'aria-hidden="true"'}></video>`;
-
-// The bench legend's vocabulary, reused wherever two clips are a comparison:
-// a filled dot for the kit, a hollow one for the baseline, an outline for the
-// motion that went in.
-const toneDot = (t) => (t ? `<i class="dot dot--${t}"></i>` : '');
-
-const tile = (o) => `
-  <figure class="tile${o.wide ? ' is-wide' : ''}">
-    <div class="tile__frame">${clip(o)}</div>
-    <figcaption>${toneDot(o.tone)}${esc(o.label)}</figcaption>
-  </figure>`;
 
 // One capability per band, one 16:9 stage per band. Everything else — the
 // scene name, the provenance line, the image-only picker — is laid over the
@@ -110,7 +98,7 @@ function showcaseSection(group, groupIndex) {
     <div class="band__in">
       ${eyebrow(group.label)}
       <div class="showcase__head">
-        <h2 id="${titleId}">${esc(group.h)}${group.sub ? ` <span class="showcase__sub">${esc(group.sub)}</span>` : ''}</h2>
+        <h2 id="${titleId}">${esc(group.h)}</h2>
       </div>
       <div class="motion-board">
         ${showcaseCard(group, groupIndex)}
@@ -159,38 +147,9 @@ function scaleSection(s) {
   </section>`;
 }
 
-function section(s) {
-  const paras = (s.paras || []).map((p) => `<p>${esc(p)}</p>`).join('');
-  const linkPara = s.links
-    ? `<p>${esc(s.linkLead)} ${s.links.map((l) => `<a href="${l.href}">${esc(l.label)}</a>${esc(l.sep)}`).join('')}</p>`
-    : '';
-  const cards = s.cards
-    ? `<div class="cards" style="grid-template-columns:${s.cardCols || 'repeat(3,1fr)'}">` +
-      s.cards.map((c) => `<div><span class="kicker">${esc(c.kicker)}</span><span class="name">${esc(c.name)}</span><span class="desc">${esc(c.desc)}</span></div>`).join('') +
-      `</div>` : '';
-  const bullets = s.bullets ? `<ul class="bullets">${s.bullets.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>` : '';
-  const callout = s.callout
-    ? `<div class="callout"><div class="callout__bar"></div><div class="callout__body"><span class="t">★ rule of thumb</span>${esc(s.callout)}</div></div>`
-    : '';
-  const code = s.codeLines
-    ? `<div class="code" data-copy-scope>
-         <div class="code__bar"><span class="file">${esc(s.codeFile)}</span><button type="button" class="copy copy--swap" data-copy-from=".code__body" title="Click to copy"><span class="t">⧉ copy</span><span class="o">&#10003; copied</span></button></div>
-         <div class="code__body">${s.codeLines.map((l) => `<div class="${l.comment ? 'c' : ''}">${esc(l.text) || '&nbsp;'}</div>`).join('')}</div>
-       </div>` : '';
-  return `
-    <section class="sec">
-      <div class="sec__label"><span class="n">${esc(s.n)}</span>${esc(s.label)}</div>
-      <div style="min-width:0">
-        <h2>${esc(s.h)}</h2>
-        ${paras}${linkPara}${cards}${bullets}${callout}${code}
-      </div>
-    </section>`;
-}
-
-
 // The capability grid, as a justified row of frames or a fixed grid of cards.
 function bentoSection(b) {
-  return `  <section class="band bento${b.photo ? ' bento--photo' : ''}${b.rows ? ' bento--justified' : ''}${b.pills ? ' bento--pills' : ''}" id="${esc(b.id || 'bento')}">
+  return `  <section class="band bento${b.rows ? ' bento--justified' : ''}${b.pills ? ' bento--pills' : ''}" id="${esc(b.id || 'bento')}">
     <div class="band__in">
       ${eyebrow(b.label || 'Capabilities')}
       <h2>${esc(b.h)}</h2>
@@ -198,10 +157,8 @@ function bentoSection(b) {
         <div class="bento__row">
           ${row.map((c) => `
             <article style="--ar:${c.ar}">
-              <div class="bento__frame" style="aspect-ratio:${c.ar}"${c.clips ? ` data-bento-reel="${c.dwell || 6000}"` : ''}>
+              <div class="bento__frame" style="aspect-ratio:${c.ar}">
                 ${c.still ? `<img class="card-media card-still" src="${c.still}" alt="" />` : ''}
-                ${c.clips ? `<img class="card-media card-still" src="${c.clips[0].still}" alt="" />` +
-                  c.clips.map((k, i) => `<video class="card-media card-video card-clip${i === 0 ? ' is-active' : ''}" data-src="${k.video}" poster="${k.still}" muted loop playsinline preload="none" aria-hidden="true"></video>`).join('') : ''}
                 ${c.video ? `<video class="card-media card-video" src="${c.video}" autoplay muted loop playsinline aria-hidden="true" data-fallback></video>` : ''}
               </div>
               <div class="card-label"><h3>${esc(c.name)}${c.tag ? ` <span class="card-tag">${esc(c.tag)}</span>` : ''}</h3></div>
@@ -209,16 +166,14 @@ function bentoSection(b) {
         </div>`).join('') : `
       <div class="bento__grid">
         ${(b.cards || []).map((c) => {
-          // renders sit on the page ground and are framed by transform; camera
-          // frames are framed by which part of the picture is kept instead
-          const fit = `--card-fit:${c.fit || 'scale(1)'}${c.pos ? `;--card-pos:${c.pos}` : ''}`;
+          // renders sit on the page ground and are framed by transform
+          const fit = `--card-fit:${c.fit || 'scale(1)'}`;
           // input → output pills over the footage's top edge, the output in the accent
           const flow = c.flow && c.flow.map((group, i) => `${i ? '<i aria-hidden="true">→</i>' : ''}${group.map((x) =>
             `<span${i === c.flow.length - 1 ? ' class="is-out"' : ''}>${esc(x)}</span>`).join('')}`).join('');
           return `
-          <article class="${c.wide ? 'wide' : ''}${c.placeholder ? ' is-placeholder' : ''}">
+          <article class="${c.wide ? 'wide' : ''}">
             ${c.href ? `<a class="card-link" href="${c.href}" aria-label="${esc(c.name)}"></a>` : ''}
-            ${c.placeholder ? `<span class="card-placeholder">${esc(c.placeholder)}</span>` : ''}
             ${c.still ? `<img class="card-media card-still" src="${c.still}" alt="" style="${fit}" />` : ''}
             ${c.video ? `<video class="card-media card-video" src="${c.video}" autoplay muted loop playsinline aria-hidden="true" data-fallback style="${fit}"></video>` : ''}
             ${flow ? `<p class="card-flow">${flow}</p>` : ''}
@@ -276,9 +231,8 @@ const stageSidebar = (st, variant) => `
 
 // One clip per band, with optional input media and variants to swap in.
 function stageSection(st) {
-  // `picker: 'tabs'` swaps variants from a tab tray on a card, instead of the
-  // poster buttons under the frame; tags name the frame's equal columns.
-  const tabs = st.picker === 'tabs' && st.variants;
+  // Variants swap from a tab tray on a card around the frame.
+  const tabs = st.variants;
   const first = st.variants ? st.variants[0] : {};
   const comparing = st.reveal && first.before;
   const frame = `<div class="stage__frame${comparing ? ' stage__comparison' : ''}" id="${esc(st.id)}-view"${st.ar ? ` style="aspect-ratio:${st.ar}"` : ''}>${clip({ src: st.src, poster: st.poster })}
@@ -288,8 +242,6 @@ function stageSection(st) {
         <span class="stage__divider" aria-hidden="true"><span class="stage__handle"><svg viewBox="0 0 24 24"><path d="m9 7-5 5 5 5m6-10 5 5-5 5"/></svg></span></span>` : ''}
         ${comparing || st.inputs ? '<button type="button" class="stage__compare-play" aria-label="Pause playback">Pause</button>' : ''}
         ${st.sidebar ? stageSidebar(st, first) : ''}
-        ${st.tags ? `<div class="stage__tags" style="--tags:${st.tags.length}">${st.tags.map((t) => `<span><b>${esc(t)}</b></span>`).join('')}</div>` : ''}
-        ${st.variants && st.variants.some((v) => v.prompt) ? `<p class="stage__prompt" data-stage-prompt${first.prompt ? '' : ' hidden'}>${esc(first.prompt || '')}</p>` : ''}
         ${st.benchmark ? `<div class="scale__count scale__count--timed stage__benchmark" data-stage-benchmark data-static="${st.benchmark.static === true}" data-seconds="${st.benchmark.seconds}" data-rounds='${JSON.stringify(st.benchmark.rounds)}'><div><strong>${st.benchmark.batch.toLocaleString()}</strong><span>Parallel grasps</span></div><div class="scale__timing"><b data-stage-seconds>0.0000 s</b><span class="stage__status" data-stage-status role="status">Ready</span><small>${esc(st.benchmark.hardware)}</small></div></div>` : ''}
       </div>`;
   const view = st.inputs ? `<div class="stage__scene">
@@ -304,15 +256,12 @@ function stageSection(st) {
         <h2>${esc(st.h)}</h2>
         ${st.note ? `<p class="stage__note">${esc(st.note)}</p>` : ''}
       </div>
-      ${tabs ? `<div class="stage__card${st.narrow ? ' stage__card--narrow' : ''}">
+      ${tabs ? `<div class="stage__card">
         <div class="scale__tasks" style="--scale-tasks:${st.variants.length}" role="group" aria-label="${esc(st.variantsLabel || 'Choose a version')}">
           ${st.variants.map((v, i) => `<button type="button" class="${i === 0 ? 'is-active' : ''}" data-stage-variant="${i}" aria-pressed="${i === 0}" aria-controls="${esc(st.id)}-view${st.inputs ? ` ${esc(st.id)}-input` : ''}">${esc(v.label)}</button>`).join('')}
         </div>
         ${view}
       </div>` : view}
-      ${st.variants && !tabs ? `<div class="stage__variants" role="group" aria-label="${esc(st.variantsLabel || 'Choose a grasp optimization version')}">
-        ${st.variants.map((variant, i) => `<button type="button" class="stage__variant${i === 0 ? ' is-active' : ''}" data-stage-variant="${i}" aria-pressed="${i === 0}" aria-controls="${esc(st.id)}-view"><img src="${variant.poster}" alt="" loading="lazy" width="320" height="180" /><span>${esc(variant.label)}<small>${esc(variant.note)}</small></span></button>`).join('')}
-      </div><p class="stage__selection"><span data-stage-selection aria-live="polite">${esc(st.variants[0].label)} · ${esc(st.variants[0].note)}</span>${st.comparison ? `<a href="${st.comparison}" target="_blank" rel="noopener">Compare both ↗</a>` : ''}</p>` : ''}
     </div>
   </section>`;
 }
@@ -411,20 +360,6 @@ const BANDS = {
       </div>
     </div>
   </section>`,
-  // a code card beside its footage, or a stand-in for footage to come
-  code: (b) => `
-  <section class="band codeband" id="${esc(b.id)}">
-    <div class="band__in">${bandHead(b)}
-      <div class="codeband__grid">
-        <div class="api__demo codeband__code" data-copy-scope>
-          <div class="api__bar"><span class="file">${esc(b.file)}</span>${b.side ? `<span class="codeband__side">${esc(b.side)}</span>` : ''}<button type="button" class="api__copy copy--swap" data-copy-from=".api__body"><span class="t">copy</span><span class="o">&#10003; copied</span></button></div>
-          <pre class="api__body">${rkHighlight(b.lines.join('\n'))}</pre>
-          ${b.facts ? `<div class="codeband__facts">${b.facts.map((f) => `<div><span class="codeband__k">${esc(f.k)}</span>${esc(f.v)}</div>`).join('')}</div>` : ''}
-        </div>
-        <div class="codeband__media${b.media.placeholder ? ' is-placeholder' : ''}">${b.media.placeholder ? `<span>${esc(b.media.placeholder)}</span>` : clip(b.media)}</div>
-      </div>
-    </div>
-  </section>`,
 };
 
 // The teaser: one clip at a time, as large as the hero allows, and the agent's side in a small card of the Agent
@@ -456,22 +391,20 @@ const heroConsole = (c) => `
       <div class="hero-console__foot"><span class="hero-console__playlist" role="group" aria-label="Teaser clips">${c.tasks.map((t, i) => `<button type="button" aria-label="${esc(t.label)}"${i ? '' : ' class="is-on" aria-current="true"'}></button>`).join('')}</span></div>
     </div>`;
 
-// A project may opt into a standalone image, one looping clip, or a reel that
-// plays each clip once. Reel clips are stacked in the same stage so changing
-// scenes never moves the surrounding layout.
+// A project shows one looping clip, or a reel that plays each clip once. Reel
+// clips are stacked in the same stage so changing scenes never moves the
+// surrounding layout.
 const heroReel = (window.RK_HERO_REELS || {})[key];
 // Choose before creating the video so phones only fetch the smaller clip.
 const heroVideo = kit.heroVideoMobile && window.matchMedia('(max-width: 760px)').matches
   ? kit.heroVideoMobile : window.RK_VIDEOS[key];
-const heroMedia = kit.heroImage
-  ? `<img class="hero-figure" src="${kit.heroImage}" alt="" />`
-  : heroReel
-    ? `<img class="hero-media hero-reel-still" src="${heroReel[0].poster}" alt="" style="--clip-fit:${heroReel[0].fit};--clip-portrait-pos:${heroReel[0].portraitPosition}" />` +
-      heroReel.map((clip, i) =>
-        `<video class="hero-media hero-clip${i === 0 ? ' is-active' : ''}" src="${clip.src}" poster="${clip.poster}" ${i === 0 ? 'autoplay ' : ''}muted playsinline preload="${i < 2 ? 'auto' : 'metadata'}" data-rate="${clip.rate || 1}" data-hero-clip style="--clip-fit:${clip.fit};--clip-portrait-pos:${clip.portraitPosition}"></video>`
-      ).join('')
-    : `${window.RK_STILLS[key] ? `<img class="hero-media" src="${window.RK_STILLS[key]}" alt="" />` : ''}
-       <video class="hero-media" src="${heroVideo}" ${window.RK_STILLS[key] ? `poster="${window.RK_STILLS[key]}" data-fallback` : ''} autoplay muted loop playsinline preload="auto"></video>`;
+const heroMedia = heroReel
+  ? `<img class="hero-media hero-reel-still" src="${heroReel[0].poster}" alt="" style="--clip-fit:${heroReel[0].fit};--clip-portrait-pos:${heroReel[0].portraitPosition}" />` +
+    heroReel.map((clip, i) =>
+      `<video class="hero-media hero-clip${i === 0 ? ' is-active' : ''}" src="${clip.src}" poster="${clip.poster}" ${i === 0 ? 'autoplay ' : ''}muted playsinline preload="${i < 2 ? 'auto' : 'metadata'}" data-rate="${clip.rate || 1}" data-hero-clip style="--clip-fit:${clip.fit};--clip-portrait-pos:${clip.portraitPosition}"></video>`
+    ).join('')
+  : `${window.RK_STILLS[key] ? `<img class="hero-media" src="${window.RK_STILLS[key]}" alt="" />` : ''}
+     <video class="hero-media" src="${heroVideo}" ${window.RK_STILLS[key] ? `poster="${window.RK_STILLS[key]}" data-fallback` : ''} autoplay muted loop playsinline preload="auto"></video>`;
 
 document.getElementById('page').innerHTML = `
   <section class="hero${kit.heroConsole ? ' hero--console' : ''}">
@@ -483,13 +416,12 @@ document.getElementById('page').innerHTML = `
         <p class="lede">${esc(kit.lede)}</p>
         <div class="btns">
           <a href="${kit.cta ? kit.cta.href : `/docs/${key}/`}" class="cta">${esc(kit.cta ? kit.cta.label : 'Get started')}</a>
-          ${kit.status ? `<span class="ghost ghost--status"><span class="p">&#9679;</span> ${esc(kit.status)}</span>` : ''}
           ${kit.install ? `<button class="ghost" type="button" data-copy="${esc(kit.install)}" title="Click to copy"><span class="p">$</span><span class="t">${esc(kit.install)}</span><span class="o">&#10003; copied</span></button>` : ''}
         </div>
       </div>
     </div>
     ${kit.heroConsole ? `${heroConsole(kit.heroConsole)}</div>` : ''}
-    ${kit.bento || kit.showcase || kit.stages || kit.bands ? `<button class="scrollcue" id="scrollcue" aria-label="Skip the hero"><span class="t">Scroll</span><span class="c" aria-hidden="true">&#9660;</span></button>` : ''}
+    <button class="scrollcue" id="scrollcue" aria-label="Skip the hero"><span class="t">Scroll</span><span class="c" aria-hidden="true">&#9660;</span></button>
   </section>
 
   ${kit.bands ? kit.bands.map((b) => BANDS[b.type](b)).join('') : ''}
@@ -554,38 +486,6 @@ document.getElementById('page').innerHTML = `
     </div>
   </section>` : ''}
 
-  ${kit.layers ? `
-  <section class="band layers">
-    <div class="band__in">
-      ${eyebrow('Method')}
-      ${kit.layers.h || kit.layers.lead ? `
-      <div class="layers__head">
-        ${kit.layers.h ? `<h2>${esc(kit.layers.h)}</h2>` : ''}
-        ${kit.layers.lead ? `<p class="layers__lead">${esc(kit.layers.lead)}</p>` : ''}
-      </div>` : ''}
-      <div class="layers__grid">
-        ${kit.layers.cards.map((c) => `
-          <article class="layers__card">
-            <div class="layers__head-row"><span class="n">${esc(c.n)}</span><span class="kicker">${esc(c.kicker)}</span></div>
-            <h3>${esc(c.name)}</h3>
-            ${c.desc ? `<p>${esc(c.desc)}</p>` : ''}
-          </article>`).join('')}
-      </div>
-    </div>
-  </section>` : ''}
-
-  ${kit.reel ? `
-  <section class="band reel">
-    <div class="band__in">
-      ${eyebrow('Humanoid')}
-      <div class="reel__head">
-        <h2>${esc(kit.reel.h)}</h2>
-        <p class="reel__lead">${esc(kit.reel.lead)}</p>
-      </div>
-      <div class="reel__grid" style="--tile-ar:${kit.reel.ar}">${kit.reel.cards.map(tile).join('')}</div>
-    </div>
-  </section>` : ''}
-
   ${kit.bench ? benchSection(kit.bench) : ''}
   ${kit.scale && !['beforeMotionRange', 'afterPipeline'].includes(kit.scale.position) ? scaleSection(kit.scale) : ''}
 
@@ -617,14 +517,13 @@ document.getElementById('page').innerHTML = `
   </section>` : ''}
 
   ${api ? `
-  <section class="band api" id="${api.id || 'api'}">
+  <section class="band api" id="api">
     <div class="band__in">
       ${eyebrow(api.label || 'API')}
       <div class="api__head">
         <h2>${esc(api.h)}</h2>
         ${api.install ? `<button type="button" class="api__copy-cmd" data-copy="${esc(api.install)}" title="Click to copy"><span class="p">$</span><span class="t">${esc(api.install)}</span><span class="o">&#10003; copied</span></button>` : ''}
       </div>
-      ${api.note ? `<p class="api__note">${esc(api.note)}</p>` : ''}
       <div class="api__demo">
         <div class="api__tabs" role="tablist" aria-label="${esc(api.label || 'Example task')}" style="grid-template-columns:repeat(${api.tabs.length},minmax(0,1fr))">
           ${api.tabs.map((t, i) => `<button type="button" role="tab" data-api="${i}" aria-selected="${i === 0}" class="${i === 0 ? 'is-active' : ''}">${esc(t.label)}</button>`).join('')}
@@ -634,51 +533,14 @@ document.getElementById('page').innerHTML = `
             <div class="api__bar">
               <span class="file">${esc(t.file)}</span>
               ${t.source || t.doc ? `<a href="${t.source ? esc(t.source) : `/docs/${key}/${t.doc}/`}">${t.source ? 'source' : 'docs'} &rarr;</a>` : ''}
-              ${t.fullCode ? '<button type="button" class="api__copy" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button>' : ''}
-              <button type="button" class="api__copy copy--swap" data-copy-from="${t.fullCode ? '[data-code-full]' : '.api__body'}"><span class="t">copy</span><span class="o">&#10003; copied</span></button>
+              <button type="button" class="api__copy" data-code-toggle aria-expanded="false" aria-label="Show full code">Full</button>
+              <button type="button" class="api__copy copy--swap" data-copy-from="[data-code-full]"><span class="t">copy</span><span class="o">&#10003; copied</span></button>
             </div>
-            ${t.fullCode ? `<pre class="api__body" style="--api-lines:${Math.max(...api.tabs.map((x) => x.lines.length))}">${rkHighlight(t.lines.map((l) => l.text).join('\n'))}</pre><pre class="api__body" data-code-full hidden>${rkHighlight(t.fullCode)}</pre>` : `<div class="api__body" style="--api-lines:${Math.max(...api.tabs.map((x) => x.lines.length))}">${t.lines.map((l) => `<div>${rkHighlight(l.text) || '&nbsp;'}</div>`).join('')}</div>`}
-            ${t.command ? `<div class="api__launch" data-copy-scope>
-              <div class="api__bar"><span>Interactive demo · run in the GraspKit checkout</span><button type="button" class="api__copy copy--swap" data-copy-from="pre"><span class="t">copy command</span><span class="o">&#10003; copied</span></button></div>
-              <pre>${esc(t.command)}</pre>
-            </div>` : ''}
+            <pre class="api__body">${rkHighlight(t.lines.map((l) => l.text).join('\n'))}</pre><pre class="api__body" data-code-full hidden>${rkHighlight(t.fullCode)}</pre>
           </div>`).join('')}
       </div>
     </div>
   </section>` : ''}
-
-  ${kit.showDetails === false ? '' : `
-  <div class="wrap">
-    ${kit.details ? `
-      <div class="details__head">
-        ${eyebrow(kit.details.label)}
-        <div class="details__intro">
-          <h2>${esc(kit.details.h)}</h2>
-          ${kit.details.lead ? `<p>${esc(kit.details.lead)}</p>` : ''}
-        </div>
-      </div>` : ''}
-    <div class="hl">
-      ${kit.highlights.map((h) => `<div><span class="k">${esc(h.k)}</span><span class="v">${esc(h.v)}</span></div>`).join('')}
-    </div>
-
-    <div class="meta">
-      ${kit.meta.map((m) => `<span class="row"><span class="k">${esc(m.k)}</span><span class="v">${esc(m.v)}</span></span>`).join('')}
-      <span class="row status"><span class="k">status</span><span class="v">● research preview</span></span>
-    </div>
-
-    ${kit.sections.map(section).join('')}
-
-    <section class="end">
-      <div class="end__label"><span class="n">05</span>Get started</div>
-      <div style="min-width:0">
-        <h2>${esc(kit.endH)}</h2>
-        <div class="btns">
-          <a href="/docs/${key}/" class="cta">Open docs</a>
-          <a href="${kit.alt.href}" class="ghost">${esc(kit.alt.label)}</a>
-        </div>
-      </div>
-    </section>
-  </div>`}
 
   ${kit.close ? `
   <section class="band close">
@@ -687,13 +549,13 @@ document.getElementById('page').innerHTML = `
       <h2>${esc(kit.close.h)}</h2>
       <div class="btns">
         <a href="${kit.close.cta ? kit.close.cta.href : `/docs/${key}/`}" class="cta">${esc(kit.close.cta ? kit.close.cta.label : 'Open docs')}</a>
-        <a href="${(kit.close.alt || kit.alt).href}" class="ghost">${esc((kit.close.alt || kit.alt).label)}</a>
+        <a href="${kit.close.alt.href}" class="ghost">${esc(kit.close.alt.label)}</a>
       </div>
     </div>
   </section>` : ''}`;
 rkVideoFallback();
 
-// ---------- imported footage: hydration, tabs, and row sync ----------
+// ---------- lazy clips ----------
 // A clip is fetched and started when it comes within a screen of the viewport
 // and paused when it leaves, so scrolling the page costs one screenful of
 // video rather than forty. A pane that is display:none never intersects, so a
@@ -1003,13 +865,6 @@ if (teaser) {
     video.src = variant.src;
     video.load();
     if (!stillPage) playClip(video);
-    const selection = section.querySelector('[data-stage-selection]');
-    if (selection) selection.textContent = `${variant.label} · ${variant.note}`;
-    const prompt = section.querySelector('[data-stage-prompt]');
-    if (prompt) {
-      prompt.hidden = !variant.prompt;
-      prompt.textContent = variant.prompt || '';
-    }
     if (stage.sidebar) {
       section.querySelector('[data-stage-status]').textContent = stageStatus(stage, variant);
       section.querySelector('[data-stage-record]').innerHTML = stageRecord(stage, variant);
@@ -1310,19 +1165,13 @@ document.querySelectorAll('[data-stage-benchmark]').forEach((badge) => {
   ['timeupdate', 'seeking', 'loadedmetadata', 'emptied'].forEach((event) => video.addEventListener(event, update));
   update();
 });
-if (lazyClips.length) {
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) { hydrateClip(e.target); if (!stillPage && !e.target.dataset.inspection) playClip(e.target); }
-        else e.target.pause();
-      });
-    }, { rootMargin: '320px 0px', threshold: 0.01 });
-    lazyClips.forEach((v) => io.observe(v));
-  } else {
-    lazyClips.forEach(hydrateClip);
-  }
-}
+const lazyObserver = new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if (e.isIntersecting) { hydrateClip(e.target); if (!stillPage && !e.target.dataset.inspection) playClip(e.target); }
+    else e.target.pause();
+  });
+}, { rootMargin: '320px 0px', threshold: 0.01 });
+lazyClips.forEach((v) => lazyObserver.observe(v));
 
 // Match the scale demo's transition: hold the outgoing last frame underneath
 // until the incoming clip is actually playing, then fade it in and warm the
@@ -1371,9 +1220,6 @@ if (heroClips.length > 1) {
   warmHeroClip(1);
 }
 
-// The gallery's tab strip only decides which pane is shown; a hidden pane
-// never intersects, so its clips stay cold until it is opened and the observer
-// above starts them on its own.
 // ---------- bento: the cursor lights every border, not just one ----------
 // Each card's border gradient is centred on the pointer in that card's own
 // coordinates. The values are deliberately unclamped: a distant card gets a
@@ -1405,54 +1251,6 @@ document.querySelectorAll('.bento__grid, .bento__row').forEach((grid) => {
     frame = 0;
     point = null;
   });
-});
-
-// ---------- a bento card that rolls through its family ----------
-// The in-hand card has four objects to show and one frame to show them in, so
-// it plays each in turn. Same three-class crossfade as the hero above — the
-// outgoing clip stays opaque underneath while the incoming one fades in, so the
-// poster behind them never flashes through — but paced by a timer rather than
-// by the clip ending, because these run from five to twenty seconds.
-document.querySelectorAll('[data-bento-reel]').forEach((frame) => {
-  const clips = [...frame.querySelectorAll('.card-clip')];
-  if (clips.length < 2) return;
-  const dwell = Number(frame.dataset.bentoReel) || 6000;
-  let at = 0;
-  let timer = 0;
-  const warm = (i) => hydrateClip(clips[i % clips.length]);
-  const advance = () => {
-    const previous = clips[at];
-    at = (at + 1) % clips.length;
-    const next = clips[at];
-    warm(at);
-    warm(at + 1);
-    next.classList.add('is-active', 'is-entering');
-    previous.classList.remove('is-active');
-    previous.classList.add('is-under');
-    try { next.currentTime = 0; } catch (e) {}
-    playClip(next);
-    requestAnimationFrame(() => next.classList.remove('is-entering'));
-    setTimeout(() => { previous.classList.remove('is-under'); previous.pause(); }, 420);
-  };
-  const start = () => {
-    if (stillPage || timer) return;
-    warm(at);
-    warm(at + 1);
-    playClip(clips[at]);
-    timer = setInterval(advance, dwell);
-  };
-  const stop = () => {
-    clearInterval(timer);
-    timer = 0;
-    clips.forEach((v) => v.pause());
-  };
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver((entries) => {
-      entries.forEach((e) => (e.isIntersecting ? start() : stop()));
-    }, { rootMargin: '200px 0px', threshold: 0.01 }).observe(frame);
-  } else {
-    start();
-  }
 });
 
 // ---------- RetargetingKit capability reels ----------
@@ -1555,17 +1353,12 @@ document.querySelectorAll('[data-motion-reel]').forEach((card) => {
   });
   document.addEventListener('visibilitychange', refreshPlayback);
 
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        inView = entry.isIntersecting;
-        refreshPlayback();
-      });
-    }, { rootMargin: '180px 0px', threshold: 0.08 }).observe(card);
-  } else {
-    inView = true;
-    refreshPlayback();
-  }
+  new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      inView = entry.isIntersecting;
+      refreshPlayback();
+    });
+  }, { rootMargin: '180px 0px', threshold: 0.08 }).observe(card);
 });
 
 // ---------- RetargetingKit motion range ----------
@@ -1721,7 +1514,6 @@ if (scaleRange) {
     stepIndex = Math.min(nextStep, task.steps.length - 1);
     selectedSteps[taskIndex] = stepIndex;
     scale.classList.toggle('scale--responsive', Boolean(step.mobileVideo));
-    scale.classList.toggle('scale--neutral-stage', Boolean(task.neutralStage));
     if (step.mobileAspect) scale.style.setProperty('--scale-mobile-aspect', step.mobileAspect);
     else scale.style.removeProperty('--scale-mobile-aspect');
     if (playbackFooter) {
@@ -1809,7 +1601,7 @@ if (scaleRange) {
   mobileScale.addEventListener('change', updateScaleMedia);
   updateScaleMedia();
   document.addEventListener('visibilitychange', refreshPlayback);
-  if (kit.scale.lazy && 'IntersectionObserver' in window) {
+  if (kit.scale.lazy) {
     new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         inView = entry.isIntersecting;
@@ -1861,7 +1653,7 @@ document.querySelectorAll('.bench__table').forEach((benchTable) => {
     benchTable.classList.add('is-in');
     countUp();
   };
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) benchTable.classList.add('is-in');
+  if (stillPage) benchTable.classList.add('is-in');
   else {
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => { if (e.isIntersecting) { reveal(); io.disconnect(); } });
@@ -1903,8 +1695,7 @@ const cue = document.getElementById('scrollcue');
 if (cue) cue.addEventListener('click', () => {
   const el = document.querySelector('#page .band');
   if (!el) return;
-  const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
-  el.scrollIntoView({ behavior, block: 'start' });
+  el.scrollIntoView({ behavior: stillPage ? 'auto' : 'smooth', block: 'start' });
 });
 
 // The API examples are one card with a tab strip: every pane is rendered and

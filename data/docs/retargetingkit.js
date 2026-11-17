@@ -1,4 +1,4 @@
-// retargetingkit documentation. Written by scripts/import_retargetingkit_docs.py; the
+// retargetingkit documentation. Written by scripts/import_docs.py; the
 // hand-written groups outside the GENERATED markers are edited here.
 // Loaded only by scripts/build_docs.py -- the browser reads the static
 // pages it emits, never this file.
@@ -7,7 +7,7 @@ window.RK_DOCS.retargetingkit = {
     title: 'retargetingkit',
     lede: "Real-time human-to-robot motion retargeting, built on robokit.",
     groups: [
-      // BEGIN GENERATED retargetingkit DOCS (scripts/import_retargetingkit_docs.py)
+      // BEGIN GENERATED retargetingkit DOCS (scripts/import_docs.py)
 {
   "name": "User Guide",
   "items": [
