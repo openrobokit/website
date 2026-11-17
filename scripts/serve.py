@@ -88,7 +88,7 @@ class RangeHandler(http.server.SimpleHTTPRequestHandler):
 
 
 def main():
-    port = int(sys.argv[1]) if len(sys.argv) > 1 else 8734
+    port = int(sys.argv[1]) if len(sys.argv) > 1 else 8914
     root = sys.argv[2] if len(sys.argv) > 2 else "."
     socketserver.ThreadingTCPServer.allow_reuse_address = True
     handler = functools.partial(RangeHandler, directory=root)

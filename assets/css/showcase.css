@@ -4,7 +4,6 @@
 
 body.page--showcase, body.page--showcase .band { background: #FFFFFF; }
 body.page--showcase .band__in { min-width: 0; }
-.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 /* ---------- head ---------- */
 .runs { min-height: 100vh; padding-top: calc(var(--site-nav-height) + clamp(28px, 5vh, 56px)); }
@@ -211,12 +210,6 @@ nav.crumbs { display: block; height: auto; padding: 0; background: none; }
 .run__code .tok-c { color: var(--code-comment, #918A7C); font-style: italic; }
 
 /* ---------- motion generation: hub cards and a run's page ---------- */
-.mg-status {
-  display: inline-flex; align-items: center; gap: 5px; white-space: nowrap;
-  font: 500 12px/1 'JetBrains Mono', monospace; color: #5B6478;
-}
-.mg-status svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
-.mg-status.is-pass { color: #36398A; }
 /* a section's illustration: what goes in → the agent's loop → what comes out */
 .runs__flow {
   display: flex; align-items: stretch; gap: 14px; margin: -4px 0 32px; padding: 20px;
@@ -317,17 +310,12 @@ nav.crumbs { display: block; height: auto; padding: 0; background: none; }
 .mg-chain { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .mg-chain span { display: inline-flex; align-items: center; min-height: 32px; padding: 4px 12px; border-radius: 8px; border: 1px solid #E6E8F0; font-size: 14px; color: #182B49; }
 .mg-chain i { font-style: normal; color: #8A91A5; }
-.mg-credit { margin: 0; font-size: 14px; line-height: 1.6; color: #5B6478; }
-.mg-credit a, .mg-fine a { color: var(--accent); border-bottom: 1px solid currentColor; }
+.mg-fine a { color: var(--accent); border-bottom: 1px solid currentColor; }
 .mg-facts { flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 20px; padding: 24px; border-radius: 16px; border: 1px solid #E6E8F0; }
 .mg-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; padding-bottom: 20px; border-bottom: 1px solid #EEF0F5; }
 .mg-stats > div { display: flex; flex-direction: column; gap: 8px; }
 .mg-stats b { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; color: #182B49; }
 .mg-stats small { font-size: 15px; font-weight: 500; color: #5B6478; }
-.mg-checks { display: flex; flex-direction: column; padding-bottom: 20px; border-bottom: 1px solid #EEF0F5; }
-.mg-checks .mg-label { margin-bottom: 8px; }
-.mg-checks > div { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 36px; font-size: 14px; color: #182B49; }
-.mg-checks .mg-status { max-width: 62%; white-space: normal; text-align: right; line-height: 1.4; }
 .mg-fine { margin: 0; font-size: 13px; line-height: 1.6; color: #5B6478; }
 .mg-more { margin-top: 48px; }
 .mg-more__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 16px; }

@@ -7,7 +7,7 @@ window.RK_DOCS.robokit = {
     title: 'robokit',
     lede: "GPU-native, differentiable robotics tooling: IK, trajectory optimization, retargeting, grasping, calibration.",
     groups: [
-      // BEGIN GENERATED DOCS (tools/import_docs.py)
+      // BEGIN GENERATED robokit DOCS (scripts/import_docs.py)
 {
   "name": "User Guide",
   "items": [
@@ -35716,6 +35716,6 @@ window.RK_DOCS.robokit = {
     }
   ]
 },
-// END GENERATED DOCS
+// END GENERATED robokit DOCS
     ]
 };

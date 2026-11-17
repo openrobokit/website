@@ -70,9 +70,6 @@ window.RK_HERO_REELS = {
   ],
 };
 
-const C = (text) => ({ text, comment: true });
-const L = (text) => ({ text });
-
 // The original footage shares one cache version. Independently rendered
 // embodiment cuts below carry their own version stamps.
 const RKV = '?v=1788938453028';
@@ -89,12 +86,12 @@ const rangeClip = (p, label, version = '20260908-range2') => ({
 
 // RoboSkills media helpers, carried over from the standalone RoboSkills site.
 const SKV = '?v=20261030-r2s-bars';
-const sk = (p, label, note) => ({
-  label, note, src: `/assets/videos/roboskills/${p}.mp4${SKV}`, poster: `/assets/images/roboskills/${p}.webp${SKV}`,
+const sk = (p, label) => ({
+  label, src: `/assets/videos/roboskills/${p}.mp4${SKV}`, poster: `/assets/images/roboskills/${p}.webp${SKV}`,
 });
 const SHV = '?v=20261030-g1-grey';
-const sh = (p, label, note) => ({
-  label, note, run: p, src: `/assets/videos/showcase/${p}.mp4${SHV}`, poster: `/assets/images/showcase/${p}.webp${SHV}`,
+const sh = (p, label) => ({
+  label, run: p, src: `/assets/videos/showcase/${p}.mp4${SHV}`, poster: `/assets/images/showcase/${p}.webp${SHV}`,
 });
 const SKT = '?v=20261029-cover';
 const skTeaser = (p, still) => ({
@@ -110,22 +107,14 @@ const arStage = (p, label, result, note) => ({
   label, result, note, src: `/assets/videos/showcase/auto-research/${p}.mp4?v=20261029-stages-2`, poster: `/assets/images/showcase/auto-research/${p}.webp?v=20261029-stages-2`,
 });
 const arStages = (o) => Object.assign({ src: o.stages[0].src, poster: o.stages[0].poster }, o);
-const skStage = (o) => Object.assign({ type: 'stage', picker: 'tabs', src: o.variants[0].src, poster: o.variants[0].poster }, o);
+const skStage = (o) => Object.assign({ type: 'stage', src: o.variants[0].src, poster: o.variants[0].poster }, o);
 
 window.RK_PROJECTS = {
   robokit: {
-    crumb: 'robokit', titleA: 'robo', titleB: 'kit',
+    titleA: 'robo', titleB: 'kit',
     heroVideoMobile: '/assets/videos/robokit/hero-composite-mobile.mp4?v=20261015-plan4s-1x',
     lede: "It's just fast, and batched.",
     chip: 'Core library', install: 'uv add robokit',
-    showDetails: false,
-    highlights: [
-      { k: 'Batched', v: 'Thousands of seeds solved in one call.' },
-      { k: 'Differentiable', v: 'Gradients flow through kinematics.' },
-      { k: 'One runtime', v: 'Warp kernels, PyTorch tensors, CUDA.' },
-    ],
-    meta: [{ k: 'version', v: '0.1.0' }, { k: 'license', v: 'MIT' }, { k: 'python', v: '3.8+' }, { k: 'backend', v: 'warp · pytorch' }],
-    endH: 'Read the docs, then build on it.',
     // The six tasks and their order follow robokit 1.0.0's docs overview grid
     // (docs/guide/overview.md): two RL policies, then four MPC motions.
     mpc: {
@@ -238,7 +227,7 @@ window.RK_PROJECTS = {
         {"label": "Calibration", "file": "hand_eye_calibration.py", "doc": "hand_eye_calibration", "lines": [{"text": "from robokit.helpers.hand_eye_calibration import HandEyeCalibrator, presets"}, {"text": ""}, {"text": "hec = HandEyeCalibrator(presets.rgb, robot, camera_intrinsic=intrinsic, height=H, width=W)"}, {"text": "predicted = hec.solve(initial, target_masks=masks, q=q)"}], "fullCode": "import torch\nfrom robokit.helpers.hand_eye_calibration import compute_robot_masks\nfrom robokit.robo import Robot\n\n# A one-joint box robot needs no external assets.\nrobot = Robot.load(\n    \"\"\"<robot name=\"demo\">\n  <link name=\"base\"><visual><geometry><box size=\".3 .2 .1\"/></geometry></visual></link>\n  <link name=\"arm\"><visual><origin xyz=\".2 0 0\"/><geometry><box size=\".4 .1 .1\"/></geometry></visual></link>\n  <joint name=\"joint\" type=\"revolute\">\n    <parent link=\"base\"/><child link=\"arm\"/><axis xyz=\"0 0 1\"/>\n    <limit lower=\"-3.14\" upper=\"3.14\" effort=\"1\" velocity=\"1\"/>\n  </joint>\n</robot>\"\"\",\n    load_meshes=True,\n)\nH = W = 64\nq = torch.tensor([[-0.6], [-0.2], [0.2], [0.6]], device=\"cuda\")\nintrinsic = torch.tensor([[80.0, 0, W / 2], [0, 80.0, H / 2], [0, 0, 1]], device=\"cuda\")\ninitial = torch.eye(4, device=\"cuda\")\ninitial[2, 3] = 1.5\nmasks = compute_robot_masks(robot, q, intrinsic, initial, H, W)\nfrom robokit.helpers.hand_eye_calibration import HandEyeCalibrator, presets\n\nhec = HandEyeCalibrator(presets.rgb, robot, camera_intrinsic=intrinsic, height=H, width=W)\npredicted = hec.solve(initial, target_masks=masks, q=q)\nassert predicted.shape == (4, 4)\nassert torch.isfinite(predicted).all()"},
       ],
     },
-    close: { h: 'Read the docs, then build on it.' },
+    close: { h: 'Read the docs, then build on it.', alt: { label: 'View on GitHub', href: 'https://github.com/openrobokit/robokit' } },
     bench: {
       h: "It's just fast.",
       rows: [
@@ -254,71 +243,13 @@ window.RK_PROJECTS = {
       ],
       note: 'Bars are wall-clock time on the same task, baseline normalized to full width. Check the paper for benchmark details.',
     },
-    alt: { label: 'View on GitHub', href: 'https://github.com/openrobokit/robokit' },
-    sections: [
-      {
-        n: '01', label: 'Overview', h: 'The layer between a controller and a policy.',
-        paras: ["robokit is a single GPU-native library for the geometric work in robot learning: forward / inverse kinematics, collision-aware trajectory optimization, human-to-robot motion retargeting, grasp optimization, and rendering-based calibration. Every operation is batched along the leading dimension and differentiable through PyTorch, dispatched to CUDA through NVIDIA Warp."],
-        linkLead: 'It is the foundation the rest of the stack builds on:',
-        links: [
-          { label: 'retargetingkit', href: '/retargetingkit/', sep: ' and ' },
-          { label: 'graspkit', href: '/graspkit/', sep: " both call into robokit's chains, solvers, and SDF colliders." },
-        ],
-        codeFile: 'shell',
-        codeLines: [L('uv add robokit'), L('uv add torch --index-url https://download.pytorch.org/whl/cu126'), C('# optional; pick your CUDA build')],
-      },
-      {
-        n: '02', label: 'Modules', h: 'Six modules. One runtime.',
-        cardCols: 'repeat(2,1fr)',
-        cards: [
-          { kicker: '→ ROBO', name: 'robo', desc: 'Robot, RobotSpec, RobotState. URDF / MJCF parsing, batched forward kinematics & collision on Warp.' },
-          { kicker: '→ OPT', name: 'opt', desc: 'Sparse least-squares solvers (GD / Levenberg–Marquardt / L-BFGS) behind every helper.' },
-          { kicker: '→ TERMS', name: 'terms', desc: 'Composable cost terms: position, rotation, frame, collision, self-collision, smoothness, limits.' },
-          { kicker: '→ LIE', name: 'lie', desc: 'SE(3) / SO(3) Lie-group ops with the T_dst_src transform convention.' },
-          { kicker: '→ GEOM', name: 'geom', desc: 'Meshes, primitives, signed-distance fields, and Warp collision scenes.' },
-          { kicker: '→ HELPERS', name: 'helpers', desc: 'The applications: IK, trajectory optimization, humanoid & hand retargeting, calibration.' },
-        ],
-        codeFile: 'examples/ik/basic.py',
-        codeLines: [{"text": "from robokit.helpers.ik import IKSolver, presets"}, {"text": ""}, {"text": "ik = IKSolver(presets.smooth, robot=robot, target_links=\"panda_hand\", device=device)"}, {"text": "state = ik.solve_numpy(T_world_target_batch)"}, {"text": "q_batch = state.q.numpy()"}],
-      },
-      {
-        n: '03', label: 'Built for the loop', h: 'Shaped for the training loop.',
-        paras: ['Robot learning runs geometry inside a tight loop with a neural network: generate data, retarget onto new embodiments, roll out optimizers across thousands of seeds, repeat. robokit is built for that loop: tensors stay on device, gradients flow through, and a single batch drives thousands of parallel solves.'],
-        bullets: [
-          'Batched IK across many seeds with a multi-stage Levenberg–Marquardt solver.',
-          'Collision-aware trajectory optimization over a time horizon.',
-          'SMPL-X / MANO retargeting onto humanoids and dexterous hands.',
-          'Grasp optimization with force-closure and contact terms.',
-          'Hand-eye calibration from images.',
-        ],
-        callout: 'If you can write it as a (batch, time, joints) tensor, robokit will run it across thousands of seeds at training speed.',
-      },
-      {
-        n: '04', label: 'The stack', h: 'The base of the stack.',
-        cardCols: 'repeat(3,1fr)',
-        cards: [
-          { kicker: '↑ BUILT ON IT', name: 'retargetingkit', desc: 'Real-time teleop & mocap retargeting using robokit IK and body models.' },
-          { kicker: '↑ BUILT ON IT', name: 'graspkit', desc: 'Grasp synthesis, policy learning, and deployment on robokit + retargetingkit.' },
-          { kicker: '↗ EXTERNAL', name: 'MuJoCo · Isaac · viser', desc: 'Load URDF / MJCF, play trajectories as PD targets, visualize live.' },
-        ],
-      },
-    ],
   },
 
   retargetingkit: {
-    crumb: 'retargetingkit', titleA: 'retargeting', titleB: 'kit',
+    titleA: 'retargeting', titleB: 'kit',
     lede: 'Real-time human-to-robot motion retargeting, built on robokit.',
     chip: 'Teleoperation', install: 'uv add retargetingkit',
-    highlights: [
-      { k: 'Live sources', v: 'VR headsets, gloves, mocap suits, cameras.' },
-      { k: 'Any target', v: 'Dexterous hands, arms, full humanoids.' },
-      { k: 'Sim or real', v: 'MuJoCo playback or ZMQ to hardware.' },
-    ],
-    meta: [{ k: 'version', v: '0.1.0' }, { k: 'built on', v: 'robokit' }, { k: 'python', v: '3.10+' }, { k: 'backend', v: 'warp · pytorch' }],
-    showDetails: false,
-    endH: 'Read the docs, then retarget it.',
-    alt: { label: 'Back to robokit', href: '/robokit/' },
-    close: { h: 'Read the docs, then retarget it.' },
+    close: { h: 'Read the docs, then retarget it.', alt: { label: 'Back to robokit', href: '/robokit/' } },
 
     // Each group is its own full-width band: one 16:9 stage per screen, with the
     // scene picker and the counter laid over the footage rather than beside it.
@@ -440,75 +371,21 @@ window.RK_PROJECTS = {
       h: 'Simple API and framework.',
       install: 'uv add retargetingkit',
       tabs: [
-        // Generated from RetargetingKit guide examples by scripts/import_retargetingkit_docs.py.
+        // Generated from RetargetingKit guide examples by scripts/import_docs.py.
         {"label": "Hand", "file": "hand.py", "doc": "hand-optimization", "lines": [{"text": "from retargetingkit.configs.teleop.hand.manus_sharpa import RIGHT_MANUS_SHARPA_CONFIG"}, {"text": ""}, {"text": "retargeter = RIGHT_MANUS_SHARPA_CONFIG.retargeter.build(device)"}, {"text": ""}, {"text": "for frame in stream:  # HandFrame: right-hand MANO-21 keypoints"}, {"text": "    command = retargeter.solve(frame)"}, {"text": "    qpos = command.qpos  # (22,), Sharpa joints in URDF order"}], "fullCode": "import pickle\n\nimport numpy as np\nimport warp as wp\n\nfrom retargetingkit.assets.example_data import MANUS_DATA_RIGHT_PKL\nfrom retargetingkit.sources.frames import HandFrame, HandPose\n\ndevice = \"cuda:0\" if wp.is_cuda_available() else \"cpu\"\n# Three recorded wrist-local MANO-21 frames from a right Manus glove.\nkeypoints = pickle.load(open(MANUS_DATA_RIGHT_PKL, \"rb\"))[\"keypoints\"][:3]\nstream = [HandFrame({\"right\": HandPose(points)}) for points in keypoints]\nfrom retargetingkit.configs.teleop.hand.manus_sharpa import RIGHT_MANUS_SHARPA_CONFIG\n\nretargeter = RIGHT_MANUS_SHARPA_CONFIG.retargeter.build(device)\n\nfor frame in stream:  # HandFrame: right-hand MANO-21 keypoints\n    command = retargeter.solve(frame)\n    qpos = command.qpos  # (22,), Sharpa joints in URDF order\nassert qpos.shape == (22,)\nassert np.isfinite(qpos).all()"},
         {"label": "Arm and hand", "file": "arm_hand.py", "doc": "arm-retargeting", "lines": [{"text": "from retargetingkit.configs.teleop.arm_hand.visionpro_xarm7_xhand import RIGHT_VISIONPRO_XARM7_XHAND_CONFIG"}, {"text": ""}, {"text": "config = RIGHT_VISIONPRO_XARM7_XHAND_CONFIG"}, {"text": "arm = config.arm_retargeters[\"right\"].build(device)"}, {"text": "hand = config.hand_retargeters[\"right\"].build(device)"}, {"text": ""}, {"text": "for frame in stream:  # ArmHandFrame: synchronized wrist and finger poses"}, {"text": "    arm_qpos = arm.solve(frame.arm).qpos  # (7,), xArm7 joints"}, {"text": "    hand_qpos = hand.solve(frame.hand).qpos  # (12,), XHand joints"}], "fullCode": "import pickle\n\nimport numpy as np\nimport warp as wp\n\nfrom retargetingkit.assets.example_data import MANUS_DATA_RIGHT_PKL\nfrom retargetingkit.sources.frames import ArmFrame, ArmHandFrame, HandFrame, HandPose\n\ndevice = \"cuda:0\" if wp.is_cuda_available() else \"cpu\"\nkeypoints = pickle.load(open(MANUS_DATA_RIGHT_PKL, \"rb\"))[\"keypoints\"][:3]\n# Recorded finger poses paired with a wrist moving 10 cm forward.\nstream = [\n    ArmHandFrame(\n        ArmFrame({\"right\": np.array([0.05 * i, -0.2, 1.1, 1, 0, 0, 0], dtype=np.float32)}),\n        HandFrame({\"right\": HandPose(points)}),\n    )\n    for i, points in enumerate(keypoints)\n]\nfrom retargetingkit.configs.teleop.arm_hand.visionpro_xarm7_xhand import RIGHT_VISIONPRO_XARM7_XHAND_CONFIG\n\nconfig = RIGHT_VISIONPRO_XARM7_XHAND_CONFIG\narm = config.arm_retargeters[\"right\"].build(device)\nhand = config.hand_retargeters[\"right\"].build(device)\n\nfor frame in stream:  # ArmHandFrame: synchronized wrist and finger poses\n    arm_qpos = arm.solve(frame.arm).qpos  # (7,), xArm7 joints\n    hand_qpos = hand.solve(frame.hand).qpos  # (12,), XHand joints\nassert arm_qpos.shape == (7,)\nassert hand_qpos.shape == (12,)\nassert np.isfinite(arm_qpos).all()\nassert np.isfinite(hand_qpos).all()"},
         {"label": "Humanoid", "file": "humanoid.py", "doc": "humanoid-retargeting", "lines": [{"text": "from retargetingkit.retargeting.humanoid.online import HumanoidRetargeterConfig"}, {"text": "from retargetingkit.retargeting.humanoid.presets.g1 import g1_aligned"}, {"text": ""}, {"text": "retargeter = HumanoidRetargeterConfig(g1_aligned).build(device)"}, {"text": ""}, {"text": "command = retargeter.solve(frame)  # BodyFrame: named world-frame joint poses"}, {"text": "base_pose = command.base_pose  # (7,), [x, y, z, qw, qx, qy, qz]"}, {"text": "qpos = command.qpos  # (29,), G1 joints in URDF order"}], "fullCode": "import numpy as np\nimport warp as wp\n\nfrom retargetingkit.assets.sample_bvh import EXAMPLE_BVH\nfrom retargetingkit.sources.misc.human_frame_file import BodyFileSourceConfig\n\ndevice = \"cuda:0\" if wp.is_cuda_available() else \"cpu\"\nsource = BodyFileSourceConfig(EXAMPLE_BVH, use_ankle_as_foot_target=True).build()\nframe = source.get_frame()\nfrom retargetingkit.retargeting.humanoid.online import HumanoidRetargeterConfig\nfrom retargetingkit.retargeting.humanoid.presets.g1 import g1_aligned\n\nretargeter = HumanoidRetargeterConfig(g1_aligned).build(device)\n\ncommand = retargeter.solve(frame)  # BodyFrame: named world-frame joint poses\nbase_pose = command.base_pose  # (7,), [x, y, z, qw, qx, qy, qz]\nqpos = command.qpos  # (29,), G1 joints in URDF order\nassert base_pose.shape == (7,)\nassert qpos.shape == (29,)\nassert np.isfinite(qpos).all()\nsource.close()"},
       ],
     },
 
-    details: {
-      label: 'System',
-      h: 'One pipeline, multiple bodies.',
-    },
-
-    sections: [
-      {
-        n: '01', label: 'Overview', h: 'Human motion in. Robot motion out.',
-        paras: ['retargetingkit is a real-time pipeline that turns human motion into robot commands: Sources → Retargeting → Targets. Sources produce skeletal frames (VR, gloves, mocap, cameras, or recorded BVH); the retargeting stage maps them to robot joint angles with robokit IK; targets execute on hardware or in sim.'],
-        linkLead: 'It is built on',
-        links: [
-          { label: 'robokit', href: '/robokit/', sep: " (hand and humanoid mapping use robokit's chains, solvers, and SMPL-X / MANO models) and provides the teleop and deployment layer for " },
-          { label: 'graspkit', href: '/graspkit/', sep: '.' },
-        ],
-        codeFile: 'shell',
-        codeLines: [
-          L('uv add retargetingkit'), C('# core'),
-          L('uv add "retargetingkit[pico]"'), C('# + a device, e.g. PICO VR'),
-        ],
-      },
-      {
-        n: '02', label: 'Pipeline', h: 'Sources → Retargeting → Targets.',
-        cardCols: 'repeat(3,1fr)',
-        cards: [
-          { kicker: 'A · SOURCES', name: 'VR · gloves · mocap · cameras', desc: 'PICO, Quest 3, Vision Pro, Manus, Axis Studio, RealSense / ZED, or BVH playback, unified as hand & body frames.' },
-          { kicker: 'B · RETARGETING', name: 'optimization · neural · IK', desc: 'Map frames to joint angles with robokit: hand optimization with pinch & self-collision terms, neural hand models, arm IK, and humanoid retargeting.' },
-          { kicker: 'C · TARGETS', name: 'hands · arms · humanoids', desc: 'Inspire, Ability, SHARPA, xHand; xArm, RBY1; G1 / SONIC humanoid, over ZMQ, serial, or simulation.' },
-        ],
-        codeFile: 'scripts/teleop/humanoid.py',
-        codeLines: [
-          C('# replay the sample BVH on G1, with the live viewer'),
-          L('uv run --extra vis scripts/teleop/humanoid.py bvh_g1_sonic_viser'),
-        ],
-      },
-      {
-        n: '03', label: 'Hardware', h: 'Plug in your hardware.',
-        paras: ['Sources and targets are protocols, so any device that produces a hand or body frame can drive any robot that accepts joint commands.'],
-        cardCols: 'repeat(2,1fr)',
-        cards: [
-          { kicker: 'SOURCES', name: 'in', desc: 'PICO 4 · Vision Pro · Quest 3 (VR) · Manus gloves · Axis Studio mocap · RealSense / ZED cameras · BVH files.' },
-          { kicker: 'TARGETS', name: 'out', desc: 'Inspire (6-DoF serial) · Ability Hand · SHARPA · xHand; xArm · RBY1 · DexMate arms; G1 / SONIC humanoid (ZMQ).' },
-        ],
-      },
-      {
-        n: '04', label: 'The stack', h: 'Part of the stack.',
-        cardCols: 'repeat(3,1fr)',
-        cards: [
-          { kicker: '↓ BUILT ON', name: 'robokit', desc: 'IK, kinematic chains, and SMPL-X / MANO body models.' },
-          { kicker: '↑ FEEDS', name: 'graspkit', desc: 'Teleop bridges and real-robot deployment for grasp learning.' },
-          { kicker: '↗ EXTERNAL', name: 'MuJoCo · ZMQ · viser', desc: 'Simulation playback, streaming to deploy systems, live visualization.' },
-        ],
-      },
-    ],
   },
 
   graspkit: {
-    crumb: 'graspkit', titleA: 'grasp', titleB: 'kit',
+    titleA: 'grasp', titleB: 'kit',
     heroVideoMobile: '/assets/videos/graspkit/hero-scissors-mobile.mp4?v=20261017-restored-blue',
     lede: 'End-to-end grasp pipeline, built on robokit and retargetingkit.',
     chip: 'Grasp pipeline', install: 'uv add graspkit',
     // the body is the media run below, so the prose column is dropped
-    showDetails: false,
     // One clip per row, full measure. Both carry their own telemetry -- a
     // running clock, a batch count -- which is the claim, so they are not
     // shrunk into a two-up grid where that type stops resolving.
@@ -585,70 +462,16 @@ window.RK_PROJECTS = {
         {"label":"Real deploy","file":"deploy_real.py","source":"https://github.com/openrobokit/graspkit/blob/main/scripts/deploy/deploy.py","lines":[{"text":"import torch"},{"text":"from graspkit.configs.real_env_config import REAL_ENV_CONFIGS"},{"text":"from graspkit.envs import RealEnv"},{"text":""},{"text":"env = RealEnv("},{"text":"    REAL_ENV_CONFIGS[\"xarm7_xhand_right\"], torch.device(\"cuda:0\"), t_robot_cam"},{"text":")"},{"text":""},{"text":"env.reset(init_qpos=phases[0][0])"},{"text":"for phase in phases:"},{"text":"    info = env.set_qpos_traj(phase)"},{"text":"env.close()"}],"fullCode":"import graspkit\nimport json\nimport torch\nfrom graspkit.configs.real_env_config import REAL_ENV_CONFIGS\nfrom graspkit.envs import RealEnv\n\n# Configure your arm, hand, and camera in xarm7_xhand_right.\n# camera_pose.json: your measured camera extrinsic in the robot-base frame\nwith open(\"camera_pose.json\") as f:\n    t_robot_cam = json.load(f)[\"T_base_camera\"]\nenv = RealEnv(\n    REAL_ENV_CONFIGS[\"xarm7_xhand_right\"], torch.device(\"cuda:0\"), t_robot_cam\n)\n\n# phases: approach / close / hold / lift tensors (T, D), after fixed-base IK\n# Executes on hardware; the interactive demo below lets you inspect the plan.\nenv.reset(init_qpos=phases[0][0])\nfor phase in phases:\n    info = env.set_qpos_traj(phase)\nenv.close()"},
       ],
     },
-    close: { h: 'Read the docs, then grasp it.' },
-    highlights: [
-      { k: 'Force closure', v: 'Contact-aware grasps with friction cones.' },
-      { k: '258k scenes', v: 'dev / mini / small / full size tiers.' },
-      { k: 'Train → deploy', v: 'Policies that run on real robots.' },
-    ],
-    meta: [{ k: 'version', v: '0.1.0' }, { k: 'built on', v: 'robokit' }, { k: 'python', v: '3.10' }, { k: 'backend', v: 'torch · maniskill · warp' }],
-    endH: 'Read the docs, then grasp it.',
-    alt: { label: 'Back to robokit', href: '/robokit/' },
-    sections: [
-      {
-        n: '01', label: 'Overview', h: 'From an object to a grasp that runs on hardware.',
-        paras: ['graspkit is a full research pipeline for grasping: process object assets, build scenes, render point-cloud observations, optimize stable force-closure grasps, train neural policies from the results, and deploy them on real robots. One unified launcher drives every stage on the GPU.'],
-        linkLead: 'It is built on',
-        links: [
-          { label: 'robokit', href: '/robokit/', sep: ' (kinematics, contact, optimization) and ' },
-          { label: 'retargetingkit', href: '/retargetingkit/', sep: ' (deployment), so optimized grasps flow straight into whole-body control on real hardware.' },
-        ],
-        codeFile: 'shell',
-        codeLines: [
-          L('uv add graspkit'),
-        ],
-      },
-      {
-        n: '02', label: 'Pipeline', h: 'Assets → Optimize → Learn → Deploy.',
-        cardCols: 'repeat(3,1fr)',
-        cards: [
-          { kicker: 'A · GENERATE', name: 'scenes & observations', desc: 'Randomized tabletop scenes; point-cloud rendering with configurable camera pose and intrinsics.' },
-          { kicker: 'B · OPTIMIZE', name: 'force-closure grasps', desc: 'Floating- and fixed-base grasp optimization with friction cones, penetration and self-penetration limits.' },
-          { kicker: 'C · LEARN & DEPLOY', name: 'policy → robot', desc: 'Train an open-loop policy from optimized grasps; deploy on xArm, RBY1, or G1 with whole-body control.' },
-        ],
-        codeFile: 'scripts/launch.py',
-        codeLines: [C('# end-to-end mini pipeline on GPU 0'), L('uv run scripts/launch.py g1_inspire_dex1b_tabletop_mini --gpus 0')],
-      },
-      {
-        n: '03', label: "What's inside", h: 'A whole pipeline, one launcher.',
-        paras: ['The unified launcher orchestrates every stage and can restart from any step with --restart-from, so you can iterate on optimization or training without rerunning the whole pipeline.'],
-        bullets: [
-          'Scene descriptions (v0.3–v0.5) from DexGraspNet, DexDiffuser, Objaverse, and RoboCasa.',
-          'Size tiers: dev / mini / small / full (up to ~258k floating-base scenes).',
-          'HDF5 grasp data: grasp, pre-grasp, and post-grasp qpos per scene.',
-          'Open-loop policy (transformer / ViT backbone) over point-cloud observations.',
-          'Sim-to-real evaluator networks and multi-GPU training.',
-        ],
-      },
-      {
-        n: '04', label: 'The stack', h: 'Part of the stack.',
-        cardCols: 'repeat(3,1fr)',
-        cards: [
-          { kicker: '↓ BUILT ON', name: 'robokit', desc: 'Kinematics, contact, and grasp-optimization terms.' },
-          { kicker: '↓ BUILT ON', name: 'retargetingkit', desc: 'Real-robot deployment and teleop bridges.' },
-          { kicker: '↗ EXTERNAL', name: 'ManiSkill · Warp · wandb', desc: 'Simulation environments, CUDA kernels, and experiment tracking.' },
-        ],
-      },
-    ],
+    close: { h: 'Read the docs, then grasp it.', alt: { label: 'Back to robokit', href: '/robokit/' } },
   },
   roboskills: {
-    crumb: 'roboskills', titleA: 'robo', titleB: 'skills',
+    titleA: 'robo', titleB: 'skills',
     lede: 'A low-cost, minimal skillset for agentic robotics.',
     chip: 'Agent Skills',
     cta: { label: 'View showcase →', href: '/roboskills/showcase/' },
     install: 'uv add roboskills',
     heroConsole: {
-      label: 'Real2Sim · Cat’s cradle', state: 'agent replay', placeholder: 'Ask RoboSkills',
+      state: 'agent replay', placeholder: 'Ask RoboSkills',
       tasks: [
         { label: 'Real2Sim · Cat’s cradle', state: 'wikiHow video, CC BY-NC-SA', prompt: 'Learn cat’s cradle from this human video.', steps: [[1.4, 'Thinking'], [1.7, 'Tracking both hands and the string'], [2.1, 'Rebuilding it with robot hands'], [2.6, 'Rebuilt in simulation']], ...skTeaser('cats-cradle') },
         { label: 'Agentic Simulation · Paper folding', state: 'built task', prompt: 'Build a paper folding task.', steps: [[1, 'Thinking'], [1.6, 'Building paper and two hands'], [2.8, 'Solving the folds'], [5, 'Solution verified']], ...skTeaser('paper-folding', true) },
@@ -657,7 +480,6 @@ window.RK_PROJECTS = {
         skRun('dexjoco/hammer_nail-s20001', 'Hammer a nail', 321 / 501),
       ],
     },
-    showDetails: false,
     bands: [
       { type: 'bento', id: 'harnesses', label: 'Workflows', h: 'Built-in five workflows.', pills: true, cards: [
         { name: 'Auto Research', wide: true, href: '#auto-research', flow: [['Task'], ['Trials'], ['Policy']], video: sh('auto-research/bimanual-lifting').src, still: sh('auto-research/bimanual-lifting').poster },
@@ -768,6 +590,5 @@ window.RK_PROJECTS = {
         ] },
     ],
     close: { h: 'Try the code.', cta: { label: 'View on GitHub', href: 'https://github.com/openrobokit/roboskills' }, alt: { label: 'View showcase →', href: '/roboskills/showcase/' } },
-    alt: { label: 'View on GitHub', href: 'https://github.com/openrobokit/roboskills' },
   },
 };
