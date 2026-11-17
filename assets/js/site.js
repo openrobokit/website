@@ -28,11 +28,14 @@
     { key: 'docs', label: 'Docs', href: '/docs/robokit/overview/' },
   ];
 
-  const GITHUB_URL = 'https://github.com/openrobokit/robokit';
 
   // `active` is a NAV key, or anything absent from it (the landing page passes
   // nothing) to leave every entry unmarked.
   window.rkRenderNav = function (active) {
+    // The GitHub icon opens the page's own kit: a project page names it, a docs
+    // page has it as /docs/<kit>/, and the landing page gets the organization.
+    const kit = [active, ...location.pathname.split('/')].find((k) => k in window.RK_NAMES);
+    const github = kit ? `https://github.com/openrobokit/${kit}` : 'https://github.com/openrobokit';
     const link = (n, dot) =>
       `<a href="${n.href}" class="${n.key === active ? 'is-active' : ''}">` +
       `${dot && n.key === active ? '<span class="dot"></span>' : ''}${n.label}</a>`;
@@ -48,7 +51,7 @@
         </a>
         <div class="links">${NAV.map((n) => link(n, true)).join('')}</div>
         <div class="right">
-          <a href="${GITHUB_URL}" aria-label="GitHub">${ICONS.github}</a>
+          <a href="${github}" aria-label="GitHub">${ICONS.github}</a>
           <button class="burger" onclick="rkToggleMenu()" aria-label="Menu">${ICONS.burger}</button>
         </div>
       </nav>

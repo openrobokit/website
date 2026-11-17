@@ -39,13 +39,6 @@ only for the project being imported.
 `scripts/serve.py` serves the built tree with HTTP Range support so the video
 scrubbers can seek locally.
 
-The landing hero and its three kit previews live under
-`assets/{videos,images}/landing/`. After updating the hero, regenerate the
-matching card clips and posters with
-`uv run --python 3.12 python scripts/assemble_landing_teaser.py --previews-only`.
-The same script can assemble the hero from existing Blender frames using
-`--renders <render-directory>`.
-
 ## Layout
 
 ```
